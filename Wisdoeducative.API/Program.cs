@@ -1,9 +1,22 @@
+using Azure.Identity;
+using Microsoft.Extensions.Configuration;
+using Wisdoeducative.API.Settings;
+using Wisdoeducative.Infrastructure.Settings;
+
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+//Azure key vault configuration
+var keyVaultEndpoint = builder.Configuration.GetSection("KeyVault:keyVaultEndpoint")?.Value;
+builder.Configuration.AddAzureKeyVault(
+    new Uri(keyVaultEndpoint!),
+    new DefaultAzureCredential()
+);
 
+// Add services to the container.
+builder.Services.AddApiSettings(builder.Configuration, MyAllowSpecificOrigins);
+builder.Services.AddProjectStartUpSettings(builder.Configuration);
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
