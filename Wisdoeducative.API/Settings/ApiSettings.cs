@@ -7,6 +7,7 @@
         {
             services.AddHttpContextAccessor();
             services.AddCorsSettings(configuration, MyAllowSpecificOrigins);
+            services.AddAuthenticationSettings(configuration);
             return services;
         }
     }

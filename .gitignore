@@ -365,43 +365,38 @@ FodyWeavers.xsd
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # Compiled output
-/dist
-/tmp
-/out-tsc
-/bazel-out
+/Wisdoeducative.UI/dist
+/Wisdoeducative.UI/tmp
+/Wisdoeducative.UI/out-tsc
+/Wisdoeducative.UI/bazel-out
 
 # Node
-/node_modules
-npm-debug.log
-yarn-error.log
+/Wisdoeducative.UI/node_modules
+/Wisdoeducative.UI/npm-debug.log
+/Wisdoeducative.UI/yarn-error.log
 
 # IDEs and editors
-.idea/
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
+/Wisdoeducative.UI/.idea/
+/Wisdoeducative.UI/.project
+/Wisdoeducative.UI/.classpath
+/Wisdoeducative.UI/.c9/
+/Wisdoeducative.UI/*.launch
+/Wisdoeducative.UI/.settings/
+/Wisdoeducative.UI/*.sublime-workspace
 
 # Visual Studio Code
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-.history/*
+/Wisdoeducative.UI/.vscode
+/Wisdoeducative.UI/.history/*
 
 # Miscellaneous
-/.angular/cache
-.sass-cache/
-/connect.lock
-/coverage
-/libpeerconnection.log
-testem.log
-/typings
+/Wisdoeducative.UI/.angular/cache
+/Wisdoeducative.UI/.sass-cache/
+/Wisdoeducative.UI/connect.lock
+/Wisdoeducative.UI/coverage
+/Wisdoeducative.UI/libpeerconnection.log
+/Wisdoeducative.UI/testem.log
+/Wisdoeducative.UI/typings
 
 # System files
 .DS_Store
 Thumbs.db
-/Wisdoeducative.UI/.editorconfig
