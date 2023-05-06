@@ -1,15 +1,16 @@
 //angular components
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
+import { MsalGuard } from '@azure/msal-angular';
+import { WorkspaceComponent } from './workspace.component';
 
 const routes: Routes = [
   {
-      path      : 'home',
-    //   component : PagesComponent,
-      //canActivate: [AuthGuard],
+      path : 'workspace',
+      component : WorkspaceComponent,
+      canActivate: [MsalGuard],
       children  : [
-    //    { path: '',component: HomeComponent }, 
-    //    { path: 'myProjects',component: ProjectsComponent }, 
+        // { path: '/:workspaceId',component: HomeComponent }, 
       ]
   }
 ];

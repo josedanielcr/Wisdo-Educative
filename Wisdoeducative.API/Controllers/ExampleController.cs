@@ -1,7 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Web.Resource;
+using System.Security.Claims;
 
 namespace Wisdoeducative.API.Controllers
 {
+    [Authorize]
+    [RequiredScope("api.wisdoeducativedev.read")]
     [ApiController]
     [Route("[controller]")]
     public class ExampleController : ControllerBase
@@ -19,7 +24,12 @@ namespace Wisdoeducative.API.Controllers
         [HttpGet]
         public ActionResult Get()
         {
-            return Ok(new DateTime());
+            ClaimsPrincipal user = HttpContext.User;
+            // Get all claims
+            var claims = user.Claims.ToList();
+
+            // Return the claims as JSON
+            return Ok(claims);
         }
     }
 }
