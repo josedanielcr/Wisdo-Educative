@@ -19,13 +19,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Common\Exceptions\" />
-    <Folder Include="Models\" />
-    <Folder Include="Services\" />
+    <ProjectReference Include="..\Wisdoeducative.Domain\Wisdoeducative.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Wisdoeducative.Domain\Wisdoeducative.Domain.csproj" />
+    <Folder Include="Helpers\" />
   </ItemGroup>
 
 </Project>

@@ -13,7 +13,6 @@ namespace Wisdoeducative.Domain.Common
         public DateTime CreationDate { get; set; }
         public DateTime ChangeDate { get; set; }
         public EntityChangeTypes EntityChangeType { get; set; }
-        public int ModifiedByUserId { get; set; }
-        public User? ModifiedByUser { get; set; }
+        public string ModifiedByUser { get; set; }
     }
 }

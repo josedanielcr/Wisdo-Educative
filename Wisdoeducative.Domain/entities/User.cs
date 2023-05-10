@@ -4,13 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Wisdoeducative.Domain.Common;
+using Wisdoeducative.Domain.enums;
 
 namespace Wisdoeducative.Domain.Entities
 {
-    public class User : BaseAuditableEntity
+    public class User : BaseEntity
     {
-        public string Username { get; set; }
-        public string Email { get; set; }
-
+        public string B2cId { get; set; }
+        public string? Username { get; set; }
+        public string? Email { get; set; }
+        public int AddressId { get; set; }
+        public Address Address { get; set; }
+        public UserStatus UserStatus { get; set; }
     }
-} 
+}
