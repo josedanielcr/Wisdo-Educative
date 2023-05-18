@@ -1,6 +1,8 @@
 using Azure.Identity;
 using Microsoft.Extensions.Configuration;
+using Wisdoeducative.API.Middlewares;
 using Wisdoeducative.API.Settings;
+using Wisdoeducative.Infrastructure.Persistence;
 using Wisdoeducative.Infrastructure.Settings;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
@@ -22,6 +24,13 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+//initialize database
+using (var scope = app.Services.CreateScope())
+{
+    var initialiser = scope.ServiceProvider.GetRequiredService<ApplicationDBContextInitializer>();
+    await initialiser.InitialiseAsync();
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -31,6 +40,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseCors(MyAllowSpecificOrigins);
+app.UseMiddleware<ErrorHandlingMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
 

@@ -18,6 +18,8 @@ namespace Wisdoeducative.Application
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             //services
             services.AddServicesSettings();
+            //helpers
+            services.AddHelpersSettings();
             return services;
         }
     }

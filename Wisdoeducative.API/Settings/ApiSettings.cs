@@ -8,6 +8,7 @@
             services.AddHttpContextAccessor();
             services.AddCorsSettings(configuration, MyAllowSpecificOrigins);
             services.AddAuthenticationSettings(configuration);
+            services.AddSwaggerSettings();
             return services;
         }
     }
