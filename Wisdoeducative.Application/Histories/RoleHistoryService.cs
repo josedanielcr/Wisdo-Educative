@@ -13,29 +13,29 @@ using Wisdoeducative.Domain.Histories;
 
 namespace Wisdoeducative.Application.Histories
 {
-    public class UserHistoryService : IEntityHistoryService<User>
+    public class RoleHistoryService : IEntityHistoryService<Role>
     {
         private readonly IApplicationDBContext dBContext;
-        private readonly ILogger<UserHistoryService> logger;
+        private readonly ILogger<RoleHistoryService> logger;
 
-        public UserHistoryService(IApplicationDBContext dBContext,
-            ILogger<UserHistoryService> logger)
+        public RoleHistoryService(IApplicationDBContext dBContext,
+            ILogger<RoleHistoryService> logger)
         {
             this.dBContext = dBContext;
             this.logger = logger;
         }
 
-        public void SaveChanges(User entity, int userId, EntityChangeTypes type, string modifiedBy)
+        public void SaveChanges(Role entity, int roleId, EntityChangeTypes type, string modifiedBy)
         {
             try
             {
-                dBContext.UserHistories.Add(new UserHistory
+                dBContext.RoleHistories.Add(new RoleHistory
                 {
                     Date = DateTime.Now,
                     EntityChangeType = type,
                     ModifiedByUser = modifiedBy,
-                    ChangedUserId = entity.Id,
-                    ChangedUser = entity
+                    ChangedRoleId = roleId,
+                    ChangedRole = entity
                 });
             }
             catch (Exception ex)
@@ -43,7 +43,6 @@ namespace Wisdoeducative.Application.Histories
                 logger.LogError(ex, $"{ErrorMessages.HistorySaveErrorMessage}{entity}");
                 throw;
             }
-            
         }
     }
 }

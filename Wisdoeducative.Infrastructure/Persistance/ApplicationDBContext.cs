@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Wisdoeducative.Application.Common.Interfaces;
 using Wisdoeducative.Domain.Entities;
-using Wisdoeducative.Domain.Historics;
+using Wisdoeducative.Domain.Histories;
 
 namespace Wisdoeducative.Infrastructure.Persistence
 {
@@ -18,6 +18,8 @@ namespace Wisdoeducative.Infrastructure.Persistence
         public DbSet<Address> Addresses { get; set; }
         public DbSet<AddressHistory> AddressHistories { get; set; }
         public DbSet<UserHistory> UserHistories { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<RoleHistory> RoleHistories { get; set; }
 
         public async Task<int> SaveChangesAsync()
         {

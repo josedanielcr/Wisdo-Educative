@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using Wisdoeducative.Domain.Common;
 using Wisdoeducative.Domain.Entities;
 
-namespace Wisdoeducative.Domain.Historics
+namespace Wisdoeducative.Domain.Histories
 {
     public class UserHistory : BaseAuditableEntity
     {
-        public User ChangedUser { get; set; }
+        public User? ChangedUser { get; set; }
+        public int ChangedUserId { get; set; }
     }
 }

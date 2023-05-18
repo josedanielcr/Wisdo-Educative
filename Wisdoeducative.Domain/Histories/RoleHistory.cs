@@ -8,9 +8,9 @@ using Wisdoeducative.Domain.Entities;
 
 namespace Wisdoeducative.Domain.Histories
 {
-    public class AddressHistory : BaseAuditableEntity
+    public class RoleHistory : BaseAuditableEntity
     {
-        public Address? ChangedAddress { get; set; }
-        public int ChangedAddressId { get; set; }
+        public Role? ChangedRole { get; set; }
+        public int ChangedRoleId { get; set; }
     }
 }

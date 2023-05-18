@@ -18,6 +18,7 @@ namespace Wisdoeducative.Application.Settings
             services.AddHistorySettings();
             //services
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IRoleService, RoleService>();
             return services;
         }
     }
