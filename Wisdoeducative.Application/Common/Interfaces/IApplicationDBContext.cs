@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Wisdoeducative.Domain.Entities;
-using Wisdoeducative.Domain.Historics;
+using Wisdoeducative.Domain.Histories;
 
 namespace Wisdoeducative.Application.Common.Interfaces
 {
@@ -15,6 +15,8 @@ namespace Wisdoeducative.Application.Common.Interfaces
         DbSet<Address> Addresses { get; set; }
         DbSet<UserHistory> UserHistories { get; set; }
         DbSet<AddressHistory> AddressHistories { get; set; }
+        DbSet<Role> Roles { get; set; }
+        DbSet<RoleHistory> RoleHistories { get; set; }
         Task<int> SaveChangesAsync();
     }
 }

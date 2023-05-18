@@ -10,7 +10,7 @@ using Wisdoeducative.Application.Common.Interfaces.Historics;
 using Wisdoeducative.Application.Resources;
 using Wisdoeducative.Domain.Entities;
 using Wisdoeducative.Domain.Enums;
-using Wisdoeducative.Domain.Historics;
+using Wisdoeducative.Domain.Histories;
 
 namespace Wisdoeducative.Application.Histories
 {
@@ -26,7 +26,7 @@ namespace Wisdoeducative.Application.Histories
             this.logger = logger;
         }
 
-        public void SaveChanges(Address entity, EntityChangeTypes type, string modifiedBy)
+        public void SaveChanges(Address entity, int addressId, EntityChangeTypes type, string modifiedBy)
         {
             try
             {
@@ -35,6 +35,7 @@ namespace Wisdoeducative.Application.Histories
                     Date = DateTime.Now,
                     EntityChangeType = type,
                     ModifiedByUser = modifiedBy,
+                    ChangedAddressId = addressId,
                     ChangedAddress = entity
                 });
             }

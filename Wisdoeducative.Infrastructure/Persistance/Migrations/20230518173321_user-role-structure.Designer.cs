@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Wisdoeducative.Infrastructure.Persistence;
 
@@ -11,9 +12,11 @@ using Wisdoeducative.Infrastructure.Persistence;
 namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230518173321_user-role-structure")]
+    partial class userrolestructure
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -43,7 +46,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Addresses", (string)null);
+                    b.ToTable("Addresses");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Entities.Role", b =>
@@ -66,7 +69,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles", (string)null);
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Entities.User", b =>
@@ -104,7 +107,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Histories.AddressHistory", b =>
@@ -132,7 +135,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasIndex("ChangedAddressId");
 
-                    b.ToTable("AddressHistories", (string)null);
+                    b.ToTable("AddressHistories");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Histories.RoleHistory", b =>
@@ -160,7 +163,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasIndex("ChangedRoleId");
 
-                    b.ToTable("RoleHistories", (string)null);
+                    b.ToTable("RoleHistories");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Histories.UserHistory", b =>
@@ -188,7 +191,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasIndex("ChangedUserId");
 
-                    b.ToTable("UserHistories", (string)null);
+                    b.ToTable("UserHistories");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Entities.User", b =>

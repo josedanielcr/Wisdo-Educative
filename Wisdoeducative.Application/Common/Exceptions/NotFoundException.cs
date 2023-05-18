@@ -8,15 +8,15 @@ namespace Wisdoeducative.Application.Common.Exceptions
 {
     public class NotFoundException : Exception
     {
-        public NotFoundException(string name, object key) : base($"Entity \"{name}\" ({key}) was not found.")
+        public NotFoundException(string message) : base(message)
         {
         }
 
-        public NotFoundException(string name, object key, string message) : base($"Entity \"{name}\" ({key}) was not found. {message}")
+        public NotFoundException() : base()
         {
         }
 
-        public NotFoundException(string name, object key, string message, Exception innerException) : base($"Entity \"{name}\" ({key}) was not found. {message}", innerException)
+        public NotFoundException(string message, Exception innerException) : base(message, innerException)
         {
         }
     }
