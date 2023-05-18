@@ -85,13 +85,10 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("ChangeDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("ChangedAddressId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreationDate")
+                    b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("EntityChangeType")
@@ -116,13 +113,10 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("ChangeDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("ChangedUserId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreationDate")
+                    b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("EntityChangeType")

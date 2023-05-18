@@ -4,20 +4,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Wisdoeducative.Application.Common.Interfaces.Historics;
+using Wisdoeducative.Application.Common.Interfaces.Helpers;
 using Wisdoeducative.Application.Common.Interfaces.Services;
+using Wisdoeducative.Application.Helpers;
 using Wisdoeducative.Application.Services;
 
 namespace Wisdoeducative.Application.Settings
 {
-    public static class ServicesSettings
+    public static class HelpersSettings
     {
-        public static IServiceCollection AddServicesSettings(this IServiceCollection services)
+        public static IServiceCollection AddHelpersSettings(this IServiceCollection services)
         {
-            //histories
-            services.AddHistorySettings();
             //services
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserServiceHelper, UserServiceHelper>();
             return services;
         }
     }

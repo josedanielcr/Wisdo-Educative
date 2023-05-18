@@ -30,6 +30,7 @@ namespace Wisdoeducative.API.Middlewares
             catch (Exception ex)
             {
                 await HandleExceptionAsync(context, ex);
+                LogExceptionDetails(ex);
             }
         }
 
@@ -55,6 +56,17 @@ namespace Wisdoeducative.API.Middlewares
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)code;
             await context.Response.WriteAsync(result);
+        }
+
+        private void LogExceptionDetails(Exception exception)
+        {
+            var logMessage = $"Unhandled exception occurred: {exception.Message}";
+            if (_env.IsDevelopment())
+            {
+                logMessage += $"\nStackTrace: {exception.StackTrace}";
+            }
+
+            _logger.LogError(exception, logMessage);
         }
     }
 }

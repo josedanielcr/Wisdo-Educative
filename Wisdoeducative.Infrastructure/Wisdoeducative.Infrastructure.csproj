@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Persistence\Migrations\" />
+    <Folder Include="Persistance\Migrations\" />
   </ItemGroup>
 
   <ItemGroup>

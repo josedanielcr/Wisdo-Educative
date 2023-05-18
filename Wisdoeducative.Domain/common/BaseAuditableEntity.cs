@@ -4,14 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Wisdoeducative.Domain.Entities;
-using Wisdoeducative.Domain.enums;
+using Wisdoeducative.Domain.Enums;
 
 namespace Wisdoeducative.Domain.Common
 {
     public class BaseAuditableEntity : BaseEntity
     {
-        public DateTime CreationDate { get; set; }
-        public DateTime ChangeDate { get; set; }
+        public DateTime Date { get; set; }
         public EntityChangeTypes EntityChangeType { get; set; }
         public string ModifiedByUser { get; set; }
     }

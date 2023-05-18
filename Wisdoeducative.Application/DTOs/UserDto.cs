@@ -14,7 +14,7 @@ namespace Wisdoeducative.Application.DTOs
         public string B2cId { get; set; }
         public string Username { get; set; }
         public string Email { get; set; }
-        public string UserStatus { get; set; }
+        public string? UserStatus { get; set; }
         public AddressDto Address { get; set; }
         public int AddressId { get; set; }
     }

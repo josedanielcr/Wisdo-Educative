@@ -12,8 +12,8 @@ using Wisdoeducative.Infrastructure.Persistence;
 namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20230510212659_auth-user-b2c-migration")]
-    partial class authuserb2cmigration
+    [Migration("20230511230234_auth-module-migration")]
+    partial class authmodulemigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -88,13 +88,10 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("ChangeDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("ChangedAddressId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreationDate")
+                    b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("EntityChangeType")
@@ -119,13 +116,10 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("ChangeDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("ChangedUserId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreationDate")
+                    b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("EntityChangeType")

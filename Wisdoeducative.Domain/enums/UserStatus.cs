@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Wisdoeducative.Domain.enums
+namespace Wisdoeducative.Domain.Enums
 {
     public enum UserStatus
     {
