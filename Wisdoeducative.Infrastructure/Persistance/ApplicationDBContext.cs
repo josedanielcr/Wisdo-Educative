@@ -20,6 +20,10 @@ namespace Wisdoeducative.Infrastructure.Persistence
         public DbSet<UserHistory> UserHistories { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<RoleHistory> RoleHistories { get; set; }
+        public DbSet<Subscription> Subscriptions { get; set; }
+        public DbSet<UserSubscription> UserSubscriptions { get; set; }
+        public DbSet<SubscriptionHistory> SubscriptionHistories { get; set; }
+        public DbSet<UserSubscriptionHistory> UserSubscriptionHistories { get; set; }
 
         public async Task<int> SaveChangesAsync()
         {

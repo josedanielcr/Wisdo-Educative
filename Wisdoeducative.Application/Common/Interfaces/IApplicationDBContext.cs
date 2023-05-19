@@ -17,6 +17,10 @@ namespace Wisdoeducative.Application.Common.Interfaces
         DbSet<AddressHistory> AddressHistories { get; set; }
         DbSet<Role> Roles { get; set; }
         DbSet<RoleHistory> RoleHistories { get; set; }
+        DbSet<Subscription> Subscriptions { get; set; }
+        DbSet<UserSubscription> UserSubscriptions { get; set; }
+        DbSet<SubscriptionHistory> SubscriptionHistories { get; set; }
+        DbSet<UserSubscriptionHistory> UserSubscriptionHistories { get; set; }
         Task<int> SaveChangesAsync();
     }
 }

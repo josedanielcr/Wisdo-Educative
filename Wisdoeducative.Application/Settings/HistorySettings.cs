@@ -17,6 +17,8 @@ namespace Wisdoeducative.Application.Settings
             services.AddScoped<IEntityHistoryService<User>, UserHistoryService>();
             services.AddScoped<IEntityHistoryService<Address>, AddressHistoryService>();
             services.AddScoped<IEntityHistoryService<Role>, RoleHistoryService>();
+            services.AddScoped<IEntityHistoryService<Subscription>, SubscriptionHistoryService>();
+            services.AddScoped<IEntityHistoryService<UserSubscription>, UserSubscriptionHistoryService>();
             return services;
         }
     }
