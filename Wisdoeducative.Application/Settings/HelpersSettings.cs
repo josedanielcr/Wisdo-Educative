@@ -16,7 +16,8 @@ namespace Wisdoeducative.Application.Settings
         public static IServiceCollection AddHelpersSettings(this IServiceCollection services)
         {
             //services
-            services.AddScoped<IUserServiceHelper, UserServiceHelper>();
+            services.AddScoped<IUserHelperService, UserHelperService>();
+            services.AddScoped<ISubscriptionHelperService, SubscriptionHelperService>();
             return services;
         }
     }

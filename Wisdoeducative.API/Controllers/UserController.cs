@@ -13,13 +13,10 @@ namespace Wisdoeducative.API.Controllers
     [Route("[controller]")]
     public class UserController : ControllerBase
     {
-        private readonly ILogger<UserController> logger;
         private readonly IUserService userService;
 
-        public UserController(ILogger<UserController> logger, 
-               IUserService userService)
+        public UserController(IUserService userService)
         {
-            this.logger = logger;
             this.userService = userService;
         }
 

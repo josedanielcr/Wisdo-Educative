@@ -13,12 +13,12 @@ using Wisdoeducative.Domain.Entities;
 
 namespace Wisdoeducative.Application.Helpers
 {
-    public class UserServiceHelper : IUserServiceHelper
+    public class UserHelperService : IUserHelperService
     {
         private readonly IApplicationDBContext DbContext;
         private readonly IMapper mapper;
 
-        public UserServiceHelper(IApplicationDBContext DbContext, IMapper mapper)
+        public UserHelperService(IApplicationDBContext DbContext, IMapper mapper)
         {
             this.DbContext = DbContext;
             this.mapper = mapper;
