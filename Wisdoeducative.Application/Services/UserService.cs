@@ -21,7 +21,7 @@ namespace Wisdoeducative.Application.Services
     {
         private readonly IApplicationDBContext dBContext;
         private readonly IMapper mapper;
-        private readonly IUserServiceHelper userServiceHelper;
+        private readonly IUserHelperService userServiceHelper;
         private readonly IEntityHistoryService<User> userHistoryService;
         private readonly IEntityHistoryService<Address> addressHistoryService;
         private readonly IEntityHistoryService<Role> roleHistoryService;
@@ -29,7 +29,7 @@ namespace Wisdoeducative.Application.Services
 
         public UserService(IApplicationDBContext dBContext, 
             IMapper mapper, 
-            IUserServiceHelper userServiceHelper,
+            IUserHelperService userServiceHelper,
             IEntityHistoryService<User> userHistoryService,
             IEntityHistoryService<Address> addressHistoryService,
             IEntityHistoryService<Role> roleHistoryService,

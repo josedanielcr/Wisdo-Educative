@@ -7,7 +7,7 @@ using Wisdoeducative.Application.DTOs;
 
 namespace Wisdoeducative.Application.Common.Interfaces.Helpers
 {
-    public interface IUserServiceHelper
+    public interface IUserHelperService
     {
         Task<UserDto> GetUser(int id, string email, string username, string b2cId);
         Task<UserDto> GetUserById(int id);
