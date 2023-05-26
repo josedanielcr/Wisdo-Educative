@@ -21,6 +21,7 @@ namespace Wisdoeducative.Application.Common.Interfaces
         DbSet<UserSubscription> UserSubscriptions { get; set; }
         DbSet<SubscriptionHistory> SubscriptionHistories { get; set; }
         DbSet<UserSubscriptionHistory> UserSubscriptionHistories { get; set; }
+        DbSet<UserSubscriptionTransaction> userSubscriptionTransactions { get; set; }
         Task<int> SaveChangesAsync();
     }
 }

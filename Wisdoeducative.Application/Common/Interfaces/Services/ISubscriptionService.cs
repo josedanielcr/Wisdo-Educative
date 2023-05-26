@@ -9,7 +9,8 @@ namespace Wisdoeducative.Application.Common.Interfaces.Services
 {
     public interface ISubscriptionService
     {
-        Task<UserDto> LinkSubscriptionToAccount(int userId, SubscriptionDto subscription);
+        Task<UserDto> LinkSubscriptionToAccount(int userId, int subscriptionId,
+            UserSubscriptionTransactionDto transaction);
         Task<SubscriptionDto?> GetSubscription(int subscriptionId);
     }
 }

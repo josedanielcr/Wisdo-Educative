@@ -20,10 +20,12 @@ namespace Wisdoeducative.API.Controllers
             this.subscriptionService = subscriptionService;
         }
 
-        [HttpPut("link/{userId}")]
-        public async Task<IActionResult> LinkSubscription(int userId, [FromBody] SubscriptionDto subscriptionDto)
+        [HttpPut("link/{userId}/{subscriptionId}")]
+        public async Task<IActionResult> LinkSubscription(int userId, int subscriptionId,
+            [FromBody] UserSubscriptionTransactionDto transaction)
         {
-            return Ok(await subscriptionService.LinkSubscriptionToAccount(userId, subscriptionDto));
+            return Ok(await subscriptionService.LinkSubscriptionToAccount(userId,
+                subscriptionId, transaction));
         }
     }
 }

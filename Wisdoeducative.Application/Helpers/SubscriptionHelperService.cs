@@ -61,5 +61,10 @@ namespace Wisdoeducative.Application.Helpers
         {
             throw new NotImplementedException();
         }
+
+        public Task<bool> IsTransactionValid(UserSubscriptionTransactionDto transaction)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

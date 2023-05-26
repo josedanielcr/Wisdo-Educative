@@ -49,15 +49,19 @@ namespace Wisdoeducative.Application.Services
             return mapper.Map<SubscriptionDto>(subscription);
         }
 
-        public async Task<UserDto> LinkSubscriptionToAccount(int userId, SubscriptionDto subscription)
+        public async Task<UserDto> LinkSubscriptionToAccount(int userId, int subscriptionId,
+            UserSubscriptionTransactionDto transaction)
         {
 
-            var subscriptionDb = await subscriptionHelperService.GetSubscriptionById(subscription.Id)
-                ?? throw new NotFoundException($"{ErrorMessages.EntityNotFound} Subscription={subscription}");
+            var subscriptionDb = await subscriptionHelperService.GetSubscriptionById(subscriptionId)
+                ?? throw new NotFoundException($"{ErrorMessages.EntityNotFound} Subscription={subscriptionId}");
 
             var userdb = await userServiceHelper.GetUserById(userId) 
                 ?? throw new NotFoundException($"{ErrorMessages.EntityNotFound} User={userId}");
 
+            //transaction checker
+            
+            
             var userSubscription = new UserSubscription(userdb.Id,
                 subscriptionDb.Id, DateTime.Now, DateTime.Now, DateTime.Now, SubscriptionStatus.Active);
 

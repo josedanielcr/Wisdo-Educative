@@ -24,6 +24,7 @@ namespace Wisdoeducative.Infrastructure.Persistence
         public DbSet<UserSubscription> UserSubscriptions { get; set; }
         public DbSet<SubscriptionHistory> SubscriptionHistories { get; set; }
         public DbSet<UserSubscriptionHistory> UserSubscriptionHistories { get; set; }
+        public DbSet<UserSubscriptionTransaction> UserSubscriptionTransactions { get; set; }
 
         public async Task<int> SaveChangesAsync()
         {

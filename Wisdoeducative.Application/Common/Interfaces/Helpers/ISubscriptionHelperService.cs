@@ -14,5 +14,7 @@ namespace Wisdoeducative.Application.Common.Interfaces.Helpers
         Task<SubscriptionDto?> GetSubscriptionByUserId(int userId);
         Task<SubscriptionDto?> GetSubscriptionByUserEmail(string email);
         Task<SubscriptionDto?> GetSubscriptionByName(SubscriptionNames subscriptionName);
+
+        Task<Boolean> IsTransactionValid(UserSubscriptionTransactionDto transaction);
     }
 }
