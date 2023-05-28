@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -23,25 +24,22 @@ namespace Wisdoeducative.Application.Services
         private readonly IMapper mapper;
         private readonly IUserHelperService userServiceHelper;
         private readonly IEntityHistoryService<User> userHistoryService;
-        private readonly IEntityHistoryService<Address> addressHistoryService;
-        private readonly IEntityHistoryService<Role> roleHistoryService;
         private readonly IRoleService roleService;
+        private readonly IInterestService interestService;
 
         public UserService(IApplicationDBContext dBContext, 
             IMapper mapper, 
             IUserHelperService userServiceHelper,
             IEntityHistoryService<User> userHistoryService,
-            IEntityHistoryService<Address> addressHistoryService,
-            IEntityHistoryService<Role> roleHistoryService,
-            IRoleService roleService)
+            IRoleService roleService,
+            IInterestService interestService)
         {
             this.dBContext = dBContext;
             this.mapper = mapper;
             this.userServiceHelper = userServiceHelper;
             this.userHistoryService = userHistoryService;
-            this.addressHistoryService = addressHistoryService;
-            this.roleHistoryService = roleHistoryService;
             this.roleService = roleService;
+            this.interestService = interestService;
         }
 
         public async Task<UserDto> CreateUser(UserDto user)
@@ -65,16 +63,45 @@ namespace Wisdoeducative.Application.Services
         private void SaveToHistory(User user, EntityChangeTypes type, string modifiedBy)
         {
             userHistoryService.SaveChanges(user, user.Id, type, modifiedBy);
-            addressHistoryService.SaveChanges(user.Address, user.Address.Id, type, modifiedBy);
         }
 
         private async Task AddDataToUser(User user)
         {
             user.UserStatus = UserStatus.Pending;
-            user.Address.Status = EntityStatus.Active;
             var role = await roleService.GetRoleByName(UserRoles.Student) 
                 ?? throw new NotFoundException($"{ErrorMessages.EntityNotFound} {UserRoles.Student}");
             user.RoleId = role.Id;
+        }
+
+        public async Task<UserDto> SetUserData(UserDto user)
+        {
+            if (!userServiceHelper.AreUserPropertiesNotNull(user).Result)
+            {
+                throw new BadRequestException($"{ErrorMessages.NullProperties} User={user}");
+            }
+
+            await UpdateUser(user);
+            return await userServiceHelper.GetUser(user.Id);
+        }
+
+        public async Task<UserDto> SetUserInterests(int userId, IEnumerable<InterestDto> interests)
+        {
+            var user = await userServiceHelper.GetUserById(userId) 
+                ?? throw new NotFoundException($"{ErrorMessages.EntityNotFound} {userId}");
+
+            await interestService.SetInterestToUser(interests, user);
+            await UpdateUser(mapper.Map<UserDto>(user));
+
+            return mapper.Map<UserDto>(user);
+        }
+
+        public async Task UpdateUser(UserDto user)
+        {
+            var userEntity = mapper.Map<User>(user);
+            dBContext.Users.Attach(userEntity);
+            dBContext.Entry(userEntity).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            dBContext.Entry(userEntity).Property(u => u.B2cId).IsModified = false;
+            await dBContext.SaveChangesAsync();
         }
     }
 }

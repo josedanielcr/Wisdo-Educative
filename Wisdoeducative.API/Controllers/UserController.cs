@@ -25,5 +25,20 @@ namespace Wisdoeducative.API.Controllers
         {
             return Ok(await userService.CreateUser(user));
         }
+
+        [HttpPost]
+        [Route("configuration")]
+        public async Task<IActionResult> SetUserConfiguration([FromBody] UserDto userConfiguration)
+        {
+            return Ok(await userService.SetUserData(userConfiguration));
+        }
+
+        [HttpPost]
+        [Route("{userId}/interests")]
+        public async Task<IActionResult> SetUserInterests(int userId,
+            [FromBody] List<InterestDto> interests)
+        {
+            return Ok(await userService.SetUserInterests(userId, interests));
+        }
     }
 }

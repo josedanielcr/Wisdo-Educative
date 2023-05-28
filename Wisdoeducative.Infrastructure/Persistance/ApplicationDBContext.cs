@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +15,12 @@ namespace Wisdoeducative.Infrastructure.Persistence
     {
         public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options) { }
 
+        public new EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class
+        {
+            return base.Entry(entity);
+        }
+
         public DbSet<User> Users { get; set; }
-        public DbSet<Address> Addresses { get; set; }
-        public DbSet<AddressHistory> AddressHistories { get; set; }
         public DbSet<UserHistory> UserHistories { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<RoleHistory> RoleHistories { get; set; }
@@ -25,6 +29,8 @@ namespace Wisdoeducative.Infrastructure.Persistence
         public DbSet<SubscriptionHistory> SubscriptionHistories { get; set; }
         public DbSet<UserSubscriptionHistory> UserSubscriptionHistories { get; set; }
         public DbSet<UserSubscriptionTransaction> UserSubscriptionTransactions { get; set; }
+        public DbSet<Interest> Interests { get; set; }
+        public DbSet<UserInterest> UserInterests { get; set; }
 
         public async Task<int> SaveChangesAsync()
         {

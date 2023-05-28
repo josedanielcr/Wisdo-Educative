@@ -15,7 +15,6 @@ namespace Wisdoeducative.Application.Settings
         public static IServiceCollection AddHistorySettings(this IServiceCollection services)
         {
             services.AddScoped<IEntityHistoryService<User>, UserHistoryService>();
-            services.AddScoped<IEntityHistoryService<Address>, AddressHistoryService>();
             services.AddScoped<IEntityHistoryService<Role>, RoleHistoryService>();
             services.AddScoped<IEntityHistoryService<Subscription>, SubscriptionHistoryService>();
             services.AddScoped<IEntityHistoryService<UserSubscription>, UserSubscriptionHistoryService>();
