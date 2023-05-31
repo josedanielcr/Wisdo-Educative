@@ -117,11 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="EmptyEntityList" xml:space="preserve">
+    <value>The list of the following entity is null:</value>
+  </data>
   <data name="EntityNotFound" xml:space="preserve">
     <value>The following entity was not found:</value>
   </data>
   <data name="HistorySaveErrorMessage" xml:space="preserve">
     <value>Error occurred while saving entity history:</value>
+  </data>
+  <data name="NullProperties" xml:space="preserve">
+    <value>The following entity has null properties:</value>
   </data>
   <data name="UserAlreadyExistsErrorMessage" xml:space="preserve">
     <value>User already exists:</value>

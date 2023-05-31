@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Wisdoeducative.Infrastructure.Persistence;
 
@@ -11,9 +12,11 @@ using Wisdoeducative.Infrastructure.Persistence;
 namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20230527161837_fix-user-structure")]
+    partial class fixuserstructure
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -103,10 +106,10 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("Category")
+                    b.Property<int>("Category")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("DateOfBirth")
+                    b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
@@ -114,9 +117,11 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("RoleId")
@@ -318,34 +323,6 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
                     b.ToTable("UserHistories");
                 });
 
-            modelBuilder.Entity("Wisdoeducative.Domain.Histories.UserInterestHistory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ChangedInterestId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("EntityChangeType")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ModifiedByUser")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ChangedInterestId");
-
-                    b.ToTable("UserInterestHistories");
-                });
-
             modelBuilder.Entity("Wisdoeducative.Domain.Histories.UserSubscriptionHistory", b =>
                 {
                     b.Property<int>("Id")
@@ -465,17 +442,6 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
                         .IsRequired();
 
                     b.Navigation("ChangedUser");
-                });
-
-            modelBuilder.Entity("Wisdoeducative.Domain.Histories.UserInterestHistory", b =>
-                {
-                    b.HasOne("Wisdoeducative.Domain.Entities.UserInterest", "ChangedInterest")
-                        .WithMany()
-                        .HasForeignKey("ChangedInterestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ChangedInterest");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Histories.UserSubscriptionHistory", b =>

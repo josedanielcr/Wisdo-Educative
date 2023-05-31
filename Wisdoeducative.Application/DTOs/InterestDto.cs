@@ -8,11 +8,10 @@ using Wisdoeducative.Domain.Entities;
 
 namespace Wisdoeducative.Application.DTOs
 {
-    public class AddressDto : IMapFrom<Address>
+    public class InterestDto : IMapFrom<Interest>
     {
         public int Id { get; set; }
-        public string Country { get; set; }
-        public string City { get; set; }
+        public string Name { get; set; }
         public string? Status { get; set; }
     }
 }

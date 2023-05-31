@@ -8,10 +8,9 @@ using Wisdoeducative.Domain.Enums;
 
 namespace Wisdoeducative.Domain.Entities
 {
-    public class Address : BaseEntity
+    public class Interest : BaseEntity
     {
-        public string Country { get; set; }
-        public string City { get; set; }
+        public string Name { get; set; }
         public EntityStatus Status { get; set; }
     }
 }

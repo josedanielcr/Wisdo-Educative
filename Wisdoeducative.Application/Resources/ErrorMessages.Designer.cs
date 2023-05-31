@@ -61,6 +61,15 @@ namespace Wisdoeducative.Application.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The list of the following entity is null:.
+        /// </summary>
+        internal static string EmptyEntityList {
+            get {
+                return ResourceManager.GetString("EmptyEntityList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The following entity was not found:.
         /// </summary>
         internal static string EntityNotFound {
@@ -75,6 +84,15 @@ namespace Wisdoeducative.Application.Resources {
         internal static string HistorySaveErrorMessage {
             get {
                 return ResourceManager.GetString("HistorySaveErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The following entity has null properties:.
+        /// </summary>
+        internal static string NullProperties {
+            get {
+                return ResourceManager.GetString("NullProperties", resourceCulture);
             }
         }
         
