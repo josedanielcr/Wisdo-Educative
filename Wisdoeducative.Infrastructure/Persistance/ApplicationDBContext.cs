@@ -31,6 +31,7 @@ namespace Wisdoeducative.Infrastructure.Persistence
         public DbSet<UserSubscriptionTransaction> UserSubscriptionTransactions { get; set; }
         public DbSet<Interest> Interests { get; set; }
         public DbSet<UserInterest> UserInterests { get; set; }
+        public DbSet<UserInterestHistory> UserInterestHistories { get; set; }
 
         public async Task<int> SaveChangesAsync()
         {

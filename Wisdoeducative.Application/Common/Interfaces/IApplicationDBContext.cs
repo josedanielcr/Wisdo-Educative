@@ -23,6 +23,7 @@ namespace Wisdoeducative.Application.Common.Interfaces
         DbSet<UserSubscriptionTransaction> UserSubscriptionTransactions { get; set; }
         DbSet<Interest> Interests { get; set; }
         DbSet<UserInterest> UserInterests { get; set; }
+        DbSet<UserInterestHistory> UserInterestHistories { get; set; }
 
         Task<int> SaveChangesAsync();
         EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;

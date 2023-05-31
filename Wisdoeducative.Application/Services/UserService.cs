@@ -81,6 +81,7 @@ namespace Wisdoeducative.Application.Services
             }
 
             await UpdateUser(user);
+            SaveToHistory(mapper.Map<User>(user), EntityChangeTypes.Modified, user.B2cId);
             return await userServiceHelper.GetUser(user.Id);
         }
 
@@ -90,8 +91,6 @@ namespace Wisdoeducative.Application.Services
                 ?? throw new NotFoundException($"{ErrorMessages.EntityNotFound} {userId}");
 
             await interestService.SetInterestToUser(interests, user);
-            await UpdateUser(mapper.Map<UserDto>(user));
-
             return mapper.Map<UserDto>(user);
         }
 

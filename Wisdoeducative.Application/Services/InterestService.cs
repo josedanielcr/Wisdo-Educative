@@ -7,10 +7,13 @@ using System.Text;
 using System.Threading.Tasks;
 using Wisdoeducative.Application.Common.Exceptions;
 using Wisdoeducative.Application.Common.Interfaces;
+using Wisdoeducative.Application.Common.Interfaces.Historics;
 using Wisdoeducative.Application.Common.Interfaces.Services;
 using Wisdoeducative.Application.DTOs;
+using Wisdoeducative.Application.Histories;
 using Wisdoeducative.Application.Resources;
 using Wisdoeducative.Domain.Entities;
+using Wisdoeducative.Domain.Enums;
 
 namespace Wisdoeducative.Application.Services
 {
@@ -18,11 +21,14 @@ namespace Wisdoeducative.Application.Services
     {
         private readonly IApplicationDBContext dBContext;
         private readonly IMapper mapper;
+        private readonly IEntityHistoryService<UserInterest> interestHistory;
 
-        public InterestService(IApplicationDBContext dBContext, IMapper mapper)
+        public InterestService(IApplicationDBContext dBContext, IMapper mapper,
+            IEntityHistoryService<UserInterest> interestHistory)
         {
             this.dBContext = dBContext;
             this.mapper = mapper;
+            this.interestHistory = interestHistory;
         }
 
         private Task<bool> AreInterestPropertiesNotNull(InterestDto interest)
@@ -55,10 +61,11 @@ namespace Wisdoeducative.Application.Services
                     Status = Domain.Enums.EntityStatus.Active
                 };
                 dBContext.UserInterests.Add(userInterest);
+                SaveToHistory(userInterest, EntityChangeTypes.Added, user.B2cId);
             }
             await dBContext.SaveChangesAsync();
 
-            return await GetUserInterests(user.Id);
+            return await GetUserInterests(user.Id); ;
         }
 
         public Task CheckInterestList(IEnumerable<InterestDto> interests)
@@ -88,6 +95,10 @@ namespace Wisdoeducative.Application.Services
             await CheckInterestList(mapper.Map<IEnumerable<InterestDto>>(interests));
 
             return mapper.Map<IEnumerable<InterestDto>>(interests);
+        }
+        private void SaveToHistory(UserInterest interest, EntityChangeTypes type, string modifiedBy)
+        {
+            interestHistory.SaveChanges(interest, interest.Id, type, modifiedBy);
         }
     }
 }
