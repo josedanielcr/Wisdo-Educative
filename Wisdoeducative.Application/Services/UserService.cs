@@ -14,6 +14,7 @@ using Wisdoeducative.Application.Common.Interfaces.Services;
 using Wisdoeducative.Application.DTOs;
 using Wisdoeducative.Application.Resources;
 using Wisdoeducative.Domain.Entities;
+using Wisdoeducative.Domain.enums;
 using Wisdoeducative.Domain.Enums;
 
 namespace Wisdoeducative.Application.Services
@@ -26,13 +27,15 @@ namespace Wisdoeducative.Application.Services
         private readonly IEntityHistoryService<User> userHistoryService;
         private readonly IRoleService roleService;
         private readonly IInterestService interestService;
+        private readonly ISubscriptionService subscriptionService;
 
         public UserService(IApplicationDBContext dBContext, 
             IMapper mapper, 
             IUserHelperService userServiceHelper,
             IEntityHistoryService<User> userHistoryService,
             IRoleService roleService,
-            IInterestService interestService)
+            IInterestService interestService,
+            ISubscriptionService subscriptionService)
         {
             this.dBContext = dBContext;
             this.mapper = mapper;
@@ -40,6 +43,7 @@ namespace Wisdoeducative.Application.Services
             this.userHistoryService = userHistoryService;
             this.roleService = roleService;
             this.interestService = interestService;
+            this.subscriptionService = subscriptionService;
         }
 
         public async Task<UserDto> CreateUser(UserDto user)
@@ -81,6 +85,7 @@ namespace Wisdoeducative.Application.Services
             }
 
             await UpdateUser(user);
+            await subscriptionService.LinkSubscriptionToAccount(SubscriptionNames.Free, user.Id);
             SaveToHistory(mapper.Map<User>(user), EntityChangeTypes.Modified, user.B2cId);
             return await userServiceHelper.GetUser(user.Id);
         }

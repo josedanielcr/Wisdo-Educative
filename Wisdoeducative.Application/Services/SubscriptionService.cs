@@ -13,6 +13,7 @@ using Wisdoeducative.Application.DTOs;
 using Wisdoeducative.Application.Helpers;
 using Wisdoeducative.Application.Resources;
 using Wisdoeducative.Domain.Entities;
+using Wisdoeducative.Domain.enums;
 using Wisdoeducative.Domain.Enums;
 
 namespace Wisdoeducative.Application.Services
@@ -21,55 +22,68 @@ namespace Wisdoeducative.Application.Services
     {
         private readonly IApplicationDBContext dBContext;
         private readonly IMapper mapper;
-        private readonly IUserHelperService userServiceHelper;
-        private readonly ISubscriptionHelperService subscriptionHelperService;
+        private readonly ISubscriptionHelperService subscriptionHelper;
 
-        public SubscriptionService(IApplicationDBContext dBContext, 
+        public SubscriptionService(IApplicationDBContext dBContext,
             IMapper mapper,
-            IUserHelperService userServiceHelper,
-            ISubscriptionHelperService subscriptionHelperService)
+            ISubscriptionHelperService subscriptionHelper)
         {
             this.dBContext = dBContext;
             this.mapper = mapper;
-            this.userServiceHelper = userServiceHelper;
-            this.subscriptionHelperService = subscriptionHelperService;
+            this.subscriptionHelper = subscriptionHelper;
         }
 
-        public async Task<SubscriptionDto?> GetSubscription(int subscriptionId)
+        public async Task LinkSubscriptionToAccount(SubscriptionNames subscription, int userId)
         {
-            var subscription = await dBContext.Subscriptions
-                .Where(subs => subs.Id == subscriptionId)
-                .FirstOrDefaultAsync();
+            var subscriptiondb = await subscriptionHelper.GetSubscriptionByName(subscription)
+                ?? throw new NotFoundException($"{ErrorMessages.EntityNotFound} " +
+                $"Subscription={subscription}");
 
-            if(subscription == null)
+            var newUserSubscription = new UserSubscription
             {
-                return null;
-            }
+                UserId = userId,
+                SubscriptionId = subscriptiondb.Id,
+                StartDate = DateTime.Now,
+                EndDate = null,
+                Status = SubscriptionStatus.Active,
+                LastPayment = DateTime.Now,
+                NextPayment = DateTime.Now.AddMonths(1)
+            };
 
-            return mapper.Map<SubscriptionDto>(subscription);
-        }
-
-        public async Task<UserDto> LinkSubscriptionToAccount(int userId, int subscriptionId,
-            UserSubscriptionTransactionDto transaction)
-        {
-
-            var subscriptionDb = await subscriptionHelperService.GetSubscriptionById(subscriptionId)
-                ?? throw new NotFoundException($"{ErrorMessages.EntityNotFound} Subscription={subscriptionId}");
-
-            var userdb = await userServiceHelper.GetUserById(userId) 
-                ?? throw new NotFoundException($"{ErrorMessages.EntityNotFound} User={userId}");
-
-            //transaction checker
-            
-            
-            var userSubscription = new UserSubscription(userdb.Id,
-                subscriptionDb.Id, DateTime.Now, DateTime.Now, DateTime.Now, SubscriptionStatus.Active);
-
-            dBContext.UserSubscriptions.Add(userSubscription);
+            dBContext.UserSubscriptions.Add(newUserSubscription);
             await dBContext.SaveChangesAsync();
 
-            return mapper.Map<UserDto>(userdb);
+            var newUserSubscriptionId = newUserSubscription.Id;
+            await LinkTransactionToUserSubscription(newUserSubscriptionId, null);
+        }
 
+        public async Task LinkTransactionToUserSubscription(int userSubscriptionId, 
+            UserSubscriptionTransaction? transaction)
+        {
+            if (transaction == null)
+            {
+                await LinkFreeTransaction(userSubscriptionId);
+                return;
+            }
+
+            //create method for paid transactions
+        }
+
+        public async Task LinkFreeTransaction(int userSubscriptionId)
+        {
+            var transaction = new UserSubscriptionTransaction
+            {
+                UserSubscriptionId = userSubscriptionId,
+                Amount = 0,
+                TransactionDate = DateTime.Now,
+                TransactionReference = null,
+                Currency = TransactionCurrency.Dollar,
+                PaymentStatus = PaymentStatus.Paid,
+                Status = EntityStatus.Active
+            };
+
+            dBContext.UserSubscriptionTransactions.Add(transaction);
+            await dBContext.SaveChangesAsync();
         }
     }
 }

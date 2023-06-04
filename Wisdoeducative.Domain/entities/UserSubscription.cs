@@ -19,16 +19,5 @@ namespace Wisdoeducative.Domain.Entities
         public DateTime NextPayment { get; set; }
         public DateTime LastPayment { get; set; }
         public SubscriptionStatus Status { get; set; }
-
-        public UserSubscription(int userId, int subscriptionId, DateTime startDate,
-                            DateTime nextPayment, DateTime lastPayment, SubscriptionStatus status)
-        {
-            UserId = userId;
-            SubscriptionId = subscriptionId;
-            StartDate = startDate;
-            NextPayment = nextPayment.AddMonths(1);
-            LastPayment = lastPayment;
-            Status = status;
-        }
     }
 }

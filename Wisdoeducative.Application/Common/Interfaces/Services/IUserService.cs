@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Wisdoeducative.Application.DTOs;
+using Wisdoeducative.Domain.enums;
 
 namespace Wisdoeducative.Application.Common.Interfaces.Services
 {
