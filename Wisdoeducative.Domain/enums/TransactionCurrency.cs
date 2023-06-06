@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Wisdoeducative.Domain.Enums
 {
-    public enum SubscriptionNames
+    public enum TransactionCurrency
     {
-        Free,
-        Basic
+        Dollar,
+        Colon
     }
 }

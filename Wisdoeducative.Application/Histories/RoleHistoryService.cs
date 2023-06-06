@@ -16,33 +16,24 @@ namespace Wisdoeducative.Application.Histories
     public class RoleHistoryService : IEntityHistoryService<Role>
     {
         private readonly IApplicationDBContext dBContext;
-        private readonly ILogger<RoleHistoryService> logger;
 
-        public RoleHistoryService(IApplicationDBContext dBContext,
-            ILogger<RoleHistoryService> logger)
+        public RoleHistoryService(IApplicationDBContext dBContext)
         {
             this.dBContext = dBContext;
-            this.logger = logger;
         }
 
-        public void SaveChanges(Role entity, int roleId, EntityChangeTypes type, string modifiedBy)
+        public async Task SaveChanges(Role entity, int roleId, EntityChangeTypes type, string modifiedBy)
         {
-            try
+            dBContext.RoleHistories.Add(new RoleHistory
             {
-                dBContext.RoleHistories.Add(new RoleHistory
-                {
-                    Date = DateTime.Now,
-                    EntityChangeType = type,
-                    ModifiedByUser = modifiedBy,
-                    ChangedRoleId = roleId,
-                    ChangedRole = entity
-                });
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, $"{ErrorMessages.HistorySaveErrorMessage}{entity}");
-                throw;
-            }
+                Date = DateTime.Now,
+                EntityChangeType = type,
+                ModifiedByUser = modifiedBy,
+                RoleId = roleId,
+                Name = entity.Name,
+                Description = entity.Description,
+                Status = entity.Status
+            });
         }
     }
 }

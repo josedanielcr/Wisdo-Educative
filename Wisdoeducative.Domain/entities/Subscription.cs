@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Wisdoeducative.Domain.Common;
-using Wisdoeducative.Domain.enums;
 using Wisdoeducative.Domain.Enums;
 
 namespace Wisdoeducative.Domain.Entities

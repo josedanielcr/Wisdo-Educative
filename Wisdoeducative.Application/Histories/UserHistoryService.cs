@@ -16,34 +16,30 @@ namespace Wisdoeducative.Application.Histories
     public class UserHistoryService : IEntityHistoryService<User>
     {
         private readonly IApplicationDBContext dBContext;
-        private readonly ILogger<UserHistoryService> logger;
 
-        public UserHistoryService(IApplicationDBContext dBContext,
-            ILogger<UserHistoryService> logger)
+        public UserHistoryService(IApplicationDBContext dBContext)
         {
             this.dBContext = dBContext;
-            this.logger = logger;
         }
 
-        public void SaveChanges(User entity, int userId, EntityChangeTypes type, string modifiedBy)
+        public async Task SaveChanges(User entity, int userId, EntityChangeTypes type, string modifiedBy)
         {
-            try
+            dBContext.UserHistories.Add(new UserHistory
             {
-                dBContext.UserHistories.Add(new UserHistory
-                {
-                    Date = DateTime.Now,
-                    EntityChangeType = type,
-                    ModifiedByUser = modifiedBy,
-                    ChangedUserId = entity.Id,
-                    ChangedUser = entity
-                });
-            }
-            catch (Exception ex)
-            {
-                logger.LogError(ex, $"{ErrorMessages.HistorySaveErrorMessage}{entity}");
-                throw;
-            }
-            
+                Date = DateTime.Now,
+                EntityChangeType = type,
+                ModifiedByUser = modifiedBy,
+                UserId = userId,
+                B2cId = entity.B2cId,
+                Name = entity.Name,
+                LastName = entity.LastName,
+                DateOfBirth = entity.DateOfBirth,
+                Email = entity.Email,
+                Role = entity.Role,
+                RoleId = entity.RoleId,
+                Category = entity.Category,
+                UserStatus = entity.UserStatus
+            });
         }
     }
 }

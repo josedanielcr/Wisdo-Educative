@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Wisdoeducative.Domain.Common;
 using Wisdoeducative.Domain.Entities;
-using Wisdoeducative.Domain.enums;
 using Wisdoeducative.Domain.Enums;
 
 namespace Wisdoeducative.Domain.Entities
@@ -16,8 +15,8 @@ namespace Wisdoeducative.Domain.Entities
         public int UserSubscriptionId { get; set; }
         public float Amount { get; set; }
         public DateTime TransactionDate { get; set; }
-        public string TransactionReference { get; set; }
-        public string Currency { get; set; }
+        public string? TransactionReference { get; set; }
+        public TransactionCurrency Currency { get; set; }
         public PaymentStatus PaymentStatus { get; set; }
         public EntityStatus Status { get; set; }
     }
