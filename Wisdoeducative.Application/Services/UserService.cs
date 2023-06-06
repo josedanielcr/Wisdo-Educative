@@ -14,7 +14,6 @@ using Wisdoeducative.Application.Common.Interfaces.Services;
 using Wisdoeducative.Application.DTOs;
 using Wisdoeducative.Application.Resources;
 using Wisdoeducative.Domain.Entities;
-using Wisdoeducative.Domain.enums;
 using Wisdoeducative.Domain.Enums;
 
 namespace Wisdoeducative.Application.Services
@@ -84,9 +83,10 @@ namespace Wisdoeducative.Application.Services
                 throw new BadRequestException($"{ErrorMessages.NullProperties} User={user}");
             }
 
-            await UpdateUser(user);
-            await subscriptionService.LinkSubscriptionToAccount(SubscriptionNames.Free, user.Id);
+            await subscriptionService.LinkSubscriptionToAccount(SubscriptionNames.Free, user.Id,
+                user.B2cId);
             SaveToHistory(mapper.Map<User>(user), EntityChangeTypes.Modified, user.B2cId);
+            await UpdateUser(user);
             return await userServiceHelper.GetUser(user.Id);
         }
 

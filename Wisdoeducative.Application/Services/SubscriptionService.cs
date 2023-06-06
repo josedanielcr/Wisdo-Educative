@@ -13,7 +13,6 @@ using Wisdoeducative.Application.DTOs;
 using Wisdoeducative.Application.Helpers;
 using Wisdoeducative.Application.Resources;
 using Wisdoeducative.Domain.Entities;
-using Wisdoeducative.Domain.enums;
 using Wisdoeducative.Domain.Enums;
 
 namespace Wisdoeducative.Application.Services
@@ -33,7 +32,7 @@ namespace Wisdoeducative.Application.Services
             this.subscriptionHelper = subscriptionHelper;
         }
 
-        public async Task LinkSubscriptionToAccount(SubscriptionNames subscription, int userId)
+        public async Task LinkSubscriptionToAccount(SubscriptionNames subscription, int userId, string b2cId)
         {
             var subscriptiondb = await subscriptionHelper.GetSubscriptionByName(subscription)
                 ?? throw new NotFoundException($"{ErrorMessages.EntityNotFound} " +
@@ -55,6 +54,9 @@ namespace Wisdoeducative.Application.Services
 
             var newUserSubscriptionId = newUserSubscription.Id;
             await LinkTransactionToUserSubscription(newUserSubscriptionId, null);
+            await subscriptionHelper.SaveUserSubscriptionHistory(newUserSubscription, newUserSubscriptionId,
+                EntityChangeTypes.Added,b2cId);
+            await dBContext.SaveChangesAsync();
         }
 
         public async Task LinkTransactionToUserSubscription(int userSubscriptionId, 
@@ -83,7 +85,6 @@ namespace Wisdoeducative.Application.Services
             };
 
             dBContext.UserSubscriptionTransactions.Add(transaction);
-            await dBContext.SaveChangesAsync();
         }
     }
 }

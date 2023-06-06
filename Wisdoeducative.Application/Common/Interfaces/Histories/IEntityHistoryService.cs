@@ -9,6 +9,6 @@ namespace Wisdoeducative.Application.Common.Interfaces.Historics
 {
     public interface IEntityHistoryService<T>
     {
-        void SaveChanges(T entity, int entityId, EntityChangeTypes type, string modifiedBy);
+        Task SaveChanges(T entity, int entityId, EntityChangeTypes type, string modifiedBy);
     }
 }   

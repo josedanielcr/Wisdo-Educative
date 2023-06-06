@@ -28,20 +28,15 @@ namespace Wisdoeducative.Application.Helpers
         public async Task<UserDto> GetUser(int? id = null, string? email = null, string? name = null, 
             string? lastname = null, string? b2cId = null)
         {
-            var user = await DbContext.Users
-                .Where(user => user.Id == id || 
-                user.Email == email || 
-                user.Name == name||
-                user.LastName == lastname ||
-                user.B2cId == b2cId)
-                .FirstOrDefaultAsync();
+            var user = await DbContext.Users.FirstOrDefaultAsync(u =>
+                   (id == null || u.Id == id) &&
+                   (email == null || u.Email == email) &&
+                   (name == null || u.Name == name) &&
+                   (lastname == null || u.LastName == lastname) &&
+                   (b2cId == null || u.B2cId == b2cId)
+               );
 
-            if (user != null)
-            {
-                return mapper.Map<UserDto>(user);
-            }
-
-            return null!;
+            return user != null ? mapper.Map<UserDto>(user) : null!;
         }
 
         public async Task<UserDto> GetUserByEmail(string email)

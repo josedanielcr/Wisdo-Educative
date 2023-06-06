@@ -7,8 +7,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Wisdoeducative.Application.Common.Interfaces;
 using Wisdoeducative.Application.Common.Interfaces.Helpers;
+using Wisdoeducative.Application.Common.Interfaces.Historics;
 using Wisdoeducative.Application.DTOs;
-using Wisdoeducative.Domain.enums;
+using Wisdoeducative.Domain.Entities;
+using Wisdoeducative.Domain.Enums;
 
 namespace Wisdoeducative.Application.Helpers
 {
@@ -16,12 +18,15 @@ namespace Wisdoeducative.Application.Helpers
     {
         private readonly IApplicationDBContext dBContext;
         private readonly IMapper mapper;
+        private readonly IEntityHistoryService<UserSubscription> userSubscriptionHistory;
 
         public SubscriptionHelperService(IApplicationDBContext dBContext, 
-            IMapper mapper)
+            IMapper mapper,
+            IEntityHistoryService<UserSubscription> userSubscriptionHistory)
         {
             this.dBContext = dBContext;
             this.mapper = mapper;
+            this.userSubscriptionHistory = userSubscriptionHistory;
         }
 
         public async Task<SubscriptionDto?> GetSubscriptionById(int subscriptionId)
@@ -52,19 +57,10 @@ namespace Wisdoeducative.Application.Helpers
             return mapper.Map<SubscriptionDto>(subscription);
         }
 
-        public async Task<SubscriptionDto?> GetSubscriptionByUserEmail(string email)
+        public async Task SaveUserSubscriptionHistory(UserSubscription userSubscription,
+            int userSubscriptionId, EntityChangeTypes changeType, string modifiedBy)
         {
-            throw new NotImplementedException();
-        }
-
-        public async Task<SubscriptionDto?> GetSubscriptionByUserId(int userId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<bool> IsTransactionValid(UserSubscriptionTransactionDto transaction)
-        {
-            throw new NotImplementedException();
+            await userSubscriptionHistory.SaveChanges(userSubscription, userSubscriptionId, changeType, modifiedBy);
         }
     }
 }
