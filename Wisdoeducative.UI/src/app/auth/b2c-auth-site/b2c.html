@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wisdo Educative</title>
+    <style>
+       /* Document and Body Styling */
+        html {
+            height: 100%;
+        }
+
+        body {
+            height: 100%;
+            margin: 0px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: grey;
+        }
+
+        /* Window Container Styling */
+        .auth-window-container {
+            height: 560px;
+            width: 520px;
+            background-color: white;
+            border-radius: 5px;
+        }
+
+        /* Window Content Styling */
+        .auth-window-content {
+            padding: 60px 130px 40px 130px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Logo Styling */
+        .logo {
+            margin-bottom: 40px;
+        }
+
+        .logo img {
+            width: 70px;
+            height: 75px;
+        }
+
+        /* Unified API Styling */
+        #api {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Form Styling */
+        .heading, .intro, .entry .entry-item label, .divider {
+            display: none;
+        }
+
+        #localAccountForm {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Input Styling */
+        #email, #password {
+            padding-left: 20px;
+            padding-right: 0px;
+            border: none;
+            width: 295px;
+            height: 39px;
+            background: rgba(217, 217, 217, 0.37);
+            border-radius: 5px;
+        }
+
+        #password {
+            margin-top: 8px;
+        }
+
+        #email:focus, #password:focus {
+            outline: none;
+        }
+
+        .buttons button {
+            border: none;
+            width: 315px;
+            height: 39px;
+            background: #D9D9D9;
+            border-radius: 5px; 
+            margin-top: 20px;
+        }
+
+        .create {
+            margin-top: 80px;
+        }
+
+        .entry .entry-item {
+            display: flex;
+            flex-direction: column-reverse;
+        }
+
+        .password-label {
+            margin-top: 8px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        #password {
+            order: 1;
+        }
+
+        #forgotPassword {
+            order: 2;
+        }
+
+        .buttons {
+            order: 3;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="auth-window-container">
+        
+        <div class="auth-window-content">
+            <div class="logo">
+                <img src="https://logodownload.org/wp-content/uploads/2017/10/starbucks-logo-1.png" 
+                alt="">
+            </div>
+            <div id="api"></div>
+        </div>
+    </div>
+</body>
+</html>
