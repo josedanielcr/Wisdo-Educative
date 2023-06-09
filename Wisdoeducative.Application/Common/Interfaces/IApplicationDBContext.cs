@@ -24,7 +24,12 @@ namespace Wisdoeducative.Application.Common.Interfaces
         DbSet<Interest> Interests { get; set; }
         DbSet<UserInterest> UserInterests { get; set; }
         DbSet<UserInterestHistory> UserInterestHistories { get; set; }
-
+        DbSet<Degree> Degrees { get; set; }
+        DbSet<DegreeHistory> DegreeHistories { get; set; }
+        DbSet<Institution> Institutions { get; set; }
+        DbSet<InstitutionHistory> InstitutionHistories { get; set; }
+        DbSet<UserDegree> UserDegrees { get; set; }
+        DbSet<UserDegreeHistory> UserDegreeHistories { get; set; }
         Task<int> SaveChangesAsync();
         EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;
     }

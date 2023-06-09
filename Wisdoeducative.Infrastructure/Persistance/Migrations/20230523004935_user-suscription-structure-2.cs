@@ -17,6 +17,16 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
                 nullable: false,
                 oldClrType: typeof(string),
                 oldType: "nvarchar(max)");
+
+            migrationBuilder.InsertData(
+                table: "Subscriptions",
+                columns: new[] { "Name", "Description", "Price", "Status" },
+                values: new object[,]
+                {
+                    { 0, "Access basic features at no cost", 0.0f, 0 },
+                    { 1, "Unlock advanced features with a low monthly fee", 3.99f, 0 }
+                }
+            );
         }
 
         /// <inheritdoc />

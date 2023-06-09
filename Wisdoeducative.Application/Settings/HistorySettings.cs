@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Wisdoeducative.Application.Common.Interfaces.Historics;
 using Wisdoeducative.Application.Histories;
 using Wisdoeducative.Domain.Entities;
+using Wisdoeducative.Domain.Histories;
 
 namespace Wisdoeducative.Application.Settings
 {
@@ -19,6 +20,8 @@ namespace Wisdoeducative.Application.Settings
             services.AddScoped<IEntityHistoryService<Subscription>, SubscriptionHistoryService>();
             services.AddScoped<IEntityHistoryService<UserSubscription>, UserSubscriptionHistoryService>();
             services.AddScoped<IEntityHistoryService<UserInterest>, UserInterestHistoryService>();
+            services.AddScoped<IEntityHistoryService<Degree>, DegreeHistoryService>();
+            services.AddScoped<IEntityHistoryService<UserDegree>, UserDegreeHistoryService>();
             return services;
         }
     }
