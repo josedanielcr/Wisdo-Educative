@@ -63,6 +63,24 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
                     table.PrimaryKey("PK_Interests", x => x.Id);
                 });
 
+                migrationBuilder.InsertData(
+                table: "Interests",
+                columns: new[] { "Name", "Status" },
+                values: new object[,]
+                {
+                    { "Sports", 0 },
+                    { "Music", 0 },
+                    { "Art", 0 },
+                    { "Reading", 0 },
+                    { "Travel", 0 },
+                    { "Cooking", 0 },
+                    { "Gaming", 0 },
+                    { "Technology", 0 },
+                    { "Photography", 0 },
+                    { "Fashion", 0 }
+                }
+            );
+
             migrationBuilder.CreateTable(
                 name: "UserSubscriptionTransactions",
                 columns: table => new

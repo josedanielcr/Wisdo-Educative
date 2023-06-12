@@ -39,53 +39,11 @@ namespace Wisdoeducative.Application.Helpers
             return user != null ? mapper.Map<UserDto>(user) : null!;
         }
 
-        public async Task<UserDto> GetUserByEmail(string email)
-        {
-            var user = await DbContext.Users
-                .Where(user => user.Email == email)
-                .FirstOrDefaultAsync();
-
-            if (user != null)
-            {
-                return mapper.Map<UserDto>(user);
-            }
-
-            return null!;
-        }
-
         public async Task<bool> DoesUserExist(UserDto user)
         {
             var userDB = await GetUser(user.Id,user.Email,user.Name,user.LastName,user.B2cId);
 
             return userDB != null;
-        }
-
-        public async Task<UserDto> GetUserByB2CId(string b2cId)
-        {
-            var user = await DbContext.Users
-                .Where(user => user.B2cId == b2cId)
-                .FirstOrDefaultAsync();
-
-            if (user != null)
-            {
-                return mapper.Map<UserDto>(user);
-            }
-
-            return null!;
-        }
-
-        public async Task<UserDto> GetUserById(int id)
-        {
-            var user = await DbContext.Users
-               .Where(user => user.Id == id)
-               .FirstOrDefaultAsync();
-
-            if (user != null)
-            {
-                return mapper.Map<UserDto>(user);
-            }
-
-            return null!;
         }
 
         public Task<bool> AreUserPropertiesNotNull(UserDto user)

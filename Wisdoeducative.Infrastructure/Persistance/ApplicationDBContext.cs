@@ -32,7 +32,12 @@ namespace Wisdoeducative.Infrastructure.Persistence
         public DbSet<Interest> Interests { get; set; }
         public DbSet<UserInterest> UserInterests { get; set; }
         public DbSet<UserInterestHistory> UserInterestHistories { get; set; }
-
+        public DbSet<Degree> Degrees { get; set; }
+        public DbSet<DegreeHistory> DegreeHistories { get; set; }
+        public DbSet<Institution> Institutions { get; set; }
+        public DbSet<InstitutionHistory> InstitutionHistories { get; set; }
+        public DbSet<UserDegree> UserDegrees { get; set; }
+        public DbSet<UserDegreeHistory> UserDegreeHistories { get; set; }
         public async Task<int> SaveChangesAsync()
         {
             return await base.SaveChangesAsync();

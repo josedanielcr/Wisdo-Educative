@@ -52,6 +52,16 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
                 {
                     table.PrimaryKey("PK_Roles", x => x.Id);
                 });
+            
+            migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "Name", "Description", "Status" },
+                values: new object[,]
+                {
+                    { 1, "Student Role", 0 },
+                    { 0, "Admin Role", 0 }
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "RoleHistories",

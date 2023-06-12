@@ -18,6 +18,9 @@ namespace Wisdoeducative.Application.Settings
             //services
             services.AddScoped<IUserHelperService, UserHelperService>();
             services.AddScoped<ISubscriptionHelperService, SubscriptionHelperService>();
+            services.AddScoped<IEntityHelperService, EntityHelperService>();
+            services.AddScoped<IDegreeHelperService, DegreeHelperService>();
+            services.AddScoped<IInstitutionHelperService, InstitutionHelperService>();
             return services;
         }
     }

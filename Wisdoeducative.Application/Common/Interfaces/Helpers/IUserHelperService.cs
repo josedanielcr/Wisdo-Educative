@@ -11,9 +11,6 @@ namespace Wisdoeducative.Application.Common.Interfaces.Helpers
     {
         Task<UserDto> GetUser(int? id = null, string? email = null, 
             string? name = null,string? lastname = null, string? b2cId = null);
-        Task<UserDto> GetUserById(int id);
-        Task<UserDto> GetUserByEmail(string email);
-        Task<UserDto> GetUserByB2CId(string b2cId);
         Task<bool> DoesUserExist(UserDto user);
         Task<bool> AreUserPropertiesNotNull(UserDto user);
     }
