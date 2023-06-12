@@ -13,8 +13,8 @@ namespace Wisdoeducative.Application.DTOs
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public StudyField StudyField { get; set; }
-        public DegreeType Type { get; set; }
-        public EntityStatus Status { get; set; }
+        public string? StudyField { get; set; }
+        public string? Type { get; set; }
+        public string? Status { get; set; }
     }
 }

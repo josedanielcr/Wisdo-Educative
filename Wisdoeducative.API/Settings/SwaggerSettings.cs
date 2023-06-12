@@ -8,6 +8,8 @@ namespace Wisdoeducative.API.Settings
         {
             var runningEnvironment = Environment.GetEnvironmentVariable("WEBSITE_SITE_NAME");
             if (runningEnvironment != null) return services;
+            var appServiceEnvironment = Environment.GetEnvironmentVariable("APP_ENVIRONMENT");
+            if (appServiceEnvironment != "DEV" && runningEnvironment != null) return services;
 
             services.AddSwaggerGen(option =>
             {

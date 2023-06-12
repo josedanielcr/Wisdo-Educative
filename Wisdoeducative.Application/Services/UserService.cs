@@ -92,7 +92,7 @@ namespace Wisdoeducative.Application.Services
 
         public async Task<UserDto> SetUserInterests(int userId, IEnumerable<InterestDto> interests)
         {
-            var user = await userServiceHelper.GetUserById(userId) 
+            var user = await userServiceHelper.GetUser(userId)
                 ?? throw new NotFoundException($"{ErrorMessages.EntityNotFound} {userId}");
 
             await interestService.SetInterestToUser(interests, user);

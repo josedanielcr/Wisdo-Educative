@@ -31,7 +31,13 @@ namespace Wisdoeducative.Infrastructure.Settings
         private static string GetConnectionString(IConfiguration configuration)
         {
             var runningEnvironment = Environment.GetEnvironmentVariable("WEBSITE_SITE_NAME");
-            var connectionStringKey = runningEnvironment == null ? "DefaultConnection" : "ProdConnection";
+
+            if (runningEnvironment == null) return configuration["AzureSQLDevConnection"]!;
+
+            var appServiceEnvironment = Environment.GetEnvironmentVariable("APP_ENVIRONMENT");
+            var connectionStringKey = appServiceEnvironment == "DEV" 
+                ? "AzureSQLDevConnection"
+                : "ProdConnection";
             return configuration[connectionStringKey]!;
         }
     }

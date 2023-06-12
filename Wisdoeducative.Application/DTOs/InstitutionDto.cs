@@ -16,6 +16,6 @@ namespace Wisdoeducative.Application.DTOs
         public string? Country { get; set; }
         public string? CountryCode { get; set; }
         public string? WebSite { get; set; }
-        public EntityStatus Status { get; set; }
+        public string? Status { get; set; }
     }
 }
