@@ -85,6 +85,7 @@ namespace Wisdoeducative.Application.Services
             };
 
             dBContext.UserSubscriptionTransactions.Add(transaction);
+            await dBContext.SaveChangesAsync();
         }
     }
 }

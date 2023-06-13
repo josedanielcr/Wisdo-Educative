@@ -12,7 +12,6 @@ namespace Wisdoeducative.Application.Common.Interfaces.Services
     public interface IDegreeService
     {
         Task<DegreeDto> CreateDegree(DegreeDto degree);
-        Task<DegreeDto> GetDegreeById(int degreeId);
         Task<UserDegreeDto> SetupUserDegree(UserDegreeConfigDTO userDegreeConfig);
         Task SaveUserDegreeChanges(UserDegree userDegree);
     }
