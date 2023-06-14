@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Wisdoeducative.Application.Common.Exceptions;
 using Wisdoeducative.Application.Common.Interfaces;
+using Wisdoeducative.Application.Common.Interfaces.Helpers;
 using Wisdoeducative.Application.Common.Interfaces.Historics;
 using Wisdoeducative.Application.Common.Interfaces.Services;
 using Wisdoeducative.Application.DTOs;
@@ -22,18 +23,17 @@ namespace Wisdoeducative.Application.Services
         private readonly IApplicationDBContext dBContext;
         private readonly IMapper mapper;
         private readonly IEntityHistoryService<UserInterest> interestHistory;
+        private readonly IEntityHelperService entityHelperService;
 
-        public InterestService(IApplicationDBContext dBContext, IMapper mapper,
-            IEntityHistoryService<UserInterest> interestHistory)
+        public InterestService(IApplicationDBContext dBContext,
+            IMapper mapper,
+            IEntityHistoryService<UserInterest> interestHistory,
+            IEntityHelperService entityHelperService)
         {
             this.dBContext = dBContext;
             this.mapper = mapper;
             this.interestHistory = interestHistory;
-        }
-
-        private Task<bool> AreInterestPropertiesNotNull(InterestDto interest)
-        {
-            return Task.FromResult(!string.IsNullOrEmpty(interest.Name));
+            this.entityHelperService = entityHelperService;
         }
 
         public async Task<InterestDto> CreateInterest(InterestDto interestDto)
@@ -70,6 +70,7 @@ namespace Wisdoeducative.Application.Services
 
         public Task CheckInterestList(IEnumerable<InterestDto> interests)
         {
+            string[] propertiesToCheck = new string[] { "Name" };
             if (!interests.Any() || interests == null)
             {
                 throw new BadRequestException($"{ErrorMessages.EmptyEntityList} Interests={interests}");
@@ -77,7 +78,7 @@ namespace Wisdoeducative.Application.Services
 
             foreach (var interest in interests)
             {
-                if (!AreInterestPropertiesNotNull(interest).Result)
+                if(entityHelperService.AreAnyPropertiesNull(interest, propertiesToCheck))
                 {
                     throw new BadRequestException($"{ErrorMessages.NullProperties} Interest={interest}");
                 }

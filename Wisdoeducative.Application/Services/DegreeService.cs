@@ -62,12 +62,7 @@ namespace Wisdoeducative.Application.Services
 
             dBContext.Degrees.Add(dbDegree);
             await dBContext.SaveChangesAsync();
-            return await GetDegreeById(dbDegree.Id);   
-        }
-
-        public async Task<DegreeDto> GetDegreeById(int degreeId)
-        {
-            return await degreeHelperService.GetById(degreeId);
+            return await degreeHelperService.GetById(dbDegree.Id); 
         }
 
         public async Task SaveUserDegreeChanges(UserDegree userDegree)
@@ -87,7 +82,7 @@ namespace Wisdoeducative.Application.Services
         {
             await degreeHelperService.ValidateUserDegreeProperties(userDegreeConfig);
 
-            UserDegree userDegree = new UserDegree
+            UserDegree userDegree = new()
             {
                 DegreeId = userDegreeConfig.DegreeId,
                 UserId = userDegreeConfig.UserId,
