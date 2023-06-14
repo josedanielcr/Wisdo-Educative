@@ -8,15 +8,20 @@ let clientID : string;
 let endPoint : string;
 let scopes : string[];
 let b2cPolicy : string = 'B2C_1_Combined_Sign-In_Sign-Up';
+let authorityDomain : string;
+let domainName : string;
 
 if (isDevMode()) {
-    b2cPolicy = b2cPolicy + '_DEV';
-    clientID = 'e090b4fa-ebf0-4f50-a520-bd34a0f9c4ed';
+    domainName = 'wisdoeducativedev.onmicrosoft.com';
+    authorityDomain = 'wisdoeducativedev.b2clogin.com';
+    clientID = 'e46252e1-e3a7-4fe5-9343-08c88a86fd47';
     endPoint = 'https://localhost:7254/';
-    scopes = ['https://wisdoeducative.onmicrosoft.com/wisdoeducativedev/api.wisdoeducativedev.read',
-    'https://wisdoeducative.onmicrosoft.com/wisdoeducativedev/api.wisdoeducativedev.write'];
+    scopes = ["https://wisdoeducativedev.onmicrosoft.com/wisdoeducative-dev-api/api.wisdoeducative.write"
+    ,"https://wisdoeducativedev.onmicrosoft.com/wisdoeducative-dev-api/api.wisdoeducative.read"]
 }
 else {
+    domainName = 'wisdoeducative.onmicrosoft.com';
+    authorityDomain = 'wisdoeducative.b2clogin.com';
     clientID = '7fa12bd2-0a44-447e-ba5b-c7e6dbf2b4a1';
     endPoint = 'https://wisdoeducative.azurewebsites.net/';
     scopes = ['https://wisdoeducative.onmicrosoft.com/wisdoeducative/api.wisdoeducative.read',
@@ -29,10 +34,10 @@ export const b2cPolicies = {
     },
     authorities: {
         signUpSignIn: {
-            authority: `https://wisdoeducative.b2clogin.com/wisdoeducative.onmicrosoft.com/${b2cPolicy}`,
+            authority: `https://${authorityDomain}/${domainName}/${b2cPolicy}`,
         }
     },
-    authorityDomain: 'wisdoeducative.b2clogin.com',
+    authorityDomain: authorityDomain,
 };
 
 export const msalConfig: Configuration = {
