@@ -1,4 +1,6 @@
-﻿namespace Wisdoeducative.API.Settings
+﻿using Wisdoeducative.API.Helpers;
+
+namespace Wisdoeducative.API.Settings
 {
     public static class ApiSettings
     {
@@ -9,6 +11,10 @@
             services.AddCorsSettings(configuration, MyAllowSpecificOrigins);
             services.AddAuthenticationSettings(configuration);
             services.AddSwaggerSettings();
+            
+            //helpers
+            services.AddScoped<IControllerHelper, ControllerHelper>();
+            
             return services;
         }
     }
