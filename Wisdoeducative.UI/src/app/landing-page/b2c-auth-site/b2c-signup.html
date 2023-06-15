@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wisdo Educative</title>
+    <style>
+       /* Document and Body Styling */
+       html {
+            height: 100%;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            height: 100%;
+            margin: 0px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-color: #0B5354;
+        }
+
+        /* Window Container Styling */
+        .auth-window-container {
+            height: 560px;
+            width: 710px;
+            background-color: white;
+            border-radius: 5px;
+        }
+
+        /* Window Content Styling */
+        .auth-window-content {
+            padding: 60px 130px 40px 130px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+        .main-logo {
+            margin-bottom: 40px;
+        }
+
+        li {
+            list-style-type: none;
+        }
+
+        .heading h1 {
+            font-weight: 700;
+            size: 40px;
+            line-height: 48.41px;
+        }
+
+        /* Unified API Styling */
+        #api {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /*removed styles*/
+        #cancel, .intro {
+            display: none;
+        }
+
+        ul {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        li {
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+
+    </style>
+</head>
+<body>
+
+    <img src="https://wisdostorageaccount.blob.core.windows.net/wisdoblob/wisdo-white-logo.png"
+    height="116" width="241" class="main-logo">
+    <div class="auth-window-container">
+        
+        <div class="auth-window-content">
+            <div id="api" data-name="SelfAsserted" role="main">
+                <div class="heading">
+                    <h1 role="heading">User Details</h1>
+                </div>
+                <div class="buttons">
+                    <button id="cancel" aria-label="Cancel" formnovalidate="">Cancel</button>
+                </div>
+                <div class="intro">
+                    <p>Please provide the following details.</p>
+                </div>
+                <form id="attributeVerification" action="JavaScript:void(0);">
+                    <div id="requiredFieldMissing" class="error pageLevel" style="display: none;" aria-hidden="true">A required
+                        field is missing. Please fill out all required fields and try again.</div>
+                    <div id="fieldIncorrect" class="error pageLevel" style="display: none;" aria-hidden="true">One or more fields
+                        are filled out incorrectly. Please check your entries and try again.</div>
+                    <div id="claimVerificationServerError" class="error pageLevel" style="display: none;" aria-hidden="true"></div>
+                    <div id="attributeList" class="attr">
+                        <ul>
+                            <li class="VerificationControl emailVerificationControl_li">
+                                <div class="attrEntry"><label id="emailVerificationControl_label"
+                                        for="emailVerificationControl"></label>
+                                    <div class="error itemLevel" role="alert"></div>
+                                    <div class="verificationControlContent" id="emailVerificationControl">
+                                        <div class="verificationInfoText">
+                                            <div id="emailVerificationControl_info_message" aria-hidden="true" role="alert"
+                                                aria-label="Verification is necessary. Please click Send button."
+                                                style="display: none;">Verification is necessary. Please click Send button.</div>
+                                        </div>
+                                        <div class="verificationSuccessText">
+                                            <div id="emailVerificationControl_success_message" aria-hidden="true" role="alert"
+                                                aria-label="" style="display: none;"></div>
+                                        </div>
+                                        <div class="verificationErrorText error">
+                                            <div id="emailVerificationControl_error_message" aria-hidden="true" role="alert"
+                                                aria-label="" style="display: none;"></div>
+                                        </div>
+                                        <ul>
+                                            <li class="EmailBox email_li email" aria-hidden="false" style="display: inline;">
+                                                <div class="attrEntry">
+                                                    <div class="error itemLevel" role="alert"></div><input id="email"
+                                                        class="textInput" type="email" placeholder="Email Address"
+                                                        aria-label="Email Address"
+                                                        pattern="^[a-zA-Z0-9!#$%&amp;'+^_`{}~-]+(?:\.[a-zA-Z0-9!#$%&amp;'+^_`{}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?$"
+                                                        title="Email address that can be used to contact you." aria-required="true"
+                                                        autofocus="autofocus"><span class="required">*</span><a
+                                                        class="helpLink tiny" href="javascript:void(0)"
+                                                        data-help="Email address that can be used to contact you.">What is this?</a>
+                                                </div>
+                                            </li>
+                                            <li class="TextBox emailVerificationCode_li VerificationCode" aria-hidden="true"
+                                                style="display: none;">
+                                                <div class="attrEntry">
+                                                    <div class="error itemLevel" role="alert"></div><input
+                                                        id="emailVerificationCode" class="textInput" type="text"
+                                                        placeholder="Verification Code" aria-label="Verification Code"
+                                                        title="Verification code received in the email." aria-required="true"
+                                                        autocomplete="off" disabled=""><span class="required">*</span><a
+                                                        class="helpLink tiny" href="javascript:void(0)"
+                                                        data-help="Verification code received in the email.">What is this?</a>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        <div class="working" style="display: none;" aria-hidden="true"></div>
+                                        <div class="buttons"><button class="sendCode" id="emailVerificationControl_but_send_code"
+                                                type="button" aria-label="Send verification code" aria-hidden="false"
+                                                style="display: inline;">Send verification code</button><button class="verifyCode"
+                                                id="emailVerificationControl_but_verify_code" type="button" aria-label="Verify code"
+                                                aria-hidden="true" style="display: none;">Verify code</button><button
+                                                class="sendNewCode" id="emailVerificationControl_but_send_new_code" type="button"
+                                                aria-label="Send new code" aria-hidden="true" style="display: none;">Send new
+                                                code</button><button class="changeClaims"
+                                                id="emailVerificationControl_but_change_claims" type="button"
+                                                aria-label="Change e-mail" aria-hidden="true" style="display: none;">Change
+                                                e-mail</button></div>
+                                    </div><a class="helpLink tiny" href="javascript:void(0)">What is this?</a>
+                                </div>
+                            </li>
+                            <li class="Password newPassword_li">
+                                <div class="attrEntry">
+                                    <div class="error itemLevel" role="alert"></div><input id="newPassword" class="textInput"
+                                        type="password" placeholder="New Password" aria-label="New Password"
+                                        title="Enter new password" autocomplete="new-password" aria-required="true"
+                                        aria-disabled="true" disabled="disabled" tabindex="-1"><span class="required">*</span><a
+                                        class="helpLink tiny" href="javascript:void(0)" data-help="Enter new password">What is
+                                        this?</a>
+                                </div>
+                            </li>
+                            <li class="Password reenterPassword_li">
+                                <div class="attrEntry">
+                                    <div class="error itemLevel" role="alert"></div><input id="reenterPassword" class="textInput"
+                                        type="password" placeholder="Confirm New Password" aria-label="Confirm New Password"
+                                        title="Confirm new password" autocomplete="new-password" aria-required="true"
+                                        aria-disabled="true" disabled="disabled" tabindex="-1"><span class="required">*</span><a
+                                        class="helpLink tiny" href="javascript:void(0)" data-help="Confirm new password">What is
+                                        this?</a>
+                                </div>
+                            </li>
+                            <li class="TextBox extension_Name_li">
+                                <div class="attrEntry">
+                                    <div class="error itemLevel" role="alert"></div><input id="extension_Name" class="textInput"
+                                        type="text" placeholder="Name" aria-label="Name" aria-disabled="true" disabled="disabled"
+                                        tabindex="-1"><a class="helpLink tiny" href="javascript:void(0)">What is this?</a>
+                                </div>
+                            </li>
+                            <li class="TextBox extension_Lastname_li">
+                                <div class="attrEntry">
+                                    <div class="error itemLevel" role="alert"></div><input id="extension_Lastname" class="textInput"
+                                        type="text" placeholder="Last name" aria-label="Last name" aria-disabled="true"
+                                        disabled="disabled" tabindex="-1"><a class="helpLink tiny" href="javascript:void(0)">What is
+                                        this?</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="buttons">
+                        <button id="continue" type="submit" form="attributeVerification" aria-disabled="true" aria-label="Create"
+                            tabindex="-1">Create</button>
+                    </div>
+            
+                    <div class="verifying-modal" aria-live="assertive" aria-labelledby="verifying_blurb">
+                        <div id="verifying_blurb"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -16,13 +16,15 @@ import { msalConfig, protectedResources } from '../config/azure-ad-b2c.config';
 
 //HTTP
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthComponent } from './auth/auth.component';
+import { SetupComponent } from './setup/setup.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NotFoundComponent,
-    AuthComponent
+    SetupComponent,
+    LandingPageComponent
   ],
   imports: [
     BrowserModule,

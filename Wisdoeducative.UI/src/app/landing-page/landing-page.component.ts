@@ -5,12 +5,11 @@ import { InteractionStatus, RedirectRequest } from '@azure/msal-browser';
 import { Subject, filter, takeUntil } from 'rxjs';
 
 @Component({
-  selector: 'app-auth',
-  templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.css']
+  selector: 'app-landing-page',
+  templateUrl: './landing-page.component.html',
+  styleUrls: ['./landing-page.component.css']
 })
-export class AuthComponent {
-
+export class LandingPageComponent {
   private readonly _destroying$ = new Subject<void>();
   public loginDisplay = false;
 
@@ -52,7 +51,7 @@ export class AuthComponent {
    */
   logout() { 
     this.msalService.logoutRedirect({
-      postLogoutRedirectUri: 'http://localhost:4200/auth'
+      postLogoutRedirectUri: 'http://localhost:4200/landing'
     });
   }
 
@@ -63,9 +62,9 @@ export class AuthComponent {
    */
   setLoginDisplay() {
     this.loginDisplay = this.msalService.instance.getAllAccounts().length > 0;
-    // if(this.loginDisplay){
-    //   this.router.navigate(['/workspace']);
-    // }
+    if(this.loginDisplay){
+      this.router.navigate(['/workspace']);
+    }
   }
 
   // Unsubscribe from the MSAL broadcast service when the component is destroyed

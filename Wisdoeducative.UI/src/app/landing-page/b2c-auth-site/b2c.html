@@ -2,10 +2,14 @@
 <html>
 <head>
     <title>Wisdo Educative</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
        /* Document and Body Styling */
         html {
             height: 100%;
+            font-family: 'Inter', sans-serif;
         }
 
         body {
@@ -14,13 +18,32 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: grey;
+            flex-direction: column;
+            background-color: #0B5354;
+        }
+
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+        .main-logo {
+            margin-bottom: 40px;
+        }
+
+        #createAccount {
+            font-weight: 700;
+            margin-left: 5px;
+        }
+
+        ::placeholder {
+            color: black;
         }
 
         /* Window Container Styling */
         .auth-window-container {
             height: 560px;
-            width: 520px;
+            width: 710px;
             background-color: white;
             border-radius: 5px;
         }
@@ -34,14 +57,15 @@
             align-items: center;
         }
 
-        /* Logo Styling */
-        .logo {
-            margin-bottom: 40px;
+        .heading {
+            margin-bottom: 10px;
         }
 
-        .logo img {
-            width: 70px;
-            height: 75px;
+        /* Logo Styling */
+        .heading h1 {
+            font-weight: 700;
+            size: 40px;
+            line-height: 48.41px;
         }
 
         /* Unified API Styling */
@@ -53,7 +77,7 @@
         }
 
         /* Form Styling */
-        .heading, .intro, .entry .entry-item label, .divider {
+        .intro, .entry .entry-item label, .divider {
             display: none;
         }
 
@@ -66,17 +90,31 @@
 
         /* Input Styling */
         #email, #password {
-            padding-left: 20px;
+            padding-left: 10px;
             padding-right: 0px;
             border: none;
-            width: 295px;
+            width: 305px;
             height: 39px;
             background: rgba(217, 217, 217, 0.37);
             border-radius: 5px;
         }
 
+        #GoogleExchange {
+            margin-bottom: 20px;
+            width: 315px;
+            height: 39px;
+            background-color:  #DB4437;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-weight: 700;
+            size: 16px;
+            line-height: 19.36px;
+            cursor: pointer;
+        }
+
         #password {
-            margin-top: 8px;
+            margin-top: 20px;
         }
 
         #email:focus, #password:focus {
@@ -87,13 +125,24 @@
             border: none;
             width: 315px;
             height: 39px;
-            background: #D9D9D9;
+            background: #0B5354;
             border-radius: 5px; 
             margin-top: 20px;
+            cursor: pointer;
+            color: white;
+            font-weight: 700;
+            size: 16px;
+            line-height: 19.36px;
         }
 
         .create {
-            margin-top: 80px;
+            margin-top: 50px;
+        }
+
+        .create p {
+            font-weight: 300;
+            size: 16px;
+            line-height: 19.36px;
         }
 
         .entry .entry-item {
@@ -113,23 +162,28 @@
 
         #forgotPassword {
             order: 2;
+            font-weight: 300;
+            size: 12;
+            line-height: 14.52px;
         }
 
         .buttons {
             order: 3;
         }
 
+        .claims-provider-list-buttons {
+            order: 3;
+        }
+
     </style>
 </head>
 <body>
+    <img src="https://wisdostorageaccount.blob.core.windows.net/wisdoblob/wisdo-white-logo.png"
+    height="116" width="241" class="main-logo">
     <div class="auth-window-container">
         
         <div class="auth-window-content">
-            <div class="logo">
-                <img src="https://logodownload.org/wp-content/uploads/2017/10/starbucks-logo-1.png" 
-                alt="">
-            </div>
-            <div id="api"></div>
+            <div id="api" data-name="Unified"></div>
         </div>
     </div>
 </body>
