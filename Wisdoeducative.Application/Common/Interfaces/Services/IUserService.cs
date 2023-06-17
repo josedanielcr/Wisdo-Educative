@@ -14,5 +14,6 @@ namespace Wisdoeducative.Application.Common.Interfaces.Services
         Task<UserDto> SetUserData(UserDto user);
         Task<UserDto> SetUserInterests(int userId, IEnumerable<InterestDto> interests);
         Task UpdateUser(UserDto user);
+        Task<UserDto> ValidateUser(UserDto user);
     }
 }

@@ -42,10 +42,10 @@
 
         /* Window Container Styling */
         .auth-window-container {
-            height: 560px;
-            width: 710px;
+            height: 610px;
+            width: 560px;
             background-color: white;
-            border-radius: 5px;
+            border-radius: 10px;
         }
 
         /* Window Content Styling */
@@ -96,21 +96,33 @@
             width: 305px;
             height: 39px;
             background: rgba(217, 217, 217, 0.37);
-            border-radius: 5px;
+            border-radius: 10px;
         }
 
         #GoogleExchange {
-            margin-bottom: 20px;
-            width: 315px;
-            height: 39px;
-            background-color:  #DB4437;
-            border: none;
-            border-radius: 5px;
-            color: white;
-            font-weight: 700;
-            size: 16px;
-            line-height: 19.36px;
+            display: inline-block;
+            background-color: #D9D9D98A;
+            color: #757575;
+            border: 1px solid #dadce0;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 400;
+            padding: 10px 20px;
             cursor: pointer;
+            transition: background-color 0.3s;
+            background-image: url('https://companieslogo.com/img/orig/GOOG-0ed88f7c.png?t=1633218227');
+            background-repeat: no-repeat;
+            background-position: 10px center;
+            background-size: 16px 16px;
+            text-align: left;
+            padding-left: 36px;
+            width: 315px;
+            outline: none;
+            margin-bottom: 40px;
+        }
+
+        #GoogleExchange:hover {
+            background-color: #f1f3f4;
         }
 
         #password {
@@ -126,7 +138,7 @@
             width: 315px;
             height: 39px;
             background: #0B5354;
-            border-radius: 5px; 
+            border-radius: 10px; 
             margin-top: 20px;
             cursor: pointer;
             color: white;
@@ -171,8 +183,17 @@
             order: 3;
         }
 
-        .claims-provider-list-buttons {
-            order: 3;
+        .cancel-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .auth-window-container {
+            position: relative;
         }
 
     </style>
@@ -181,7 +202,7 @@
     <img src="https://wisdostorageaccount.blob.core.windows.net/wisdoblob/wisdo-white-logo.png"
     height="116" width="241" class="main-logo">
     <div class="auth-window-container">
-        
+        <div class="cancel-button">X</div>
         <div class="auth-window-content">
             <div id="api" data-name="Unified"></div>
         </div>
