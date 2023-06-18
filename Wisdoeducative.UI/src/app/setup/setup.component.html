@@ -1,1 +1,44 @@
-<p>setup works!</p>
+<div *ngIf="isStartupWindowOpen">
+    <div class="setup-container">
+    
+        <!-- logo -->
+        <div>
+            <img src="https://wisdostorageaccount.blob.core.windows.net/wisdoblob/wisdo-colored-logo.png"
+            width="366" height="176">
+        </div>
+    
+        <!-- header -->
+        <div class="setup-header">
+            <h1 class="wd-text-h1">Welcome to Wisdo!</h1>
+        </div>
+    
+        <!-- subheader -->
+        <div class="setup-subheader">
+            <span>Set up the tool in 4 easy steps and start a new learning journey.</span>
+        </div>
+    
+        <!-- button -->
+        <div>
+            <app-button text="Set up now" 
+                    [disabled]="false" 
+                    [width]="224" 
+                    [height]="47"
+                    [type]="ButtonType.PRIMARY"
+                    (click)="startSetup()"
+                    >
+            </app-button>
+        </div>
+    
+        <!-- skip button -->
+        <div class="setup-skip">
+            <app-button text="Skip this step" 
+                    [disabled]="false"
+                    [type]="ButtonType.NOSTYLE"
+                    (click)="skipSetup()">
+            </app-button>
+        </div>
+    </div>
+</div>
+<div *ngIf="!isStartupWindowOpen" class="setup-container">
+    <app-steps></app-steps>
+</div>

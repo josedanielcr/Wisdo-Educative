@@ -1,1 +1,107 @@
-/* You can add global styles to this file, and also import other style files */
+/* #region general styles */
+body {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19.36px;
+}
+/*#endregion*/
+
+/* #region global variables */
+:root {
+    --primary-color: #0B5354;
+    --seconday-color: #B6CBCC;
+    --disabled-color: #838383;
+    --background-color: #FFFFFF;
+    --danger-color: #B22222;
+    --success-color: #42AC66;
+    --bone-color: #F1F1F1;
+}
+/*#endregion*/
+
+/*#region text mode*/
+.wd-text-bold {
+    font-weight: 700;
+}
+/*#endregion*/
+
+/*#region headers */
+.wd-text-h1 {
+    font-weight: 700;
+    size: 30px;
+    line-height: 36.31px;
+}
+
+.wd-text-h2 {
+    font-weight: 500;
+    size: 26px;
+    line-height: 31.47px;
+}
+
+.wd-text-h3 {
+    font-weight: 500;
+    size: 22px;
+    line-height: 26.63px;
+}
+/*#endregion*/
+
+/*#region text colors */
+.wd-text-primary {
+    color: var(--primary-color);
+}
+
+.wd-text-white {
+    color: white;
+}
+
+.wd-text-disabled {
+    color: var(--disabled-color);
+}
+
+.wd-text-secondary {
+    color: var(--seconday-color);
+}
+
+.wd-text-success {
+    color: var(--success-color);
+}
+
+.wd-text-danger {
+    color: var(--danger-color);
+}
+
+.wd-text-bone {
+    color: var(--bone-color);
+}
+/* #endregion */
+
+
+/*#region backgrounds*/
+.wd-bg-primary {
+    background-color: var(--primary-color);
+}
+
+.wd-bg-white {
+    background-color: white;
+}
+
+.wd-bg-disabled {
+    background-color: var(--disabled-color);
+}
+
+.wd-bg-secondary {
+    background-color: var(--seconday-color);
+}
+
+.wd-bg-success {
+    background-color: var(--success-color);
+}
+
+.wd-bg-danger {
+    background-color: var(--danger-color);
+}
+
+.wd-bg-bone {
+    background-color: var(--bone-color);
+}
+/*#endregion*/
