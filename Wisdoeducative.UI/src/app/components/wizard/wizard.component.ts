@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { WizardStepState } from 'src/app/enums/wizard.enum';
+import { Component, Input, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { WizardStepDirection, WizardStepState } from 'src/app/enums/wizard.enum';
 import { WizardChildModel } from 'src/app/models/wizard.child.model';
 
 @Component({
@@ -9,37 +9,32 @@ import { WizardChildModel } from 'src/app/models/wizard.child.model';
 })
 export class WizardComponent implements OnInit {
   
-    //Util
-    WizardStepState = WizardStepState;
-
     @Input() steps: WizardChildModel[];
+    @ViewChild('componentContainer', { read: ViewContainerRef }) container: ViewContainerRef;
+    
     public currentWizardChildModel: WizardChildModel;
     public currentStep: number = 0;
+    public WizardStepState = WizardStepState;
 
-    constructor() {}
+    constructor(private viewContainerRef: ViewContainerRef) {}
 
     ngOnInit(): void {
         this.currentWizardChildModel = this.steps[this.currentStep];
+        this.loadComponent();
     }
 
     /**
-     * This function increments the current step
+     * Creates a component.
      */
-    public nextStep(): void {
-        if(this.currentStep+1 <= this.steps.length) {
-            this.currentWizardChildModel = this.steps[this.currentStep];
-        }
-        this.currentStep++;
-    }
-
-    /**
-     * moves the current step of a wizard to the previous step if it exists.
-     */
-    public prevStep(): void {
-      if(this.currentStep-1 >= 0) {
-        this.currentWizardChildModel = this.steps[this.currentStep];
-      }
-      this.currentStep--;
+    public loadComponent(): void {
+        
+        this.viewContainerRef.clear();
+        const componentRef = this.viewContainerRef
+            .createComponent(this.currentWizardChildModel.content);
+        
+        componentRef.instance.event.subscribe((event) => {
+            this.handleChildEvent(event);
+        });
     }
 
     /**
@@ -53,5 +48,22 @@ export class WizardComponent implements OnInit {
         } else {
           return WizardStepState.UPCOMING;
         }
+    }
+
+    /**
+     * This function handles the event of moving to the next or previous step in a wizard and updates the
+     * current step and model accordingly.
+     * @param {WizardStepDirection} direction
+     */
+    private handleChildEvent(direction : WizardStepDirection): void {
+        console.log(direction);
+        if (direction === WizardStepDirection.NEXT && this.currentStep < this.steps.length - 1) {
+            this.currentStep++;
+        } else if (direction === WizardStepDirection.PREVIOUS && this.currentStep > 0) {
+            this.currentStep--;
+        }
+
+        this.currentWizardChildModel = this.steps[this.currentStep];
+        this.loadComponent();
     }
 }

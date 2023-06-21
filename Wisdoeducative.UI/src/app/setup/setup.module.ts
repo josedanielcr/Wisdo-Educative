@@ -6,6 +6,7 @@ import { ComponentsModule } from '../components/components.module';
 import { UserSetupComponent } from './steps/StepComponents/user-setup/user-setup.component';
 import { UserDegreeSetupComponent } from './steps/StepComponents/user-degree-setup/user-degree-setup.component';
 import { UserInterestsSetupComponent } from './steps/StepComponents/user-interests-setup/user-interests-setup.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,9 @@ import { UserInterestsSetupComponent } from './steps/StepComponents/user-interes
   ],
   imports: [
     CommonModule,
-    ComponentsModule
+    ComponentsModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class SetupModule { }

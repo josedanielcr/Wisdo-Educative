@@ -22,29 +22,9 @@
     <div class="d-flex justify-content-center align-items-center flex-column">
         <h1 class="wd-text-h1">{{currentWizardChildModel.title}}</h1>
         <span class="wizard-child-description">{{currentWizardChildModel.description}}</span>
+        
         <div class="wizard-component-container">
-            <ng-container *ngComponentOutlet="currentWizardChildModel.content"></ng-container>
+            <ng-container #componentContainer></ng-container>
         </div>
-    </div>
-
-    <!-- buttons -->
-    <div class="w-100 d-flex align-items-center justify-content-between">
-        <!-- back button -->
-        <app-button [text]="currentWizardChildModel.nextButtonText"
-                    [height]="currentWizardChildModel.previousButtonHeight" 
-                    [width]="currentWizardChildModel.previousButtonWidth"
-                    *ngIf="currentWizardChildModel.previousButtonText != null"
-                    [type]="currentWizardChildModel.previousButtonType"> 
-        </app-button>
-
-        <!-- next button -->
-        <app-button [text]="currentWizardChildModel.nextButtonText"
-                    [height]="currentWizardChildModel.nextButtonHeight" 
-                    [width]="currentWizardChildModel.nextButtonWidth"
-                    [type]="currentWizardChildModel.nextButtonType"
-                    *ngIf="currentWizardChildModel.nextButtonText != null"
-                    class="ms-auto"
-                    (click)="nextStep()">
-        </app-button>
     </div>
 </div>

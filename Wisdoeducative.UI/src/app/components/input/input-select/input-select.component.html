@@ -1,0 +1,22 @@
+<div class="input-label-container" *ngIf="label">
+  <label for="">{{label}}</label>
+</div>
+
+<div class="select-wrapper" [style.width]="width+'px'" [style.height]="height+'px'">
+    <select #selectComponent
+            class="wd-input">  
+
+        <option *ngIf="defaultOption" 
+                [value]="defaultOption.value">
+            {{defaultOption.name}}
+        </option>
+
+        <option *ngFor="let option of options" 
+                [value]="option.value">
+            {{option.name}}
+        </option>
+    </select>
+    <div class="arrow">
+      <img src="../../../../assets/icons/Arrow.svg" alt="arrow">
+    </div>
+</div>
