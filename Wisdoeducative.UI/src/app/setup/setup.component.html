@@ -21,8 +21,8 @@
         <div>
             <app-button text="Set up now" 
                     [disabled]="false" 
-                    [width]="224" 
-                    [height]="47"
+                    [width]="14.0625" 
+                    [height]="2.9375"
                     [type]="ButtonType.PRIMARY"
                     (click)="startSetup()"
                     >
@@ -34,7 +34,9 @@
             <app-button text="Skip this step" 
                     [disabled]="false"
                     [type]="ButtonType.NOSTYLE"
-                    (click)="skipSetup()">
+                    (click)="skipSetup()"
+                    [width]="14.0625" 
+                    [height]="2.9375">
             </app-button>
         </div>
     </div>

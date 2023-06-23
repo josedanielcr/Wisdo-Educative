@@ -1,1 +1,7 @@
-<p>chip works!</p>
+<div class="chip d-flex justify-content-center align-items-center" 
+    [ngClass]="{ 
+        'selected': chip.selected 
+    }"
+    (click)="toggleSelected()">
+    <span>{{ chip.name }}</span>
+</div>

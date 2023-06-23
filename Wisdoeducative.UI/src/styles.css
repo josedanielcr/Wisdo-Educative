@@ -2,20 +2,19 @@
 body {
     font-family: 'Inter', sans-serif;
     font-weight: 500;
-    font-size: 16px;
-    line-height: 19.36px;
+    font-size: 1rem;
 }
 /*#endregion*/
 
 /* #region global variables */
 :root {
-    --primary-color: #0B5354;
-    --seconday-color: #B6CBCC;
-    --disabled-color: #838383;
+    --primary-color: #023246;
+    --seconday-color: #287094;
+    --disabled-color: #D4D4CE;
     --background-color: #FFFFFF;
     --danger-color: #B22222;
     --success-color: #42AC66;
-    --bone-color: #F1F1F1;
+    --bone-color: #F6F6F6;
 }
 /*#endregion*/
 
@@ -28,20 +27,17 @@ body {
 /*#region headers */
 .wd-text-h1 {
     font-weight: 700;
-    size: 30px;
-    line-height: 36.31px;
+    font-size: 1.875rem;
 }
 
 .wd-text-h2 {
     font-weight: 500;
-    size: 26px;
-    line-height: 31.47px;
+    font-size: 1.625rem;
 }
 
 .wd-text-h3 {
     font-weight: 500;
-    size: 22px;
-    line-height: 26.63px;
+    font-size: 1.375rem;
 }
 /*#endregion*/
 

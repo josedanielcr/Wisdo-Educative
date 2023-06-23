@@ -10,6 +10,7 @@ import { WizardChildModel } from 'src/app/models/wizard.child.model';
 export class WizardComponent implements OnInit {
   
     @Input() steps: WizardChildModel[];
+    @Input() width: number;
     @ViewChild('componentContainer', { read: ViewContainerRef }) container: ViewContainerRef;
     
     public currentWizardChildModel: WizardChildModel;

@@ -25,7 +25,8 @@ import { ChipComponent } from './chips-container/chip/chip.component';
     WizardComponent,
     InputTextComponent,
     InputSelectComponent,
-    InputDateComponent
+    InputDateComponent,
+    ChipsContainerComponent
   ],
   imports: [
     CommonModule

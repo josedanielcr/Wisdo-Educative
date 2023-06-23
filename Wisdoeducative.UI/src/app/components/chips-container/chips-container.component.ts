@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChipModel } from 'src/app/models/chip.model';
 
 @Component({
   selector: 'app-chips-container',
@@ -7,4 +8,17 @@ import { Component } from '@angular/core';
 })
 export class ChipsContainerComponent {
 
+    @Input() chips : ChipModel[];
+    @Input() maxChipsPerRow : number;
+    @Output() toggleChip : EventEmitter<any> = new EventEmitter<any>();
+
+    constructor() { }
+
+    public getSelectedChips(): ChipModel[] {
+      return this.chips;
+    }
+
+    public emitToggleChip(): void {
+      this.toggleChip.emit(this.chips.filter(chip => chip.selected));
+    }
 }
