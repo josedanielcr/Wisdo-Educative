@@ -1,0 +1,12 @@
+<div class="input-label-container">
+    <label for="">{{label}}</label>
+</div>
+
+<input type="text"
+       [placeholder]="placeholder"
+       class="wd-input"
+       [style.width]="width+'px'"
+       [style.height]="height+'px'"
+       [disabled]="isDisabled"
+       [value]="value"
+       (input)="updateValue($event)"/>

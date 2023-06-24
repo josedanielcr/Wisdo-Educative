@@ -16,13 +16,14 @@ import { msalConfig, protectedResources } from '../config/azure-ad-b2c.config';
 
 //HTTP
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthComponent } from './auth/auth.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
+import { SetupModule } from './setup/setup.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     NotFoundComponent,
-    AuthComponent
+    LandingPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -32,6 +33,7 @@ import { AuthComponent } from './auth/auth.component';
     SharedModule,
     AppRoutingModule,
     HttpClientModule,
+    SetupModule,
     MsalModule.forRoot(new PublicClientApplication(msalConfig),
     {
       interactionType: InteractionType.Redirect,

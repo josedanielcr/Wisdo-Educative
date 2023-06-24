@@ -1,0 +1,32 @@
+<div class="wizard-container" [ngStyle]="{
+    maxWidth: width+'rem',
+    width: width+'rem'
+}">
+    <!-- wizard timeline -->
+    <div class="w-100">     
+        <div class="timeline">
+            <div class="timeline-line"></div>
+            <div *ngFor="let step of steps; let i = index" 
+                class="timeline-item" 
+                [class.active]="i === currentStep">
+                <div class="step-number">{{ i + 1 }}</div>
+                <div class="timeline-marker"
+                    [ngClass]="{
+                        'timeline-item-done': isStepActive(i) == WizardStepState.COMPLETED,
+                        'timeline-item-active': isStepActive(i) == WizardStepState.ACTIVE,
+                        'timeline-item-upcoming': isStepActive(i) == WizardStepState.UPCOMING, 
+                    }">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center align-items-center flex-column">
+        <h1 class="wd-text-h1">{{currentWizardChildModel.title}}</h1>
+        <span class="wizard-child-description">{{currentWizardChildModel.description}}</span>
+        
+        <div class="wizard-component-container">
+            <ng-container #componentContainer></ng-container>
+        </div>
+    </div>
+</div>

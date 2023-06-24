@@ -1,0 +1,21 @@
+<div class="input-label-container" *ngIf="label">
+    <label for="">{{label}}</label>
+</div>
+  
+<div class="date-wrapper" 
+    [style.width]="width+'px'" 
+    [style.height]="height+'px'">
+    <input type="date"
+            #dateInput
+            [placeholder]="placeholder"
+            class="wd-input no-calendar"
+            [style.width]="width+'px'"
+            [style.height]="height+'px'"
+            [disabled]="isDisabled"
+            [value]="value"
+            (input)="updateValue($event)"
+            (click)="openDatePicker()"/>
+    <div class="icon">
+        <img src="../../../../assets/icons/CalendarIcon.svg" alt="date icon">
+    </div>
+</div>

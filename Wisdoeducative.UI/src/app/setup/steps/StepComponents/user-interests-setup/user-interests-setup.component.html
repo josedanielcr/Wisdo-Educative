@@ -1,0 +1,25 @@
+<div class="d-flex justify-content-center align-items-center flex-column" 
+    [ngStyle]="{
+        width: 60+'rem'
+}">
+    <app-chips-container #chipsContainer 
+                        [chips]="chips" 
+                        [maxChipsPerRow]="6">
+    </app-chips-container>
+
+    <div class="w-100 d-flex button-spacing align-items-center">
+        
+        <div>
+            {{'You have selected ' + selectedChipsCount + ' of ' + chips.length + ' interests'}}
+        </div>
+
+        <app-button text="Continue"
+                    [width]="14.0625" 
+                    [height]="2.9375"
+                    [type]="ButtonType.PRIMARY"
+                    class="ms-auto" 
+                    (click)="sendMessageToParent()">
+        </app-button>
+    </div>
+
+</div>

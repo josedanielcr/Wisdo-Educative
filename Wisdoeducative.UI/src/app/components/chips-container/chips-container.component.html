@@ -1,0 +1,6 @@
+<div class="chips-container">
+    <app-chip *ngFor="let chip of chips" 
+            [chip]="chip"
+            (toggleChip)="emitToggledChips()">
+    </app-chip>
+</div>

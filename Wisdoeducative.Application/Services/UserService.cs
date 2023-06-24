@@ -47,17 +47,11 @@ namespace Wisdoeducative.Application.Services
 
         public async Task<UserDto> CreateUser(UserDto user)
         {
-            bool isExistingUser = await userServiceHelper.DoesUserExist(user);
-            if (isExistingUser)
-            {
-                throw new BadRequestException($"{ErrorMessages.UserAlreadyExistsErrorMessage}{user.Email}");
-            }
-
             User userEntity = mapper.Map<User>(user);
             userEntity.UserStatus = UserStatus.Pending;
             var role = await roleService.GetRoleByName(UserRoles.Student)
                 ?? throw new NotFoundException($"{ErrorMessages.EntityNotFound} {UserRoles.Student}");
-            user.RoleId = role.Id;
+            userEntity.RoleId = role.Id;
 
             dBContext.Users.Add(userEntity);
             await userServiceHelper.SaveUserHistory(userEntity, EntityChangeTypes.Added, user.B2cId);
@@ -97,6 +91,21 @@ namespace Wisdoeducative.Application.Services
             dBContext.Entry(userEntity).State = EntityState.Modified;
             dBContext.Entry(userEntity).Property(u => u.B2cId).IsModified = false;
             await dBContext.SaveChangesAsync();
+        }
+
+        public async Task<UserDto> ValidateUser(UserDto user)
+        {
+            string[] propertiesToCheck = new string[] { "Name", "LastName", "B2cId", "Email" };
+            if (entityHelperService.AreAnyPropertiesNull(user, propertiesToCheck))
+            {
+                throw new BadRequestException($"{ErrorMessages.NullProperties} User={user}");
+            }
+
+            bool isExistingUser = await userServiceHelper.DoesUserExist(user);
+
+            if (!isExistingUser) await CreateUser(user);
+
+            return await userServiceHelper.GetUser(null,user.Email,null,null,user.B2cId);
         }
     }
 }

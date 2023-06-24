@@ -1,0 +1,14 @@
+.wd-button {
+    outline: none;
+    border: none;
+    border-radius: 10px;
+}
+
+/* #region types */
+.btn-no-style {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+/*#endregion*/
