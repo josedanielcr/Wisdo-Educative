@@ -1,15 +1,17 @@
 <button class="wd-button" [ngClass]="{
     'wd-bg-primary': type === ButtonType.PRIMARY,
-    'wd-text-white': type === ButtonType.PRIMARY,
+    'wd-bg-secondary': type === ButtonType.SECONDARY,
+    'wd-text-white': type === ButtonType.PRIMARY || type === ButtonType.SECONDARY,
     'btn-primary': type === ButtonType.PRIMARY,
     'btn-no-style': type === ButtonType.NOSTYLE,
     'wd-text-disabled': type === ButtonType.NOSTYLE,
     'wd-bg-bone' : type === ButtonType.BONE,
-    'wd-text-bold': type === ButtonType.BONE
+    'wd-text-bold': type === ButtonType.BONE,
+    'w-100': !width
     }"
     [ngStyle]="{
         'height': height+'rem',
-        'width': width+'rem' 
+        'width': width+'rem',
     }"
     [disabled]="disabled"
 >

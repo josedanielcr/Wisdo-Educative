@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ChipModel } from 'src/app/models/chip.model';
+import { ChipsContainerService } from 'src/app/services/components/chips-container.service';
 
 @Component({
   selector: 'app-chips-container',
@@ -10,15 +11,14 @@ export class ChipsContainerComponent {
 
     @Input() chips : ChipModel[];
     @Input() maxChipsPerRow : number;
-    @Output() toggleChip : EventEmitter<any> = new EventEmitter<any>();
 
-    constructor() { }
+    constructor(private chipsContainerService : ChipsContainerService) { }
 
     public getSelectedChips(): ChipModel[] {
       return this.chips;
     }
 
-    public emitToggleChip(): void {
-      this.toggleChip.emit(this.chips.filter(chip => chip.selected));
+    public emitToggledChips(): void {
+      this.chipsContainerService.setVariableSubject(this.chips.filter(chip => chip.selected));
     }
 }
