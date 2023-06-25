@@ -57,7 +57,6 @@ export class WizardComponent implements OnInit {
      * @param {WizardStepDirection} direction
      */
     private handleChildEvent(direction : WizardStepDirection): void {
-        console.log(direction);
         if (direction === WizardStepDirection.NEXT && this.currentStep < this.steps.length - 1) {
             this.currentStep++;
         } else if (direction === WizardStepDirection.PREVIOUS && this.currentStep > 0) {

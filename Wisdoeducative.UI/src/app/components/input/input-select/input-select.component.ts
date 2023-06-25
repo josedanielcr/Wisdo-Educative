@@ -29,7 +29,7 @@ export class InputSelectComponent extends BaseInput implements AfterViewInit {
     constructor() {
         super();
     }
-
+    
     public ngAfterViewInit(): void {
         if(this.defaultOption) {
             this.setValueToSelect(this.defaultOption);

@@ -2,19 +2,24 @@
   <label for="">{{label}}</label>
 </div>
 
-<div class="select-wrapper" [style.width]="width+'px'" [style.height]="height+'px'">
+<div class="select-wrapper" [style.width]="width+'rem'" [style.height]="height+'rem'">
     <select #selectComponent
             class="wd-input">  
 
-        <option *ngIf="defaultOption" 
-                [value]="defaultOption.value">
-            {{defaultOption.name}}
-        </option>
+      <!-- loading-->
+      <option *ngIf="!options && !defaultOption">Loading...</option>
 
-        <option *ngFor="let option of options" 
-                [value]="option.value">
-            {{option.name}}
-        </option>
+      <!-- default option -->
+      <option *ngIf="defaultOption" 
+              [value]="defaultOption.value">
+          {{defaultOption.name}}
+      </option>
+      
+      <!-- options -->
+      <option *ngFor="let option of options" 
+              [value]="option.value">
+          {{option.name}}
+      </option>
     </select>
     <div class="arrow">
       <img src="../../../../assets/icons/Arrow.svg" alt="arrow">

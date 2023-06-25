@@ -28,7 +28,7 @@ namespace Wisdoeducative.API.Controllers
         }
 
         [HttpPost("validate")]
-        public async Task<IActionResult> ValidateUser()
+        public async Task<IActionResult> ValidateUser([FromBody] Object data)
         {
             var Email = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "emails")?.Value;
             var Name = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "extension_Name")?.Value;

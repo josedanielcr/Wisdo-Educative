@@ -95,7 +95,7 @@ namespace Wisdoeducative.Application.Services
 
         public async Task<UserDto> ValidateUser(UserDto user)
         {
-            string[] propertiesToCheck = new string[] { "Name", "LastName", "B2cId", "Email" };
+            string[] propertiesToCheck = new string[] { "B2cId", "Email" };
             if (entityHelperService.AreAnyPropertiesNull(user, propertiesToCheck))
             {
                 throw new BadRequestException($"{ErrorMessages.NullProperties} User={user}");

@@ -14,5 +14,6 @@ namespace Wisdoeducative.Application.Common.Interfaces.Services
         Task<IEnumerable<InterestDto>> SetInterestToUser(IEnumerable<InterestDto> interests, 
             UserDto user);
         Task<IEnumerable<InterestDto>> GetUserInterests(int userId);
+        Task<IEnumerable<InterestDto>> GetInterests();
     }
 }

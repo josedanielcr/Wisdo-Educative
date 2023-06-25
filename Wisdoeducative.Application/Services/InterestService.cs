@@ -97,6 +97,21 @@ namespace Wisdoeducative.Application.Services
 
             return mapper.Map<IEnumerable<InterestDto>>(interests);
         }
+
+        public async Task<IEnumerable<InterestDto>> GetInterests()
+        {
+            List<InterestDto> interest = new List<InterestDto>();
+            var interestsdb = await dBContext.Interests.ToListAsync();
+            foreach (var interestdb in interestsdb)
+            {
+                if(interestdb.Status == EntityStatus.Active)
+                {
+                    interest.Add(mapper.Map<InterestDto>(interestdb));
+                }
+            }
+            return interest;
+        }
+    
         private void SaveToHistory(UserInterest interest, EntityChangeTypes type, string modifiedBy)
         {
             interestHistory.SaveChanges(interest, interest.Id, type, modifiedBy);
