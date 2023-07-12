@@ -11,6 +11,7 @@ using Wisdoeducative.Application.Common.Interfaces.Helpers;
 using Wisdoeducative.Application.DTOs;
 using Wisdoeducative.Application.Resources;
 using Wisdoeducative.Domain.Entities;
+using Wisdoeducative.Domain.Enums;
 
 namespace Wisdoeducative.Application.Helpers
 {
@@ -26,6 +27,24 @@ namespace Wisdoeducative.Application.Helpers
             this.mapper = mapper;
         }
 
+        public async Task<InstitutionDto> CreateInstituionByName(string name)
+        {
+            if(name == null){
+                throw new BadRequestException($"{ErrorMessages.NullProperties} Institution name");
+            }
+            var institution = await ValidateInstitutionByName(name)!;
+            if(institution != null)
+            {
+                return institution;
+            }
+            var newInstitution = new Institution();
+            newInstitution.Name = name.ToUpper();
+            newInstitution.Status = EntityStatus.Active;
+            dBContext.Institutions.Add(newInstitution);
+            await dBContext.SaveChangesAsync();
+            return mapper.Map<InstitutionDto>(newInstitution);
+        }
+
         public async Task<InstitutionDto> GetInstitutionById(int institutionId)
         {
             var dbInstitution = await dBContext.Institutions
@@ -35,6 +54,19 @@ namespace Wisdoeducative.Application.Helpers
             return dbInstitution == null
                 ? throw new NotFoundException($"{ErrorMessages.EntityNotFound} Institution")
                 : mapper.Map<InstitutionDto>(dbInstitution);
+        }
+
+        public async Task<InstitutionDto>? ValidateInstitutionByName(string name)
+        {
+            var institutionName = name.ToUpper();
+            var dbInstitution = await dBContext.Institutions
+                .Where(ins => ins.Name != null && ins.Name.ToUpper().Contains(institutionName))
+                .FirstOrDefaultAsync();
+            if(dbInstitution != null)
+            {
+                return mapper.Map<InstitutionDto>(dbInstitution);
+            }
+            return null;
         }
     }
 }

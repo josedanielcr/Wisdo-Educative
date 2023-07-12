@@ -4,6 +4,8 @@
 
 <div class="select-wrapper" [style.width]="width+'rem'" [style.height]="height+'rem'">
     <select #selectComponent
+            (change)="updateValue($event)"
+            [value]="value"
             class="wd-input">  
 
       <!-- loading-->

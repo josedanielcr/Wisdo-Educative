@@ -1,5 +1,6 @@
 <div class="w-100">
-    <form autocomplete="off" [formGroup]="setupDegreFormm">
+    <form autocomplete="off" [formGroup]="setupDegreFormm"
+    *ngIf="academicSheculeOptions && degreeTypeOptions && studyFieldOptions">
 
         <!-- main form container -->
         <div class="d-flex justify-content-center align-items-center flex-column">
@@ -18,7 +19,7 @@
                                 placeholder="" 
                                 label="Educational institution" 
                                 placeholder=""
-                                formControlName="institution">
+                                formControlName="institutionName">
                 </app-input-text>
             </div>
 
@@ -28,14 +29,12 @@
                                   [height]="2.9375" 
                                   class="me-4"
                                   label="Schedule"
-                                  [disabled]="false"
                                   formControlName="schedule">
                 </app-input-select>
                 <app-input-select [options]="degreeTypeOptions"
                                   [width]="29.1875" 
                                   [height]="2.9375" 
                                   label="Type of career"
-                                  [disabled]="false"
                                   formControlName="degreeType">
                 </app-input-select>
             </div>
@@ -45,9 +44,8 @@
                                   [width]="29.1875" 
                                   [height]="2.9375" 
                                   class="me-4"
-                                  label="field of study"
-                                  [disabled]="false"
-                                  formControlName="field">
+                                  label="Field of study"
+                                  formControlName="studyField">
                 </app-input-select>
                 <app-input-date [width]="467" 
                                 [height]="47" 

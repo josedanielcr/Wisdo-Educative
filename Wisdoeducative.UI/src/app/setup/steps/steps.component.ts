@@ -1,9 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { WizardChildModel } from 'src/app/models/wizard.child.model';
 import { UserSetupComponent } from './StepComponents/user-setup/user-setup.component';
 import { UserInterestsSetupComponent } from './StepComponents/user-interests-setup/user-interests-setup.component';
 import { UserDegreeSetupComponent } from './StepComponents/user-degree-setup/user-degree-setup.component';
 import { ButtonType } from 'src/app/enums/button.enum';
+import { AuthService } from 'src/app/services/core/auth.service';
+import { UserStatus } from 'src/app/enums/core/user.status.enum';
+import { Router } from '@angular/router';
+import { UserClient } from 'src/app/models/core/client/user.client.model';
 
 @Component({
   selector: 'app-steps',

@@ -10,5 +10,7 @@ namespace Wisdoeducative.Application.Common.Interfaces.Helpers
     public interface IInstitutionHelperService
     {
         Task<InstitutionDto> GetInstitutionById(int institutionId);
+        Task<InstitutionDto> CreateInstituionByName(string name);
+        Task<InstitutionDto>? ValidateInstitutionByName(string name);
     }
 }

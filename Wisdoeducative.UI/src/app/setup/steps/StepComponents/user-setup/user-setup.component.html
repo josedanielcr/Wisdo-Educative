@@ -32,7 +32,6 @@
                                  [width]="29.1875" 
                                   [height]="2.9375" 
                                   label="What do you do for a living?"
-                                  [disabled]="false"
                                   formControlName="category">
                 </app-input-select>
             </div>
@@ -44,7 +43,7 @@
                     [height]="2.9375"
                     [type]="ButtonType.PRIMARY"
                     class="ms-auto mt-3" 
-                    (click)="sendMessageToParent()">
+                    (click)="submit()">
         </app-button>
     </div>
 </div>

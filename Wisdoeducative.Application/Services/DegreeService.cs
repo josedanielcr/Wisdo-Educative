@@ -29,6 +29,7 @@ namespace Wisdoeducative.Application.Services
         private readonly IEntityHistoryService<UserDegree> userDegreeHistory;
         private readonly IEntityHistoryService<User> userHistory;
         private readonly IUserService userService;
+        private readonly IInstitutionHelperService institutionHelperService;
 
         public DegreeService(IApplicationDBContext dBContext,
             IMapper mapper,
@@ -37,7 +38,8 @@ namespace Wisdoeducative.Application.Services
             IUserHelperService userHelperService,
             IEntityHistoryService<UserDegree> userDegreeHistory,
             IEntityHistoryService<User> userHistory,
-            IUserService userService)
+            IUserService userService, 
+            IInstitutionHelperService institutionHelperService)
         {
             this.dBContext = dBContext;
             this.mapper = mapper;
@@ -47,6 +49,7 @@ namespace Wisdoeducative.Application.Services
             this.userDegreeHistory = userDegreeHistory;
             this.userHistory = userHistory;
             this.userService = userService;
+            this.institutionHelperService = institutionHelperService;
         }
 
         public async Task<DegreeDto> CreateDegree(DegreeDto degree)
@@ -69,11 +72,7 @@ namespace Wisdoeducative.Application.Services
         {
             User user = mapper.Map<User>(await userHelperService.GetUser(userDegree.UserId) ??
                 throw new NotFoundException($"{ErrorMessages.EntityNotFound} User"));
-            
-            user.UserStatus = UserStatus.Active;
-            UserDto userDto = mapper.Map<UserDto>(user);
-            await userService.UpdateUser(userDto);
-            await userHistory.SaveChanges(user, user.Id, EntityChangeTypes.Modified, user.B2cId);
+
             await userDegreeHistory.SaveChanges(userDegree, userDegree.Id, EntityChangeTypes.Added, user.B2cId);
             await dBContext.SaveChangesAsync();
         }
@@ -81,12 +80,18 @@ namespace Wisdoeducative.Application.Services
         public async Task<UserDegreeDto> SetupUserDegree(UserDegreeConfigDTO userDegreeConfig)
         {
             await degreeHelperService.ValidateUserDegreeProperties(userDegreeConfig);
+            DegreeDto newDegree = await CreateDegree
+                (degreeHelperService.ParseUserDegreeDtoToDegree(userDegreeConfig))
+                ?? throw new BadRequestException($"{ErrorMessages.EntityNotFound} Degree");
+            InstitutionDto newInstitution = await institutionHelperService
+                .CreateInstituionByName(userDegreeConfig.InstitutionName)
+                ?? throw new BadRequestException($"{ErrorMessages.EntityNotFound} Institution");
 
             UserDegree userDegree = new()
             {
-                DegreeId = userDegreeConfig.DegreeId,
+                DegreeId = newDegree.Id,
                 UserId = userDegreeConfig.UserId,
-                InstitutionId = userDegreeConfig.InstitutionId,
+                InstitutionId = newInstitution.Id,
                 CurrentProgress = 0,
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now.AddYears(4),
@@ -95,6 +100,7 @@ namespace Wisdoeducative.Application.Services
             };
 
             dBContext.UserDegrees.Add(userDegree);
+            await userService.UpdateStatus(userDegreeConfig.UserId, UserStatus.Active);
             await dBContext.SaveChangesAsync();
             await SaveUserDegreeChanges(userDegree);
             return mapper.Map<UserDegreeDto>(userDegree);

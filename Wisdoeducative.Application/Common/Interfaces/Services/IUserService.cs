@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Wisdoeducative.Application.DTOs;
+using Wisdoeducative.Domain.Entities;
 using Wisdoeducative.Domain.Enums;
 
 namespace Wisdoeducative.Application.Common.Interfaces.Services
@@ -13,7 +14,8 @@ namespace Wisdoeducative.Application.Common.Interfaces.Services
         Task<UserDto> CreateUser(UserDto user);
         Task<UserDto> SetUserData(UserDto user);
         Task<UserDto> SetUserInterests(int userId, IEnumerable<InterestDto> interests);
-        Task UpdateUser(UserDto user);
+        Task UpdateUser(UserDto user, UserStatus status);
         Task<UserDto> ValidateUser(UserDto user);
+        Task UpdateStatus(int userId, UserStatus status);
     }
 }
