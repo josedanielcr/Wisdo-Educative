@@ -1,7 +1,7 @@
 /* #region general styles */
 body {
     font-family: 'Inter', sans-serif;
-    font-weight: 500;
+    font-weight: 300;
     font-size: 1rem;
 }
 /*#endregion*/
@@ -15,6 +15,7 @@ body {
     --danger-color: #B22222;
     --success-color: #42AC66;
     --bone-color: #F6F6F6;
+    --input-error-bg-color: rgba(200, 33, 73, 0.20);
 }
 /*#endregion*/
 
@@ -101,3 +102,13 @@ body {
     background-color: var(--bone-color);
 }
 /*#endregion*/
+
+/*#region errors*/
+.wd-bg-input-error {
+    background-color: var(--input-error-bg-color) !important;
+}
+
+.wd-text-input-error-size {
+    font-size: 0.8rem;
+}
+/*#endregion errors*/

@@ -48,11 +48,10 @@ namespace Wisdoeducative.Application.Services
         public async Task<UserDto> CreateUser(UserDto user)
         {
             User userEntity = mapper.Map<User>(user);
-            userEntity.UserStatus = UserStatus.PendingData;
             var role = await roleService.GetRoleByName(UserRoles.Student)
                 ?? throw new NotFoundException($"{ErrorMessages.EntityNotFound} {UserRoles.Student}");
             userEntity.RoleId = role.Id;
-
+            userEntity.UserStatus = UserStatus.Pending;
             dBContext.Users.Add(userEntity);
             await userServiceHelper.SaveUserHistory(userEntity, EntityChangeTypes.Added, user.B2cId);
             await dBContext.SaveChangesAsync();
@@ -70,7 +69,6 @@ namespace Wisdoeducative.Application.Services
 
             await subscriptionService.LinkSubscriptionToAccount(SubscriptionNames.Free, user.Id,
                 user.B2cId);
-            await UpdateStatus(user.Id, UserStatus.PendingInterests);
             return await userServiceHelper.GetUser(user.Id);
         }
 
@@ -79,7 +77,6 @@ namespace Wisdoeducative.Application.Services
             var user = await userServiceHelper.GetUser(userId)
                 ?? throw new NotFoundException($"{ErrorMessages.EntityNotFound} {userId}");
             await interestService.SetInterestToUser(interests, user);
-            await UpdateStatus(user.Id, UserStatus.PendingDegree);
             return mapper.Map<UserDto>(user);
         }
 

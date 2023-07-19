@@ -2,7 +2,9 @@
   <label for="">{{label}}</label>
 </div>
 
-<div class="select-wrapper" [style.width]="width+'rem'" [style.height]="height+'rem'">
+<div class="select-wrapper w-100"
+      [ngClass]="{'wd-bg-input-error' : ngControl?.control?.touched 
+      && ngControl?.control?.invalid }">
     <select #selectComponent
             (change)="updateValue($event)"
             [value]="value"
@@ -26,4 +28,8 @@
     <div class="arrow">
       <img src="../../../../assets/icons/Arrow.svg" alt="arrow">
     </div>
+</div>
+<div class="w-100 d-flex">
+  <span *ngIf="ngControl?.control?.touched 
+  && ngControl?.control?.invalid" class="ms-auto wd-text-danger wd-text-input-error-size">{{error}}</span>
 </div>

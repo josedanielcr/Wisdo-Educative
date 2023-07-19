@@ -6,14 +6,8 @@
     'btn-no-style': type === ButtonType.NOSTYLE,
     'wd-text-disabled': type === ButtonType.NOSTYLE,
     'wd-bg-bone' : type === ButtonType.BONE,
-    'wd-text-bold': type === ButtonType.BONE,
-    'w-100': !width
+    'wd-text-bold': type === ButtonType.BONE
     }"
-    [ngStyle]="{
-        'height': height+'rem',
-        'width': width+'rem',
-    }"
-    [disabled]="disabled"
->
+    [disabled]="disabled">
     {{text}}
 </button>

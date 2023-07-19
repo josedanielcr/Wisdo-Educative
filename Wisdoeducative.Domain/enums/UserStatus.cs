@@ -10,9 +10,7 @@ namespace Wisdoeducative.Domain.Enums
     {
         Active,
         Inactive,
-        PendingData,
-        PendingInterests,
-        PendingDegree,
+        Pending,
         Locked,
         Deleted
     }

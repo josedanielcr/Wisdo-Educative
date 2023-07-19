@@ -15,24 +15,13 @@ export class FormService {
    * @param classRef
    */
   public validateForm<T>(form : FormGroup, classRef : new () => T): T | null {
+    form.markAllAsTouched();
     if(form.valid){
       const instance = new classRef();
       Object.assign(instance, form.value);
       return instance;
     } else {
-      this.markControlsAsTouched(form);
       return null;
     }
-  }
-
-  /**
-   * This function marks all controls in a given form as touched.
-   * @param form 
-   */
-  public markControlsAsTouched(form: FormGroup<any>) {
-    Object.keys(form.controls).forEach(field => {
-      const control = form.get(field);
-      control.markAsTouched();
-    });
   }
 }

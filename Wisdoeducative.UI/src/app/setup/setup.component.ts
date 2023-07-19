@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { AuthService } from '../services/core/auth.service';
 import { UserClient } from '../models/core/client/user.client.model';
 import { UserStatus } from '../enums/core/user.status.enum';
+import { WindowResizeService } from '../services/helpers/window-resize.service';
+import { ScreenSizeModel } from '../models/screenSize.model';
 
 @Component({
   selector: 'app-setup',
@@ -12,29 +14,40 @@ import { UserStatus } from '../enums/core/user.status.enum';
 })
 export class SetupComponent implements OnInit {
 
-    public ButtonType = ButtonType;
-    public isStartupWindowOpen: boolean = true;
+  public ButtonType = ButtonType;
+  public isStartupWindowOpen: boolean = true;
+  public isPhone: boolean = false;
+  public isTablet: boolean = false;
+  public isDesktop: boolean = false;
 
-    constructor(private router : Router,
-                private authService : AuthService){}
+  constructor(private router: Router,
+    private authService: AuthService,
+    private resizeService: WindowResizeService) {
+  }
 
-    ngOnInit(): void {
-        this.authService.getUserSubject().subscribe({
-            next: (user : UserClient) => {
-                if(user.userStatus !== UserStatus.PendingData
-                    && user.userStatus !== UserStatus.PendingDegree
-                    && user.userStatus !== UserStatus.PendingInterests) {
-                        this.router.navigate(['/workspace']);        
-                }
-            }
-        })
-    }
+  ngOnInit(): void {
+    this.manageWindowSize();
+    this.authService.getUserSubject().subscribe({
+      next: (user: UserClient) => {
+        if (user.userStatus !== UserStatus.Pending) {
+          this.router.navigate(['/workspace']);
+        }
+      }
+    })
+  }
+  private manageWindowSize() {
+    this.resizeService.getScreenSizeObservable().subscribe((screenSizes: ScreenSizeModel) => {
+      this.isDesktop = screenSizes.isDesktop;
+      this.isTablet = screenSizes.isTablet;
+      this.isPhone = screenSizes.isPhone;
+    });
+  }
 
-    public skipSetup(): void {
-        this.router.navigate(['workspace']);
-    }
+  public skipSetup(): void {
+    this.router.navigate(['workspace']);
+  }
 
-    public startSetup(): void {
-        this.isStartupWindowOpen = false;
-    }
+  public startSetup(): void {
+    this.isStartupWindowOpen = false;
+  }
 }

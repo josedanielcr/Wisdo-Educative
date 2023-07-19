@@ -1,38 +1,263 @@
-import { Component, OnInit } from '@angular/core';
-import { WizardChildModel } from 'src/app/models/wizard.child.model';
-import { UserSetupComponent } from './StepComponents/user-setup/user-setup.component';
-import { UserInterestsSetupComponent } from './StepComponents/user-interests-setup/user-interests-setup.component';
-import { UserDegreeSetupComponent } from './StepComponents/user-degree-setup/user-degree-setup.component';
-import { ButtonType } from 'src/app/enums/button.enum';
-import { AuthService } from 'src/app/services/core/auth.service';
-import { UserStatus } from 'src/app/enums/core/user.status.enum';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { concat, toArray } from 'rxjs';
+import { ChipsContainerComponent } from 'src/app/components/chips-container/chips-container.component';
+import { ButtonType } from 'src/app/enums/button.enum';
+import { AcademicScheduleEnum } from 'src/app/enums/core/academic.schedule.enum';
+import { DegreeTypeEnum } from 'src/app/enums/core/degree.type.enum';
+import { StudyFieldEnum } from 'src/app/enums/core/study.field.enum';
+import { UserCategoryEnum } from 'src/app/enums/core/user.category.enum';
+import { ApplicationErrorModel } from 'src/app/models/application.error.model';
+import { ChipModel } from 'src/app/models/chip.model';
+import { InterestClient } from 'src/app/models/core/client/interest.client.model';
 import { UserClient } from 'src/app/models/core/client/user.client.model';
+import { UserDegreeClient } from 'src/app/models/core/client/user.degree.client.model';
+import { ScreenSizeModel } from 'src/app/models/screenSize.model';
+import { SelectOptionModel } from 'src/app/models/select.option.model';
+import { SetUpDegree } from 'src/app/models/utils/setup.degree.model';
+import { SetUpUser } from 'src/app/models/utils/setup.user.model';
+import { WizardChildModel } from 'src/app/models/wizard.child.model';
+import { ChipsContainerService } from 'src/app/services/components/chips-container.service';
+import { FormService } from 'src/app/services/components/form.service';
+import { SelectService } from 'src/app/services/components/select.service';
+import { AuthService } from 'src/app/services/core/auth.service';
+import { DegreeService } from 'src/app/services/core/degree.service';
+import { EnumService } from 'src/app/services/core/enum.service';
+import { InterestService } from 'src/app/services/core/interest.service';
+import { UserService } from 'src/app/services/core/user.service';
+import { WindowResizeService } from 'src/app/services/helpers/window-resize.service';
 
 @Component({
   selector: 'app-steps',
   templateUrl: './steps.component.html',
   styleUrls: ['./steps.component.css']
 })
-export class StepsComponent {
-    
-    public wizardsChildSteps : WizardChildModel[];
+export class StepsComponent implements OnInit{
 
-    constructor() {
-        this.setupSteps();
-    }
+  //containers
+  @ViewChild('chipsContainer') chipsContainer : ChipsContainerComponent;
 
-    private setupSteps(): void {
-        this.wizardsChildSteps = [
-            new WizardChildModel('Personal',
-             'We can personalize your experience within the tool with your personal information', 
-             'Continue', ButtonType.BONE, 225, 47, null, null, null, null, UserSetupComponent),
-            new WizardChildModel('Interests','Tell us what your professional interests are',
-             'Continue', ButtonType.BONE, 225, 47, null, null, null, null,
-              UserInterestsSetupComponent),
-            new WizardChildModel('Studies','Tell us about the career, course you are currently studying or have studied',
-             'Continue', ButtonType.BONE, 225, 47, null, null, null, null, 
-             UserDegreeSetupComponent),
-        ];
-    }
+  //util
+  public steps : number[] = [1,2,3,4];
+  public currentStep : number = 1;
+  public isPhone : boolean;
+  public isTablet : boolean;
+  public isDesktop : boolean;
+  public loading : boolean = true;
+  public ButtonType = ButtonType;
+  private user : UserClient;
+  public notEnoughInterestsError : boolean = false;
+  
+  //options
+  public academicSheculeOptions : SelectOptionModel[];
+  public degreeTypeOptions : SelectOptionModel[];
+  public studyFieldOptions : SelectOptionModel[];
+  public userCategoryOptions : SelectOptionModel[];
+  
+  //forms
+  public userSetupForm : FormGroup;
+  public setupDegreForm : FormGroup;
+
+  //data
+  public chips : ChipModel[] = [];
+  public interests : InterestClient[] = [];
+  public selectedInterests : InterestClient[] = [];
+  public selectedChips : ChipModel[] = [];
+  public userDegreeSetupData : SetUpDegree;
+
+  constructor(private resizeService : WindowResizeService, 
+              private fb : FormBuilder, 
+              private enumService : EnumService,
+              private selectService : SelectService,
+              private formService : FormService,
+              private authService : AuthService,
+              private userService : UserService,
+              private chipsContainerService : ChipsContainerService,
+              private interestsService : InterestService,
+              private router : Router,
+              private degreeService : DegreeService) {}
+              
+  ngOnInit(): void {
+    this.loadSelectOptions();
+    this.createUserForm();
+    this.loadUserData();
+    this.manageScreenSize();
+    this.handleChipsContainerService();
+    this.loadInterests();
+    this.loadSelectInputs();
+    this.createUserDegreeForm();
+  }
+
+  private handleChipsContainerService(): void {
+    this.chipsContainerService.getVariableSubject().subscribe((chips : ChipModel[]) => {
+      if(chips && chips.length > 0 && chips.length <= 4){
+        this.selectedChips = chips;
+        if(chips.length >= 4) this.notEnoughInterestsError = false;
+      }
+    });
+  }
+
+  private loadInterests(): void {
+    this.interestsService.getInterests().subscribe({
+      next: (interests : InterestClient[]) => {
+        if(interests && interests.length > 0){
+          this.interests = interests;
+          this.chips = interests.map((interest : InterestClient) => {
+            return new ChipModel(interest.id, interest.name, false);
+          });
+        }
+      },
+      error: (error : ApplicationErrorModel) => {
+        alert(error.message);
+      }
+    });
+  }
+
+  private loadSelectInputs(): void {
+    this.academicSheculeOptions = this.selectService
+      .transformObjectToSelectOptions(this.enumService.getEnumValues(AcademicScheduleEnum),null,null);
+    this.degreeTypeOptions = this.selectService.transformObjectToSelectOptions(
+      this.enumService.getEnumValues(DegreeTypeEnum),null,null);
+    this.studyFieldOptions = this.selectService.transformObjectToSelectOptions(
+      this.enumService.getEnumValues(StudyFieldEnum),null,null);
+  }
+
+  public next(): void {
+    this.currentStep++;
+  }
+
+  private manageScreenSize() {
+    this.resizeService.getScreenSizeObservable().subscribe((resizeData : ScreenSizeModel) => {
+      this.isPhone = resizeData.isPhone;
+      this.isTablet = resizeData.isTablet;
+      this.isDesktop = resizeData.isDesktop;
+    });
+  }
+
+  private createUserForm(): void {
+    this.userSetupForm = this.fb.group({
+      firstName: ['Loading...', [Validators.required]],
+      lastName: ['Loading...', [Validators.required]],
+      dateOfBirth: [null, [ Validators.required]],
+      category : [null, [Validators.required]]
+    });
+  }
+
+  private loadUserData(): void {
+    this.authService.getUserSubject().subscribe({
+      next: (user : UserClient) => {
+        this.user = user;
+        this.loadUserDataForm();
+        this.loading = false;
+      },
+      error: (error : ApplicationErrorModel) => {
+        alert(error);
+        this.loading = false;
+      }
+    });
+  }
+
+  private loadUserDataForm() {
+     this.userSetupForm.patchValue({
+      firstName: this.user.name,
+      lastName: this.user.lastName,
+      dateOfBirth: null,
+      category: this.userCategoryOptions[0]
+    });
+  }
+
+  private loadSelectOptions(): void {
+    this.userCategoryOptions = this.getUserCategoryNames(
+      this.selectService.transformObjectToSelectOptions(
+        this.enumService.getEnumValues(UserCategoryEnum),null,null));
+  }
+
+  private getUserCategoryNames(userCategories : SelectOptionModel[]) : SelectOptionModel[] {
+    return userCategories.map((category : SelectOptionModel) => {
+      const name = category.name;
+      const spacedString = name.replace(/([A-Z])/g, ' $1');
+      spacedString.charAt(0).toUpperCase() + spacedString.slice(1).toLowerCase();
+      category.name = spacedString;
+      return category;
+    });
+  }
+
+  public submitUserData(): void {
+    const setupUserData : SetUpUser | null = 
+      this.formService.validateForm(this.userSetupForm, SetUpUser);
+    if(!setupUserData) return;
+    this.saveUserDetails(setupUserData);
+    this.next();
+  }
+
+  private saveUserDetails(userData: SetUpUser): void {
+    this.user.name = userData.firstName;
+    this.user.lastName = userData.lastName;
+    this.user.dateOfBirth = userData.dateOfBirth;
+    this.user.category = userData.category['value'];
+    this.user.role = null;
+  }
+
+  public submitInterests(): void {
+    this.notEnoughInterestsError = false;
+    if(this.selectedChips.length < 4){
+      this.notEnoughInterestsError = true;
+      return;
+    } 
+    this.next();
+    this.setupUserInterests();
+  }
+
+  private setupUserInterests(): void {
+    this.selectedInterests = this.parseChipToInterestClient();
+  }
+
+  private parseChipToInterestClient(): InterestClient[] {
+    return this.interests.filter((interest : InterestClient) => {
+      return this.selectedChips.some((chip : ChipModel) => {
+        return chip.id === interest.id;
+      });
+    });
+  }
+
+  private createUserDegreeForm(): void {
+    this.setupDegreForm = this.fb.group({
+      userId : ['', Validators.required],
+      degreeName: [{value: '', disabled: false}, Validators.required],
+      institutionName: ['', Validators.required],
+      schedule: [this.academicSheculeOptions[0].value, Validators.required],
+      degreeType: [this.degreeTypeOptions[0].value, Validators.required],
+      studyField : [this.studyFieldOptions[0].value, Validators.required],
+      startYear: [null, Validators.required],
+    });  
+  }
+
+  public submitUserDegree(): void {
+    this.setupDegreForm.controls['userId'].setValue(this.user.id);
+    const setupDegreeData : SetUpDegree | null = 
+      this.formService.validateForm(this.setupDegreForm, SetUpDegree);
+    if(!setupDegreeData) return;
+    this.next();
+    this.userDegreeSetupData = setupDegreeData;
+    this.executeUserSetup();
+  }
+
+  private executeUserSetup(): void {
+    concat(this.userService.setUserDetails(this.user),
+      this.userService.setUserInterests(this.user.id, this.selectedInterests), 
+      this.degreeService.setUserDegree(this.userDegreeSetupData))
+    .pipe(
+      toArray()
+    )
+    .subscribe({
+      next: (response : [UserClient, UserClient, UserDegreeClient]) => {
+        this.authService.setUserSubject(response[0]);
+        this.router.navigate(['/workspace']);
+      },
+      error: (error : ApplicationErrorModel) => {
+        alert(error);
+      }
+    });
+  }
 }

@@ -9,16 +9,19 @@ import { ChipsContainerService } from 'src/app/services/components/chips-contain
 })
 export class ChipsContainerComponent {
 
-    @Input() chips : ChipModel[];
-    @Input() maxChipsPerRow : number;
+  @Input() chips : ChipModel[];
+  @Input() limit : number = Infinity;
+  @Input() maxChipsPerRow : number;
+  public currentSelectedChips : number = 0;
 
-    constructor(private chipsContainerService : ChipsContainerService) { }
+  constructor(private chipsContainerService : ChipsContainerService) { }
 
-    public getSelectedChips(): ChipModel[] {
-      return this.chips;
-    }
+  public getSelectedChips(): ChipModel[] {
+    return this.chips;
+  }
 
-    public emitToggledChips(): void {
-      this.chipsContainerService.setVariableSubject(this.chips.filter(chip => chip.selected));
-    }
+  public emitToggledChips(): void {
+    this.currentSelectedChips = this.chips.filter(chip => chip.selected).length;
+    this.chipsContainerService.setVariableSubject(this.chips.filter(chip => chip.selected));
+  }
 }

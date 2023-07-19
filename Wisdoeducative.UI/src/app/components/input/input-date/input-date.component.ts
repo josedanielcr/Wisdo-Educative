@@ -1,6 +1,6 @@
-import { Component, ElementRef, Input, ViewChild, forwardRef } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Injector, Input, ViewChild, forwardRef } from '@angular/core';
 import { BaseInput } from '../base-input';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 
 @Component({
   selector: 'app-input-date',
@@ -14,21 +14,28 @@ import { NG_VALUE_ACCESSOR } from '@angular/forms';
       }
   ]
 })
-export class InputDateComponent extends BaseInput {
+export class InputDateComponent extends BaseInput implements AfterViewInit {
 
-    @ViewChild('dateInput') dateInput!: ElementRef<HTMLInputElement>;
-    
-    @Input() width : number;
-    @Input() height : number;
-    @Input() placeholder : string;
-    @Input() label : string;
-    @Input() override value : Date;
+  @ViewChild('dateInput') dateInput!: ElementRef<HTMLInputElement>;
+  @Input() placeholder : string;
+  @Input() label : string;
+  @Input() error : string = '';
+  @Input() override value : Date;
+  public ngControl : NgControl;
 
-    constructor() {
-        super();
+  constructor(private injector : Injector, private cdf : ChangeDetectorRef) {
+      super();
+  }
+
+  ngAfterViewInit(): void {
+    this.ngControl = this.injector.get(NgControl);
+    if (this.ngControl != null) { 
+      this.ngControl.valueAccessor = this;
+      this.cdf.detectChanges();
     }
-    
-    public openDatePicker() {
-        this.dateInput.nativeElement.showPicker();
-    }
+  }
+  
+  public openDatePicker() {
+      this.dateInput.nativeElement.showPicker();
+  }
 }

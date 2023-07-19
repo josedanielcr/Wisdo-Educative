@@ -1,3 +1,8 @@
+button {
+    height: 2.9375rem;
+    width: 100%;
+}
+
 .wd-button {
     outline: none;
     border: none;

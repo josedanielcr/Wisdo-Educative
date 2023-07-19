@@ -1,4 +1,4 @@
-import { ControlValueAccessor } from '@angular/forms';
+import { ControlValueAccessor, NgControl } from '@angular/forms';
 
 export abstract class BaseInput implements ControlValueAccessor {
 

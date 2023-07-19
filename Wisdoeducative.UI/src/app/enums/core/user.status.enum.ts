@@ -1,9 +1,7 @@
 export enum UserStatus {
   Active = "Active",
   Inactive = "Inactive",
-  PendingData = "PendingData",
-  PendingInterests = "PendingInterests",
-  PendingDegree = "PendingDegree",
+  Pending = "Pending",
   Locked = "Locked",
   Deleted = "Deleted"
 }

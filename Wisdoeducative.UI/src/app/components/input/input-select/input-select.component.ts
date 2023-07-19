@@ -1,6 +1,6 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild, forwardRef } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Injector, Input, OnInit, ViewChild, forwardRef } from '@angular/core';
 import { BaseInput } from '../base-input';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { NG_VALUE_ACCESSOR, NgControl } from '@angular/forms';
 import { SelectOptionModel } from 'src/app/models/select.option.model';
 
 @Component({
@@ -15,18 +15,26 @@ import { SelectOptionModel } from 'src/app/models/select.option.model';
       }
   ]
 })
-export class InputSelectComponent extends BaseInput {
+export class InputSelectComponent extends BaseInput implements AfterViewInit {
 
   @ViewChild('selectComponent', { static: false }) mySelectRef: ElementRef;
   
   @Input() options : SelectOptionModel[];
   @Input() defaultOption : SelectOptionModel;
-  @Input() height : number;
-  @Input() width : number; 
   @Input() label : string;
   @Input() override value : any;
+  @Input() error : string = '';
+  public ngControl : NgControl;
 
-  constructor() {
+  constructor(private injector : Injector, private cdf : ChangeDetectorRef) {
       super();
+  }
+
+  ngAfterViewInit(): void {
+    this.ngControl = this.injector.get(NgControl);
+    if (this.ngControl != null) { 
+      this.ngControl.valueAccessor = this;
+      this.cdf.detectChanges();
+    }
   }
 }
