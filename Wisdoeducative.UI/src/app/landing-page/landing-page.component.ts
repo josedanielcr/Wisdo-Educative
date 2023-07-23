@@ -56,8 +56,14 @@ export class LandingPageComponent {
    * The postLogoutRedirectUri parameter is set to the app's /auth route.
    */
   logout() { 
+    let redirectUri : string;
+    if(window.location.href.indexOf('localhost') > -1) {
+        redirectUri = 'http://localhost:4200/landing';
+    } else {
+      redirectUri = 'https://lemon-glacier-05e76cc10.3.azurestaticapps.net/landing'
+    }
     this.msalService.logoutRedirect({
-      postLogoutRedirectUri: 'http://localhost:4200/landing'
+      postLogoutRedirectUri: redirectUri
     });
   }
 
