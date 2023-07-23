@@ -1,4 +1,4 @@
-import { ControlValueAccessor } from '@angular/forms';
+import { ControlValueAccessor, NgControl } from '@angular/forms';
 
 export abstract class BaseInput implements ControlValueAccessor {
 
@@ -26,6 +26,12 @@ export abstract class BaseInput implements ControlValueAccessor {
     updateValue(event: Event): void {
         const target = event.target as HTMLInputElement;
         this.value = target.value;
+        this.onChange(this.value);
+        this.onTouched();
+    }
+
+    updateAndNotify(value : any){
+        this.value = value;
         this.onChange(this.value);
         this.onTouched();
     }

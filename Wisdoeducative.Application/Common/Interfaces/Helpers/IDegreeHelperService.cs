@@ -11,7 +11,7 @@ namespace Wisdoeducative.Application.Common.Interfaces.Helpers
     public interface IDegreeHelperService
     {
         Task<DegreeDto> GetById(int degreeId);
-
         Task ValidateUserDegreeProperties(UserDegreeConfigDTO userDegree);
+        DegreeDto ParseUserDegreeDtoToDegree(UserDegreeConfigDTO userDegree);
     }
 }

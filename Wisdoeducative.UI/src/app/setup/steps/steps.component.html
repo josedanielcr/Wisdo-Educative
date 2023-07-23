@@ -1,3 +1,221 @@
-<div *ngIf="wizardsChildSteps.length > 0">
-    <app-wizard [steps]="wizardsChildSteps" [width]="59.625"></app-wizard>
+<div class="d-flex justify-content-center image-logo-container">
+    <img src="https://wisdostorageaccount.blob.core.windows.net/wisdoblob/wisdo-colored-logo.png"
+    width="200" height="100">
+</div>
+
+<!-- wizard -->
+<div class="d-flex justify-content-center align-items-center">
+    <div class="wizard-container" [ngClass]="{
+        'standard-wizard-container': isDesktop || isTablet,
+        'small-wizard-container': isPhone
+        }">
+        <!-- wizard timeline -->
+        <div class="w-100">     
+            <div class="timeline">
+                <div class="timeline-line"></div>
+                <div *ngFor="let step of steps" 
+                    class="timeline-item" 
+                    [class.active]="step === currentStep">
+                    <div class="step-number">{{ step }}</div>
+                    <div class="timeline-marker"
+                        [ngClass]="{
+                            'timeline-item-done': step < currentStep,
+                            'timeline-item-active': step === currentStep,
+                            'timeline-item-upcoming': step > currentStep, 
+                        }">
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <div class="d-flex justify-content-center align-items-center flex-column w-100">
+          <!-- step 1 user data -->
+          <div class="w-100 d-flex justify-content-center align-items-center flex-column mb-4"
+                *ngIf="this.currentStep === 1">
+            <h1 class="wd-text-h1">Personales</h1>
+            <span class="wizard-child-description text-center">
+              Podemos personalizar su experiencia dentro de la herramienta con su información personal.
+            </span>
+            
+            <!-- content -->
+            <div class="wizard-component-container w-100">
+                <div class="w-100">
+                    <form autocomplete="off" [formGroup]="userSetupForm" class="w-100">
+                        <div class="row d-flex flex-wrap">
+                            <div class="col-sm-6 mb-3">
+                                <app-input-text placeholder="" 
+                                              label="Nombre" 
+                                              placeholder=""
+                                              error="El nombre es requerido"
+                                              formControlName="firstName">
+                              </app-input-text>
+                            </div>
+                            <div class="col-sm-6 mb-3">
+                              <app-input-text placeholder="" 
+                                              label="Apellido" 
+                                              placeholder=""
+                                              error="El apellido es requerido"
+                                              formControlName="lastName">
+                              </app-input-text>
+                            </div>
+                        </div>
+                        <div class="row d-flex flex-wrap">
+                            <div class="col-sm-6">
+                                <app-input-date label="¿Cuándo es tu cumpleaños?"
+                                                placeholder=""
+                                                error="La fecha de nacimiento es requerida"
+                                                formControlName="dateOfBirth">
+                                </app-input-date>
+                            </div>
+                            <div class="col-sm-6">
+                                <app-input-select [options]="userCategoryOptions"
+                                                  label="¿A qué te dedicas?"
+                                                  error="La categoría es requerida"
+                                                  formControlName="category">
+                                </app-input-select>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="w-100 d-flex">
+                        <div class="btn-container ms-auto mt-3">
+                            <app-button text="Continuar"
+                                        [type]="ButtonType.PRIMARY"
+                                        (click)="submitUserData()">
+                            </app-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+
+          <!-- step 2 interests -->
+          <div class="w-100 d-flex justify-content-center align-items-center flex-column mb-4"
+                *ngIf="this.currentStep === 2">
+            <!-- step 2 interests -->
+            <h1 class="wd-text-h1">Intereses</h1>
+            <span class="wizard-child-description text-center">
+              Cuéntanos cuáles son sus intereses profesionales
+            </span>
+            
+            <!-- content -->
+            <div class="wizard-component-container d-flex justify-content-center align-items-center flex-column w-100">
+              <app-chips-container #chipsContainer 
+                                  [chips]="chips" 
+                                  [limit]="4"
+                                  [maxChipsPerRow]="6">
+              </app-chips-container>
+          
+              <div class="w-100 d-flex button-spacing align-items-center mt-5"> 
+                <div *ngIf="this.isDesktop || this.isTablet" class="interest-count-container"
+                      [ngClass]="{'wd-bg-input-error' : this.notEnoughInterestsError}">
+                  {{'Has seleccionado ' + selectedChips.length + ' de ' + 4 + ' intereses'}}
+                </div>
+                <div *ngIf="this.isPhone" class="interest-count-container"
+                    [ngClass]="{'wd-bg-input-error' : this.notEnoughInterestsError}"> 
+                  {{(this.selectedChips.length > 0 ? this.selectedChips.length : 0) + ' de ' + 4}}
+                </div>
+        
+                <div class="btn-container ms-auto">
+                    <app-button text="Continuar"
+                                [type]="ButtonType.PRIMARY"
+                                (click)="submitInterests()">
+                    </app-button>
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- step 3 degree data -->
+        <div class="w-100 d-flex justify-content-center align-items-center flex-column mb-4"
+        *ngIf="this.currentStep === 3">
+
+        <!-- step 3 degree data -->
+          <h1 class="wd-text-h1">Estudio</h1>
+          <span class="wizard-child-description text-center">
+            Cuéntanos sobre la carrera, curso que estás estudiando actualmente
+          </span>
+      
+          <div class="w-100 wizard-component-container">
+            <form autocomplete="off" [formGroup]="setupDegreForm"
+            *ngIf="academicSheculeOptions && degreeTypeOptions && studyFieldOptions">
+        
+                <!-- main form container -->
+                <div class="row d-flex flex-wrap">
+                  <div class="col-sm-6 mb-3">
+                    <app-input-text placeholder="" 
+                                    label="Carrera / Curso" 
+                                    placeholder=""
+                                    error="El nombre de la carrera es requerido"
+                                    formControlName="degreeName">
+                    </app-input-text>
+                  </div>
+                  <div class="col-sm-6 mb-3">
+                    <app-institution-select placeholder="" 
+                                    label="Centro Educativo" 
+                                    [institutions]="institutions"
+                                    formControlName="institutionName"
+                                    error="La institución es requerida">
+                    </app-institution-select>
+                  </div>
+                </div>
+
+                <div class="row d-flex flex-wrap">
+                  <div class="col-sm-6 mb-3">
+                    <app-input-select [options]="academicSheculeOptions"
+                                      label="Modalidad"
+                                      formControlName="schedule">
+                    </app-input-select>
+                  </div>
+                  <div class="col-sm-6 mb-3">
+                    <app-input-select [options]="degreeTypeOptions"
+                                      label="Título a obtener"
+                                      formControlName="degreeType">
+                    </app-input-select>
+                  </div>
+                </div>
+
+                <div class="row d-flex flex-wrap">
+                  <div class="col-sm-6">
+                    <app-input-select [options]="studyFieldOptions"
+                                      label="Campo"
+                                      formControlName="studyField">
+                    </app-input-select>
+                  </div>
+                  <div class="col-sm-6">
+                    <app-input-date label="Fecha de inicio"
+                                    placeholder=""
+                                    error="La fecha de inicio es requerida"
+                                    formControlName="startYear">
+                    </app-input-date>
+                  </div>
+                </div>
+                <div class="btn-container ms-auto mt-3">
+                  <app-button text="Continue"
+                              [type]="ButtonType.PRIMARY"
+                              (click)="submitUserDegree()">
+                  </app-button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- step 4 execute setup -->
+        <div class="w-100 d-flex justify-content-center align-items-center flex-column mb-4"
+        *ngIf="this.currentStep === 4">
+
+        <div class="w-100 wizard-component-container d-flex justify-content-center">
+          <object type="image/svg+xml" data="../../../assets/animations/Infinity-1.6s-210px.svg">
+            Your browser does not support SVG.
+          </object>
+        </div>
+
+        <div class="d-flex justify-content-center flex-column text-center">
+          <h1 class="wd-text-h1">configurando...</h1>
+          <span class="wizard-child-description text-center">
+            No tienes que hacer nada más, espera a que terminemos de configurar y te rediregiremos al nuevo espacio creado.
+          </span>
+        </div>
+        </div>
+      </div>
+    </div>
 </div>

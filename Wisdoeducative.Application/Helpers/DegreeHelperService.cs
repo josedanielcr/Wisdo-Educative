@@ -47,22 +47,27 @@ namespace Wisdoeducative.Application.Helpers
                 : mapper.Map<DegreeDto>(dbDegree);
         }
 
+        public DegreeDto ParseUserDegreeDtoToDegree(UserDegreeConfigDTO userDegree)
+        {
+            if (entityHelper.AreAnyPropertiesNull(userDegree))
+            {
+                throw new BadRequestException($"{ErrorMessages.NullProperties} Degree information");
+            }
+            
+            var newDegree = new DegreeDto();
+            newDegree.Name = userDegree.DegreeName;
+            newDegree.StudyField = userDegree.StudyField;
+            newDegree.Type = userDegree.DegreeType;
+            return newDegree;
+        }
+
         public async Task ValidateUserDegreeProperties(UserDegreeConfigDTO userDegree)
         {
             if (entityHelper.AreAnyPropertiesNull(userDegree))
             {
                 throw new BadRequestException($"{ErrorMessages.NullProperties} User information");
             }
-            
-            mapper.Map<Degree>(await GetById(userDegree.DegreeId) ??
-                throw new NotFoundException($"{ErrorMessages.EntityNotFound} Degree"));
-
-            mapper.Map<User>(await userHelperService.GetUser(userDegree.UserId) ??
-                throw new NotFoundException($"{ErrorMessages.EntityNotFound} User"));
-
-            mapper.Map<Institution>(await institutionHelperService
-                .GetInstitutionById(userDegree.InstitutionId) ??
-                throw new NotFoundException($"{ErrorMessages.EntityNotFound} Institution"));
+            await Task.CompletedTask;
         }
     }
 }

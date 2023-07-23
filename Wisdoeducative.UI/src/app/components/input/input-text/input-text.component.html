@@ -4,9 +4,14 @@
 
 <input type="text"
        [placeholder]="placeholder"
-       class="wd-input"
-       [style.width]="width+'px'"
-       [style.height]="height+'px'"
+       class="wd-input w-100"
        [disabled]="isDisabled"
        [value]="value"
-       (input)="updateValue($event)"/>
+       (input)="updateValue($event)"
+       [ngClass]="{'wd-bg-input-error' : ngControl?.control?.touched 
+       && ngControl?.control?.invalid }"/>
+<div class="w-100 d-flex">
+    <span *ngIf="ngControl?.control?.touched 
+    && ngControl?.control?.invalid" 
+    class="ms-auto wd-text-danger wd-text-input-error-size">{{error}}</span>
+</div>

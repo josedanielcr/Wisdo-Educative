@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ButtonType } from 'src/app/enums/button.enum';
 
 @Component({
@@ -8,11 +8,11 @@ import { ButtonType } from 'src/app/enums/button.enum';
 })
 export class ButtonComponent {
 
-    ButtonType = ButtonType;
-    @Input() height : number = 40;
-    @Input() width : number = 150;
-    @Input() text: string = '';
-    @Input() disabled: boolean = false;
-    @Input() type: ButtonType = ButtonType.PRIMARY;
-    constructor() { }
+  ButtonType = ButtonType;
+  @Input() text: string = '';
+  @Input() disabled: boolean = false;
+  @Input() type: ButtonType = ButtonType.PRIMARY;
+  public isFull : boolean = true;
+
+  constructor() { }
 }

@@ -1,0 +1,43 @@
+<div class="input-label-container" *ngIf="label">
+    <label for="">{{label}}</label>
+</div>
+
+<div class="institution-select-container wd-bg-bone d-flex"
+    [ngClass]="{'wd-bg-input-error' : ngControl?.control?.touched 
+    && ngControl?.control?.invalid }">
+  <!-- input -->
+  <div class="input-container">
+    <input type="text"
+          class="w-100 h-100"
+          [value]="value"
+          (input)="updateValue($event)"
+          (focus)="openDropdown()"
+          (blur)="closeDropdown()">
+  </div>
+  
+  <div class="line"></div>
+
+  <!-- icon -->
+  <div class="d-flex justify-content-center align-items-center icon-container">
+    <img src="../../../../assets/icons/Loupe.png">
+  </div>
+  <div class="w-100 dropdown-container wd-bg-bone" [hidden]="!dropdownOpen">
+    <div class="drowpdown-data">
+      <div *ngFor="let institution of filteredInstitutions" 
+          class="drowpdown-data-item"
+          (mousedown)="setToInput(institution.name)">
+        <span class="option-text">{{institution.name}}</span>
+      </div>
+      <div class="dropdown-data-item d-flex align-items-center create-container"
+           *ngIf="filteredInstitutions.length === 0">
+        <img src="../../../../assets/icons/Add.png">
+        <span class="ms-2 option-text">Crear "<span class="option-text">{{this.value}}</span>"</span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="w-100 d-flex">
+  <span *ngIf="ngControl?.control?.touched 
+  && ngControl?.control?.invalid" 
+  class="ms-auto wd-text-danger wd-text-input-error-size">{{error}}</span>
+</div>

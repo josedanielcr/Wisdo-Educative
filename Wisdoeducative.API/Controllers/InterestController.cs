@@ -27,5 +27,17 @@ namespace Wisdoeducative.API.Controllers
             return Ok(await interestService.CreateInterest(interest));
         }
 
+        [HttpGet("{userId}")]
+        public async Task<IActionResult> GetUserInterests(int userId)
+        {
+            return Ok(await interestService.GetUserInterests(userId));
+        }
+
+        //create get interests method
+        [HttpGet]
+        public async Task<IActionResult> GetInterests()
+        {
+            return Ok(await interestService.GetInterests());
+        }
     }
 }

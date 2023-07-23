@@ -27,8 +27,7 @@ namespace Wisdoeducative.Application.Services
         private readonly IDegreeHelperService degreeHelperService;
         private readonly IUserHelperService userHelperService;
         private readonly IEntityHistoryService<UserDegree> userDegreeHistory;
-        private readonly IEntityHistoryService<User> userHistory;
-        private readonly IUserService userService;
+        private readonly IInstitutionHelperService institutionHelperService;
 
         public DegreeService(IApplicationDBContext dBContext,
             IMapper mapper,
@@ -36,8 +35,7 @@ namespace Wisdoeducative.Application.Services
             IDegreeHelperService degreeHelperService,
             IUserHelperService userHelperService,
             IEntityHistoryService<UserDegree> userDegreeHistory,
-            IEntityHistoryService<User> userHistory,
-            IUserService userService)
+            IInstitutionHelperService institutionHelperService)
         {
             this.dBContext = dBContext;
             this.mapper = mapper;
@@ -45,8 +43,7 @@ namespace Wisdoeducative.Application.Services
             this.degreeHelperService = degreeHelperService;
             this.userHelperService = userHelperService;
             this.userDegreeHistory = userDegreeHistory;
-            this.userHistory = userHistory;
-            this.userService = userService;
+            this.institutionHelperService = institutionHelperService;
         }
 
         public async Task<DegreeDto> CreateDegree(DegreeDto degree)
@@ -56,12 +53,12 @@ namespace Wisdoeducative.Application.Services
             { 
                 throw new BadRequestException($"{ErrorMessages.NullProperties} Degree");
             }
-            
+
             var dbDegree = mapper.Map<Degree>(degree);
             dbDegree.Status = EntityStatus.Active;
 
             dBContext.Degrees.Add(dbDegree);
-            await dBContext.SaveChangesAsync();
+            await dBContext.SaveChangesAsync(); //needed to get the id and use it in the userDegree
             return await degreeHelperService.GetById(dbDegree.Id); 
         }
 
@@ -69,33 +66,39 @@ namespace Wisdoeducative.Application.Services
         {
             User user = mapper.Map<User>(await userHelperService.GetUser(userDegree.UserId) ??
                 throw new NotFoundException($"{ErrorMessages.EntityNotFound} User"));
-            
-            user.UserStatus = UserStatus.Active;
-            UserDto userDto = mapper.Map<UserDto>(user);
-            await userService.UpdateUser(userDto);
-            await userHistory.SaveChanges(user, user.Id, EntityChangeTypes.Modified, user.B2cId);
+
             await userDegreeHistory.SaveChanges(userDegree, userDegree.Id, EntityChangeTypes.Added, user.B2cId);
-            await dBContext.SaveChangesAsync();
         }
 
         public async Task<UserDegreeDto> SetupUserDegree(UserDegreeConfigDTO userDegreeConfig)
         {
             await degreeHelperService.ValidateUserDegreeProperties(userDegreeConfig);
 
+            DegreeDto newDegree = await CreateDegree
+                (degreeHelperService.ParseUserDegreeDtoToDegree(userDegreeConfig))
+                ?? throw new BadRequestException($"{ErrorMessages.EntityNotFound} Degree");
+            InstitutionDto newInstitution = await institutionHelperService
+                .CreateInstituionByName(userDegreeConfig.InstitutionName)
+                ?? throw new BadRequestException($"{ErrorMessages.EntityNotFound} Institution");
+
+            if (userDegreeConfig.startDate > DateTime.Now)
+            {
+                throw new BadRequestException($"Initial date cannot be greater than today");
+            }
+
             UserDegree userDegree = new()
             {
-                DegreeId = userDegreeConfig.DegreeId,
+                DegreeId = newDegree.Id,
                 UserId = userDegreeConfig.UserId,
-                InstitutionId = userDegreeConfig.InstitutionId,
+                InstitutionId = newInstitution.Id,
                 CurrentProgress = 0,
-                StartDate = DateTime.Now,
+                StartDate = userDegreeConfig.startDate,
                 EndDate = DateTime.Now.AddYears(4),
                 Status = EntityStatus.Active,
                 Schedule = Enum.Parse<AcademicSchedule>(userDegreeConfig.Schedule)
             };
 
             dBContext.UserDegrees.Add(userDegree);
-            await dBContext.SaveChangesAsync();
             await SaveUserDegreeChanges(userDegree);
             return mapper.Map<UserDegreeDto>(userDegree);
         }

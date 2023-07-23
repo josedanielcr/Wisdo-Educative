@@ -1,46 +1,43 @@
-<div *ngIf="isStartupWindowOpen">
-    <div class="setup-container wd-bg-primary">
-    
-        <!-- logo -->
-        <div>
-            <img src="https://wisdostorageaccount.blob.core.windows.net/wisdoblob/wisdo-white-logo.png"
-            width="366" height="176">
-        </div>
-    
-        <!-- header -->
-        <div class="setup-header">
-            <h1 class="wd-text-h1 wd-text-white">Welcome to Wisdo!</h1>
-        </div>
-    
-        <!-- subheader -->
-        <div class="setup-subheader">
-            <span class="wd-text-white">Set up the tool in 4 easy steps and start a new learning journey.</span>
-        </div>
-    
-        <!-- button -->
-        <div>
-            <app-button text="Set up now" 
-                    [disabled]="false" 
-                    [width]="14.0625" 
-                    [height]="2.9375"
-                    [type]="ButtonType.SECONDARY"
-                    (click)="startSetup()"
-                    >
-            </app-button>
-        </div>
-    
-        <!-- skip button -->
-        <div class="setup-skip">
-            <app-button text="Skip this step" 
-                    [disabled]="false"
-                    [type]="ButtonType.NOSTYLE"
-                    (click)="skipSetup()"
-                    [width]="14.0625" 
-                    [height]="2.9375">
-            </app-button>
-        </div>
+<div class="setup-container">
+  <div class="wd-bg-primary page-container startup-window"
+      *ngIf="isStartupWindowOpen">
+    <!-- logo -->
+    <img src="https://wisdostorageaccount.blob.core.windows.net/wisdoblob/wisdo-white-logo.png"
+        class="logo">
+
+    <div class="setup-header text-center">
+        <h1 class="wd-text-h1 wd-text-white">¡Bienvenido a Wisdo!</h1>
     </div>
-</div>
-<div *ngIf="!isStartupWindowOpen" class="setup-container">
+
+    <!-- subheader -->
+    <div class="setup-subheader">
+      <span class="wd-text-white">
+        Configura la herramienta en <span class="fw-bold">4 sencillos pasos</span> 
+        y empieza una nueva etapa de aprendizaje.
+      </span>
+    </div>
+
+      <!-- button -->
+    <div class="setup-skip btn-container">
+      <app-button text="Configurar ahora" 
+              [disabled]="false" 
+              [type]="ButtonType.SECONDARY"
+              (click)="startSetup()"
+              >
+      </app-button>
+    </div>
+
+    <!-- skip button -->
+    <div class="setup-skip btn-container">
+      <app-button text="Omitir este paso" 
+              [disabled]="false"
+              [type]="ButtonType.NOSTYLE"
+              (click)="skipSetup()">
+      </app-button>
+    </div>
+  </div>
+
+  <div class="page-container" *ngIf="!isStartupWindowOpen">
     <app-steps></app-steps>
+  </div>
 </div>

@@ -61,6 +61,15 @@ namespace Wisdoeducative.Application.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The following entity already exists:.
+        /// </summary>
+        internal static string DuplicatedEntity {
+            get {
+                return ResourceManager.GetString("DuplicatedEntity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The list of the following entity is null:.
         /// </summary>
         internal static string EmptyEntityList {

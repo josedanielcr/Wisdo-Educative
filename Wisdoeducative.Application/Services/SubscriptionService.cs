@@ -50,13 +50,12 @@ namespace Wisdoeducative.Application.Services
             };
 
             dBContext.UserSubscriptions.Add(newUserSubscription);
-            await dBContext.SaveChangesAsync();
+            await dBContext.SaveChangesAsync(); //needed to link a transaction to the user subscription
 
             var newUserSubscriptionId = newUserSubscription.Id;
             await LinkTransactionToUserSubscription(newUserSubscriptionId, null);
             await subscriptionHelper.SaveUserSubscriptionHistory(newUserSubscription, newUserSubscriptionId,
                 EntityChangeTypes.Added,b2cId);
-            await dBContext.SaveChangesAsync();
         }
 
         public async Task LinkTransactionToUserSubscription(int userSubscriptionId, 
@@ -85,7 +84,6 @@ namespace Wisdoeducative.Application.Services
             };
 
             dBContext.UserSubscriptionTransactions.Add(transaction);
-            await dBContext.SaveChangesAsync();
         }
     }
 }

@@ -8,13 +8,16 @@ import { ChipModel } from 'src/app/models/chip.model';
 })
 export class ChipComponent {
 
-    @Input() chip : ChipModel;
-    @Output() toggleChip : EventEmitter<any> = new EventEmitter<any>();
+  @Input() chip : ChipModel;
+  @Input() limit : number;
+  @Input() currentSelectedChips : number;
+  @Output() toggleChip : EventEmitter<any> = new EventEmitter<any>();
 
-    constructor() { }
+  constructor() { }
 
-    public toggleSelected() : void {
-        this.chip.selected = !this.chip.selected;
-        this.toggleChip.emit();
-    }
+  public toggleSelected() : void {
+    if(this.currentSelectedChips >= this.limit && this.chip.selected === false) return;
+    this.chip.selected = !this.chip.selected;
+    this.toggleChip.emit();
+  }
 }

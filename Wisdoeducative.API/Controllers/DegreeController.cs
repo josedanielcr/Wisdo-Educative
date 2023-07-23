@@ -24,11 +24,5 @@ namespace Wisdoeducative.API.Controllers
         {
             return Ok(await degreeService.CreateDegree(degree));
         }
-
-        [HttpPost("setup")]
-        public async Task<IActionResult> SetupUserDegree([FromBody] UserDegreeConfigDTO userDegreeConfig)
-        {
-            return Ok(await degreeService.SetupUserDegree(userDegreeConfig));
-        }
     }
 }

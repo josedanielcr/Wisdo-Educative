@@ -1,22 +1,38 @@
 .setup-container {
     height: 100vh;
     width: 100%;
+}
+
+.page-container {
+    height: 100%;
+    width: 100%;
+}
+
+.startup-window {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
+.logo {
+    max-width: 224px;
+    max-height: 107px;
+}
+
 .setup-header {
-    margin: 50px 0px;
+    margin-top: 6.60rem;
 }
 
 .setup-subheader {
-    margin-bottom: 50px;
-    width: 400px;
+    margin-top: 1.25rem;
     text-align: center;
 }
 
 .setup-skip {
-    margin-top: 20px;
+    margin-top: 2.25rem
+}
+
+.btn-container {
+    width: 14.0625rem;
 }
