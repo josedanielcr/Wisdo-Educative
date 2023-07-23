@@ -365,7 +365,6 @@ FodyWeavers.xsd
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # Compiled output
-/Wisdoeducative.UI/dist
 /Wisdoeducative.UI/tmp
 /Wisdoeducative.UI/out-tsc
 /Wisdoeducative.UI/bazel-out

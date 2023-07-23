@@ -1,0 +1,119 @@
+/*!**********************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[5].rules[0].oneOf[0].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[5].rules[0].oneOf[0].use[2]!./src/styles.css?ngGlobalStyle ***!
+  \**********************************************************************************************************************************************************************************************************************/
+/* #region general styles */
+body {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    font-size: 1rem;
+}
+/*#endregion*/
+
+/* #region global variables */
+:root {
+    --primary-color: #023246;
+    --seconday-color: #287094;
+    --disabled-color: #D4D4CE;
+    --background-color: #FFFFFF;
+    --danger-color: #B22222;
+    --success-color: #42AC66;
+    --bone-color: #F6F6F6;
+    --input-error-bg-color: rgba(200, 33, 73, 0.20);
+}
+/*#endregion*/
+
+/*#region text mode*/
+.wd-text-bold {
+    font-weight: 700;
+}
+/*#endregion*/
+
+/*#region headers */
+.wd-text-h1 {
+    font-weight: 700;
+    font-size: 1.875rem;
+}
+
+.wd-text-h2 {
+    font-weight: 500;
+    font-size: 1.625rem;
+}
+
+.wd-text-h3 {
+    font-weight: 500;
+    font-size: 1.375rem;
+}
+/*#endregion*/
+
+/*#region text colors */
+.wd-text-primary {
+    color: var(--primary-color);
+}
+
+.wd-text-white {
+    color: white;
+}
+
+.wd-text-disabled {
+    color: var(--disabled-color);
+}
+
+.wd-text-secondary {
+    color: var(--seconday-color);
+}
+
+.wd-text-success {
+    color: var(--success-color);
+}
+
+.wd-text-danger {
+    color: var(--danger-color);
+}
+
+.wd-text-bone {
+    color: var(--bone-color);
+}
+/* #endregion */
+
+
+/*#region backgrounds*/
+.wd-bg-primary {
+    background-color: var(--primary-color);
+}
+
+.wd-bg-white {
+    background-color: white;
+}
+
+.wd-bg-disabled {
+    background-color: var(--disabled-color);
+}
+
+.wd-bg-secondary {
+    background-color: var(--seconday-color);
+}
+
+.wd-bg-success {
+    background-color: var(--success-color);
+}
+
+.wd-bg-danger {
+    background-color: var(--danger-color);
+}
+
+.wd-bg-bone {
+    background-color: var(--bone-color);
+}
+/*#endregion*/
+
+/*#region errors*/
+.wd-bg-input-error {
+    background-color: var(--input-error-bg-color) !important;
+}
+
+.wd-text-input-error-size {
+    font-size: 0.8rem;
+}
+/*#endregion errors*/
+
+/*# sourceMappingURL=styles.css.map*/
