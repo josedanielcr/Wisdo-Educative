@@ -10,6 +10,7 @@ import { StudyFieldEnum } from 'src/app/enums/core/study.field.enum';
 import { UserCategoryEnum } from 'src/app/enums/core/user.category.enum';
 import { ApplicationErrorModel } from 'src/app/models/application.error.model';
 import { ChipModel } from 'src/app/models/chip.model';
+import { InstitutionClient } from 'src/app/models/core/client/institution.client.model';
 import { InterestClient } from 'src/app/models/core/client/interest.client.model';
 import { UserClient } from 'src/app/models/core/client/user.client.model';
 import { UserDegreeClient } from 'src/app/models/core/client/user.degree.client.model';
@@ -17,12 +18,14 @@ import { ScreenSizeModel } from 'src/app/models/screenSize.model';
 import { SelectOptionModel } from 'src/app/models/select.option.model';
 import { SetUpDegree } from 'src/app/models/utils/setup.degree.model';
 import { SetUpUser } from 'src/app/models/utils/setup.user.model';
+import { SetUpUserServer } from 'src/app/models/utils/setup.user.sever.model';
 import { ChipsContainerService } from 'src/app/services/components/chips-container.service';
 import { FormService } from 'src/app/services/components/form.service';
 import { SelectService } from 'src/app/services/components/select.service';
 import { AuthService } from 'src/app/services/core/auth.service';
 import { DegreeService } from 'src/app/services/core/degree.service';
 import { EnumService } from 'src/app/services/core/enum.service';
+import { InstitutionService } from 'src/app/services/core/institution.service';
 import { InterestService } from 'src/app/services/core/interest.service';
 import { UserService } from 'src/app/services/core/user.service';
 import { WindowResizeService } from 'src/app/services/helpers/window-resize.service';
@@ -53,6 +56,7 @@ export class StepsComponent implements OnInit{
   public degreeTypeOptions : SelectOptionModel[];
   public studyFieldOptions : SelectOptionModel[];
   public userCategoryOptions : SelectOptionModel[];
+  public institutions : InstitutionClient[] = [];
   
   //forms
   public userSetupForm : FormGroup;
@@ -75,7 +79,7 @@ export class StepsComponent implements OnInit{
               private chipsContainerService : ChipsContainerService,
               private interestsService : InterestService,
               private router : Router,
-              private degreeService : DegreeService) {}
+              private institutionService : InstitutionService) {}
               
   ngOnInit(): void {
     this.loadSelectOptions();
@@ -170,6 +174,11 @@ export class StepsComponent implements OnInit{
     this.userCategoryOptions = this.getUserCategoryNames(
       this.selectService.transformObjectToSelectOptions(
         this.enumService.getEnumValues(UserCategoryEnum),null,null));
+    this.institutionService.getInstitutions().subscribe({
+      next: (institutions : InstitutionClient[]) => {
+        this.institutions = institutions;
+      }
+    });
   }
 
   private getUserCategoryNames(userCategories : SelectOptionModel[]) : SelectOptionModel[] {
@@ -243,15 +252,14 @@ export class StepsComponent implements OnInit{
   }
 
   private executeUserSetup(): void {
-    concat(this.userService.setUserDetails(this.user),
-      this.userService.setUserInterests(this.user.id, this.selectedInterests), 
-      this.degreeService.setUserDegree(this.userDegreeSetupData))
-    .pipe(
-      toArray()
-    )
-    .subscribe({
-      next: (response : [UserClient, UserClient, UserDegreeClient]) => {
-        this.authService.setUserSubject(response[2].user);
+    let userSetupData : SetUpUserServer = new SetUpUserServer();
+    userSetupData.user = this.user;
+    userSetupData.interestsDtos = this.selectedInterests;
+    userSetupData.userDegreConfig = this.userDegreeSetupData;
+
+    this.userService.setUserDetails(userSetupData).subscribe({
+      next: (user : UserClient) => {
+        this.authService.setUserSubject(user);
         this.router.navigate(['/workspace']);
       },
       error: (error : ApplicationErrorModel) => {

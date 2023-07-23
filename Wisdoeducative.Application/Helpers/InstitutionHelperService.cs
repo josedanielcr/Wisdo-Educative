@@ -38,10 +38,10 @@ namespace Wisdoeducative.Application.Helpers
                 return institution;
             }
             var newInstitution = new Institution();
-            newInstitution.Name = name.ToUpper();
+            newInstitution.Name = name;
             newInstitution.Status = EntityStatus.Active;
             dBContext.Institutions.Add(newInstitution);
-            await dBContext.SaveChangesAsync();
+            await dBContext.SaveChangesAsync(); //needed to get the id for the userDegree setup
             return mapper.Map<InstitutionDto>(newInstitution);
         }
 

@@ -6,12 +6,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using Wisdoeducative.Application.Common.Exceptions;
 using Wisdoeducative.Application.Common.Interfaces;
 using Wisdoeducative.Application.Common.Interfaces.Helpers;
 using Wisdoeducative.Application.Common.Interfaces.Historics;
 using Wisdoeducative.Application.Common.Interfaces.Services;
 using Wisdoeducative.Application.DTOs;
+using Wisdoeducative.Application.DTOs.CustomDTOs;
 using Wisdoeducative.Application.Resources;
 using Wisdoeducative.Domain.Entities;
 using Wisdoeducative.Domain.Enums;
@@ -27,6 +29,7 @@ namespace Wisdoeducative.Application.Services
         private readonly IInterestService interestService;
         private readonly ISubscriptionService subscriptionService;
         private readonly IEntityHelperService entityHelperService;
+        private readonly IDegreeService degreeService;
 
         public UserService(IApplicationDBContext dBContext, 
             IMapper mapper, 
@@ -34,7 +37,8 @@ namespace Wisdoeducative.Application.Services
             IRoleService roleService,
             IInterestService interestService,
             ISubscriptionService subscriptionService,
-            IEntityHelperService entityHelperService)
+            IEntityHelperService entityHelperService,
+            IDegreeService degreeService)
         {
             this.dBContext = dBContext;
             this.mapper = mapper;
@@ -43,6 +47,7 @@ namespace Wisdoeducative.Application.Services
             this.interestService = interestService;
             this.subscriptionService = subscriptionService;
             this.entityHelperService = entityHelperService;
+            this.degreeService = degreeService;
         }
 
         public async Task<UserDto> CreateUser(UserDto user)
@@ -59,6 +64,33 @@ namespace Wisdoeducative.Application.Services
             return mapper.Map<UserDto>(userEntity);
         }
 
+        public async Task<UserDto> UserConfiguration(UserSetupDTO userSetupDTO)
+        {
+            using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+
+            try
+            {
+                var userSetup = await SetUserData(userSetupDTO.User);
+                var interestsSetup = await SetUserInterests(userSetupDTO.User.Id, userSetupDTO.InterestsDtos);
+                var userDegreeSetup = await degreeService.SetupUserDegree(userSetupDTO.UserDegreConfig);
+
+                //complete user
+                User alreadyExistingUser = dBContext.Users.Find(userSetupDTO.User.Id)!;
+                alreadyExistingUser.UserStatus = UserStatus.Active;
+
+                //save changes
+                await dBContext.SaveChangesAsync();
+
+                //complete
+                scope.Complete();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return mapper.Map<UserDto>(dBContext.Users.Find(userSetupDTO.User.Id));
+        }
+
         public async Task<UserDto> SetUserData(UserDto user)
         {
             string[] propertiesToCheck = new string[] { "Name", "LastName", "DateOfBirth", "Category" };
@@ -73,9 +105,8 @@ namespace Wisdoeducative.Application.Services
                 throw new BadRequestException($"You need to have more than 13 years old");
             }
 
-            await subscriptionService.LinkSubscriptionToAccount(SubscriptionNames.Free, user.Id,
-                user.B2cId);
-            await UpdateUser(user, UserStatus.Pending);
+            await subscriptionService.LinkSubscriptionToAccount(SubscriptionNames.Free, user.Id, user.B2cId);
+            await UpdateUser(user);
             return await userServiceHelper.GetUser(user.Id);
         }
 
@@ -87,25 +118,13 @@ namespace Wisdoeducative.Application.Services
             return mapper.Map<UserDto>(user);
         }
 
-        public async Task UpdateStatus(int userId, UserStatus status)
-        {
-            var user = mapper.Map<User>(await userServiceHelper.GetUser(userId)
-                ?? throw new NotFoundException($"{ErrorMessages.EntityNotFound} {userId}"));
-            user.UserStatus = status;
-            dBContext.Users.Attach(user);
-            dBContext.Entry(user).State = EntityState.Modified;
-            await userServiceHelper.SaveUserHistory(user, EntityChangeTypes.Modified, user.B2cId);
-            await dBContext.SaveChangesAsync();
-        }
-
-        public async Task UpdateUser(UserDto user, UserStatus newStatus)
+        public async Task UpdateUser(UserDto user)
         {
             var userEntity = mapper.Map<User>(user);
-            userEntity.UserStatus = newStatus;
             dBContext.Users.Attach(userEntity);
             dBContext.Entry(userEntity).State = EntityState.Modified;
             dBContext.Entry(userEntity).Property(u => u.B2cId).IsModified = false;
-            await dBContext.SaveChangesAsync();
+            await userServiceHelper.SaveUserHistory(userEntity, EntityChangeTypes.Modified, user.B2cId);
         }
 
         public async Task<UserDto> ValidateUser(UserDto user)

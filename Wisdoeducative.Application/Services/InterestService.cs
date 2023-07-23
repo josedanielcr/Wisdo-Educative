@@ -64,8 +64,7 @@ namespace Wisdoeducative.Application.Services
                 SaveToHistory(userInterest, EntityChangeTypes.Added, user.B2cId);
             }
             await dBContext.SaveChangesAsync();
-
-            return await GetUserInterests(user.Id); ;
+            return await GetUserInterests(user.Id);
         }
 
         public Task CheckInterestList(IEnumerable<InterestDto> interests)

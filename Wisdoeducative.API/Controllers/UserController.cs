@@ -4,6 +4,7 @@ using Microsoft.Identity.Web.Resource;
 using System.Security.Claims;
 using Wisdoeducative.Application.Common.Interfaces.Services;
 using Wisdoeducative.Application.DTOs;
+using Wisdoeducative.Application.DTOs.CustomDTOs;
 using Wisdoeducative.Application.Services;
 
 namespace Wisdoeducative.API.Controllers
@@ -46,17 +47,9 @@ namespace Wisdoeducative.API.Controllers
 
         [HttpPost]
         [Route("configuration")]
-        public async Task<IActionResult> SetUserConfiguration([FromBody] UserDto userConfiguration)
+        public async Task<IActionResult> SetUserConfiguration([FromBody] UserSetupDTO userConfiguration)
         {
-            return Ok(await userService.SetUserData(userConfiguration));
-        }
-
-        [HttpPost]
-        [Route("{userId}/interests")]
-        public async Task<IActionResult> SetUserInterests(int userId,
-            [FromBody] List<InterestDto> interests)
-        {
-            return Ok(await userService.SetUserInterests(userId, interests));
+            return Ok(await userService.UserConfiguration(userConfiguration));
         }
     }
 }

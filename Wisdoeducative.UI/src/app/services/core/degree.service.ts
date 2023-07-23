@@ -17,14 +17,4 @@ export class DegreeService {
   constructor(private http : HttpClient,
     private userDegreeAdapater : UserDegreeAdapterService,
     private applicationErrorService : ApplicationErrorService) { }
-
-  public setUserDegree(setUpDegree : SetUpDegree) : Observable<UserDegreeClient> {
-    return this.http.post<UserDegreeClient>(`${environment.apiUrl}/degree/setup`, setUpDegree)
-      .pipe(
-        map((userDegree : UserDegreeServer) => {
-          return this.userDegreeAdapater.adaptUserDegreeServerToClient(userDegree);
-        }),
-        catchError((error: any) => { throw this.applicationErrorService.parseHttpError(error); })
-      );
-  }
 }

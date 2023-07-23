@@ -27,8 +27,6 @@ namespace Wisdoeducative.Application.Services
         private readonly IDegreeHelperService degreeHelperService;
         private readonly IUserHelperService userHelperService;
         private readonly IEntityHistoryService<UserDegree> userDegreeHistory;
-        private readonly IEntityHistoryService<User> userHistory;
-        private readonly IUserService userService;
         private readonly IInstitutionHelperService institutionHelperService;
 
         public DegreeService(IApplicationDBContext dBContext,
@@ -37,8 +35,6 @@ namespace Wisdoeducative.Application.Services
             IDegreeHelperService degreeHelperService,
             IUserHelperService userHelperService,
             IEntityHistoryService<UserDegree> userDegreeHistory,
-            IEntityHistoryService<User> userHistory,
-            IUserService userService, 
             IInstitutionHelperService institutionHelperService)
         {
             this.dBContext = dBContext;
@@ -47,8 +43,6 @@ namespace Wisdoeducative.Application.Services
             this.degreeHelperService = degreeHelperService;
             this.userHelperService = userHelperService;
             this.userDegreeHistory = userDegreeHistory;
-            this.userHistory = userHistory;
-            this.userService = userService;
             this.institutionHelperService = institutionHelperService;
         }
 
@@ -59,12 +53,12 @@ namespace Wisdoeducative.Application.Services
             { 
                 throw new BadRequestException($"{ErrorMessages.NullProperties} Degree");
             }
-            
+
             var dbDegree = mapper.Map<Degree>(degree);
             dbDegree.Status = EntityStatus.Active;
 
             dBContext.Degrees.Add(dbDegree);
-            await dBContext.SaveChangesAsync();
+            await dBContext.SaveChangesAsync(); //needed to get the id and use it in the userDegree
             return await degreeHelperService.GetById(dbDegree.Id); 
         }
 
@@ -74,7 +68,6 @@ namespace Wisdoeducative.Application.Services
                 throw new NotFoundException($"{ErrorMessages.EntityNotFound} User"));
 
             await userDegreeHistory.SaveChanges(userDegree, userDegree.Id, EntityChangeTypes.Added, user.B2cId);
-            await dBContext.SaveChangesAsync();
         }
 
         public async Task<UserDegreeDto> SetupUserDegree(UserDegreeConfigDTO userDegreeConfig)
@@ -106,8 +99,6 @@ namespace Wisdoeducative.Application.Services
             };
 
             dBContext.UserDegrees.Add(userDegree);
-            await userService.UpdateStatus(userDegreeConfig.UserId, UserStatus.Active);
-            await dBContext.SaveChangesAsync();
             await SaveUserDegreeChanges(userDegree);
             return mapper.Map<UserDegreeDto>(userDegree);
         }

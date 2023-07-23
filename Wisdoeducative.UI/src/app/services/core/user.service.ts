@@ -10,6 +10,7 @@ import { AuthService } from './auth.service';
 import { InterestClient } from 'src/app/models/core/client/interest.client.model';
 import { InterestAdapterService } from '../helpers/adapters/interest-adapter.service';
 import { InterestServer } from 'src/app/models/core/server/interest.server.model';
+import { SetUpUserServer } from 'src/app/models/utils/setup.user.sever.model';
 
 @Injectable({
   providedIn: 'root'
@@ -29,23 +30,19 @@ export class UserService {
       );
   }
 
-  public setUserDetails(user : UserClient): Observable<UserClient> {
-    return this.http.post(`${environment.apiUrl}/user/configuration`, 
-      this.userAdapterService.adaptUserClientToServer(user))
+  public setUserDetails(userSetupData : SetUpUserServer): Observable<UserClient> {
+    return this.http.post(`${environment.apiUrl}/user/configuration`, this.adaptData(userSetupData))
       .pipe(
         map((user : UserServer) => this.userAdapterService.adaptUserServerToClient(user)),
         catchError((error: any) => {throw this.applicationErrorService.parseHttpError(error)})
       );
   }
 
-  public setUserInterests(userId : number, interests : InterestClient[]): Observable<UserClient> {
-    let interestsServer : InterestServer[] = interests.map((interest : InterestClient) => 
-      this.interestAdapterService.adaptInterestClientToServer(interest));
-
-    return this.http.post(`${environment.apiUrl}/user/${userId}/interests`,interestsServer)
-      .pipe(
-        map((user : UserServer) => this.userAdapterService.adaptUserServerToClient(user)),
-        catchError((error: any) => {throw this.applicationErrorService.parseHttpError(error)})
-      );
+  private adaptData(userSetupData: SetUpUserServer): any {
+    return {
+      user : this.userAdapterService.adaptUserClientToServer(userSetupData.user),
+      interestsDtos : userSetupData.interestsDtos.map((interest : InterestClient) => this.interestAdapterService.adaptInterestClientToServer(interest)),
+      userDegreConfig : userSetupData.userDegreConfig
+    }
   }
 }
