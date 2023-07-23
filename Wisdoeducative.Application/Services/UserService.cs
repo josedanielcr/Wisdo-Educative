@@ -67,8 +67,15 @@ namespace Wisdoeducative.Application.Services
                 throw new BadRequestException($"{ErrorMessages.NullProperties} User={user}");
             }
 
+            DateTime validDate = DateTime.Now.AddYears(-13);
+            if (user.DateOfBirth >= validDate)
+            {
+                throw new BadRequestException($"You need to have more than 13 years old");
+            }
+
             await subscriptionService.LinkSubscriptionToAccount(SubscriptionNames.Free, user.Id,
                 user.B2cId);
+            await UpdateUser(user, UserStatus.Pending);
             return await userServiceHelper.GetUser(user.Id);
         }
 

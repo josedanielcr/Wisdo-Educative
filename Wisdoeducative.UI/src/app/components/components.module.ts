@@ -6,6 +6,7 @@ import { InputSelectComponent } from './input/input-select/input-select.componen
 import { InputDateComponent } from './input/input-date/input-date.component';
 import { ChipsContainerComponent } from './chips-container/chips-container.component';
 import { ChipComponent } from './chips-container/chip/chip.component';
+import { InstitutionSelectComponent } from './input/institution-select/institution-select.component';
 
 
 
@@ -16,14 +17,16 @@ import { ChipComponent } from './chips-container/chip/chip.component';
     InputSelectComponent,
     InputDateComponent,
     ChipsContainerComponent,
-    ChipComponent
+    ChipComponent,
+    InstitutionSelectComponent
   ],
   exports: [
     ButtonComponent,
     InputTextComponent,
     InputSelectComponent,
     InputDateComponent,
-    ChipsContainerComponent
+    ChipsContainerComponent,
+    InstitutionSelectComponent
   ],
   imports: [
     CommonModule

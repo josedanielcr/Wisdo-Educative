@@ -80,6 +80,7 @@ namespace Wisdoeducative.Application.Services
         public async Task<UserDegreeDto> SetupUserDegree(UserDegreeConfigDTO userDegreeConfig)
         {
             await degreeHelperService.ValidateUserDegreeProperties(userDegreeConfig);
+
             DegreeDto newDegree = await CreateDegree
                 (degreeHelperService.ParseUserDegreeDtoToDegree(userDegreeConfig))
                 ?? throw new BadRequestException($"{ErrorMessages.EntityNotFound} Degree");
@@ -87,13 +88,18 @@ namespace Wisdoeducative.Application.Services
                 .CreateInstituionByName(userDegreeConfig.InstitutionName)
                 ?? throw new BadRequestException($"{ErrorMessages.EntityNotFound} Institution");
 
+            if (userDegreeConfig.startDate > DateTime.Now)
+            {
+                throw new BadRequestException($"Initial date cannot be greater than today");
+            }
+
             UserDegree userDegree = new()
             {
                 DegreeId = newDegree.Id,
                 UserId = userDegreeConfig.UserId,
                 InstitutionId = newInstitution.Id,
                 CurrentProgress = 0,
-                StartDate = DateTime.Now,
+                StartDate = userDegreeConfig.startDate,
                 EndDate = DateTime.Now.AddYears(4),
                 Status = EntityStatus.Active,
                 Schedule = Enum.Parse<AcademicSchedule>(userDegreeConfig.Schedule)

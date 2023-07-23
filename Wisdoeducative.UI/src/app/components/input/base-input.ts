@@ -29,4 +29,10 @@ export abstract class BaseInput implements ControlValueAccessor {
         this.onChange(this.value);
         this.onTouched();
     }
+
+    updateAndNotify(value : any){
+        this.value = value;
+        this.onChange(this.value);
+        this.onTouched();
+    }
 }

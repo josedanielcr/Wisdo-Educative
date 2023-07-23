@@ -15,5 +15,6 @@ namespace Wisdoeducative.Application.DTOs.CustomDTOs
         public string Schedule { get; set; }
         public string DegreeType { get; set; }
         public string StudyField { get; set; }
+        public DateTime startDate { get; set; }
     }
 }

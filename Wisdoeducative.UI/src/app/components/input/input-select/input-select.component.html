@@ -2,22 +2,16 @@
   <label for="">{{label}}</label>
 </div>
 
-<div class="select-wrapper w-100"
-      [ngClass]="{'wd-bg-input-error' : ngControl?.control?.touched 
-      && ngControl?.control?.invalid }">
+<div class="select-wrapper w-100">
     <select #selectComponent
             (change)="updateValue($event)"
             [value]="value"
-            class="wd-input">  
+            class="wd-input"
+            [ngClass]="{'wd-bg-input-error' : ngControl?.control?.touched 
+            && ngControl?.control?.invalid }">  
 
       <!-- loading-->
       <option *ngIf="!options && !defaultOption">Loading...</option>
-
-      <!-- default option -->
-      <option *ngIf="defaultOption" 
-              [value]="defaultOption.value">
-          {{defaultOption.name}}
-      </option>
       
       <!-- options -->
       <option *ngFor="let option of options" 

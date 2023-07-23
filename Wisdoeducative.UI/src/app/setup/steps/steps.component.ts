@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { concat, toArray } from 'rxjs';
 import { ChipsContainerComponent } from 'src/app/components/chips-container/chips-container.component';
@@ -17,7 +17,6 @@ import { ScreenSizeModel } from 'src/app/models/screenSize.model';
 import { SelectOptionModel } from 'src/app/models/select.option.model';
 import { SetUpDegree } from 'src/app/models/utils/setup.degree.model';
 import { SetUpUser } from 'src/app/models/utils/setup.user.model';
-import { WizardChildModel } from 'src/app/models/wizard.child.model';
 import { ChipsContainerService } from 'src/app/services/components/chips-container.service';
 import { FormService } from 'src/app/services/components/form.service';
 import { SelectService } from 'src/app/services/components/select.service';
@@ -163,7 +162,7 @@ export class StepsComponent implements OnInit{
       firstName: this.user.name,
       lastName: this.user.lastName,
       dateOfBirth: null,
-      category: this.userCategoryOptions[0]
+      category: null
     });
   }
 
@@ -195,7 +194,7 @@ export class StepsComponent implements OnInit{
     this.user.name = userData.firstName;
     this.user.lastName = userData.lastName;
     this.user.dateOfBirth = userData.dateOfBirth;
-    this.user.category = userData.category['value'];
+    this.user.category = userData.category;
     this.user.role = null;
   }
 
@@ -252,11 +251,14 @@ export class StepsComponent implements OnInit{
     )
     .subscribe({
       next: (response : [UserClient, UserClient, UserDegreeClient]) => {
-        this.authService.setUserSubject(response[0]);
+        this.authService.setUserSubject(response[2].user);
         this.router.navigate(['/workspace']);
       },
       error: (error : ApplicationErrorModel) => {
         alert(error);
+        setTimeout(() => {
+          window.location.reload();
+        },2000);
       }
     });
   }

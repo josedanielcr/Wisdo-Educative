@@ -36,5 +36,12 @@ export class InputSelectComponent extends BaseInput implements AfterViewInit {
       this.ngControl.valueAccessor = this;
       this.cdf.detectChanges();
     }
+    this.setFirstValue();
+    this.cdf.detectChanges();
+  }
+
+  private setFirstValue() {
+    this.value = this.options[0].value;
+    super.updateAndNotify(this.value);
   }
 }
