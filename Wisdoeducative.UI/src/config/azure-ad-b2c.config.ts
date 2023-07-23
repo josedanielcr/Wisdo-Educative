@@ -15,7 +15,11 @@ if (isDevMode()) {
     domainName = 'wisdoeducativedev.onmicrosoft.com';
     authorityDomain = 'wisdoeducativedev.b2clogin.com';
     clientID = 'e46252e1-e3a7-4fe5-9343-08c88a86fd47';
-    endPoint = 'https://localhost:7254/';
+    if(window.location.href.indexOf('localhost') > -1) {
+        endPoint = 'https://localhost:7254/';
+    } else {
+        endPoint = 'https://lemon-glacier-05e76cc10.3.azurestaticapps.net/';
+    }
     scopes = ["https://wisdoeducativedev.onmicrosoft.com/wisdoeducative-dev-api/api.wisdoeducative.write"
     ,"https://wisdoeducativedev.onmicrosoft.com/wisdoeducative-dev-api/api.wisdoeducative.read"]
 }

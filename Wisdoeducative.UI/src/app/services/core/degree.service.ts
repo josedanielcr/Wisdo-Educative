@@ -7,7 +7,6 @@ import { UserAdapterService } from '../helpers/adapters/user-adapter.service';
 import { UserDegreeAdapterService } from '../helpers/adapters/user-degree-adapter.service';
 import { UserDegreeServer } from 'src/app/models/core/server/user.degree.server.model';
 import { ApplicationErrorService } from '../helpers/application-error.service';
-import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
