@@ -14,11 +14,12 @@ let domainName : string;
 if (isDevMode()) {
     domainName = 'wisdoeducativedev.onmicrosoft.com';
     authorityDomain = 'wisdoeducativedev.b2clogin.com';
-    clientID = 'e46252e1-e3a7-4fe5-9343-08c88a86fd47';
     if(window.location.href.indexOf('localhost') > -1) {
         endPoint = 'https://localhost:7254/';
+        clientID = 'e46252e1-e3a7-4fe5-9343-08c88a86fd47';
     } else {
         endPoint = 'https://lemon-glacier-05e76cc10.3.azurestaticapps.net/';
+        clientID = '8e8af9c2-65f2-4c96-95f8-06706c3a5930';
     }
     scopes = ["https://wisdoeducativedev.onmicrosoft.com/wisdoeducative-dev-api/api.wisdoeducative.write"
     ,"https://wisdoeducativedev.onmicrosoft.com/wisdoeducative-dev-api/api.wisdoeducative.read"]
