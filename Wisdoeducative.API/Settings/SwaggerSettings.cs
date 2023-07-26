@@ -6,11 +6,6 @@ namespace Wisdoeducative.API.Settings
     {
         public static IServiceCollection AddSwaggerSettings(this IServiceCollection services)
         {
-            var runningEnvironment = Environment.GetEnvironmentVariable("WEBSITE_SITE_NAME");
-            if (runningEnvironment != null) return services;
-            var appServiceEnvironment = Environment.GetEnvironmentVariable("APP_ENVIRONMENT");
-            if (appServiceEnvironment != "DEV" && runningEnvironment != null) return services;
-
             services.AddSwaggerGen(option =>
             {
                 option.SwaggerDoc("v1", new OpenApiInfo { Title = "Wisdo Educative Dev API", Version = "v1" });
