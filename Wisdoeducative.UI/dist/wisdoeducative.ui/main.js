@@ -2280,21 +2280,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ApiUrlService": () => (/* binding */ ApiUrlService)
 /* harmony export */ });
+/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! src/environments/environment */ 2340);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ 2560);
-/* harmony import */ var src_config_environments_config__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! src/config/environments.config */ 9553);
-
 
 
 class ApiUrlService {
   constructor() {}
   checkEnvironment() {
-    if ((0,_angular_core__WEBPACK_IMPORTED_MODULE_1__.isDevMode)()) {
-      if (window.location.href.indexOf('localhost') > -1) {
-        return src_config_environments_config__WEBPACK_IMPORTED_MODULE_0__.environmentDev.apiDevLocal;
-      }
-      return src_config_environments_config__WEBPACK_IMPORTED_MODULE_0__.environmentDev.apiDevRemote;
+    if (window.location.href.indexOf('localhost') > -1) {
+      return src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.local;
     } else {
-      return src_config_environments_config__WEBPACK_IMPORTED_MODULE_0__.environment.apiUrl;
+      return src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.api;
     }
   }
 }
@@ -3138,7 +3134,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _azure_msal_browser__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @azure/msal-browser */ 3105);
 /* harmony import */ var _azure_msal_browser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @azure/msal-browser */ 3503);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ 2560);
+/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! src/environments/environment */ 2340);
 
 
 const isIE = window.navigator.userAgent.indexOf("MSIE ") > -1 || window.navigator.userAgent.indexOf("Trident/") > -1;
@@ -3148,23 +3144,15 @@ let scopes;
 let b2cPolicy = 'B2C_1_Combined_Sign-In_Sign-Up';
 let authorityDomain;
 let domainName;
-if ((0,_angular_core__WEBPACK_IMPORTED_MODULE_0__.isDevMode)()) {
-  domainName = 'wisdoeducativedev.onmicrosoft.com';
-  authorityDomain = 'wisdoeducativedev.b2clogin.com';
-  clientID = '03b715cb-055d-4ec5-ae65-ac7d5b1ef223';
-  if (window.location.href.indexOf('localhost') > -1) {
-    endPoint = 'https://localhost:7254/';
-  } else {
-    endPoint = 'https://wisdoeducative-api-dev.azurewebsites.net/';
-  }
-  scopes = ["https://wisdoeducativedev.onmicrosoft.com/wisdoeducative-dev-api/api.wisdoeducative.write", "https://wisdoeducativedev.onmicrosoft.com/wisdoeducative-dev-api/api.wisdoeducative.read"];
+domainName = src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.domainName;
+authorityDomain = src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.authorityDomain;
+clientID = src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.clientID;
+if (window.location.href.indexOf('localhost') > -1) {
+  endPoint = src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.local;
 } else {
-  domainName = 'wisdoeducative.onmicrosoft.com';
-  authorityDomain = 'wisdoeducative.b2clogin.com';
-  clientID = '7fa12bd2-0a44-447e-ba5b-c7e6dbf2b4a1';
-  endPoint = 'https://wisdoeducative.azurewebsites.net/';
-  scopes = ['https://wisdoeducative.onmicrosoft.com/wisdoeducative/api.wisdoeducative.read', 'https://wisdoeducative.onmicrosoft.com/wisdoeducative/api.wisdoeducative.write'];
+  endPoint = src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.api;
 }
+scopes = src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.scopes;
 const b2cPolicies = {
   names: {
     signUpSignIn: b2cPolicy
@@ -3224,23 +3212,23 @@ const BreakpointsConfig = {
 
 /***/ }),
 
-/***/ 9553:
-/*!*******************************************!*\
-  !*** ./src/config/environments.config.ts ***!
-  \*******************************************/
+/***/ 2340:
+/*!*****************************************!*\
+  !*** ./src/environments/environment.ts ***!
+  \*****************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "environment": () => (/* binding */ environment),
-/* harmony export */   "environmentDev": () => (/* binding */ environmentDev)
+/* harmony export */   "environment": () => (/* binding */ environment)
 /* harmony export */ });
-const environmentDev = {
-  apiDevLocal: 'https://localhost:7254',
-  apiDevRemote: 'https://lemon-glacier-05e76cc10.3.azurestaticapps.net'
-};
 const environment = {
-  apiUrl: 'https://wisdoeducative.azurewebsites.net/'
+  api: 'https://wisdoeducative-api-dev.azurewebsites.net/',
+  local: 'https://localhost:7254/',
+  domainName: 'wisdoeducativedev.onmicrosoft.com',
+  authorityDomain: 'wisdoeducativedev.b2clogin.com',
+  clientID: '03b715cb-055d-4ec5-ae65-ac7d5b1ef223',
+  scopes: ["https://wisdoeducativedev.onmicrosoft.com/wisdoeducative-dev-api/api.wisdoeducative.write", "https://wisdoeducativedev.onmicrosoft.com/wisdoeducative-dev-api/api.wisdoeducative.read"]
 };
 
 /***/ }),

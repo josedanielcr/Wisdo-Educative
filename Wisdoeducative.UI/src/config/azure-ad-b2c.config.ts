@@ -1,5 +1,5 @@
 import { LogLevel, Configuration, BrowserCacheLocation } from '@azure/msal-browser';
-import { isDevMode } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 const isIE = window.navigator.userAgent.indexOf("MSIE ") > -1 ||
 window.navigator.userAgent.indexOf("Trident/") > -1;
@@ -11,26 +11,15 @@ let b2cPolicy : string = 'B2C_1_Combined_Sign-In_Sign-Up';
 let authorityDomain : string;
 let domainName : string;
 
-if (isDevMode()) {
-    domainName = 'wisdoeducativedev.onmicrosoft.com';
-    authorityDomain = 'wisdoeducativedev.b2clogin.com';
-    clientID = '03b715cb-055d-4ec5-ae65-ac7d5b1ef223';
-    if(window.location.href.indexOf('localhost') > -1) {
-        endPoint = 'https://localhost:7254/';
-    } else {
-        endPoint = 'https://wisdoeducative-api-dev.azurewebsites.net/';
-    }
-    scopes = ["https://wisdoeducativedev.onmicrosoft.com/wisdoeducative-dev-api/api.wisdoeducative.write"
-    ,"https://wisdoeducativedev.onmicrosoft.com/wisdoeducative-dev-api/api.wisdoeducative.read"]
+domainName = environment.domainName;
+authorityDomain = environment.authorityDomain;
+clientID = environment.clientID;
+if(window.location.href.indexOf('localhost') > -1) {
+    endPoint = environment.local;
+} else {
+    endPoint = environment.api;
 }
-else {
-    domainName = 'wisdoeducative.onmicrosoft.com';
-    authorityDomain = 'wisdoeducative.b2clogin.com';
-    clientID = '7fa12bd2-0a44-447e-ba5b-c7e6dbf2b4a1';
-    endPoint = 'https://wisdoeducative.azurewebsites.net/';
-    scopes = ['https://wisdoeducative.onmicrosoft.com/wisdoeducative/api.wisdoeducative.read',
-    'https://wisdoeducative.onmicrosoft.com/wisdoeducative/api.wisdoeducative.write'];
-}
+scopes = environment.scopes;
 
 export const b2cPolicies = {
     names: {
