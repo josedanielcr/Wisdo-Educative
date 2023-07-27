@@ -1,5 +1,5 @@
-import { Injectable, isDevMode } from '@angular/core';
-import { environment, environmentDev } from 'src/config/environments.config';
+import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -9,13 +9,10 @@ export class ApiUrlService {
   constructor() {}
 
   public checkEnvironment(): string {
-    if(isDevMode()){
-      if(window.location.href.indexOf('localhost') > -1) {
-        return environmentDev.apiDevLocal;
-      }
-      return environmentDev.apiDevRemote;
+    if(window.location.href.indexOf('localhost') > -1) {
+      return environment.local;
     } else {
-      return environment.apiUrl;
+      return environment.api;
     }
   }
 }
