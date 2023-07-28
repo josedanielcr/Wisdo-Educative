@@ -10,7 +10,8 @@
             {
                 options.AddPolicy(name: MyAllowSpecificOrigins, builder =>
                 {
-                    builder.WithOrigins("http://localhost:4200", "https://localhost:4200")
+                    builder.WithOrigins("http://localhost:4200", "https://localhost:4200",
+                        "https://lemon-glacier-05e76cc10.3.azurestaticapps.net")
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials();
