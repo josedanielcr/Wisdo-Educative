@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { MsalService } from '@azure/msal-angular';
 import { AuthService } from '../services/core/auth.service';
 import { ApplicationErrorModel } from '../models/application.error.model';
 import { UserClient } from '../models/core/client/user.client.model';

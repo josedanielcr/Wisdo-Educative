@@ -11,7 +11,7 @@
             && ngControl?.control?.invalid }">  
 
       <!-- loading-->
-      <option *ngIf="!options && !defaultOption">Loading...</option>
+      <option [value]="null" [selected]="true">Seleccione una opción</option>
       
       <!-- options -->
       <option *ngFor="let option of options" 

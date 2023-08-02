@@ -234,9 +234,9 @@ export class StepsComponent implements OnInit{
       userId : ['', Validators.required],
       degreeName: [{value: '', disabled: false}, Validators.required],
       institutionName: ['', Validators.required],
-      schedule: [this.academicSheculeOptions[0].value, Validators.required],
-      degreeType: [this.degreeTypeOptions[0].value, Validators.required],
-      studyField : [this.studyFieldOptions[0].value, Validators.required],
+      schedule: [null, Validators.required],
+      degreeType: [null, Validators.required],
+      studyField : [null, Validators.required],
       startYear: [null, Validators.required],
     });  
   }
