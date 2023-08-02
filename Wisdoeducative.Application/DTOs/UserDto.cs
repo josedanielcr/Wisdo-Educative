@@ -16,6 +16,7 @@ namespace Wisdoeducative.Application.DTOs
         public string? LastName { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public string Email { get; set; }
+        public string? ProfileImage { get; set; }
         public string? UserStatus { get; set; }
         public RoleDto? Role { get; set; }
         public int? RoleId { get; set; }

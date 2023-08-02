@@ -30,6 +30,8 @@ namespace Wisdoeducative.Application.Common.Interfaces
         DbSet<InstitutionHistory> InstitutionHistories { get; set; }
         DbSet<UserDegree> UserDegrees { get; set; }
         DbSet<UserDegreeHistory> UserDegreeHistories { get; set; }
+        DbSet<MenuOption> MenuOptions { get; set; }
+        DbSet<SubscriptionRoleMenuOption> SubscriptionRoleMenuOptions { get; set; }
         Task<int> SaveChangesAsync();
         EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;
     }

@@ -1,1 +1,27 @@
-<p>workspace works!</p>
+<div class="app-container wd-bg-general">
+    
+    <!-- sidebar -->
+    <div class="h-100"
+        [ngClass]="{
+                'sidebar-flex-full': !isSidebarContracted,
+                'sidebar-flex-contracted': isSidebarContracted && !isPhone,
+                'sidebar-phone' : isPhone
+            }">
+        <app-sidebar></app-sidebar>
+    </div>
+
+    <!-- content -->
+    <div class="h-100"
+        [ngClass]="{
+            'content-flex-full' : !isSidebarContracted && !isPhone,
+            'content-flex-contracted': isSidebarContracted && !isPhone,
+            'content-phone' : isPhone
+         }">
+         <app-navbar></app-navbar>
+         
+         <!-- app content -->
+         <div class="container-fluid">
+             <p>workspace works!</p>
+         </div>
+    </div>
+</div>

@@ -7,13 +7,14 @@ export class UserClient {
   lastName: string | null;
   dateOfBirth: Date | null;
   email: string;
+  profileImage : string | null;
   userStatus: string | null;
   role: RoleClient | null;
   roleId: number | null;
   category: string | null;
   
   constructor(id: number, b2cId: string, name: string | null, lastName: string | null,
-    dateOfBirth: Date | null, email: string, userStatus: string | null,role: RoleClient | null,
+    dateOfBirth: Date | null, email: string, profileImage : string | null, userStatus: string | null,role: RoleClient | null,
     roleId: number | null, category: string | null
   ) {
     this.id = id;

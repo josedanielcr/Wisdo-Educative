@@ -15,6 +15,7 @@ namespace Wisdoeducative.Domain.Entities
         public string? LastName { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public string Email { get; set; }
+        public string? ProfileImage { get; set; }
         public Role? Role { get; set; }
         public int RoleId { get; set; }
         public UserCategory? Category { get; set; }

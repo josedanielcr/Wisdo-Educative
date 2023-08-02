@@ -15,5 +15,6 @@ namespace Wisdoeducative.Application.Common.Interfaces.Helpers
         Task<SubscriptionDto?> GetSubscriptionByName(SubscriptionNames subscriptionName);
         Task SaveUserSubscriptionHistory(UserSubscription userSubscription,
             int userSubscriptionId, EntityChangeTypes changeType, string modifiedBy);
+        Task<SubscriptionDto> GetSubscriptionByUserId(int userId);
     }
 }
