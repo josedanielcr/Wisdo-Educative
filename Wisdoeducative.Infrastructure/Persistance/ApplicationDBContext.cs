@@ -38,6 +38,8 @@ namespace Wisdoeducative.Infrastructure.Persistence
         public DbSet<InstitutionHistory> InstitutionHistories { get; set; }
         public DbSet<UserDegree> UserDegrees { get; set; }
         public DbSet<UserDegreeHistory> UserDegreeHistories { get; set; }
+        public DbSet<MenuOption> MenuOptions { get; set; }
+        public DbSet<SubscriptionRoleMenuOption> SubscriptionRoleMenuOptions { get; set; }
         public async Task<int> SaveChangesAsync()
         {
             return await base.SaveChangesAsync();

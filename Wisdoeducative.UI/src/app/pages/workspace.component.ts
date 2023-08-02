@@ -4,6 +4,9 @@ import { AuthService } from '../services/core/auth.service';
 import { ApplicationErrorModel } from '../models/application.error.model';
 import { UserClient } from '../models/core/client/user.client.model';
 import { Router } from '@angular/router';
+import { MenuService } from '../services/components/menu.service';
+import { WindowResizeService } from '../services/helpers/window-resize.service';
+import { ScreenSizeModel } from '../models/screenSize.model';
 
 @Component({
   selector: 'app-workspace',
@@ -12,17 +15,37 @@ import { Router } from '@angular/router';
 })
 export class WorkspaceComponent {
 
-  constructor(private msalService: MsalService, 
-    private authService : AuthService,
-    private router : Router) { }
+  public isSidebarContracted : boolean;
+  public isDesktop : boolean;
+  public isTablet : boolean;
+  public isPhone : boolean;
 
-  // onOninit that checks if the user is logged in
+  constructor(private authService : AuthService,
+    private router : Router,
+    private menuService : MenuService,
+    private windowService : WindowResizeService) { }
+
   ngOnInit() {
     this.manageUserState();
+    this.subscribeToSidebarService();
+    this.subscribeToWindowService();
+  }
+
+  private subscribeToWindowService() {
+    this.windowService.getScreenSizeObservable().subscribe((screenSizes: ScreenSizeModel) => {
+      this.isDesktop = screenSizes.isDesktop;
+      this.isTablet = screenSizes.isTablet;
+      this.isPhone = screenSizes.isPhone;
+    });
+  }
+
+  private subscribeToSidebarService(): void {
+    this.menuService.getContractedSidebar().subscribe((isContracted : boolean) => {
+      this.isSidebarContracted = isContracted;
+    });
   }
 
   private manageUserState() : void {
-    console.log(this.msalService.instance.getAllAccounts());
     this.authService.getUserSubject().subscribe({
       next: (user : UserClient) => {
         if(user.userStatus === 'Pending') this.router.navigate(['/setup']);

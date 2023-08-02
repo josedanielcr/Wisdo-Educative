@@ -1,0 +1,30 @@
+.app-container {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+}
+
+.sidebar-flex-contracted {
+    flex: 0 0 5.75rem;
+}
+
+.content-flex-contracted {
+    flex: 0 0 calc(100% - 5.75rem);
+}
+
+.sidebar-flex-full {
+    flex: 0 0 14.05rem;
+}
+
+.content-flex-full {
+    flex: 0 0 calc(100% - 14.05rem);
+}
+
+.sidebar-phone {
+    position: absolute;
+    width: 100%;
+}
+
+.content-phone {
+    width: 100%;
+}

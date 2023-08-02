@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { WorkspaceComponent } from './workspace.component';
+import { SharedModule } from '../shared/shared.module';
 
 
 
@@ -9,7 +10,8 @@ import { WorkspaceComponent } from './workspace.component';
     WorkspaceComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    SharedModule
   ]
 })
 export class PagesModule { }

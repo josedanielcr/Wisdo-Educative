@@ -16,6 +16,7 @@ body {
     --success-color: #42AC66;
     --bone-color: #F6F6F6;
     --input-error-bg-color: rgba(200, 33, 73, 0.20);
+    --general-bg-color: #F5F7F8;
 }
 /*#endregion*/
 
@@ -74,6 +75,10 @@ body {
 
 
 /*#region backgrounds*/
+.wd-bg-general {
+    background-color: var(--general-bg-color);
+}
+
 .wd-bg-primary {
     background-color: var(--primary-color);
 }

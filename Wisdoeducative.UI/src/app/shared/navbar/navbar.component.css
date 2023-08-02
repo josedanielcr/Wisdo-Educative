@@ -1,0 +1,77 @@
+/*#region main structure*/
+.navbar-desktop {
+    background: rgba(3, 48, 67, 0.50);
+    height: 5.25rem;
+}
+
+.navbar-phone {
+    height: 4.4375rem;
+}
+
+.logo-navbar-phone {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+/*#endregion main structure*/
+
+/*#region profile image*/
+.line-separator {
+    height: 100%;
+    width: 0.3rem;
+}
+
+.profile-image {
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+}
+
+.desktop-profile-image {
+    width: 3.382rem;
+    height: 3.4375rem;
+}
+
+.phone-profile-image {
+    width: 2.625rem;
+    height: 2.625rem;
+}
+/*#endregion profile image*/
+
+/*#region util*/
+i {
+    font-size: 1.5rem;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+/*#ebdregion util*/
+
+/*#region dropdown*/
+.dropdown-container-desktop {
+    position: absolute;
+    right: 0;
+    top: 5.25rem;
+    width: 18.5rem;
+    height: 28.25rem;
+    overflow: hidden;
+}
+
+.dropdown-container-phone {
+    position: absolute;
+    right: 0;
+    top: 4.4375rem;
+    width: 18.5rem;
+    height: 28.25rem;
+    overflow: hidden;
+}
+
+.dropdown-content {
+    padding: 1.5rem;
+}
+
+.profile-names-container {
+    font-weight: 400;
+}
+/*#endregion dropdown*/

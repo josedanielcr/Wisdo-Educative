@@ -1,6 +1,6 @@
 export const environment = {
     api : 'https://wisdoeducative-api-dev.azurewebsites.net/',
-    local : 'https://localhost:7254/',
+    local : 'https://localhost:7254',
     domainName : 'wisdoeducativedev.onmicrosoft.com',
     authorityDomain : 'wisdoeducativedev.b2clogin.com',
     clientID : '03b715cb-055d-4ec5-ae65-ac7d5b1ef223',
