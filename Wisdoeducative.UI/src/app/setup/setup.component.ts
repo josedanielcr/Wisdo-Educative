@@ -6,6 +6,7 @@ import { UserClient } from '../models/core/client/user.client.model';
 import { UserStatus } from '../enums/core/user.status.enum';
 import { WindowResizeService } from '../services/helpers/window-resize.service';
 import { ScreenSizeModel } from '../models/screenSize.model';
+import { UserService } from '../services/core/user.service';
 
 @Component({
   selector: 'app-setup',
@@ -19,22 +20,27 @@ export class SetupComponent implements OnInit {
   public isPhone: boolean = false;
   public isTablet: boolean = false;
   public isDesktop: boolean = false;
+  public user : UserClient;
 
   constructor(private router: Router,
     private authService: AuthService,
-    private resizeService: WindowResizeService) {
+    private resizeService: WindowResizeService,
+    private userService : UserService) {
   }
 
   ngOnInit(): void {
+    this.authService.setUser();
     this.manageWindowSize();
     this.authService.getUserSubject().subscribe({
       next: (user: UserClient) => {
-        if (user.userStatus !== UserStatus.Pending) {
+        if (user.userStatus !== UserStatus.Pending && user.userStatus !== UserStatus.Omitted) {
           this.router.navigate(['/workspace']);
         }
+        this.user = user;
       }
     })
   }
+
   private manageWindowSize() {
     this.resizeService.getScreenSizeObservable().subscribe((screenSizes: ScreenSizeModel) => {
       this.isDesktop = screenSizes.isDesktop;
@@ -44,7 +50,20 @@ export class SetupComponent implements OnInit {
   }
 
   public skipSetup(): void {
-    this.router.navigate(['workspace']);
+
+    if(this.user.userStatus === UserStatus.Omitted) {
+      this.router.navigate(['workspace']);
+      return;
+    }
+
+    this.userService.omitUserSetup(this.user.id).subscribe({
+      next: () => {
+        this.router.navigate(['workspace']);
+      },
+      error: (error: any) => {
+        console.log(error);
+      }
+    });
   }
 
   public startSetup(): void {

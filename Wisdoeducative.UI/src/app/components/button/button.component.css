@@ -3,10 +3,14 @@ button {
     width: 100%;
 }
 
+span {
+    padding: 1rem;
+}
+
 .wd-button {
     outline: none;
     border: none;
-    border-radius: 10px;
+    border-radius: 0.3125rem;
 }
 
 /* #region types */

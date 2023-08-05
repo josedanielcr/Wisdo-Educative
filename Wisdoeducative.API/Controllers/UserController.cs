@@ -51,5 +51,12 @@ namespace Wisdoeducative.API.Controllers
         {
             return Ok(await userService.UserConfiguration(userConfiguration));
         }
+
+        [HttpPost]
+        [Route("omit/{userId}")]
+        public async Task<IActionResult> OmitUserSetup(int userId)
+        {
+            return Ok(await userService.OmitUserSetup(userId));
+        }
     }
 }

@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, catchError, switchMap, tap } from 'rxjs';
+import { Injectable, OnInit } from '@angular/core';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { UserClient } from 'src/app/models/core/client/user.client.model';
 import { UserService } from './user.service';
 import { ApplicationErrorModel } from 'src/app/models/application.error.model';
@@ -10,29 +10,27 @@ import { ApplicationErrorService } from '../helpers/application-error.service';
 })
 export class AuthService {
 
-  private userSubject : BehaviorSubject<UserClient> = new BehaviorSubject<UserClient>(null);
+  private userSubject : Subject<UserClient> = new Subject<UserClient>();
 
   constructor(private userService : UserService,
-     private applicationErrorService : ApplicationErrorService) { }
+     private applicationErrorService : ApplicationErrorService) {}
 
-  public getUserSubject() : Observable<UserClient> {
-    if(this.userSubject.value === null){
-      return this.userService.validateUser().pipe(
-        tap((user: UserClient) => {
-          this.setUserSubject(user);
-        }),
-        catchError((err: any) => {
-          this.setUserSubject(null);
-          throw this.applicationErrorService.parseHttpError(err);
-        }),
-        switchMap(() => this.userSubject.asObservable())
-      );
-    } else {
-      return this.userSubject.asObservable();
-    }
+  public setUser() : void {
+    this.userService.validateUser().subscribe({
+      next: (user : UserClient) => {
+        this.setUserSubject(user);
+      },
+      error: (error : ApplicationErrorModel) => {
+        this.applicationErrorService.parseHttpError(error);
+      }
+    });
   }
 
   public setUserSubject(user : UserClient) : void {
     this.userSubject.next(user);
+  }
+
+  public getUserSubject(): Observable<UserClient> {
+    return this.userSubject.asObservable();
   }
 }

@@ -12,6 +12,7 @@ namespace Wisdoeducative.Domain.Enums
         Inactive,
         Pending,
         Locked,
-        Deleted
+        Deleted,
+        Omitted
     }
 }

@@ -62,6 +62,24 @@ namespace Wisdoeducative.Application.Services
             return await degreeHelperService.GetById(dbDegree.Id); 
         }
 
+        public async Task<IEnumerable<UserDegreeDto>> GetUserDegrees(int userId)
+        {
+            List<UserDegreeDto> userDegreesDto = new List<UserDegreeDto>();
+            var userDegrees = await dBContext.UserDegrees
+                .Where(x => x.UserId == userId)
+                .Where(x => x.Status == EntityStatus.Active)
+                .Include(x => x.Degree)
+                .Include(x => x.Institution)
+                .ToListAsync();
+
+            foreach(var userDegree in userDegrees)
+            {
+                userDegreesDto.Add(mapper.Map<UserDegreeDto>(userDegree));
+            }
+
+            return userDegreesDto;
+        }
+
         public async Task SaveUserDegreeChanges(UserDegree userDegree)
         {
             User user = mapper.Map<User>(await userHelperService.GetUser(userDegree.UserId) ??

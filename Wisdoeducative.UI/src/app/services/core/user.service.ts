@@ -44,4 +44,12 @@ export class UserService {
       userDegreConfig : userSetupData.userDegreConfig
     }
   }
+
+  public omitUserSetup(userId : number): Observable<UserClient> {
+    return this.http.post(`${this.apiUrlService.checkEnvironment()}/user/omit/${userId}`, null)
+      .pipe(
+        map((user : UserServer) => this.userAdapterService.adaptUserServerToClient(user)),
+        catchError((error: any) => {throw this.applicationErrorService.parseHttpError(error)})
+      );
+  }
 }
