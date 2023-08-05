@@ -16,3 +16,31 @@
     background-color: rgba(124, 147, 158, 0.15);
 }
 /*#endregion time of day*/
+
+/*#region create workspace for omitted users*/
+.create-workspace-container {
+    border-radius: 0.3125rem;
+}
+
+.smile-icon-phone {
+    width: 3.75rem;
+    height: 3.75rem;
+}
+
+.smile-icon-desktop {
+    width: 8.3125rem;
+    height: 8.3125rem;
+}
+
+.button-setup-container {
+    width: 16.125rem;
+}
+
+.setup-container-desktop {
+    padding: 2rem 4.5rem;
+}
+
+.setup-container-phone {
+    padding: 1rem;
+}
+/*#endregion create workspace for omitted users*/

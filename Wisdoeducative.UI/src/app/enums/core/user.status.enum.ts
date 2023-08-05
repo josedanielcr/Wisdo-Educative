@@ -3,5 +3,6 @@ export enum UserStatus {
   Inactive = "Inactive",
   Pending = "Pending",
   Locked = "Locked",
-  Deleted = "Deleted"
+  Deleted = "Deleted",
+  Omitted = "Omitted",
 }

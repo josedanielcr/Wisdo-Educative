@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { ButtonType } from 'src/app/enums/button.enum';
+import { UserStatus } from 'src/app/enums/core/user.status.enum';
 import { UserClient } from 'src/app/models/core/client/user.client.model';
 import { UserDegreeClient } from 'src/app/models/core/client/user.degree.client.model';
+import { ScreenSizeModel } from 'src/app/models/screenSize.model';
 import { AuthService } from 'src/app/services/core/auth.service';
 import { DegreeService } from 'src/app/services/core/degree.service';
+import { WindowResizeService } from 'src/app/services/helpers/window-resize.service';
 
 enum TimeOfDay {
   Morning = 0,
@@ -31,17 +35,32 @@ export class HomeComponent implements OnInit {
   
   // util
   public currentTimeOfDay : TimeOfDay;
+  public UserStatus = UserStatus;
   public TimeOfDay = TimeOfDay;
+  public ButtonType = ButtonType;
   public timeOfDayIcon : string;
   public timeOfDayGreeting : string;
+  public isDesktop: boolean;
+  public isTablet: boolean;
+  public isPhone: boolean;
 
   constructor(private authService : AuthService,
-    private degreeService : DegreeService){}
+    private degreeService : DegreeService,
+    private windowService : WindowResizeService){}
 
   ngOnInit(): void {
+    this.subscribeToWindowService();
     this.getUser();
     this.setCurrentTimeOfDay();
     this.setTimeOfDayIcon();
+  }
+
+  private subscribeToWindowService() {
+    this.windowService.getScreenSizeObservable().subscribe((screenSizes: ScreenSizeModel) => {
+      this.isDesktop = screenSizes.isDesktop;
+      this.isTablet = screenSizes.isTablet;
+      this.isPhone = screenSizes.isPhone;
+    });
   }
 
   private setCurrentTimeOfDay(): void {
@@ -81,7 +100,6 @@ export class HomeComponent implements OnInit {
   private getUserDegrees(): void {
     this.degreeService.getUserDegrees(this.user.id).subscribe((userDegrees: UserDegreeClient[]) => {
       this.userDegrees = userDegrees;
-      console.log(this.userDegrees);
     });
   }
 

@@ -141,5 +141,19 @@ namespace Wisdoeducative.Application.Services
 
             return await userServiceHelper.GetUser(null,user.Email,null,null,user.B2cId);
         }
+
+        public async Task<UserDto> OmitUserSetup(int UserId)
+        {
+            var user = await dBContext.Users
+                .Where(u => u.Id == UserId)
+                .FirstOrDefaultAsync() 
+            ?? throw new NotFoundException($"{ErrorMessages.EntityNotFound} User");
+            
+            user.UserStatus = UserStatus.Omitted;
+            dBContext.Users.Attach(user);
+            dBContext.Entry(user).State = EntityState.Modified;
+            await dBContext.SaveChangesAsync();
+            return mapper.Map<UserDto>(user);
+        }
     }
 }

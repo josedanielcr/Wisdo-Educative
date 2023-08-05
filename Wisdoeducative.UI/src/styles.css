@@ -17,6 +17,7 @@ body {
     --bone-color: #F6F6F6;
     --input-error-bg-color: rgba(200, 33, 73, 0.20);
     --general-bg-color: #F5F7F8;
+    --dark-grey : #404040;
 }
 /*#endregion*/
 
@@ -33,13 +34,18 @@ body {
 }
 
 .wd-text-h2 {
-    font-weight: 500;
+    font-weight: 700;
     font-size: 1.625rem;
 }
 
 .wd-text-h3 {
-    font-weight: 500;
+    font-weight: 700;
     font-size: 1.375rem;
+}
+
+.wd-text-h4 {
+    font-weight: 700;
+    font-size: 1.125rem;
 }
 /*#endregion*/
 
@@ -70,6 +76,10 @@ body {
 
 .wd-text-bone {
     color: var(--bone-color);
+}
+
+.wd-text-dark-grey {
+    color: var(--dark-grey);
 }
 /* #endregion */
 
@@ -105,6 +115,10 @@ body {
 
 .wd-bg-bone {
     background-color: var(--bone-color);
+}
+
+.wd-bg-dark-grey {
+    background-color: var(--dark-grey);
 }
 /*#endregion*/
 

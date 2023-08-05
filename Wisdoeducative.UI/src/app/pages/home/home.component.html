@@ -1,34 +1,97 @@
-<!-- header -->
-<div *ngIf="user">
-    <div class="row">
-        <div class="col-md-8">
-            <div class="d-flex align-items-center gap-3">
-                <!-- icon -->
-                <div class="time-of-day-container d-flex justify-content-center align-items-center"
-                     [ngClass]="{
-                        'morning-bg-color': currentTimeOfDay === TimeOfDay.Morning,
-                        'afternoon-bg-color' : currentTimeOfDay === TimeOfDay.Afternoon,
-                        'evening-bg-color' : currentTimeOfDay === TimeOfDay.Evening
-                     }">
-                     <img [src]="timeOfDayIcon">
+<div class="row">
+    <div class="col-md-10">
+        <!-- header -->
+        <div *ngIf="user">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="d-flex align-items-center gap-3">
+                        <!-- icon -->
+                        <div class="time-of-day-container d-flex justify-content-center align-items-center"
+                            [ngClass]="{
+                                'morning-bg-color': currentTimeOfDay === TimeOfDay.Morning,
+                                'afternoon-bg-color' : currentTimeOfDay === TimeOfDay.Afternoon,
+                                'evening-bg-color' : currentTimeOfDay === TimeOfDay.Evening
+                            }">
+                            <img [src]="timeOfDayIcon">
+                        </div>
+                
+                        <!-- name of type of the day -->
+                        <div>
+                            <h1 class="m-0 wd-text-dark-grey"
+                                [ngClass]="{
+                                    'wd-text-h3' : isPhone,
+                                    'wd-text-h1' : isDesktop || isTablet
+                                }">
+                                {{timeOfDayGreeting}} {{user.name}}
+                            </h1>
+                        </div>
+                    </div>
                 </div>
+                <div class="col-md-4">
+                    <!-- degree overview -->
+                    <div class="d-flex">
+                        <!-- degree name -->
+                        <div></div>
         
-                <!-- name of type of the day -->
-                <div>
-                    <h1 class="wd-text-h1 m-0">{{timeOfDayGreeting}} {{user.name}}</h1>
+                        <!-- add degree -->
+                        <div></div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <!-- degree overview -->
-            <div class="d-flex">
-                <!-- degree name -->
-                <div>Hola</div>
 
-                <!-- add degree -->
-                <div></div>
+        <!-- content -->
+        <div *ngIf="(user && userDegrees)">
+            <div *ngIf="user.userStatus === UserStatus.Omitted || userDegrees.length === 0"
+                    class="create-workspace-container wd-bg-white d-flex align-items-center justify-content-center mt-3"
+                    [ngClass]="{
+                        'flex-wrap flex-column' : isPhone,
+                        'setup-container-desktop': isDesktop || isTablet,
+                        'setup-container-phone': isPhone
+                    }">  
+                <!-- icon -->
+                <div class="mt-3">
+                    <img src="../../../assets/icons/happy-grey.png"
+                        [ngClass]="{
+                            'smile-icon-phone' : isPhone,
+                            'smile-icon-desktop me-5' : isDesktop || isTablet
+                        }">
+                </div>
+    
+                <!-- text -->
+                <div [ngClass]="{
+                    'text-center' : isPhone,
+                    'mt-3': true
+                }">
+                    <h3 class="wd-text-h4 wd-text-dark-grey">INICIEMOS JUNTOS</h3>
+                    <span [ngClass]="{
+                        'text-center' : isPhone
+                        }"
+                        *ngIf="user.userStatus === UserStatus.Omitted">
+                        ¡Optimiza tu experiencia con Wisdo! Configura tu espacio de estudio siguiendo estos sencillos
+                        pasos y aprovecha al máximo todas nuestras herramientas. ¡Comienza ahora!
+                    </span>
+                    <span [ngClass]="{
+                        'text-center' : isPhone
+                        }"
+                        *ngIf="user.userStatus !== UserStatus.Omitted && userDegrees.length === 0">
+                        ¡Optimiza tu experiencia con Wisdo! <span class="fw-bold">Crea un plan de estudios automatico</span>
+                        y aprovecha al máximo todas nuestras herramientas. ¡Comienza ahora!
+                    </span>
+                    <div [ngClass]="{
+                        'button-setup-container' : isDesktop || isTablet,
+                        'mt-3 mb-3' : true
+                    }">
+                        <app-button [text]="user.userStatus === UserStatus.Omitted ? 'Iniciar configuración' : 'Crear plan de estudios'"
+                                    [type]="ButtonType.SECONDARY"
+                                    [disabled]="false">
+                        </app-button>
+                    </div>         
+                </div>
             </div>
         </div>
     </div>
-
+    <div class="col-md-2">
+        hola
+    </div>
 </div>
