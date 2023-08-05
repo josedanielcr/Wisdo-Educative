@@ -69,7 +69,6 @@ export class SidebarComponent implements OnInit {
     this.menuService.getMenuOptions(this.user.id).subscribe({
       next: (menuOptions : MenuOptionClient[]) => {
         this.menuOptions = menuOptions;
-        console.log(this.menuOptions);
       },
       error: (error : any) => {
         console.log(error);

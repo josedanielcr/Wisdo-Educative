@@ -4,6 +4,7 @@ using Microsoft.Identity.Web.Resource;
 using Wisdoeducative.Application.Common.Interfaces.Services;
 using Wisdoeducative.Application.DTOs;
 using Wisdoeducative.Application.DTOs.CustomDTOs;
+using Wisdoeducative.Domain.Entities;
 
 namespace Wisdoeducative.API.Controllers
 {
@@ -23,6 +24,12 @@ namespace Wisdoeducative.API.Controllers
         public async Task<IActionResult> CreateDegree([FromBody] DegreeDto degree)
         {
             return Ok(await degreeService.CreateDegree(degree));
+        }
+
+        [HttpGet("user/{userId}")]
+        public async Task<IActionResult> GetUserDegree(int userId)
+        {
+            return Ok(await degreeService.GetUserDegrees(userId));
         }
     }
 }

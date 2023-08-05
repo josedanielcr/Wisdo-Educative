@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { AuthService } from '../services/core/auth.service';
 import { ApplicationErrorModel } from '../models/application.error.model';
 import { UserClient } from '../models/core/client/user.client.model';
@@ -45,6 +45,7 @@ export class WorkspaceComponent {
   }
 
   private manageUserState() : void {
+    this.authService.setUser();
     this.authService.getUserSubject().subscribe({
       next: (user : UserClient) => {
         if(user.userStatus === 'Pending') this.router.navigate(['/setup']);
@@ -52,4 +53,5 @@ export class WorkspaceComponent {
       error: (err : ApplicationErrorModel) => alert(err.message),
     })
   }
+
 }

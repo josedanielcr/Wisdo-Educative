@@ -4,6 +4,14 @@
     display: flex;
 }
 
+.app-content-container-desktop {
+    padding: 2rem 2.5rem;
+}
+
+.app-content-container-phone {
+    padding: 1.5rem;
+}
+
 .sidebar-flex-contracted {
     flex: 0 0 5.75rem;
 }

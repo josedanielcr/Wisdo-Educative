@@ -1,0 +1,34 @@
+<!-- header -->
+<div *ngIf="user">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="d-flex align-items-center gap-3">
+                <!-- icon -->
+                <div class="time-of-day-container d-flex justify-content-center align-items-center"
+                     [ngClass]="{
+                        'morning-bg-color': currentTimeOfDay === TimeOfDay.Morning,
+                        'afternoon-bg-color' : currentTimeOfDay === TimeOfDay.Afternoon,
+                        'evening-bg-color' : currentTimeOfDay === TimeOfDay.Evening
+                     }">
+                     <img [src]="timeOfDayIcon">
+                </div>
+        
+                <!-- name of type of the day -->
+                <div>
+                    <h1 class="wd-text-h1 m-0">{{timeOfDayGreeting}} {{user.name}}</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <!-- degree overview -->
+            <div class="d-flex">
+                <!-- degree name -->
+                <div>Hola</div>
+
+                <!-- add degree -->
+                <div></div>
+            </div>
+        </div>
+    </div>
+
+</div>
