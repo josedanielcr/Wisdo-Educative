@@ -82,6 +82,7 @@ export class StepsComponent implements OnInit{
               private institutionService : InstitutionService) {}
               
   ngOnInit(): void {
+    this.authService.setUser();
     this.loadSelectOptions();
     this.createUserForm();
     this.loadUserData();

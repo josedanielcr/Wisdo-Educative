@@ -40,6 +40,18 @@ namespace Wisdoeducative.Infrastructure.Persistence
         public DbSet<UserDegreeHistory> UserDegreeHistories { get; set; }
         public DbSet<MenuOption> MenuOptions { get; set; }
         public DbSet<SubscriptionRoleMenuOption> SubscriptionRoleMenuOptions { get; set; }
+        public DbSet<StudyPlan> StudyPlans { get; set; }
+        public DbSet<StudyPlanHistory> StudyPlanHistories { get; set; }
+        public DbSet<StudyPlanTerm> StudyPlanTerms { get; set; }
+        public DbSet<CourseEvaluation> CourseEvaluations { get; set; }
+        public DbSet<CourseSchedule> CourseSchedules { get; set; }
+        public DbSet<CoursePrerequisite> CoursePrerequisites { get; set; }
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<StudyPlanTermHistory> StudyPlanTermHistories { get; set; }
+        public DbSet<CourseEvaluationHistory> CourseEvaluationHistories { get; set; }
+        public DbSet<CourseHistory> CourseHistories { get; set; }
+        public DbSet<CoursePrerequisiteHistory> CoursePrerequisiteHistories { get; set; }
+
         public async Task<int> SaveChangesAsync()
         {
             return await base.SaveChangesAsync();

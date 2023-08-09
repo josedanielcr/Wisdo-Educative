@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ButtonType } from 'src/app/enums/button.enum';
 import { UserStatus } from 'src/app/enums/core/user.status.enum';
 import { UserClient } from 'src/app/models/core/client/user.client.model';
@@ -46,7 +47,8 @@ export class HomeComponent implements OnInit {
 
   constructor(private authService : AuthService,
     private degreeService : DegreeService,
-    private windowService : WindowResizeService){}
+    private windowService : WindowResizeService,
+    private router : Router){}
 
   ngOnInit(): void {
     this.subscribeToWindowService();
@@ -88,6 +90,11 @@ export class HomeComponent implements OnInit {
         this.timeOfDayIcon = this.eveningPath;
         this.timeOfDayGreeting = this.eveningGreeting;
     }
+  }
+
+  public executeSetup(): void {
+    if(this.user.userStatus === UserStatus.Omitted) this.router.navigate(['/setup']);
+    else alert('Configuracion plan')
   }
 
   private getUser(): void {

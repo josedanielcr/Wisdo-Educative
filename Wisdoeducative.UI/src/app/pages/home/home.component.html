@@ -84,6 +84,7 @@
                     }">
                         <app-button [text]="user.userStatus === UserStatus.Omitted ? 'Iniciar configuración' : 'Crear plan de estudios'"
                                     [type]="ButtonType.SECONDARY"
+                                    (click)="executeSetup()"
                                     [disabled]="false">
                         </app-button>
                     </div>         
