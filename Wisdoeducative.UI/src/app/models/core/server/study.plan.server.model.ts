@@ -1,3 +1,4 @@
+import { GradingSystemServer } from "./grading.system.server.model";
 import { UserDegreeServer } from "./user.degree.server.model";
 
 export class StudyPlanServer {

@@ -5,6 +5,7 @@ import { UserClient } from "./user.client.model";
 import { EntityStatusEnum } from "src/app/enums/core/entity.status.enum";
 
 export class UserDegreeClient {
+  id : number;
   degree: DegreeClient | null;
   degreeId: number;
   user: UserClient | null;
@@ -18,6 +19,7 @@ export class UserDegreeClient {
   status: EntityStatusEnum;
 
   constructor(
+      id : number,
       degree: DegreeClient | null,
       degreeId: number,
       user: UserClient | null,
@@ -30,6 +32,7 @@ export class UserDegreeClient {
       schedule: AcademicScheduleEnum,
       status: EntityStatusEnum
   ) {
+      this.id = id;
       this.degree = degree;
       this.degreeId = degreeId;
       this.user = user;

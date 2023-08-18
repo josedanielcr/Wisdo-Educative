@@ -11,26 +11,32 @@ import { ApplicationErrorService } from '../helpers/application-error.service';
 export class AuthService {
 
   private userSubject : Subject<UserClient> = new Subject<UserClient>();
+  private currentUser: UserClient | null = null;
 
   constructor(private userService : UserService,
      private applicationErrorService : ApplicationErrorService) {}
 
-  public setUser() : void {
+    public setUser(): void {
     this.userService.validateUser().subscribe({
-      next: (user : UserClient) => {
+      next: (user: UserClient) => {
+        this.currentUser = user;
         this.setUserSubject(user);
       },
-      error: (error : ApplicationErrorModel) => {
+      error: (error: ApplicationErrorModel) => {
         this.applicationErrorService.parseHttpError(error);
       }
     });
   }
 
-  public setUserSubject(user : UserClient) : void {
+  public setUserSubject(user: UserClient): void {
     this.userSubject.next(user);
   }
-
+  
   public getUserSubject(): Observable<UserClient> {
     return this.userSubject.asObservable();
+  }
+  
+  public getCurrentUser(): UserClient | null {
+    return this.currentUser;
   }
 }

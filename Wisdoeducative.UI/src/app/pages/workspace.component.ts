@@ -53,5 +53,4 @@ export class WorkspaceComponent {
       error: (err : ApplicationErrorModel) => alert(err.message),
     })
   }
-
 }

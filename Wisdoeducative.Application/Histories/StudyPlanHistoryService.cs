@@ -25,13 +25,14 @@ namespace Wisdoeducative.Application.Histories
             dBContext.StudyPlanHistories.Add(new StudyPlanHistory
             {
                 Date = DateTime.Now,
-                UserDegreeId = entity.UserDegreeId,
-                GradingSystemId = entity.GradingSystemId,
-                TotalCredits = entity.TotalCredits,
-                EarnedCredits = entity.EarnedCredits,
-                Status = entity.Status,
                 EntityChangeType = type,
-                ModifiedByUser = modifiedBy
+                ModifiedByUser = modifiedBy,
+                Id = entity.Id,
+                UserDegreeId = entity.UserDegreeId,
+                GradingSystemId = (int)entity.GradingSystemId!,
+                TotalCredits = (int)entity.TotalCredits!,
+                EarnedCredits = (int)entity.EarnedCredits!,
+                Status = entity.Status
             });
         }
     }

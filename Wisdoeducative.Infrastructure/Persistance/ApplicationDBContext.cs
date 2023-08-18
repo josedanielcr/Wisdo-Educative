@@ -50,11 +50,28 @@ namespace Wisdoeducative.Infrastructure.Persistence
         public DbSet<StudyPlanTermHistory> StudyPlanTermHistories { get; set; }
         public DbSet<CourseEvaluationHistory> CourseEvaluationHistories { get; set; }
         public DbSet<CourseHistory> CourseHistories { get; set; }
-        public DbSet<CoursePrerequisiteHistory> CoursePrerequisiteHistories { get; set; }
 
         public async Task<int> SaveChangesAsync()
         {
             return await base.SaveChangesAsync();
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<CoursePrerequisite>()
+               .HasKey(cp => new { cp.CourseId, cp.PrerequisiteOfId }); // Composite key
+
+            modelBuilder.Entity<CoursePrerequisite>()
+                .HasOne(cp => cp.Course)
+                .WithMany(c => c.PrerequisiteOfCourses)
+                .HasForeignKey(cp => cp.CourseId)
+                .OnDelete(DeleteBehavior.Restrict); // to prevent cascading deletes
+
+            modelBuilder.Entity<CoursePrerequisite>()
+                .HasOne(cp => cp.PrerequisiteOf)
+                .WithMany(c => c.Prerequisites)
+                .HasForeignKey(cp => cp.PrerequisiteOfId)
+                .OnDelete(DeleteBehavior.Restrict); // to prevent cascading deletes
         }
     }
 }

@@ -25,6 +25,7 @@ export class UserDegreeAdapterService {
      this.institutionAdapterService.adaptInstitutionClientToServer(userDegreeDto.institution) : null;
   
     return new UserDegreeServer(
+      userDegreeDto.id,
       degreeServer,
       userDegreeDto.degreeId,
       userServer,
@@ -48,6 +49,7 @@ export class UserDegreeAdapterService {
       this.institutionAdapterService.adaptInstitutionServerToClient(userDegreeServer.institution) : null;
   
     return new UserDegreeClient(
+      userDegreeServer.id,
       degreeDto,
       userDegreeServer.degreeId,
       userDto,

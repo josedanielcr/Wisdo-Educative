@@ -1,4 +1,4 @@
-export class GrandingSystemServer {
+export class GradingSystemServer {
     id: number;
     name: string;
     description: string;

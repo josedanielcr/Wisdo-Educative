@@ -11,6 +11,7 @@ namespace Wisdoeducative.Application.DTOs
 {
     public class UserDegreeDto : IMapFrom<UserDegree>
     {
+        public int Id { get; set; }
         public DegreeDto? Degree { get; set; }
         public int DegreeId { get; set; }
         public UserDto? User { get; set; }

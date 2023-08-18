@@ -23,6 +23,8 @@ namespace Wisdoeducative.Application.Settings
             services.AddScoped<IEntityHistoryService<Degree>, DegreeHistoryService>();
             services.AddScoped<IEntityHistoryService<UserDegree>, UserDegreeHistoryService>();
             services.AddScoped<IEntityHistoryService<StudyPlan>, StudyPlanHistoryService>();
+            services.AddScoped<IEntityHistoryService<StudyPlanTerm>, StudyPlanTermHistoryService>();
+            services.AddScoped<IEntityHistoryService<Course>, CourseHistoryService>();
             return services;
         }
     }

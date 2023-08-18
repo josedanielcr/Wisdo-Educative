@@ -23,7 +23,17 @@ namespace Wisdoeducative.Application.Histories
 
         public async Task SaveChanges(StudyPlanTerm entity, int studyPlanTermId, EntityChangeTypes type, string modifiedBy)
         {
-            
+            dBContext.StudyPlanTermHistories.Add(new StudyPlanTermHistory
+            {
+                Date = DateTime.Now,
+                EntityChangeType = type,
+                ModifiedByUser = modifiedBy,
+                Id = entity.Id,
+                StudyPlanId = entity.StudyPlanId,
+                PeriodNumber = entity.PeriodNumber,
+                StudyTermStatus = entity.StudyTermStatus,
+                Status = entity.Status
+            });
         }
     }
 }

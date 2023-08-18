@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Web.Resource;
 using Wisdoeducative.Application.Common.Interfaces.Services;
+using Wisdoeducative.Application.DTOs;
 
 namespace Wisdoeducative.API.Controllers
 {
@@ -22,7 +23,18 @@ namespace Wisdoeducative.API.Controllers
         public async Task<IActionResult> GetUserStudyPlan(int userDegreeId)
         {
             return Ok(await studyPlanService.GetUserStudyPlan(userDegreeId));
+        }
 
+        [HttpPost]
+        public async Task<IActionResult> CreateStudyPlan(StudyPlanDTO studyPlan)
+        {
+            return Ok(await studyPlanService.CreateStudyPlan(studyPlan));
+        }
+
+        [HttpPost("studyPlanTerm")]
+        public async Task<IActionResult> CreateStudyPlanTerm(StudyPlanTermDto studyPlanTerm)
+        {
+            return Ok(await studyPlanService.CreateStudyPlanTerm(studyPlanTerm));
         }
     }
 }

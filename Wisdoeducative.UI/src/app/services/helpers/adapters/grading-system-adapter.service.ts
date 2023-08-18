@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { GrandingSystemClient } from 'src/app/models/core/client/grading.system.client.model';
-import { GrandingSystemServer } from 'src/app/models/core/server/grading.system.server.model';
+import { GradingSystemClient } from 'src/app/models/core/client/grading.system.client.model';
+import { GradingSystemServer } from 'src/app/models/core/server/grading.system.server.model';
 
 @Injectable({
   providedIn: 'root'
@@ -9,8 +9,8 @@ export class GradingSystemAdapterService {
 
   constructor() { }
 
-  public adaptServerToClient(serverObj: GrandingSystemServer): GrandingSystemClient {
-      return new GrandingSystemClient(
+  public adaptServerToClient(serverObj: GradingSystemServer): GradingSystemClient {
+      return new GradingSystemClient(
           serverObj.id, 
           serverObj.name, 
           serverObj.description, 
@@ -21,8 +21,8 @@ export class GradingSystemAdapterService {
       );
   }
 
-  public adaptClientToServer(clientObj: GrandingSystemClient): GrandingSystemServer {
-      return new GrandingSystemServer(
+  public adaptClientToServer(clientObj: GradingSystemClient): GradingSystemServer {
+      return new GradingSystemServer(
           clientObj.id, 
           clientObj.name, 
           clientObj.description, 

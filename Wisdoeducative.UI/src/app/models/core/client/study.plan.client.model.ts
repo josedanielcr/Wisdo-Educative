@@ -1,3 +1,6 @@
+import { GradingSystemClient } from "./grading.system.client.model";
+import { UserDegreeClient } from "./user.degree.client.model";
+
 export class StudyPlanClient {
     id: number;
     userDegreeId: number;

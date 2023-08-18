@@ -5,6 +5,7 @@ import { UserServer } from "./user.server.model";
 import { EntityStatusEnum } from "src/app/enums/core/entity.status.enum";
 
 export class UserDegreeServer {
+  id : number;
   degree: DegreeServer | null;
   degreeId: number;
   user: UserServer | null;
@@ -18,6 +19,7 @@ export class UserDegreeServer {
   status: EntityStatusEnum;
 
   constructor(
+      id : number,
       degree: DegreeServer | null,
       degreeId: number,
       user: UserServer | null,
@@ -30,6 +32,7 @@ export class UserDegreeServer {
       schedule: AcademicScheduleEnum,
       status: EntityStatusEnum
   ) {
+      this.id = id;
       this.degree = degree;
       this.degreeId = degreeId;
       this.user = user;

@@ -12,10 +12,10 @@ namespace Wisdoeducative.Domain.Entities
     {
         public UserDegree UserDegree { get; set; }
         public int UserDegreeId { get; set; }
-        public GrandingSystem GrandingSystem { get; set; }
-        public int GradingSystemId { get; set; }
-        public int TotalCredits { get; set; }
-        public int EarnedCredits { get; set; }
+        public GrandingSystem? GrandingSystem { get; set; }
+        public int? GradingSystemId { get; set; }
+        public int? TotalCredits { get; set; }
+        public int? EarnedCredits { get; set; }
         public EntityStatus Status { get; set; }
     }
 }

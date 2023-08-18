@@ -2,11 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ButtonType } from 'src/app/enums/button.enum';
 import { UserStatus } from 'src/app/enums/core/user.status.enum';
+import { StudyPlanClient } from 'src/app/models/core/client/study.plan.client.model';
 import { UserClient } from 'src/app/models/core/client/user.client.model';
 import { UserDegreeClient } from 'src/app/models/core/client/user.degree.client.model';
 import { ScreenSizeModel } from 'src/app/models/screenSize.model';
 import { AuthService } from 'src/app/services/core/auth.service';
 import { DegreeService } from 'src/app/services/core/degree.service';
+import { StudyPlanService } from 'src/app/services/core/study-plan.service';
 import { WindowResizeService } from 'src/app/services/helpers/window-resize.service';
 
 enum TimeOfDay {
@@ -33,6 +35,7 @@ export class HomeComponent implements OnInit {
   // properties
   public user : UserClient;
   public userDegrees : UserDegreeClient[];
+  public studyPlan : StudyPlanClient;
   
   // util
   public currentTimeOfDay : TimeOfDay;
@@ -48,6 +51,7 @@ export class HomeComponent implements OnInit {
   constructor(private authService : AuthService,
     private degreeService : DegreeService,
     private windowService : WindowResizeService,
+    private studyPlanService : StudyPlanService,
     private router : Router){}
 
   ngOnInit(): void {
@@ -55,6 +59,18 @@ export class HomeComponent implements OnInit {
     this.getUser();
     this.setCurrentTimeOfDay();
     this.setTimeOfDayIcon();
+  }
+
+  private getUser(): void {
+    this.user = this.authService.getCurrentUser();
+    if(!this.user) {
+      this.authService.getUserSubject().subscribe((user : UserClient) => {
+        this.user = user;
+        this.getUserDegrees();
+      });
+    } else {
+      this.getUserDegrees();
+    }
   }
 
   private subscribeToWindowService() {
@@ -94,19 +110,21 @@ export class HomeComponent implements OnInit {
 
   public executeSetup(): void {
     if(this.user.userStatus === UserStatus.Omitted) this.router.navigate(['/setup']);
-    else alert('Configuracion plan')
-  }
-
-  private getUser(): void {
-    this.authService.getUserSubject().subscribe((user: UserClient) => {
-      this.user = user;
-      this.getUserDegrees();
-    });
+    else if (this.user.userStatus !== UserStatus.Omitted 
+      && this.userDegrees.length > 0 && !this.studyPlan) this.router.navigate(['workspace/studyPlan']);
   }
 
   private getUserDegrees(): void {
     this.degreeService.getUserDegrees(this.user.id).subscribe((userDegrees: UserDegreeClient[]) => {
       this.userDegrees = userDegrees;
+      this.getStudyPlan();
+    });
+  }
+
+
+  private getStudyPlan(): void {
+    this.studyPlanService.getUserStudyPlan(this.userDegrees[0].id).subscribe((studyPlan: StudyPlanClient) => {
+      this.studyPlan = studyPlan;
     });
   }
 

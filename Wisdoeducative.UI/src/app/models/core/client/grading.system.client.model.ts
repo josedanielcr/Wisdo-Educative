@@ -1,4 +1,4 @@
-export class GrandingSystemClient {
+export class GradingSystemClient {
     id: number;
     name: string;
     description: string;
