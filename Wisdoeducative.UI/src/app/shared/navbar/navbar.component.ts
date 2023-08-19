@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { UserClient } from 'src/app/models/core/client/user.client.model';
 import { ScreenSizeModel } from 'src/app/models/screenSize.model';
 import { MenuService } from 'src/app/services/components/menu.service';
-import { AuthService } from 'src/app/services/core/auth.service';
+import { UserService } from 'src/app/services/core/models/user.service';
+import { StoreService } from 'src/app/services/core/store.service';
 import { WindowResizeService } from 'src/app/services/helpers/window-resize.service';
 
 @Component({
@@ -20,8 +21,9 @@ export class NavbarComponent implements OnInit {
   public isSidebarOpen : boolean;
 
   constructor(private windowResizeService: WindowResizeService,
-              private authService : AuthService,
-              private menuService : MenuService) {}
+              private menuService : MenuService,
+              private storeService : StoreService,
+              private userService : UserService) {}
 
   ngOnInit(): void {
     this.manageWindowSizes();
@@ -43,8 +45,18 @@ export class NavbarComponent implements OnInit {
   }
 
   private setUser() {
-    this.authService.getUserSubject().subscribe((user: UserClient) => {
-      this.user = user;
+    this.storeService.select('user').subscribe({
+      next: (user: UserClient) => {
+        this.user = user;
+      },
+      complete : () => {
+        this.userService.validateUser().subscribe({
+          next: (user: UserClient) => {
+            this.storeService.set('user', user);
+            this.user = user;
+          }
+        });
+      }
     });
   }
 
@@ -63,5 +75,4 @@ export class NavbarComponent implements OnInit {
   public toggleSidebar(): void {
     this.menuService.setSidebarHidden(!this.isSidebarOpen);
   }
-
 }

@@ -40,7 +40,7 @@ namespace Wisdoeducative.Application.Services
         public async Task<StudyPlanDTO> CreateStudyPlan(StudyPlanDTO studyPlan)
         {
             string[] propertiesToCheck = new string[] { "UserDegreeId" };
-            if (!helperService.AreAnyPropertiesNull(studyPlan, propertiesToCheck))
+            if (helperService.AreAnyPropertiesNull(studyPlan, propertiesToCheck))
             {
                 throw new BadRequestException($"{ErrorMessages.NullProperties} Study plan degree");
             }
@@ -48,7 +48,7 @@ namespace Wisdoeducative.Application.Services
             studyPlanEntity.Status = Domain.Enums.EntityStatus.Active;
             dBContext.StudyPlans.Add(studyPlanEntity);
             await dBContext.SaveChangesAsync();
-            await SaveStudyPlanHistory(studyPlanEntity, Domain.Enums.EntityChangeTypes.Modified);
+            await SaveStudyPlanHistory(studyPlanEntity, Domain.Enums.EntityChangeTypes.Added);
             await dBContext.SaveChangesAsync();
             return mapper.Map<StudyPlanDTO>(studyPlanEntity);
         }
@@ -56,7 +56,7 @@ namespace Wisdoeducative.Application.Services
         public async Task<StudyPlanTermDto> CreateStudyPlanTerm(StudyPlanTermDto studyPlanTermDto)
         {
             string[] propertiesToCheck = new string[] { "StudyPlanId" };
-            if (!helperService.AreAnyPropertiesNull(studyPlanTermDto, propertiesToCheck))
+            if (helperService.AreAnyPropertiesNull(studyPlanTermDto, propertiesToCheck))
             {
                 throw new BadRequestException($"{ErrorMessages.NullProperties} Study plan term, needs to have a study plan associated");
             }
@@ -70,7 +70,7 @@ namespace Wisdoeducative.Application.Services
             newStudyPlan.StudyTermStatus = Domain.Enums.StudyTermStatus.InProgress;
             dBContext.StudyPlanTerms.Add(newStudyPlan);
             await dBContext.SaveChangesAsync();
-            await SaveStudyPlanTermHistory(newStudyPlan, Domain.Enums.EntityChangeTypes.Modified);
+            await SaveStudyPlanTermHistory(newStudyPlan, Domain.Enums.EntityChangeTypes.Added);
             await dBContext.SaveChangesAsync();
             return mapper.Map<StudyPlanTermDto>(newStudyPlan);
         }

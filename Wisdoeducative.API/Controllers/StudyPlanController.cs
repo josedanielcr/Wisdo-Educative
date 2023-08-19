@@ -32,7 +32,7 @@ namespace Wisdoeducative.API.Controllers
         }
 
         [HttpPost("studyPlanTerm")]
-        public async Task<IActionResult> CreateStudyPlanTerm(StudyPlanTermDto studyPlanTerm)
+        public async Task<IActionResult> CreateStudyPlanTerm([FromBody] StudyPlanTermDto studyPlanTerm)
         {
             return Ok(await studyPlanService.CreateStudyPlanTerm(studyPlanTerm));
         }

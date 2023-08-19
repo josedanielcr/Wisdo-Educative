@@ -6,9 +6,10 @@ import { StudyPlanClient } from 'src/app/models/core/client/study.plan.client.mo
 import { UserClient } from 'src/app/models/core/client/user.client.model';
 import { UserDegreeClient } from 'src/app/models/core/client/user.degree.client.model';
 import { ScreenSizeModel } from 'src/app/models/screenSize.model';
-import { AuthService } from 'src/app/services/core/auth.service';
-import { DegreeService } from 'src/app/services/core/degree.service';
-import { StudyPlanService } from 'src/app/services/core/study-plan.service';
+import { DegreeService } from 'src/app/services/core/models/degree.service';
+import { StudyPlanService } from 'src/app/services/core/models/study-plan.service';
+import { UserService } from 'src/app/services/core/models/user.service';
+import { StoreService } from 'src/app/services/core/store.service';
 import { WindowResizeService } from 'src/app/services/helpers/window-resize.service';
 
 enum TimeOfDay {
@@ -48,11 +49,12 @@ export class HomeComponent implements OnInit {
   public isTablet: boolean;
   public isPhone: boolean;
 
-  constructor(private authService : AuthService,
-    private degreeService : DegreeService,
+  constructor(private degreeService : DegreeService,
     private windowService : WindowResizeService,
     private studyPlanService : StudyPlanService,
-    private router : Router){}
+    private router : Router,
+    private storeService : StoreService,
+    private userService : UserService){}
 
   ngOnInit(): void {
     this.subscribeToWindowService();
@@ -62,15 +64,21 @@ export class HomeComponent implements OnInit {
   }
 
   private getUser(): void {
-    this.user = this.authService.getCurrentUser();
-    if(!this.user) {
-      this.authService.getUserSubject().subscribe((user : UserClient) => {
+    this.storeService.select('user').subscribe({
+      next: (user: UserClient) => {
         this.user = user;
         this.getUserDegrees();
-      });
-    } else {
-      this.getUserDegrees();
-    }
+      },
+      complete : () => {
+        this.userService.validateUser().subscribe({
+          next: (user: UserClient) => {
+            this.storeService.set('user', user);
+            this.user = user;
+            this.getUserDegrees();
+          }
+        });
+      }
+    });
   }
 
   private subscribeToWindowService() {
@@ -117,14 +125,15 @@ export class HomeComponent implements OnInit {
   private getUserDegrees(): void {
     this.degreeService.getUserDegrees(this.user.id).subscribe((userDegrees: UserDegreeClient[]) => {
       this.userDegrees = userDegrees;
+      this.storeService.set('userDegrees', userDegrees);
       this.getStudyPlan();
     });
   }
 
-
   private getStudyPlan(): void {
     this.studyPlanService.getUserStudyPlan(this.userDegrees[0].id).subscribe((studyPlan: StudyPlanClient) => {
       this.studyPlan = studyPlan;
+      this.storeService.set('studyPlan', studyPlan);
     });
   }
 

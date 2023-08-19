@@ -3,10 +3,6 @@ import { Router } from '@angular/router';
 import { MSAL_GUARD_CONFIG, MsalBroadcastService, MsalGuardConfiguration, MsalService } from '@azure/msal-angular';
 import { InteractionStatus, RedirectRequest } from '@azure/msal-browser';
 import { Subject, filter, takeUntil } from 'rxjs';
-import { UserService } from '../services/core/user.service';
-import { AuthService } from '../services/core/auth.service';
-import { UserClient } from '../models/core/client/user.client.model';
-import { ApplicationErrorModel } from '../models/application.error.model';
 
 @Component({
   selector: 'app-landing-page',
@@ -21,9 +17,7 @@ export class LandingPageComponent {
   constructor(@Inject(MSAL_GUARD_CONFIG) private msalGuardConfig: MsalGuardConfiguration, 
               private broadcastService: MsalBroadcastService, 
               private msalService: MsalService,
-              private router : Router,
-              private userService : UserService,
-              private authService : AuthService) { 
+              private router : Router) { 
   }
 
   // Subscribe to the MSAL broadcast service to check if there is any interaction in progress

@@ -16,9 +16,9 @@ export class StudyPlanAdapterService {
     return new StudyPlanClient(
       serverObj.id,
       serverObj.userDegreeId,
-      this.userDegreeAdapter.adaptUserDegreeServerToClient(serverObj.userDegree),
+      serverObj.userDegree ? this.userDegreeAdapter.adaptUserDegreeServerToClient(serverObj.userDegree) : null,
       serverObj.gradingSystemId,
-      this.gradingSystemAdapter.adaptServerToClient(serverObj.gradingSystem),
+      serverObj.gradingSystem ? this.gradingSystemAdapter.adaptServerToClient(serverObj.gradingSystem) : null,
       serverObj.totalCredits,
       serverObj.earnedCredits,
       serverObj.status
@@ -29,9 +29,9 @@ export class StudyPlanAdapterService {
     return new StudyPlanServer(
       clientObj.id,
       clientObj.userDegreeId,
-      this.userDegreeAdapter.adaptUserDegreeClientToServer(clientObj.userDegree),
+      clientObj.userDegree ? this.userDegreeAdapter.adaptUserDegreeClientToServer(clientObj.userDegree) : null,
       clientObj.gradingSystemId,
-      this.gradingSystemAdapter.adaptClientToServer(clientObj.gradingSystem),
+      clientObj.gradingSystem ? this.gradingSystemAdapter.adaptClientToServer(clientObj.gradingSystem) : null,
       clientObj.totalCredits,
       clientObj.earnedCredits,
       clientObj.status

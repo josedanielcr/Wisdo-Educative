@@ -2,9 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map } from 'rxjs';
 import { UserDegreeClient } from 'src/app/models/core/client/user.degree.client.model';
-import { UserDegreeAdapterService } from '../helpers/adapters/user-degree-adapter.service';
-import { ApplicationErrorService } from '../helpers/application-error.service';
-import { ApiUrlService } from '../helpers/api-url.service';
+import { UserDegreeAdapterService } from '../../helpers/adapters/user-degree-adapter.service';
+import { ApplicationErrorService } from '../../helpers/application-error.service';
+import { ApiUrlService } from '../../helpers/api-url.service';
 import { UserDegreeServer } from 'src/app/models/core/server/user.degree.server.model';
 
 @Injectable({

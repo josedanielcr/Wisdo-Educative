@@ -1,11 +1,12 @@
 import { Component, OnDestroy } from '@angular/core';
-import { AuthService } from '../services/core/auth.service';
 import { ApplicationErrorModel } from '../models/application.error.model';
 import { UserClient } from '../models/core/client/user.client.model';
 import { Router } from '@angular/router';
 import { MenuService } from '../services/components/menu.service';
 import { WindowResizeService } from '../services/helpers/window-resize.service';
 import { ScreenSizeModel } from '../models/screenSize.model';
+import { StoreService } from '../services/core/store.service';
+import { UserService } from '../services/core/models/user.service';
 
 @Component({
   selector: 'app-workspace',
@@ -19,10 +20,11 @@ export class WorkspaceComponent {
   public isTablet : boolean;
   public isPhone : boolean;
 
-  constructor(private authService : AuthService,
+  constructor(private storeService : StoreService,
     private router : Router,
     private menuService : MenuService,
-    private windowService : WindowResizeService) { }
+    private windowService : WindowResizeService,
+    private userService : UserService) { }
 
   ngOnInit() {
     this.manageUserState();
@@ -45,12 +47,15 @@ export class WorkspaceComponent {
   }
 
   private manageUserState() : void {
-    this.authService.setUser();
-    this.authService.getUserSubject().subscribe({
-      next: (user : UserClient) => {
-        if(user.userStatus === 'Pending') this.router.navigate(['/setup']);
-      },
-      error: (err : ApplicationErrorModel) => alert(err.message),
-    })
+    this.storeService.select('user').subscribe({
+      complete : () => {
+        this.userService.validateUser().subscribe({
+          next: (user: UserClient) => {
+            this.storeService.set('user', user);
+            if(user.userStatus === 'Pending') this.router.navigate(['/setup']);
+          }
+        });
+      }
+    });
   }
 }

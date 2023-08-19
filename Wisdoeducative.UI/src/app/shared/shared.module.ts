@@ -4,13 +4,15 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { RouterModule } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
 import { PipesModule } from '../pipes/pipes.module';
+import { TitleComponent } from './title/title.component';
 
 
 
 @NgModule({
   declarations: [
     SidebarComponent,
-    NavbarComponent
+    NavbarComponent,
+    TitleComponent
   ],
   imports: [
     CommonModule,
@@ -19,7 +21,8 @@ import { PipesModule } from '../pipes/pipes.module';
   ],
   exports : [
     SidebarComponent,
-    NavbarComponent
+    NavbarComponent,
+    TitleComponent
   ]
 })
 export class SharedModule { }

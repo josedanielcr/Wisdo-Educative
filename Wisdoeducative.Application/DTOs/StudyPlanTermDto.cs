@@ -10,11 +10,11 @@ namespace Wisdoeducative.Application.DTOs
 {
     public class StudyPlanTermDto : IMapFrom<StudyPlanTerm>
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public StudyPlanDTO? StudyPlanDTO { get; set; }
         public int StudyPlanId { get; set; }
-        public int PeriodNumber { get; set; }
-        public string StudyTermStatus { get; set; }
-        public string Status { get; set; }
+        public int? PeriodNumber { get; set; }
+        public string? StudyTermStatus { get; set; }
+        public string? Status { get; set; }
     }
 }

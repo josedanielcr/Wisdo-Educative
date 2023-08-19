@@ -4,28 +4,12 @@
         <div *ngIf="user">
             <div class="row">
                 <div class="col-md-8">
-                    <div class="d-flex align-items-center gap-3">
-                        <!-- icon -->
-                        <div class="time-of-day-container d-flex justify-content-center align-items-center"
-                            [ngClass]="{
-                                'morning-bg-color': currentTimeOfDay === TimeOfDay.Morning,
-                                'afternoon-bg-color' : currentTimeOfDay === TimeOfDay.Afternoon,
-                                'evening-bg-color' : currentTimeOfDay === TimeOfDay.Evening
-                            }">
-                            <img [src]="timeOfDayIcon">
-                        </div>
-                
-                        <!-- name of type of the day -->
-                        <div>
-                            <h1 class="m-0 wd-text-dark-grey"
-                                [ngClass]="{
-                                    'wd-text-h3' : isPhone,
-                                    'wd-text-h1' : isDesktop || isTablet
-                                }">
-                                {{timeOfDayGreeting}} {{user.name}}
-                            </h1>
-                        </div>
-                    </div>
+                   <app-title [title]="timeOfDayGreeting + ' ' + user.name"
+                              [iconPath]="timeOfDayIcon"
+                              [iconBackgroundColor]="currentTimeOfDay === TimeOfDay.Morning 
+                                 ? 'rgba(218, 199, 9, 0.20)' : (currentTimeOfDay === TimeOfDay.Afternoon 
+                                ? 'rgba(126, 26, 161, 0.15)' : 'rgba(124, 147, 158, 0.15)')">
+                   </app-title>
                 </div>
                 <div class="col-md-4">
                     <!-- degree overview -->

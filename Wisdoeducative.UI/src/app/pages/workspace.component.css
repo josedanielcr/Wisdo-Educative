@@ -4,12 +4,18 @@
     display: flex;
 }
 
+.app-content-container {
+    width: 100%;
+}
+
 .app-content-container-desktop {
     padding: 2rem 2.5rem;
+    height: calc(100% - 5.25rem);
 }
 
 .app-content-container-phone {
     padding: 1.5rem;
+    height: calc(100% - 4.4375rem);
 }
 
 .sidebar-flex-contracted {

@@ -28,8 +28,8 @@ namespace Wisdoeducative.Application.Histories
                 Date = DateTime.Now,
                 EntityChangeType = type,
                 ModifiedByUser = modifiedBy,
-                Id = entity.Id,
                 StudyPlanId = entity.StudyPlanId,
+                StudyPlanTermId = entity.Id,
                 PeriodNumber = entity.PeriodNumber,
                 StudyTermStatus = entity.StudyTermStatus,
                 Status = entity.Status

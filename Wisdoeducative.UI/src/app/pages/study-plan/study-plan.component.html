@@ -1,1 +1,29 @@
-<p>study-plan works!</p>
+<div *ngIf="userDegree">
+    <app-title [title]="userDegree.degree.name"
+               [iconPath]="'../../../assets/icons/book-black.png'"
+               [iconBackgroundColor]="'rgba(124, 147, 158, 0.15)'">
+    </app-title>
+</div>
+
+<div class="no-studyplan-card wd-bg-white no-studyplan-container 
+            d-flex flex-column justify-content-center align-items-center"
+    *ngIf="userDegree && !studyPlan"
+        [ngClass]="{
+        'no-studyplan-card-phone': isPhone,
+        'no-studyplan-card-desktop': isDesktop || isTablet,
+        }">
+    
+    <div class="no-studyplan-content text-center d-flex flex-column justify-content-center align-items-center">
+        <span>
+            ¡Hola! <span class="fw-bold">{{user.name}}</span> <br>
+            Te recomendamos ingresar las materias que estás cursando actualmente. 
+        </span>
+
+        <div class="no-studyplan-button mt-4">
+            <app-button text="Ingresar materias actuales"
+                        [type]="ButtonType.SECONDARY"
+                        (click)="createStudyPlan()">
+            </app-button>
+        </div>
+    </div>
+</div>

@@ -11,11 +11,11 @@ namespace Wisdoeducative.Domain.Histories
 {
     public class StudyPlanTermHistory : BaseAuditableEntity
     {
-        public StudyPlan StudyPlan { get; set; }
-        public int StudyPlanId { get; set; }
-        public int PeriodNumber { get; set; }
-        public StudyTermStatus StudyTermStatus { get; set; }
-        public EntityStatus Status { get; set; }
-        public int StudyPlanTermId { get; set; }
+        public StudyPlan? StudyPlan { get; set; }
+        public int? StudyPlanId { get; set; }
+        public int? PeriodNumber { get; set; }
+        public StudyTermStatus? StudyTermStatus { get; set; }
+        public EntityStatus? Status { get; set; }
+        public int? StudyPlanTermId { get; set; }
     }
 }

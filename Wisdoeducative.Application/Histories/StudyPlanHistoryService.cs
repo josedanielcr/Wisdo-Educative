@@ -27,11 +27,10 @@ namespace Wisdoeducative.Application.Histories
                 Date = DateTime.Now,
                 EntityChangeType = type,
                 ModifiedByUser = modifiedBy,
-                Id = entity.Id,
                 UserDegreeId = entity.UserDegreeId,
-                GradingSystemId = (int)entity.GradingSystemId!,
-                TotalCredits = (int)entity.TotalCredits!,
-                EarnedCredits = (int)entity.EarnedCredits!,
+                GradingSystemId = entity.GradingSystemId,
+                TotalCredits = entity.TotalCredits,
+                EarnedCredits = entity.EarnedCredits,
                 Status = entity.Status
             });
         }

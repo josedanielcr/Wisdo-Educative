@@ -2,16 +2,25 @@ import { GradingSystemClient } from "./grading.system.client.model";
 import { UserDegreeClient } from "./user.degree.client.model";
 
 export class StudyPlanClient {
-    id: number;
-    userDegreeId: number;
-    userDegree: UserDegreeClient;
-    gradingSystemId: number;
-    gradingSystem: GradingSystemClient;
-    totalCredits: number;
-    earnedCredits: number;
-    status: string;
+    id: number | null;
+    userDegreeId: number | null;
+    userDegree: UserDegreeClient | null;
+    gradingSystemId: number | null;
+    gradingSystem: GradingSystemClient | null;
+    totalCredits: number | null;
+    earnedCredits: number | null;
+    status: string | null;
 
-    constructor(id: number, userDegreeId: number, userDegree: UserDegreeClient, gradingSystemId: number, gradingSystem: GradingSystemClient, totalCredits: number, earnedCredits: number, status: string) {
+    constructor(
+        id: number | null,
+        userDegreeId: number | null,
+        userDegree: UserDegreeClient | null,
+        gradingSystemId: number | null,
+        gradingSystem: GradingSystemClient | null,
+        totalCredits: number | null,
+        earnedCredits: number | null,
+        status: string | null
+    ) {
         this.id = id;
         this.userDegreeId = userDegreeId;
         this.userDegree = userDegree;
