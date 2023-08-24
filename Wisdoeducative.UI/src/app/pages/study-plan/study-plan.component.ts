@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { DialogComponent } from 'src/app/components/dialog/dialog.component';
 import { ButtonType } from 'src/app/enums/button.enum';
 import { ApplicationErrorModel } from 'src/app/models/application.error.model';
+import { CourseClient } from 'src/app/models/core/client/course.client.model';
 import { StudyPlanClient } from 'src/app/models/core/client/study.plan.client.model';
 import { StudyPlanTermClient } from 'src/app/models/core/client/study.plan.term.client.model';
 import { UserClient } from 'src/app/models/core/client/user.client.model';
@@ -19,10 +22,15 @@ import { WindowResizeService } from 'src/app/services/helpers/window-resize.serv
 })
 export class StudyPlanComponent implements OnInit {
 
+  @ViewChild(DialogComponent) dialogComponent: DialogComponent;
+
   public user : UserClient;
   public userDegree : UserDegreeClient;
   public studyPlan : StudyPlanClient;
   public studyPlanTerms : StudyPlanTermClient[] = [];
+  public courseForm : FormGroup;
+
+  //utils
   public isDesktop: boolean;
   public isTablet: boolean;
   public isPhone: boolean;
@@ -32,7 +40,9 @@ export class StudyPlanComponent implements OnInit {
     private userService : UserService,
     private degreeService : DegreeService,
     private studyPlanService : StudyPlanService,
-    private windowService : WindowResizeService) { }
+    private windowService : WindowResizeService,
+    private fb : FormBuilder,
+    private cd : ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.manageUserData();
@@ -129,11 +139,63 @@ export class StudyPlanComponent implements OnInit {
       next: (studyPlan: StudyPlanTermClient) => {
         this.studyPlanTerms.push(studyPlan);
         this.storeService.set('studyPlanTerms', this.studyPlanTerms);
-        console.log(this.studyPlanTerms);
+        this.showCourseDialog();
       },
       error: (err : ApplicationErrorModel) => {
         console.log(err);
       }
     });
+  }
+  
+  private showCourseDialog(): void {
+    this.courseForm = this.fb.group({
+      courses: this.fb.array([
+        this.createCourseFormGroup()
+      ])
+    });    
+    this.cd.detectChanges();
+    this.dialogComponent.show();
+  }
+
+  get courses(): FormArray {
+    if(!this.courseForm) return null;
+    return this.courseForm.get('courses') as FormArray;
+  }
+
+  public trackByFn(index: number, item: any): number {
+    return index;
+  }
+
+  addCourse(): void {
+    this.courses.push(this.createCourseFormGroup());
+    this.cd.detectChanges();
+  }
+
+  private createCourseFormGroup(): FormGroup {
+    return this.fb.group({
+      courseName: '',
+      courseCredits: ''
+    });
+  }
+
+  public openDialog() : void {
+    this.showCourseDialog();
+  }
+
+  public createCourses(): void {
+    let courses : CourseClient[] = [];
+    if(!this.courses) return;
+    this.courses.controls.forEach((courseGroup: FormGroup, index: number) => {
+      const courseNameValue = courseGroup.get('courseName')?.value;
+      const courseCreditsValue = courseGroup.get('courseCredits')?.value;
+      const course : CourseClient = new CourseClient(null,this.studyPlanTerms[0].id,
+        null,null,null,courseNameValue,null,courseCreditsValue,null,null,null,null,null,null);
+      courses.push(course);
+    });
+    this.executeCreateCourses(courses);
+  }
+
+  private executeCreateCourses(courses: CourseClient[]) {
+    throw new Error('Method not implemented.');
   }
 }

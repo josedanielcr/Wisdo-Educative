@@ -3,6 +3,7 @@
                [iconPath]="'../../../assets/icons/book-black.png'"
                [iconBackgroundColor]="'rgba(124, 147, 158, 0.15)'">
     </app-title>
+    <button (click)="openDialog()">+</button>
 </div>
 
 <div class="no-studyplan-card wd-bg-white no-studyplan-container 
@@ -27,3 +28,48 @@
         </div>
     </div>
 </div>
+<app-dialog title="Agregar materias" [minHeight]="20">
+    <div class="w-100 h-100 d-flex flex-column" 
+         *ngIf="courses && courses.length"
+         [ngClass]="{
+            'pe-5 ps-5' : isDesktop || isTablet
+         }">
+        <form [formGroup]="courseForm">
+          <div formArrayName="courses">
+            <div *ngFor="let course of courses.controls; let i = index; trackBy: trackByFn">
+              <div [formGroupName]="i" class="add-course-container">
+                <div class="course-name">
+                    <app-input-text [label]="i === 0 ? 'Materia' : ''"
+                                    formControlName="courseName"
+                                    placeholder="">
+                    </app-input-text>
+                </div>
+                <div class="course-credits">
+                    <app-input-text [label]="i === 0 ? 'Créditos' : ''"
+                                    formControlName="courseCredits"
+                                    placeholder="">
+                    </app-input-text>
+                </div>
+                <div *ngIf="i !== courses.controls.length-1" class="placeholder-button"></div>
+                <div class="course-button mt-auto"
+                     *ngIf="i === courses.controls.length-1">
+                    <app-button iconPath="../../../assets/icons/plus.png"
+                                [type]="ButtonType.SUCCESS"
+                                (click)="addCourse()">
+                    </app-button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="mt-5 ms-auto" [ngClass]="{
+            'w-100': isPhone || isTablet,
+            'btn-create-course-desktop': isDesktop 
+        }">
+            <app-button text="Finalizar"
+                        [type]="ButtonType.SECONDARY"
+                        (click)="createCourses()">
+            </app-button>
+        </div>
+    </div>      
+</app-dialog>

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using Wisdoeducative.Application.Common.Exceptions;
 using Wisdoeducative.Application.Common.Interfaces;
 using Wisdoeducative.Application.Common.Interfaces.Helpers;
@@ -34,21 +35,29 @@ namespace Wisdoeducative.Application.Services
             this.courseHistoryService = courseHistoryService;
         }
 
-        public async Task<CourseDto> CreateCourse(CourseDto course)
+        public async Task<List<CourseDto>> CreateCourse(List<CourseDto> courses)
         {
-            string[] propertiesToCheck = new string[] { "StudyPlanTermId", "Name", "TotalCredits" };
-            if (!entityHelperService.AreAnyPropertiesNull(course, propertiesToCheck))
+            using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
+            List<CourseDto> finalCourses = new List<CourseDto>();
+            foreach (CourseDto course in courses)
             {
-                throw new BadRequestException($"{ErrorMessages.NullProperties} Course");
+                string[] propertiesToCheck = new string[] { "StudyPlanTermId", "Name", "TotalCredits" };
+                if (!entityHelperService.AreAnyPropertiesNull(course, propertiesToCheck))
+                {
+                    throw new BadRequestException($"{ErrorMessages.NullProperties} Course");
+                }
+                Course entityCourse = mapper.Map<Course>(course);
+                entityCourse.CourseStatus = Domain.Enums.CourseStatus.InProgress;
+                entityCourse.status = Domain.Enums.EntityStatus.Active;
+                dBContext.Courses.Add(entityCourse);
+                await dBContext.SaveChangesAsync();
+                await SaveCourseHistory(entityCourse);
+                await dBContext.SaveChangesAsync();
+                finalCourses.Add(mapper.Map<CourseDto>(entityCourse));
             }
-            Course entityCourse = mapper.Map<Course>(course);
-            entityCourse.CourseStatus = Domain.Enums.CourseStatus.InProgress;
-            entityCourse.status = Domain.Enums.EntityStatus.Active;
-            dBContext.Courses.Add(entityCourse);
-            await dBContext.SaveChangesAsync();
-            await SaveCourseHistory(entityCourse);
-            await dBContext.SaveChangesAsync();
-            return mapper.Map<CourseDto>(entityCourse);
+            //complete
+            scope.Complete();
+            return finalCourses;
         }
 
         public async Task<IEnumerable<CourseDto>> GetStudyTermCourses(int studyTermId)

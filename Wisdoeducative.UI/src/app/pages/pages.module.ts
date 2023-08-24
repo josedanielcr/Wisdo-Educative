@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { ComponentsModule } from '../components/components.module';
 import { StudyPlanComponent } from './study-plan/study-plan.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -19,7 +20,8 @@ import { StudyPlanComponent } from './study-plan/study-plan.component';
     CommonModule,
     SharedModule,
     RouterModule,
-    ComponentsModule
+    ComponentsModule,
+    ReactiveFormsModule
   ]
 })
 export class PagesModule { }

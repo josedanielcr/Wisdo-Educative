@@ -1,0 +1,26 @@
+<!-- dialog.component.html -->
+<div *ngIf="isVisible" class="dialog-overlay">
+    <div class="dialog-content position-relative" 
+        [ngClass]="{
+            'dialog-content-phone': isPhone || isTablet,
+            'dialog-content-desktop': isDesktop
+        }"
+        [style.minHeight]="minHeight+'rem'">
+        <div class="w-100 h-100">
+            <div class="w-100 d-flex align-items-center justify-content-center mb-5 mt-4">
+                <div class="ms-auto">
+                    <h3 class="mb-0" [ngClass]="{
+                        'wd-text-h3' : isPhone,
+                        'wd-text-h1' : isTablet || isDesktop
+                     }">
+                     {{title}}
+                    </h3>
+                </div>
+                <div class="ms-auto close-container" (click)="toggle()">
+                    <img src="../../../assets/icons/close-outline 1.png" alt="">
+                </div>
+            </div>
+            <ng-content></ng-content>
+        </div>
+    </div>
+</div>

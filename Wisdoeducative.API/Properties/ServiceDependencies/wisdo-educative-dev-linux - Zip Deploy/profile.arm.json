@@ -21,7 +21,7 @@
     },
     "resourceName": {
       "type": "string",
-      "defaultValue": "wisdoeducative-dev-lx",
+      "defaultValue": "wisdo-educative-dev-linux",
       "metadata": {
         "description": "Name of the main resource to be created by this template."
       }

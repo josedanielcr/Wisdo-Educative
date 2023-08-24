@@ -26,9 +26,9 @@ namespace Wisdoeducative.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateCourse(CourseDto course)
+        public async Task<IActionResult> CreateCourse(List<CourseDto> courses)
         {
-            return Ok(await courseService.CreateCourse(course));
+            return Ok(await courseService.CreateCourse(courses));
         }
     }
 }

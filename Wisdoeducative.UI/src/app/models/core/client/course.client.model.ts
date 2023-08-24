@@ -1,3 +1,5 @@
+import { CoursePrerequisiteClient } from "./course.prerequisite.client.model";
+import { CourseScheduleClient } from "./course.schedule.client.model";
 import { StudyPlanTermClient } from "./study.plan.term.client.model";
 
 export class CourseClient {

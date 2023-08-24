@@ -9,7 +9,7 @@ namespace Wisdoeducative.Application.Common.Interfaces.Services
 {
     public interface ICourseService
     {
-        Task<CourseDto> CreateCourse(CourseDto course);
+        Task<List<CourseDto>> CreateCourse(List<CourseDto> courses);
         Task<IEnumerable<CourseDto>> GetStudyTermCourses(int studyTermId);                                                                                            
     }
 }
