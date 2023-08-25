@@ -3,7 +3,7 @@ import { StudyPlanClient } from "./study.plan.client.model";
 export class StudyPlanTermClient {
     id: number;
     studyPlanId: number;
-    studyPlan: StudyPlanClient;
+    studyPlanDto: StudyPlanClient;
     name: string;
     startDate: Date;
     endDate: Date;

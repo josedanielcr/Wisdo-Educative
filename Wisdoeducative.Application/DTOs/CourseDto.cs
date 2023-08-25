@@ -15,14 +15,14 @@ namespace Wisdoeducative.Application.DTOs
         // Courses for which this course is a prerequisite
         public ICollection<CoursePrerequisiteDto>? PrerequisiteOfCourses { get; set; }
         public int Id { get; set; }
-        public StudyPlanTermDto StudyPlanTermDto { get; set; } 
-        public int StudyPlanTermId { get; set; }
+        public StudyPlanTermDto? StudyPlanTermDto { get; set; } 
+        public int? StudyPlanTermId { get; set; }
         public CourseScheduleDto? CourseScheduleDto { get; set; } 
         public int? CourseScheduleId { get; set; }
         public string Name { get; set; }
         public int TotalCredits { get; set; }
         public string? CurrentScore { get; set; }
-        public string Status { get; set; }
-        public string CourseStatus { get; set; }
+        public string? Status { get; set; }
+        public string? CourseStatus { get; set; }
     }
 }

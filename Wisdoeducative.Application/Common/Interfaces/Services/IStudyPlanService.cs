@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Wisdoeducative.Application.DTOs;
+using Wisdoeducative.Application.DTOs.CustomDTOs;
 
 namespace Wisdoeducative.Application.Common.Interfaces.Services
 {
@@ -11,7 +12,7 @@ namespace Wisdoeducative.Application.Common.Interfaces.Services
     {
         Task<StudyPlanDTO> GetUserStudyPlan(int userDegreeId);
         Task<StudyPlanDTO> CreateStudyPlan(StudyPlanDTO studyPlan);
-        Task<StudyPlanTermDto> CreateStudyPlanTerm(StudyPlanTermDto studyPlanTermDto);
+        Task<StudyTermCreationDto> CreateStudyPlanTerm(StudyTermCreationDto studyTermCreationDto);
         Task<IEnumerable<StudyPlanTermDto>> GetUserStudyPlanTerms(int studyPlanId);
     }
 }

@@ -27,7 +27,7 @@ namespace Wisdoeducative.Application.Histories
                 Date = DateTime.Now,
                 EntityChangeType = type,
                 ModifiedByUser = modifiedBy,
-                Id = entityId,
+                CourseId = entityId,
                 Name = entity.Name,
                 TotalCredits = entity.TotalCredits,
                 CurrentScore = entity.CurrentScore,

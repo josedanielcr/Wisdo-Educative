@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Web.Resource;
 using Wisdoeducative.Application.Common.Interfaces.Services;
 using Wisdoeducative.Application.DTOs;
+using Wisdoeducative.Application.DTOs.CustomDTOs;
 
 namespace Wisdoeducative.API.Controllers
 {
@@ -32,9 +33,9 @@ namespace Wisdoeducative.API.Controllers
         }
 
         [HttpPost("studyPlanTerm")]
-        public async Task<IActionResult> CreateStudyPlanTerm([FromBody] StudyPlanTermDto studyPlanTerm)
+        public async Task<IActionResult> CreateStudyPlanTerm([FromBody] StudyTermCreationDto studyTermCreationDto)
         {
-            return Ok(await studyPlanService.CreateStudyPlanTerm(studyPlanTerm));
+            return Ok(await studyPlanService.CreateStudyPlanTerm(studyTermCreationDto));
         }
     }
 }

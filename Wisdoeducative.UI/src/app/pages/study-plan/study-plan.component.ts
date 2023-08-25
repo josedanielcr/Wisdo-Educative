@@ -9,6 +9,7 @@ import { StudyPlanTermClient } from 'src/app/models/core/client/study.plan.term.
 import { UserClient } from 'src/app/models/core/client/user.client.model';
 import { UserDegreeClient } from 'src/app/models/core/client/user.degree.client.model';
 import { ScreenSizeModel } from 'src/app/models/screenSize.model';
+import { StudyTermCoursesModel } from 'src/app/models/utils/study.term.courses.model';
 import { FormService } from 'src/app/services/components/form.service';
 import { DegreeService } from 'src/app/services/core/models/degree.service';
 import { StudyPlanService } from 'src/app/services/core/models/study-plan.service';
@@ -155,7 +156,7 @@ export class StudyPlanComponent implements OnInit {
       ])
     });   
     this.studyTermForm = this.fb.group({
-      studyTermName: ['', [Validators.required]],
+      name: ['', [Validators.required]],
       startDate: ['', [Validators.required]],
       endDate: ['', [Validators.required]],
     });
@@ -179,8 +180,8 @@ export class StudyPlanComponent implements OnInit {
 
   private createCourseFormGroup(): FormGroup {
     return this.fb.group({
-      courseName: '',
-      courseCredits: ''
+      name: '',
+      totalCredits: ''
     });
   }
 
@@ -189,26 +190,45 @@ export class StudyPlanComponent implements OnInit {
   }
 
   public createStudyPlanTermWithCourses(): void {
-    // if(!this.coursesFormArray) return;
-    // this.coursesFormArray.controls.forEach((courseGroup: FormGroup, index: number) => {
-    //   const courseNameValue = courseGroup.get('courseName')?.value;
-    //   const courseCreditsValue = courseGroup.get('courseCredits')?.value;
-    //   console.log(courseNameValue);
-    //   console.log(courseCreditsValue);
-    // });
-    // console.log(this.studyTermForm);
-    let courses : CourseClient[] = [];
-    this.createStudyPlanTermObject();
-    courses = this.createCourses();
+    const studyPlanTerm : StudyPlanTermClient = this.createStudyPlanTermObject();
+    if(!studyPlanTerm) return;
+    let courses : CourseClient[] = this.createCourses();
+    this.createFullStudyPlanTerm(studyPlanTerm, courses);
   }
 
-  private createStudyPlanTermObject(): void {
+  private createStudyPlanTermObject(): StudyPlanTermClient {
     let studyPlanTerm : StudyPlanTermClient | null =
      this.formService.validateForm(this.studyTermForm, StudyPlanTermClient);
+    if(!studyPlanTerm) return null;
+    return studyPlanTerm;
   }
 
   private createCourses(): CourseClient[] {
-    throw new Error('Method not implemented.');
+    let courses : CourseClient[] = [];
+    if(!this.coursesFormArray) return courses;
+    this.coursesFormArray.controls.forEach((courseGroup: FormGroup) => {
+      const course : CourseClient = this.formService.validateForm(courseGroup, CourseClient);
+      if(!course) return;
+      courses.push(course);
+    });
+    return courses;
   }
 
+  private createFullStudyPlanTerm(studyPlanTerm: StudyPlanTermClient, 
+    courses: CourseClient[]): void {
+
+    const studyTermCourses : StudyTermCoursesModel = new StudyTermCoursesModel();
+    studyTermCourses.studyPlanTermDto = studyPlanTerm;
+    studyTermCourses.coursesDtos = courses;
+    studyTermCourses.studyPlanTermDto.studyPlanId = this.studyPlan.id;
+
+    this.studyPlanService.createStudyPlanTerm(studyTermCourses).subscribe({
+      next: (studyTermCourses: StudyTermCoursesModel) => {
+        this.storeService.set(studyTermCourses.studyPlanTermDto.id.toString(), studyTermCourses);
+        this.studyPlanTerms.push(studyTermCourses.studyPlanTermDto);
+        this.dialogComponent.hide();
+        console.log(studyTermCourses);
+      }
+    });
+  }
 }

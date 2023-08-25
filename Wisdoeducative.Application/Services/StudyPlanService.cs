@@ -11,6 +11,7 @@ using Wisdoeducative.Application.Common.Interfaces.Helpers;
 using Wisdoeducative.Application.Common.Interfaces.Historics;
 using Wisdoeducative.Application.Common.Interfaces.Services;
 using Wisdoeducative.Application.DTOs;
+using Wisdoeducative.Application.DTOs.CustomDTOs;
 using Wisdoeducative.Application.Resources;
 using Wisdoeducative.Domain.Entities;
 
@@ -23,18 +24,21 @@ namespace Wisdoeducative.Application.Services
         private readonly IEntityHelperService helperService;
         private readonly IEntityHistoryService<StudyPlan> studyPlanHistoryService;
         private readonly IEntityHistoryService<StudyPlanTerm> studyPlanTermHistoryService;
+        private readonly ICourseService courseService;
 
         public StudyPlanService(IApplicationDBContext dBContext,
             IMapper mapper,
             IEntityHelperService helperService,
             IEntityHistoryService<StudyPlan> studyPlanHistoryService,
-            IEntityHistoryService<StudyPlanTerm> studyPlanTermHistoryService)
+            IEntityHistoryService<StudyPlanTerm> studyPlanTermHistoryService,
+            ICourseService courseService)
         {
             this.dBContext = dBContext;
             this.mapper = mapper;
             this.helperService = helperService;
             this.studyPlanHistoryService = studyPlanHistoryService;
             this.studyPlanTermHistoryService = studyPlanTermHistoryService;
+            this.courseService = courseService;
         }
 
         public async Task<StudyPlanDTO> CreateStudyPlan(StudyPlanDTO studyPlan)
@@ -53,27 +57,72 @@ namespace Wisdoeducative.Application.Services
             return mapper.Map<StudyPlanDTO>(studyPlanEntity);
         }
 
-        public async Task<StudyPlanTermDto> CreateStudyPlanTerm(StudyPlanTermDto studyPlanTermDto)
+        public async Task<StudyTermCreationDto> CreateStudyPlanTerm(StudyTermCreationDto studyTermCreationDto)
         {
-            string[] propertiesToCheck = new string[] { "StudyPlanId", "StartDate", "EndDate" };
-            if (helperService.AreAnyPropertiesNull(studyPlanTermDto, propertiesToCheck))
+            ValidateStudyTermCreationDto(studyTermCreationDto);
+
+            var newStudyPlan = CreateNewStudyPlanTerm(studyTermCreationDto);
+            await SaveNewStudyPlanTerm(newStudyPlan);
+
+            if (HasCourses(studyTermCreationDto))
+            {
+                AssignStudyPlanTermIdToCourses(studyTermCreationDto.coursesDtos, newStudyPlan.Id);
+                studyTermCreationDto.coursesDtos = await CreateCourses(studyTermCreationDto.coursesDtos.ToList());
+            }
+
+            studyTermCreationDto.StudyPlanTermDto = mapper.Map<StudyPlanTermDto>(newStudyPlan);
+
+            return studyTermCreationDto;
+        }
+
+        private void ValidateStudyTermCreationDto(StudyTermCreationDto studyTermCreationDto)
+        {
+            string[] propertiesToCheck = { "StudyPlanId", "StartDate", "EndDate" };
+            if (helperService.AreAnyPropertiesNull(studyTermCreationDto.StudyPlanTermDto, propertiesToCheck))
             {
                 throw new BadRequestException($"{ErrorMessages.NullProperties} Study plan term, needs to have a study plan associated");
             }
-            IEnumerable<StudyPlanTermDto> studyPlanTerms
-                = await GetUserStudyPlanTerms(studyPlanTermDto.StudyPlanId);
-            var newPeriodCount = studyPlanTerms.Count() + 1;
-            studyPlanTermDto.PeriodNumber = newPeriodCount;
+        }
 
-            StudyPlanTerm newStudyPlan = mapper.Map<StudyPlanTerm>(studyPlanTermDto);
+        private StudyPlanTerm CreateNewStudyPlanTerm(StudyTermCreationDto studyTermCreationDto)
+        {
+            var studyPlanTerms = GetUserStudyPlanTerms(studyTermCreationDto.StudyPlanTermDto.StudyPlanId).Result;
+            var newPeriodCount = studyPlanTerms.Count() + 1;
+            studyTermCreationDto.StudyPlanTermDto.PeriodNumber = newPeriodCount;
+
+            var newStudyPlan = mapper.Map<StudyPlanTerm>(studyTermCreationDto.StudyPlanTermDto);
             newStudyPlan.Status = Domain.Enums.EntityStatus.Active;
             newStudyPlan.StudyTermStatus = Domain.Enums.StudyTermStatus.InProgress;
+
+            return newStudyPlan;
+        }
+
+        private async Task SaveNewStudyPlanTerm(StudyPlanTerm newStudyPlan)
+        {
             dBContext.StudyPlanTerms.Add(newStudyPlan);
             await dBContext.SaveChangesAsync();
             await SaveStudyPlanTermHistory(newStudyPlan, Domain.Enums.EntityChangeTypes.Added);
             await dBContext.SaveChangesAsync();
-            return mapper.Map<StudyPlanTermDto>(newStudyPlan);
         }
+
+        private bool HasCourses(StudyTermCreationDto studyTermCreationDto)
+        {
+            return studyTermCreationDto.coursesDtos != null;
+        }
+
+        private void AssignStudyPlanTermIdToCourses(IEnumerable<CourseDto> courses, int studyPlanTermId)
+        {
+            foreach (var course in courses)
+            {
+                course.StudyPlanTermId = studyPlanTermId;
+            }
+        }
+
+        private async Task<List<CourseDto>> CreateCourses(List<CourseDto> courses)
+        {
+            return await courseService.CreateCourse(courses);
+        }
+
 
         public async Task<StudyPlanDTO> GetUserStudyPlan(int userDegreeId)
         {

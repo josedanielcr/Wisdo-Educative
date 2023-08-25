@@ -9,6 +9,7 @@ import { StudyPlanAdapterService } from '../../helpers/adapters/study-plan-adapt
 import { StudyPlanTermClient } from 'src/app/models/core/client/study.plan.term.client.model';
 import { StudyPlanTermServer } from 'src/app/models/core/server/study.plan.term.server.model';
 import { StudyPlanTermAdapterService } from '../../helpers/adapters/study-plan-term-adapter.service';
+import { StudyTermCoursesModel } from 'src/app/models/utils/study.term.courses.model';
 
 @Injectable({
   providedIn: 'root'
@@ -41,11 +42,11 @@ export class StudyPlanService {
       );
   }
 
-  public createStudyPlanTerm(studyPlan : StudyPlanTermClient): Observable<StudyPlanTermClient> {
-    return this.http.post<StudyPlanTermClient>(`${this.apiUrlService.checkEnvironment()}/studyPlan/studyPlanTerm`, studyPlan)
+  public createStudyPlanTerm(studyPlan : StudyTermCoursesModel): Observable<StudyTermCoursesModel> {
+    return this.http.post<StudyTermCoursesModel>(`${this.apiUrlService.checkEnvironment()}/studyPlan/studyPlanTerm`, studyPlan)
       .pipe(
-        map((studyPlan: StudyPlanTermServer) => {
-          return this.studyPlanTermAdapter.adaptServerToClient(studyPlan);
+        map((studyPlan: StudyTermCoursesModel) => {
+          return studyPlan;
         }),
         catchError((error: any) => { throw this.applicationErrorService.parseHttpError(error); })
       );

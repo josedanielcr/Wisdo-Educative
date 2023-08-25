@@ -39,7 +39,7 @@
         <form [formGroup]="studyTermForm" class="w-100">
             <div class="w-100 mb-3">
                 <app-input-text [label]="'Nombre del bloque'"
-                                formControlName="studyTermName"
+                                formControlName="name"
                                 error="El nombre del bloque es requerido"
                                 placeholder="">
                 </app-input-text>
@@ -75,13 +75,13 @@
               <div [formGroupName]="i" class="add-course-container">
                 <div class="course-name">
                     <app-input-text [label]="i === 0 ? 'Materia' : ''"
-                                    formControlName="courseName"
+                                    formControlName="name"
                                     placeholder="">
                     </app-input-text>
                 </div>
                 <div class="course-credits">
                     <app-input-text [label]="i === 0 ? 'Créditos' : ''"
-                                    formControlName="courseCredits"
+                                    formControlName="totalCredits"
                                     placeholder="">
                     </app-input-text>
                 </div>

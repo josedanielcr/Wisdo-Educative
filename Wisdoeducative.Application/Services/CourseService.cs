@@ -42,7 +42,7 @@ namespace Wisdoeducative.Application.Services
             foreach (CourseDto course in courses)
             {
                 string[] propertiesToCheck = new string[] { "StudyPlanTermId", "Name", "TotalCredits" };
-                if (!entityHelperService.AreAnyPropertiesNull(course, propertiesToCheck))
+                if (entityHelperService.AreAnyPropertiesNull(course, propertiesToCheck))
                 {
                     throw new BadRequestException($"{ErrorMessages.NullProperties} Course");
                 }

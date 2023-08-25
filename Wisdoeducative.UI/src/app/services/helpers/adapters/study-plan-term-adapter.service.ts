@@ -14,7 +14,7 @@ export class StudyPlanTermAdapterService {
       let clientObj = new StudyPlanTermClient();
       clientObj.id = serverObj.id;
       clientObj.studyPlanId = serverObj.studyPlanId;
-      clientObj.studyPlan = serverObj.studyPlan ? this.studyPlanAdapter.adaptServerToClient(serverObj.studyPlan) : null;
+      clientObj.studyPlanDto = serverObj.studyPlan ? this.studyPlanAdapter.adaptServerToClient(serverObj.studyPlan) : null;
       clientObj.periodNumber = serverObj.periodNumber;
       clientObj.studyTermStatus = serverObj.studyTermStatus;
       clientObj.status = serverObj.status;
@@ -28,7 +28,7 @@ export class StudyPlanTermAdapterService {
       let serverObj = new StudyPlanTermServer();
       serverObj.id = clientObj.id;
       serverObj.studyPlanId = clientObj.studyPlanId;
-      serverObj.studyPlan = clientObj.studyPlan ? this.studyPlanAdapter.adaptClientToServer(clientObj.studyPlan) : null;
+      serverObj.studyPlan = clientObj.studyPlanDto ? this.studyPlanAdapter.adaptClientToServer(clientObj.studyPlanDto) : null;
       serverObj.periodNumber = clientObj.periodNumber;
       serverObj.studyTermStatus = clientObj.studyTermStatus;
       serverObj.status = clientObj.status;
