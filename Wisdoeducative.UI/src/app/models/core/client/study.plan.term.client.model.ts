@@ -4,16 +4,12 @@ export class StudyPlanTermClient {
     id: number;
     studyPlanId: number;
     studyPlan: StudyPlanClient;
+    name: string;
+    startDate: Date;
+    endDate: Date;
     periodNumber: number;
     studyTermStatus: string;
     status: string;
 
-    constructor(id: number, studyPlanId: number, studyPlan: StudyPlanClient, periodNumber: number, studyTermStatus: string, status: string) {
-        this.id = id;
-        this.studyPlanId = studyPlanId;
-        this.studyPlan = studyPlan;
-        this.periodNumber = periodNumber;
-        this.studyTermStatus = studyTermStatus;
-        this.status = status;
-    }
+    constructor(){}
 }

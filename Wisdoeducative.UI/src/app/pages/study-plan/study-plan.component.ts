@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DialogComponent } from 'src/app/components/dialog/dialog.component';
 import { ButtonType } from 'src/app/enums/button.enum';
 import { ApplicationErrorModel } from 'src/app/models/application.error.model';
@@ -9,6 +9,7 @@ import { StudyPlanTermClient } from 'src/app/models/core/client/study.plan.term.
 import { UserClient } from 'src/app/models/core/client/user.client.model';
 import { UserDegreeClient } from 'src/app/models/core/client/user.degree.client.model';
 import { ScreenSizeModel } from 'src/app/models/screenSize.model';
+import { FormService } from 'src/app/services/components/form.service';
 import { DegreeService } from 'src/app/services/core/models/degree.service';
 import { StudyPlanService } from 'src/app/services/core/models/study-plan.service';
 import { UserService } from 'src/app/services/core/models/user.service';
@@ -24,11 +25,15 @@ export class StudyPlanComponent implements OnInit {
 
   @ViewChild(DialogComponent) dialogComponent: DialogComponent;
 
+  //properties
   public user : UserClient;
   public userDegree : UserDegreeClient;
   public studyPlan : StudyPlanClient;
   public studyPlanTerms : StudyPlanTermClient[] = [];
+
+  //forms
   public courseForm : FormGroup;
+  public studyTermForm : FormGroup;
 
   //utils
   public isDesktop: boolean;
@@ -42,7 +47,8 @@ export class StudyPlanComponent implements OnInit {
     private studyPlanService : StudyPlanService,
     private windowService : WindowResizeService,
     private fb : FormBuilder,
-    private cd : ChangeDetectorRef) { }
+    private cd : ChangeDetectorRef,
+    private formService : FormService) { }
 
   ngOnInit(): void {
     this.manageUserData();
@@ -118,46 +124,46 @@ export class StudyPlanComponent implements OnInit {
     });
   }
 
-  public createStudyPlan() : void {
-    let studyPlan : StudyPlanClient = 
-      new StudyPlanClient(null,this.userDegree.id,null,null,null,null,null,null);
+  public createStudyPlan(): void {
+    let studyPlan: StudyPlanClient = new StudyPlanClient();
+  
+    studyPlan.id = null;
+    studyPlan.userDegreeId = this.userDegree.id;
+    studyPlan.userDegree = null;
+    studyPlan.gradingSystemId = null;
+    studyPlan.gradingSystem = null;
+    studyPlan.totalCredits = null;
+    studyPlan.earnedCredits = null;
+    studyPlan.status = null;
+  
     this.studyPlanService.createStudyPlan(studyPlan).subscribe({
       next: (studyPlan: StudyPlanClient) => {
         this.storeService.set('studyPlan', studyPlan);
         this.studyPlan = studyPlan;
-        this.createStudyTerm();
-      },
-      error: (err : ApplicationErrorModel) => {
-        console.log(err);
-      }
-    });
-  }
-
-  private createStudyTerm(): void {
-    let studyPlanTerm : StudyPlanTermClient = new StudyPlanTermClient(null,this.studyPlan.id,null,null,null,null);
-    this.studyPlanService.createStudyPlanTerm(studyPlanTerm).subscribe({
-      next: (studyPlan: StudyPlanTermClient) => {
-        this.studyPlanTerms.push(studyPlan);
-        this.storeService.set('studyPlanTerms', this.studyPlanTerms);
         this.showCourseDialog();
       },
-      error: (err : ApplicationErrorModel) => {
+      error: (err: ApplicationErrorModel) => {
         console.log(err);
       }
     });
-  }
-  
+  }  
+
   private showCourseDialog(): void {
     this.courseForm = this.fb.group({
       courses: this.fb.array([
         this.createCourseFormGroup()
       ])
-    });    
+    });   
+    this.studyTermForm = this.fb.group({
+      studyTermName: ['', [Validators.required]],
+      startDate: ['', [Validators.required]],
+      endDate: ['', [Validators.required]],
+    });
     this.cd.detectChanges();
     this.dialogComponent.show();
   }
 
-  get courses(): FormArray {
+  get coursesFormArray(): FormArray {
     if(!this.courseForm) return null;
     return this.courseForm.get('courses') as FormArray;
   }
@@ -167,7 +173,7 @@ export class StudyPlanComponent implements OnInit {
   }
 
   addCourse(): void {
-    this.courses.push(this.createCourseFormGroup());
+    this.coursesFormArray.push(this.createCourseFormGroup());
     this.cd.detectChanges();
   }
 
@@ -182,20 +188,27 @@ export class StudyPlanComponent implements OnInit {
     this.showCourseDialog();
   }
 
-  public createCourses(): void {
+  public createStudyPlanTermWithCourses(): void {
+    // if(!this.coursesFormArray) return;
+    // this.coursesFormArray.controls.forEach((courseGroup: FormGroup, index: number) => {
+    //   const courseNameValue = courseGroup.get('courseName')?.value;
+    //   const courseCreditsValue = courseGroup.get('courseCredits')?.value;
+    //   console.log(courseNameValue);
+    //   console.log(courseCreditsValue);
+    // });
+    // console.log(this.studyTermForm);
     let courses : CourseClient[] = [];
-    if(!this.courses) return;
-    this.courses.controls.forEach((courseGroup: FormGroup, index: number) => {
-      const courseNameValue = courseGroup.get('courseName')?.value;
-      const courseCreditsValue = courseGroup.get('courseCredits')?.value;
-      const course : CourseClient = new CourseClient(null,this.studyPlanTerms[0].id,
-        null,null,null,courseNameValue,null,courseCreditsValue,null,null,null,null,null,null);
-      courses.push(course);
-    });
-    this.executeCreateCourses(courses);
+    this.createStudyPlanTermObject();
+    courses = this.createCourses();
   }
 
-  private executeCreateCourses(courses: CourseClient[]) {
+  private createStudyPlanTermObject(): void {
+    let studyPlanTerm : StudyPlanTermClient | null =
+     this.formService.validateForm(this.studyTermForm, StudyPlanTermClient);
+  }
+
+  private createCourses(): CourseClient[] {
     throw new Error('Method not implemented.');
   }
+
 }

@@ -13,6 +13,9 @@ namespace Wisdoeducative.Domain.Entities
         public StudyPlan? StudyPlan { get; set; }
         public int? StudyPlanId { get; set; }
         public int? PeriodNumber { get; set; }
+        public string Name { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
         public StudyTermStatus? StudyTermStatus { get; set; }
         public EntityStatus? Status { get; set; }
     }

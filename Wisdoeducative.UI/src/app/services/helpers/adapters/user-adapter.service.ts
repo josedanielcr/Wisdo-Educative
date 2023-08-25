@@ -8,41 +8,37 @@ import { RoleAdapterService } from './role-adapter.service';
 })
 export class UserAdapterService {
 
-  constructor(private roleAdapterService : RoleAdapterService) { }
+  constructor(private roleAdapterService: RoleAdapterService) { }
 
   public adaptUserServerToClient(userServer: UserServer): UserClient {
-    const roleClient = userServer.role ? this.roleAdapterService
-      .adaptRoleServerToClient(userServer.role) : null;
-    return new UserClient(
-      userServer.id,
-      userServer.b2cId,
-      userServer.name,
-      userServer.lastName,
-      userServer.dateOfBirth,
-      userServer.email,
-      userServer.profileImage,
-      userServer.userStatus,
-      roleClient,
-      userServer.roleId,
-      userServer.category
-    );
+    let clientObj = new UserClient();
+    clientObj.role = userServer.role ? this.roleAdapterService.adaptRoleServerToClient(userServer.role) : null;
+    clientObj.id = userServer.id;
+    clientObj.b2cId = userServer.b2cId;
+    clientObj.name = userServer.name;
+    clientObj.lastName = userServer.lastName;
+    clientObj.dateOfBirth = userServer.dateOfBirth;
+    clientObj.email = userServer.email;
+    clientObj.profileImage = userServer.profileImage;
+    clientObj.userStatus = userServer.userStatus;
+    clientObj.roleId = userServer.roleId;
+    clientObj.category = userServer.category;
+    return clientObj;
   }
 
   public adaptUserClientToServer(userClient: UserClient): UserServer {
-    const roleServer = userClient.role ? this.roleAdapterService
-      .adaptRoleClientToServer(userClient.role) : null;
-    return new UserServer(
-      userClient.id,
-      userClient.b2cId,
-      userClient.name,
-      userClient.lastName,
-      userClient.dateOfBirth,
-      userClient.email,
-      userClient.profileImage,
-      userClient.userStatus,
-      roleServer,
-      userClient.roleId,
-      userClient.category
-    );
+    let serverObj = new UserServer();
+    serverObj.role = userClient.role ? this.roleAdapterService.adaptRoleClientToServer(userClient.role) : null;
+    serverObj.id = userClient.id;
+    serverObj.b2cId = userClient.b2cId;
+    serverObj.name = userClient.name;
+    serverObj.lastName = userClient.lastName;
+    serverObj.dateOfBirth = userClient.dateOfBirth;
+    serverObj.email = userClient.email;
+    serverObj.profileImage = userClient.profileImage;
+    serverObj.userStatus = userClient.userStatus;
+    serverObj.roleId = userClient.roleId;
+    serverObj.category = userClient.category;
+    return serverObj;
   }
 }

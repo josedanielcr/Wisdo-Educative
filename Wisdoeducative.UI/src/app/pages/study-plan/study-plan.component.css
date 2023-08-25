@@ -36,7 +36,16 @@
 }
 /*#endregion no study plan*/
 
-/*#region add course container*/
+/*#region add study plan term and course container*/
+.study-plan-term-container {
+    gap: 1.25rem;
+
+}
+
+.study-plan-term-container .flex-fill {
+    max-width: 50%;
+
+}
 
 .add-course-container {
     display: flex;
@@ -65,4 +74,4 @@
 .btn-create-course-desktop {
     width: 12.375rem;
 }
-/*#endregion add course container*/
+/*#endregion add study plan term and course container*/

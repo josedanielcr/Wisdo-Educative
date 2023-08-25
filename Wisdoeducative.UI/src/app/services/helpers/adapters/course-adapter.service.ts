@@ -12,40 +12,32 @@ export class CourseAdapterService {
   constructor(private studyPlanTermAdapter: StudyPlanTermAdapterService, private courseScheduleAdapter: CourseScheduleAdapterService) { }
 
   public adaptServerToClient(serverObj: CourseServer): CourseClient {
-      return new CourseClient(
-          serverObj.id, 
-          serverObj.studyPlanTermId, 
-          this.studyPlanTermAdapter.adaptServerToClient(serverObj.studyPlanTerm),
-          serverObj.courseScheduleId,
-          serverObj.courseSchedule ? this.courseScheduleAdapter.adaptServerToClient(serverObj.courseSchedule) : undefined,
-          serverObj.name, 
-          serverObj.description,
-          serverObj.totalCredits,
-          serverObj.startDate, 
-          serverObj.endDate,
-          serverObj.currentScore,
-          serverObj.price,
-          serverObj.status, 
-          serverObj.courseStatus
-      );
+      const clientObj = new CourseClient();
+      clientObj.id = serverObj.id;
+      clientObj.studyPlanTermId = serverObj.studyPlanTermId;
+      clientObj.studyPlanTerm = this.studyPlanTermAdapter.adaptServerToClient(serverObj.studyPlanTerm);
+      clientObj.courseScheduleId = serverObj.courseScheduleId;
+      clientObj.courseSchedule = serverObj.courseSchedule ? this.courseScheduleAdapter.adaptServerToClient(serverObj.courseSchedule) : undefined;
+      clientObj.name = serverObj.name;
+      clientObj.totalCredits = serverObj.totalCredits;
+      clientObj.currentScore = serverObj.currentScore;
+      clientObj.status = serverObj.status;
+      clientObj.courseStatus = serverObj.courseStatus;
+      return clientObj;
   }
 
   public adaptClientToServer(clientObj: CourseClient): CourseServer {
-      return new CourseServer(
-          clientObj.id, 
-          clientObj.studyPlanTermId, 
-          this.studyPlanTermAdapter.adaptClientToServer(clientObj.studyPlanTerm),
-          clientObj.courseScheduleId,
-          clientObj.courseSchedule ? this.courseScheduleAdapter.adaptClientToServer(clientObj.courseSchedule) : undefined,
-          clientObj.name, 
-          clientObj.description,
-          clientObj.totalCredits,
-          clientObj.startDate, 
-          clientObj.endDate,
-          clientObj.currentScore,
-          clientObj.price,
-          clientObj.status, 
-          clientObj.courseStatus
-      );
+      const serverObj = new CourseServer();
+      serverObj.id = clientObj.id;
+      serverObj.studyPlanTermId = clientObj.studyPlanTermId;
+      serverObj.studyPlanTerm = this.studyPlanTermAdapter.adaptClientToServer(clientObj.studyPlanTerm);
+      serverObj.courseScheduleId = clientObj.courseScheduleId;
+      serverObj.courseSchedule = clientObj.courseSchedule ? this.courseScheduleAdapter.adaptClientToServer(clientObj.courseSchedule) : undefined;
+      serverObj.name = clientObj.name;
+      serverObj.totalCredits = clientObj.totalCredits;
+      serverObj.currentScore = clientObj.currentScore;
+      serverObj.status = clientObj.status;
+      serverObj.courseStatus = clientObj.courseStatus;
+      return serverObj;
   }
 }

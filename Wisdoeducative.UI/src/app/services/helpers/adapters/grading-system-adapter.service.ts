@@ -10,26 +10,26 @@ export class GradingSystemAdapterService {
   constructor() { }
 
   public adaptServerToClient(serverObj: GradingSystemServer): GradingSystemClient {
-      return new GradingSystemClient(
-          serverObj.id, 
-          serverObj.name, 
-          serverObj.description, 
-          serverObj.minimumScore,
-          serverObj.maximiumScore,
-          serverObj.passingGrade,
-          serverObj.status
-      );
+      const clientObj = new GradingSystemClient();
+      clientObj.id = serverObj.id;
+      clientObj.name = serverObj.name;
+      clientObj.description = serverObj.description;
+      clientObj.minimumScore = serverObj.minimumScore;
+      clientObj.maximiumScore = serverObj.maximiumScore;
+      clientObj.passingGrade = serverObj.passingGrade;
+      clientObj.status = serverObj.status;
+      return clientObj;
   }
 
   public adaptClientToServer(clientObj: GradingSystemClient): GradingSystemServer {
-      return new GradingSystemServer(
-          clientObj.id, 
-          clientObj.name, 
-          clientObj.description, 
-          clientObj.minimumScore,
-          clientObj.maximiumScore,
-          clientObj.passingGrade,
-          clientObj.status
-      );
+      const serverObj = new GradingSystemServer();
+      serverObj.id = clientObj.id;
+      serverObj.name = clientObj.name;
+      serverObj.description = clientObj.description;
+      serverObj.minimumScore = clientObj.minimumScore;
+      serverObj.maximiumScore = clientObj.maximiumScore;
+      serverObj.passingGrade = clientObj.passingGrade;
+      serverObj.status = clientObj.status;
+      return serverObj;
   }
 }

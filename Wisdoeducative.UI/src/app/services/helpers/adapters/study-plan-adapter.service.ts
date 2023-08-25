@@ -13,28 +13,28 @@ export class StudyPlanAdapterService {
     private gradingSystemAdapter: GradingSystemAdapterService) { }
 
   public adaptServerToClient(serverObj: StudyPlanServer): StudyPlanClient {
-    return new StudyPlanClient(
-      serverObj.id,
-      serverObj.userDegreeId,
-      serverObj.userDegree ? this.userDegreeAdapter.adaptUserDegreeServerToClient(serverObj.userDegree) : null,
-      serverObj.gradingSystemId,
-      serverObj.gradingSystem ? this.gradingSystemAdapter.adaptServerToClient(serverObj.gradingSystem) : null,
-      serverObj.totalCredits,
-      serverObj.earnedCredits,
-      serverObj.status
-    );
+    const clientObj = new StudyPlanClient();
+    clientObj.id = serverObj.id;
+    clientObj.userDegreeId = serverObj.userDegreeId;
+    clientObj.userDegree = serverObj.userDegree ? this.userDegreeAdapter.adaptUserDegreeServerToClient(serverObj.userDegree) : null;
+    clientObj.gradingSystemId = serverObj.gradingSystemId;
+    clientObj.gradingSystem = serverObj.gradingSystem ? this.gradingSystemAdapter.adaptServerToClient(serverObj.gradingSystem) : null;
+    clientObj.totalCredits = serverObj.totalCredits;
+    clientObj.earnedCredits = serverObj.earnedCredits;
+    clientObj.status = serverObj.status;
+    return clientObj;
   }
 
   public adaptClientToServer(clientObj: StudyPlanClient): StudyPlanServer {
-    return new StudyPlanServer(
-      clientObj.id,
-      clientObj.userDegreeId,
-      clientObj.userDegree ? this.userDegreeAdapter.adaptUserDegreeClientToServer(clientObj.userDegree) : null,
-      clientObj.gradingSystemId,
-      clientObj.gradingSystem ? this.gradingSystemAdapter.adaptClientToServer(clientObj.gradingSystem) : null,
-      clientObj.totalCredits,
-      clientObj.earnedCredits,
-      clientObj.status
-    );
+    const serverObj = new StudyPlanServer();
+    serverObj.id = clientObj.id;
+    serverObj.userDegreeId = clientObj.userDegreeId;
+    serverObj.userDegree = clientObj.userDegree ? this.userDegreeAdapter.adaptUserDegreeClientToServer(clientObj.userDegree) : null;
+    serverObj.gradingSystemId = clientObj.gradingSystemId;
+    serverObj.gradingSystem = clientObj.gradingSystem ? this.gradingSystemAdapter.adaptClientToServer(clientObj.gradingSystem) : null;
+    serverObj.totalCredits = clientObj.totalCredits;
+    serverObj.earnedCredits = clientObj.earnedCredits;
+    serverObj.status = clientObj.status;
+    return serverObj;
   }
 }

@@ -13,7 +13,10 @@ namespace Wisdoeducative.Application.DTOs
         public int? Id { get; set; }
         public StudyPlanDTO? StudyPlanDTO { get; set; }
         public int StudyPlanId { get; set; }
+        public string Name { get; set; }
         public int? PeriodNumber { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
         public string? StudyTermStatus { get; set; }
         public string? Status { get; set; }
     }

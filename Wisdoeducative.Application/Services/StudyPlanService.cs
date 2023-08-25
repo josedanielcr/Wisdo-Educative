@@ -55,7 +55,7 @@ namespace Wisdoeducative.Application.Services
 
         public async Task<StudyPlanTermDto> CreateStudyPlanTerm(StudyPlanTermDto studyPlanTermDto)
         {
-            string[] propertiesToCheck = new string[] { "StudyPlanId" };
+            string[] propertiesToCheck = new string[] { "StudyPlanId", "StartDate", "EndDate" };
             if (helperService.AreAnyPropertiesNull(studyPlanTermDto, propertiesToCheck))
             {
                 throw new BadRequestException($"{ErrorMessages.NullProperties} Study plan term, needs to have a study plan associated");

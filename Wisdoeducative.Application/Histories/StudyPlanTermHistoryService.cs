@@ -30,6 +30,9 @@ namespace Wisdoeducative.Application.Histories
                 ModifiedByUser = modifiedBy,
                 StudyPlanId = entity.StudyPlanId,
                 StudyPlanTermId = entity.Id,
+                Name = entity.Name,
+                StartDate = entity.StartDate,
+                EndDate = entity.EndDate,
                 PeriodNumber = entity.PeriodNumber,
                 StudyTermStatus = entity.StudyTermStatus,
                 Status = entity.Status

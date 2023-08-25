@@ -16,12 +16,8 @@ namespace Wisdoeducative.Domain.Histories
         public CourseSchedule? CourseSchedule { get; set; }
         public int? CourseScheduleId { get; set; }
         public string Name { get; set; }
-        public string? Description { get; set; }
         public int TotalCredits { get; set; }
-        public DateTime? StartDate { get; set; }
-        public DateTime? EndDate { get; set; }
         public string? CurrentScore { get; set; }
-        public float? Price { get; set; }
         public EntityStatus Status { get; set; }
         public CourseStatus CourseStatus { get; set; }
         public int CourseId { get; set; }

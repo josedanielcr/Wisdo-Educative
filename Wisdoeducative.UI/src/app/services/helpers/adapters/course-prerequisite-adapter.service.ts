@@ -11,22 +11,22 @@ export class CoursePrerequisiteAdapterService {
   constructor(private courseAdapter: CourseAdapterService) { } 
 
   public adaptServerToClient(serverObj: CoursePrerequisiteServer): CoursePrerequisiteClient {
-      return new CoursePrerequisiteClient(
-          serverObj.id, 
-          serverObj.courseId, 
-          this.courseAdapter.adaptServerToClient(serverObj.course),
-          serverObj.prerequisiteOfId,
-          this.courseAdapter.adaptServerToClient(serverObj.prerequisiteOf)
-      );
+      const clientObj = new CoursePrerequisiteClient();
+      clientObj.id = serverObj.id;
+      clientObj.courseId = serverObj.courseId;
+      clientObj.course = this.courseAdapter.adaptServerToClient(serverObj.course);
+      clientObj.prerequisiteOfId = serverObj.prerequisiteOfId;
+      clientObj.prerequisiteOf = this.courseAdapter.adaptServerToClient(serverObj.prerequisiteOf);
+      return clientObj;
   }
 
   public adaptClientToServer(clientObj: CoursePrerequisiteClient): CoursePrerequisiteServer {
-      return new CoursePrerequisiteServer(
-          clientObj.id, 
-          clientObj.courseId, 
-          this.courseAdapter.adaptClientToServer(clientObj.course),
-          clientObj.prerequisiteOfId,
-          this.courseAdapter.adaptClientToServer(clientObj.prerequisiteOf)
-      );
+      const serverObj = new CoursePrerequisiteServer();
+      serverObj.id = clientObj.id;
+      serverObj.courseId = clientObj.courseId;
+      serverObj.course = this.courseAdapter.adaptClientToServer(clientObj.course);
+      serverObj.prerequisiteOfId = clientObj.prerequisiteOfId;
+      serverObj.prerequisiteOf = this.courseAdapter.adaptClientToServer(clientObj.prerequisiteOf);
+      return serverObj;
   }
 }

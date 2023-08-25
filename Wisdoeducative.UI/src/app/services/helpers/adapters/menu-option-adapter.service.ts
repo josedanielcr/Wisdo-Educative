@@ -9,27 +9,27 @@ export class MenuOptionAdapterService {
 
   constructor() { }
 
-  public adaptServerMenuOptionToClient(MenuOption : MenuOptionServer): MenuOptionClient {
-    return new MenuOptionClient(
-      MenuOption.id, 
-      MenuOption.name,
-      MenuOption.description,
-      MenuOption.isParent,
-      MenuOption.icon,
-      MenuOption.path,
-      MenuOption.status
-      );
+  public adaptServerMenuOptionToClient(serverObj: MenuOptionServer): MenuOptionClient {
+      const clientObj = new MenuOptionClient();
+      clientObj.id = serverObj.id;
+      clientObj.name = serverObj.name;
+      clientObj.description = serverObj.description;
+      clientObj.isParent = serverObj.isParent;
+      clientObj.icon = serverObj.icon;
+      clientObj.path = serverObj.path;
+      clientObj.status = serverObj.status;
+      return clientObj;
   }
 
-  public adaptClientMenuOptionToServer(MenuOption : MenuOptionClient): MenuOptionServer {
-    return new MenuOptionServer(
-      MenuOption.id, 
-      MenuOption.name,
-      MenuOption.description,
-      MenuOption.isParent,
-      MenuOption.icon,
-      MenuOption.path,
-      MenuOption.status
-      );
+  public adaptClientMenuOptionToServer(clientObj: MenuOptionClient): MenuOptionServer {
+      const serverObj = new MenuOptionServer();
+      serverObj.id = clientObj.id;
+      serverObj.name = clientObj.name;
+      serverObj.description = clientObj.description;
+      serverObj.isParent = clientObj.isParent;
+      serverObj.icon = clientObj.icon;
+      serverObj.path = clientObj.path;
+      serverObj.status = clientObj.status;
+      return serverObj;
   }
 }

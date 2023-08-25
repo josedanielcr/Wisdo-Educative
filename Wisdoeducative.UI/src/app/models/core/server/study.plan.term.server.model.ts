@@ -5,15 +5,11 @@ export class StudyPlanTermServer {
     studyPlanId: number;
     studyPlan: StudyPlanServer;
     periodNumber: number;
+    name: string;
+    startDate: Date;
+    endDate: Date;
     studyTermStatus: string;
     status: string;
 
-    constructor(id: number, studyPlanId: number, studyPlan: StudyPlanServer, periodNumber: number, studyTermStatus: string, status: string) {
-        this.id = id;
-        this.studyPlanId = studyPlanId;
-        this.studyPlan = studyPlan;
-        this.periodNumber = periodNumber;
-        this.studyTermStatus = studyTermStatus;
-        this.status = status;
-    }
+    constructor(){}
 }
