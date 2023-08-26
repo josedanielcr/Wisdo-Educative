@@ -12,7 +12,5 @@ namespace Wisdoeducative.Application.Common.Interfaces.Services
     {
         Task<StudyPlanDTO> GetUserStudyPlan(int userDegreeId);
         Task<StudyPlanDTO> CreateStudyPlan(StudyPlanDTO studyPlan);
-        Task<StudyTermCreationDto> CreateStudyPlanTerm(StudyTermCreationDto studyTermCreationDto);
-        Task<IEnumerable<StudyPlanTermDto>> GetUserStudyPlanTerms(int studyPlanId);
     }
 }

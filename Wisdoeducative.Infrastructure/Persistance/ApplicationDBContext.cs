@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,8 @@ namespace Wisdoeducative.Infrastructure.Persistence
         {
             return base.Entry(entity);
         }
+        
+        public DatabaseFacade Database => base.Database;
 
         public DbSet<User> Users { get; set; }
         public DbSet<UserHistory> UserHistories { get; set; }

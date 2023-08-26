@@ -14,10 +14,13 @@ namespace Wisdoeducative.API.Controllers
     public class StudyPlanController : ControllerBase
     {
         private readonly IStudyPlanService studyPlanService;
+        private readonly IStudyPlanTermService studyPlanTermService;
 
-        public StudyPlanController(IStudyPlanService studyPlanService)
+        public StudyPlanController(IStudyPlanService studyPlanService,
+            IStudyPlanTermService studyPlanTermService)
         {
             this.studyPlanService = studyPlanService;
+            this.studyPlanTermService = studyPlanTermService;
         }
 
         [HttpGet("{userDegreeId}")]
@@ -35,7 +38,7 @@ namespace Wisdoeducative.API.Controllers
         [HttpPost("studyPlanTerm")]
         public async Task<IActionResult> CreateStudyPlanTerm([FromBody] StudyTermCreationDto studyTermCreationDto)
         {
-            return Ok(await studyPlanService.CreateStudyPlanTerm(studyTermCreationDto));
+            return Ok(await studyPlanTermService.CreateStudyPlanTerm(studyTermCreationDto));
         }
     }
 }
