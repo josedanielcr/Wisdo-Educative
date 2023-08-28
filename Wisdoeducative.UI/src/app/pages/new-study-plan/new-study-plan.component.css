@@ -1,0 +1,37 @@
+/*#region no study plan*/
+.no-studyplan-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.no-studyplan-card {
+    border-radius: 0.3125rem;
+}
+
+.no-studyplan-card-phone {
+
+}
+
+.no-studyplan-card-desktop {
+    width: 48.27731rem;
+    height: 19.8125rem;
+}
+
+.no-studyplan-content {
+    padding: 5.60rem 6.50rem;
+}
+
+.no-studyplan-button {
+    width: 19.375rem;
+    height: 3.1875rem;
+}
+
+.no-studyplan-image {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%,0);
+}
+/*#endregion no study plan*/

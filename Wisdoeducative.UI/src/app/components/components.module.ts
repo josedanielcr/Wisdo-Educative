@@ -8,6 +8,8 @@ import { ChipsContainerComponent } from './chips-container/chips-container.compo
 import { ChipComponent } from './chips-container/chip/chip.component';
 import { InstitutionSelectComponent } from './input/institution-select/institution-select.component';
 import { DialogComponent } from './dialog/dialog.component';
+import AddStudyPlanTermComponent from './add-study-plan-term/add-study-plan-term.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -20,7 +22,8 @@ import { DialogComponent } from './dialog/dialog.component';
     ChipsContainerComponent,
     ChipComponent,
     InstitutionSelectComponent,
-    DialogComponent
+    DialogComponent,
+    AddStudyPlanTermComponent
   ],
   exports: [
     ButtonComponent,
@@ -29,10 +32,12 @@ import { DialogComponent } from './dialog/dialog.component';
     InputDateComponent,
     ChipsContainerComponent,
     InstitutionSelectComponent,
-    DialogComponent
+    DialogComponent,
+    AddStudyPlanTermComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule,
   ]
 })
 export class ComponentsModule { }

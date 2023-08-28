@@ -62,22 +62,16 @@ namespace Wisdoeducative.Application.Services
             return await degreeHelperService.GetById(dbDegree.Id); 
         }
 
-        public async Task<IEnumerable<UserDegreeDto>> GetUserDegrees(int userId)
+        public async Task<UserDegreeDto> GetUserDegree(int userId)
         {
-            List<UserDegreeDto> userDegreesDto = new List<UserDegreeDto>();
-            var userDegrees = await dBContext.UserDegrees
+            var userDegree = await dBContext.UserDegrees
                 .Where(x => x.UserId == userId)
                 .Where(x => x.Status == EntityStatus.Active)
                 .Include(x => x.Degree)
                 .Include(x => x.Institution)
-                .ToListAsync();
+                .FirstOrDefaultAsync();
 
-            foreach(var userDegree in userDegrees)
-            {
-                userDegreesDto.Add(mapper.Map<UserDegreeDto>(userDegree));
-            }
-
-            return userDegreesDto;
+            return mapper.Map<UserDegreeDto>(userDegree);
         }
 
         public async Task SaveUserDegreeChanges(UserDegree userDegree)
@@ -113,6 +107,7 @@ namespace Wisdoeducative.Application.Services
                 StartDate = userDegreeConfig.startDate,
                 EndDate = DateTime.Now.AddYears(4),
                 Status = EntityStatus.Active,
+                IsDefault = true,
                 Schedule = Enum.Parse<AcademicSchedule>(userDegreeConfig.Schedule)
             };
 

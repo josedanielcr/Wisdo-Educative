@@ -43,10 +43,22 @@ export class StudyPlanService {
   }
 
   public createStudyPlanTerm(studyPlan : StudyTermCoursesModel): Observable<StudyTermCoursesModel> {
-    return this.http.post<StudyTermCoursesModel>(`${this.apiUrlService.checkEnvironment()}/studyPlan/studyPlanTerm`, studyPlan)
+    return this.http.post<StudyTermCoursesModel>(`${this.apiUrlService.checkEnvironment()}/studyPlan/study-plan-term`, studyPlan)
       .pipe(
         map((studyPlan: StudyTermCoursesModel) => {
           return studyPlan;
+        }),
+        catchError((error: any) => { throw this.applicationErrorService.parseHttpError(error); })
+      );
+  }
+
+  public getStudyPlanTerms(studyPlanId : number): Observable<StudyPlanTermClient[]> {
+    return this.http.get<StudyPlanTermServer[]>(`${this.apiUrlService.checkEnvironment()}/studyPlan/study-plan-terms/${studyPlanId}`)
+      .pipe(
+        map((studyPlanTerms: StudyPlanTermServer[]) => {
+          return studyPlanTerms.map((studyPlanTerm : StudyPlanTermServer) => {
+            return this.studyPlanTermAdapter.adaptServerToClient(studyPlanTerm);
+          });
         }),
         catchError((error: any) => { throw this.applicationErrorService.parseHttpError(error); })
       );

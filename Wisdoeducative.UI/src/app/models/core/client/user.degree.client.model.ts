@@ -14,6 +14,7 @@ export class UserDegreeClient {
   institutionId: number;
   currentProgress: number;
   startDate: Date;
+  isDefault : boolean | null;
   endDate: Date;
   schedule: AcademicScheduleEnum;
   status: EntityStatusEnum;

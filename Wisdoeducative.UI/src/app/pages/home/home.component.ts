@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ButtonType } from 'src/app/enums/button.enum';
 import { UserStatus } from 'src/app/enums/core/user.status.enum';
+import { ApplicationErrorModel } from 'src/app/models/application.error.model';
 import { StudyPlanClient } from 'src/app/models/core/client/study.plan.client.model';
 import { UserClient } from 'src/app/models/core/client/user.client.model';
 import { UserDegreeClient } from 'src/app/models/core/client/user.degree.client.model';
@@ -35,7 +36,7 @@ export class HomeComponent implements OnInit {
 
   // properties
   public user : UserClient;
-  public userDegrees : UserDegreeClient[];
+  public userDegree : UserDegreeClient;
   public studyPlan : StudyPlanClient;
   
   // util
@@ -45,6 +46,9 @@ export class HomeComponent implements OnInit {
   public ButtonType = ButtonType;
   public timeOfDayIcon : string;
   public timeOfDayGreeting : string;
+  public loading : boolean = true;
+
+  //screen
   public isDesktop: boolean;
   public isTablet: boolean;
   public isPhone: boolean;
@@ -67,14 +71,14 @@ export class HomeComponent implements OnInit {
     this.storeService.select('user').subscribe({
       next: (user: UserClient) => {
         this.user = user;
-        this.getUserDegrees();
+        this.getUserDegree();
       },
       complete : () => {
         this.userService.validateUser().subscribe({
           next: (user: UserClient) => {
             this.storeService.set('user', user);
             this.user = user;
-            this.getUserDegrees();
+            this.getUserDegree();
           }
         });
       }
@@ -119,22 +123,33 @@ export class HomeComponent implements OnInit {
   public executeSetup(): void {
     if(this.user.userStatus === UserStatus.Omitted) this.router.navigate(['/setup']);
     else if (this.user.userStatus !== UserStatus.Omitted 
-      && this.userDegrees.length > 0 && !this.studyPlan) this.router.navigate(['workspace/studyPlan']);
+      && this.userDegree && !this.studyPlan) this.router.navigate(['workspace/new-study-plan']);
   }
 
-  private getUserDegrees(): void {
-    this.degreeService.getUserDegrees(this.user.id).subscribe((userDegrees: UserDegreeClient[]) => {
-      this.userDegrees = userDegrees;
-      this.storeService.set('userDegrees', userDegrees);
-      this.getStudyPlan();
+  private getUserDegree(): void {
+    this.degreeService.getUserDegree(this.user.id).subscribe({
+      next: (userDegree: UserDegreeClient) => {
+        this.userDegree = userDegree;
+        this.storeService.set('userDegree', userDegree);
+        this.getStudyPlan();
+      },
+      error : (err : ApplicationErrorModel) => {
+        console.log(err);
+      }
     });
   }
 
   private getStudyPlan(): void {
-    this.studyPlanService.getUserStudyPlan(this.userDegrees[0].id).subscribe((studyPlan: StudyPlanClient) => {
-      this.studyPlan = studyPlan;
-      this.storeService.set('studyPlan', studyPlan);
+    this.studyPlanService.getUserStudyPlan(this.userDegree.id).subscribe({
+      next: (studyPlan: StudyPlanClient) => {
+        this.studyPlan = studyPlan;
+        this.storeService.set('studyPlan', studyPlan);
+        this.loading = false;
+      },
+      error : (err : ApplicationErrorModel) => {
+        console.log(err);
+        this.loading = false;
+      }
     });
   }
-
 }

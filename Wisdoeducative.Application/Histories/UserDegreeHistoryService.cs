@@ -38,6 +38,7 @@ namespace Wisdoeducative.Application.Histories
                 StartDate = entity.StartDate,
                 EndDate = entity.EndDate,
                 Schedule = entity.Schedule,
+                IsDefault = entity.IsDefault,
                 Status = entity.Status
             });
         }

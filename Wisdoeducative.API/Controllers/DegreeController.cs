@@ -29,7 +29,7 @@ namespace Wisdoeducative.API.Controllers
         [HttpGet("user/{userId}")]
         public async Task<IActionResult> GetUserDegree(int userId)
         {
-            return Ok(await degreeService.GetUserDegrees(userId));
+            return Ok(await degreeService.GetUserDegree(userId));
         }
     }
 }

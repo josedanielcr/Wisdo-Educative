@@ -15,6 +15,7 @@ export class UserDegreeServer {
   currentProgress: number;
   startDate: Date;
   endDate: Date;
+  isDefault : boolean | null;
   schedule: AcademicScheduleEnum;
   status: EntityStatusEnum;
 

@@ -25,8 +25,8 @@
         </div>
 
         <!-- content -->
-        <div *ngIf="(user && userDegrees)">
-            <div *ngIf="user.userStatus === UserStatus.Omitted || userDegrees.length > 0"
+        <div *ngIf="(user && userDegree) && !loading">
+            <div *ngIf="user.userStatus === UserStatus.Omitted || (userDegree && !studyPlan)"
                     class="create-workspace-container wd-bg-white d-flex align-items-center justify-content-center mt-3"
                     [ngClass]="{
                         'flex-wrap flex-column' : isPhone,
@@ -51,14 +51,14 @@
                     <span [ngClass]="{
                         'text-center' : isPhone
                         }"
-                        *ngIf="user.userStatus === UserStatus.Omitted || userDegrees.length === 0">
+                        *ngIf="user.userStatus === UserStatus.Omitted">
                         ¡Optimiza tu experiencia con Wisdo! Configura tu espacio de estudio siguiendo estos sencillos
                         pasos y aprovecha al máximo todas nuestras herramientas. ¡Comienza ahora!
                     </span>
                     <span [ngClass]="{
                         'text-center' : isPhone
                         }"
-                        *ngIf="user.userStatus !== UserStatus.Omitted && userDegrees.length > 0 && !studyPlan">
+                        *ngIf="user.userStatus !== UserStatus.Omitted && userDegree && !studyPlan">
                         ¡Optimiza tu experiencia con Wisdo! <span class="fw-bold">Crea un plan de estudios automatico</span>
                         y aprovecha al máximo todas nuestras herramientas. ¡Comienza ahora!
                     </span>

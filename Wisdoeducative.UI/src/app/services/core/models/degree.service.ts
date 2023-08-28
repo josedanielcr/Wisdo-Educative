@@ -17,14 +17,11 @@ export class DegreeService {
     private userDegreeAdapater : UserDegreeAdapterService,
     private applicationErrorService : ApplicationErrorService) { }
 
-  
-  public getUserDegrees(userId : number) : Observable<UserDegreeClient[]> {
+  public getUserDegree(userId : number) : Observable<UserDegreeClient> {
     return this.http.get(`${this.apiUrlService.checkEnvironment()}/degree/user/${userId}`)
     .pipe(
-      map((userDegrees : UserDegreeServer[]) => {
-        return userDegrees.map((userDegree : UserDegreeServer) => {
-          return this.userDegreeAdapater.adaptUserDegreeServerToClient(userDegree);
-        });
+      map((userDegrees : UserDegreeServer) => {
+        return this.userDegreeAdapater.adaptUserDegreeServerToClient(userDegrees);
       }),
       catchError((error: any) => {throw this.applicationErrorService.parseHttpError(error)})
     );

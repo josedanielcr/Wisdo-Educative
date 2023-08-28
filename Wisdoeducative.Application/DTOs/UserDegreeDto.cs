@@ -20,8 +20,9 @@ namespace Wisdoeducative.Application.DTOs
         public int InstitutionId { get; set; }
         public int CurrentProgress { get; set; }
         public DateTime StartDate { get; set; }
+        public bool IsDefault { get; set; }
         public DateTime EndDate { get; set; }
-        public AcademicSchedule Schedule { get; set; }
-        public EntityStatus Status { get; set; }
+        public string Schedule { get; set; }
+        public string Status { get; set; }
     }
 }
