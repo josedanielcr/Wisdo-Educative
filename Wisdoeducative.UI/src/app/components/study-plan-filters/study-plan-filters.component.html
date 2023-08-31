@@ -1,0 +1,88 @@
+<div class="w-100 d-flex study-plan-filters align-items-center gap-4">
+
+    <!-- text -->
+    <form [formGroup]="courseNameForm" 
+            [ngClass]="(isDesktop || isTablet) ? 'desktop-filter-text' 
+            : 'phone-filter-text'" class="wd-bg-white d-flex">
+        <input type="text" class="h-100" 
+               [placeholder]="(isDesktop || isTablet)
+                ? 'Buscar por materia' : 'Materia'" 
+                formControlName="name"
+                (keydown.enter)="search()">
+        <div class="d-flex justify-content-center align-items-center wd-bg-secondary cursor-pointer"
+             (click)="search()">
+            <img src="../../../assets//icons/loupe-white.png" [width]="(isDesktop || isTablet) ? '25' : '20'" [height]="(isDesktop || isTablet) ? '25' : '20'">
+        </div>
+    </form>
+
+    <!-- select -->
+    <div *ngIf="isDesktop || isTablet && filterForm" 
+         class="desktop-filter-select wd-bg-white user-select-none"
+         [ngClass]="{
+            'selected-filter-window': isFilterWindowOpen
+         }">
+        <div class="desktop-filter-select-padding d-flex align-items-center h-100"
+            (click)="toggleFilterWindow()">
+            <span class="ps-4">Filtrar</span>
+            <div class="ms-auto d-flex justify-content-center align-items-center">
+                <img src="../../../assets/icons/filter.png" width="25" height="25">
+            </div>
+        </div>
+        <div class="filter-window w-100 position-absolute top-100 wd-bg-white"
+             *ngIf="isFilterWindowOpen"
+             [ngClass]="{
+                'selected-filter-window': isFilterWindowOpen
+             }">
+             <form [formGroup]="filterForm" class="p-3">
+                <div>
+                    <div class="fw-bold wd-text-dark-grey d-flex align-items-center gap-2 custom-checkbox">
+                        <input type="checkbox" formControlName="isFavorite" id="isFavorite">
+                        <label for="isFavorite"  class="d-flex align-items-center">Favoritos</label>
+                        <img src="../../../assets/icons/heart-filled.png" width="20" height="20">
+                    </div>
+                </div>
+
+                <h4 class="wd-text-h4 mt-3 wd-text-dark-grey">Estado</h4>
+                <div formArrayName="status" class="d-flex flex-column">
+                    <div *ngFor="let status of courseStatuses; let i = index" 
+                           class="fw-bold wd-text-dark-grey gap-2 custom-checkbox" 
+                           [class.mt-2]="i !== 0">
+                        <input type="checkbox" [formControlName]="i" [id]="'status' + i">
+                        <label [for]="'status' + i" class="d-flex align-items-center">{{status.name}}</label>
+                    </div>
+                </div>
+             </form>
+             <div class="filter-window-actions d-flex w-100 cursor-pointer">
+                <div class="p-2 check-child flex-child-cancel" (click)="toggleFilterWindow()">
+                    <span>Cancelar</span>
+                </div>
+                <div class="wd-bg-primary p-2 check-child flex-child-apply" (click)="search()">
+                    <span class="wd-text-white">Aplicar</span>
+                </div>
+             </div>
+        </div>
+    </div>
+
+    <!-- <div *ngIf="isPhone" class="phone-filter-select wd-bg-white d-flex align-items-center justify-content-center">
+        <img src="../../../assets/icons/filter.png" width="20" height="20">
+    </div> -->
+
+    <!-- view -->
+    <div class="ms-auto view-container d-flex user-select-none">
+        <div class="list-view" [ngClass]="{
+            'wd-bg-secondary': !isCardView,
+            'wd-bg-white': isCardView
+        }" (click)="changeView()">
+            <img [src]="isCardView ? '../../../assets/icons/menu-list-black.png' 
+                        : '../../../assets/icons/menu-list-white.png'"  
+                    width="30" height="30">
+        </div>
+        <div class="card-view" [ngClass]="{
+            'wd-bg-secondary': isCardView,
+            'wd-bg-white': !isCardView
+            }" (click)="changeView()">
+            <img [src]="isCardView ? '../../../assets/icons/menu-card-white.png' : 
+            '../../../assets/icons/menu-card-black.png'"  width="30" height="30">
+        </div>
+    </div>
+</div>

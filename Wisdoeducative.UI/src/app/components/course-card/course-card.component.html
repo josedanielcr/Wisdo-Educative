@@ -1,0 +1,20 @@
+<div class="w-100 wd-bg-white course-card d-flex flex-column"
+     *ngIf="course">
+
+    <!-- header -->
+    <div class="w-100 d-flex mb-2">
+
+        <!-- progress bar -->
+
+        <!-- favorite -->
+        <div class="favorite-course-container d-flex justify-content-center align-items-center ms-auto">
+            <img [src]="course.isFavorite ? '../../../assets/icons/heart-filled.png' 
+                : '../../../assets/icons/heart-empty.png'">
+        </div>
+    </div>
+
+    <!-- name -->
+    <div class="card-course-name">
+        <h4 class="wd-text-h4">{{course.name}}</h4>
+    </div>
+</div>

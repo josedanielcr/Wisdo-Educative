@@ -1,0 +1,33 @@
+<div *ngIf="userDegree">
+    <app-title [title]="userDegree.degree.name"
+               [iconPath]="'../../../assets/icons/book-black.png'"
+               [iconBackgroundColor]="'rgba(124, 147, 158, 0.15)'">
+    </app-title>
+</div>
+
+<div class="w-100" *ngIf="studyPlan && studyPlan 
+    && studyPlanTerms && defaultStudyPlanTerm && defaultStudyPlanTemCourses">
+
+    <!-- filters -->
+    <div>
+        <app-study-plan-filters [studyPlanId]="studyPlan.id"
+        (coursesEmitter)="filterCourses($event)"
+        (isCardViewEmitter)="switchView($event)">
+        </app-study-plan-filters>
+    </div>
+
+    <!-- courses list header -->
+    <div class="header-container wd-bg-secondary w-100 d-flex align-items-center">
+        <h3 class="wd-text-h4 wd-text-white m-0 ps-3">{{defaultStudyPlanTerm.name}}</h3>
+    </div>
+
+    <!-- courses list -->
+    <div class="w-100">
+        <app-course-grid [courses]="defaultStudyPlanTemCourses"></app-course-grid>
+    </div>
+
+    <!-- other study plan terms header-->
+    <div class="header-container wd-bg-secondary w-100 d-flex align-items-center">
+        <h3 class="wd-text-h4 wd-text-white m-0 ps-3">Otros {{userDegree.schedule}}</h3>
+    </div>
+</div>

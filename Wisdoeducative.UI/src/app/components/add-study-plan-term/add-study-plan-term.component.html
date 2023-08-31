@@ -1,0 +1,80 @@
+<app-dialog title="Agregar bloque" [minHeight]="20">
+
+    <!-- study term -->
+    <div class="w-100 d-flex flex-column" 
+        [ngClass]="{
+        'pe-5 ps-5' : isDesktop || isTablet
+        }"
+        *ngIf="studyTermForm">
+        <form [formGroup]="studyTermForm" class="w-100">
+            <div class="w-100 mb-3">
+                <app-input-text [label]="'Nombre del bloque'"
+                                formControlName="name"
+                                error="El nombre del bloque es requerido"
+                                placeholder="">
+                </app-input-text>
+            </div>
+            <div class="d-flex w-100 study-plan-term-container">
+                <div class="flex-fill">
+                    <app-input-date label="Fecha de inicio"
+                                    placeholder=""
+                                    error="La fecha de inicio es requerida"
+                                    formControlName="startDate">
+                    </app-input-date>
+                </div>
+                <div class="flex-fill">
+                    <app-input-date label="Fecha estimada de finalización"
+                                    placeholder=""
+                                    error="La fecha estimada de finalización es requerida"
+                                    formControlName="endDate">
+                    </app-input-date>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- courses -->
+    <div class="w-100 d-flex flex-column mt-5" 
+         *ngIf="coursesFormArray && coursesFormArray.length"
+         [ngClass]="{
+            'pe-5 ps-5' : isDesktop || isTablet
+         }">
+        <form [formGroup]="courseForm">
+          <div formArrayName="courses">
+            <div *ngFor="let course of coursesFormArray.controls; let i = index; trackBy: trackByFn">
+              <div [formGroupName]="i" class="add-course-container">
+                <div class="course-name">
+                    <app-input-text [label]="i === 0 ? 'Materia' : ''"
+                                    formControlName="name"
+                                    placeholder="">
+                    </app-input-text>
+                </div>
+                <div class="course-credits">
+                    <app-input-text [label]="i === 0 ? 'Créditos' : ''"
+                                    formControlName="totalCredits"
+                                    placeholder="">
+                    </app-input-text>
+                </div>
+                <div *ngIf="i !== coursesFormArray.controls.length-1" class="placeholder-button"></div>
+                <div class="course-button mt-auto"
+                     *ngIf="i === coursesFormArray.controls.length-1">
+                    <app-button iconPath="../../../assets/icons/plus.png"
+                                [type]="ButtonType.SUCCESS"
+                                (click)="addCourse()">
+                    </app-button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="mt-5 ms-auto" [ngClass]="{
+            'w-100': isPhone || isTablet,
+            'btn-create-course-desktop': isDesktop 
+        }">
+            <app-button text="Finalizar"
+                        [type]="ButtonType.SECONDARY"
+                        (click)="createStudyPlanTermWithCourses()">
+            </app-button>
+        </div>
+    </div>      
+</app-dialog>

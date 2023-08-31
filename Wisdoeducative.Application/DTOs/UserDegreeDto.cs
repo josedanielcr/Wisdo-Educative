@@ -11,6 +11,7 @@ namespace Wisdoeducative.Application.DTOs
 {
     public class UserDegreeDto : IMapFrom<UserDegree>
     {
+        public int Id { get; set; }
         public DegreeDto? Degree { get; set; }
         public int DegreeId { get; set; }
         public UserDto? User { get; set; }
@@ -19,8 +20,9 @@ namespace Wisdoeducative.Application.DTOs
         public int InstitutionId { get; set; }
         public int CurrentProgress { get; set; }
         public DateTime StartDate { get; set; }
+        public bool IsDefault { get; set; }
         public DateTime EndDate { get; set; }
-        public AcademicSchedule Schedule { get; set; }
-        public EntityStatus Status { get; set; }
+        public string Schedule { get; set; }
+        public string Status { get; set; }
     }
 }

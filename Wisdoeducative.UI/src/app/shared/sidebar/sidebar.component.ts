@@ -4,7 +4,8 @@ import { MenuOptionClient } from 'src/app/models/core/client/menu.option.client.
 import { UserClient } from 'src/app/models/core/client/user.client.model';
 import { ScreenSizeModel } from 'src/app/models/screenSize.model';
 import { MenuService } from 'src/app/services/components/menu.service';
-import { AuthService } from 'src/app/services/core/auth.service';
+import { UserService } from 'src/app/services/core/models/user.service';
+import { StoreService } from 'src/app/services/core/store.service';
 import { WindowResizeService } from 'src/app/services/helpers/window-resize.service';
 
 @Component({
@@ -23,8 +24,9 @@ export class SidebarComponent implements OnInit {
   public isHidden : boolean;
 
   constructor(private menuService : MenuService,
-    private authService : AuthService,
-    private windowService : WindowResizeService){}
+    private windowService : WindowResizeService,
+    private storeService : StoreService,
+    private userService : UserService){}
 
   ngOnInit(): void {
     this.manageWindowSizes();
@@ -59,9 +61,20 @@ export class SidebarComponent implements OnInit {
   }
 
   private setUser(): void {
-    this.authService.getUserSubject().subscribe((user : UserClient) => {
-      this.user = user;
-      this.getMenuOptions();
+    this.storeService.select('user').subscribe({
+      next: (user: UserClient) => {
+        this.user = user;
+        this.getMenuOptions();
+      },
+      complete : () => {
+        this.userService.validateUser().subscribe({
+          next: (user: UserClient) => {
+            this.storeService.set('user', user);
+            this.user = user;
+            this.getMenuOptions();
+          }
+        });
+      }
     });
   }
 

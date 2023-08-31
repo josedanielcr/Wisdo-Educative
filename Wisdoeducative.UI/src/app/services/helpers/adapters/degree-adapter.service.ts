@@ -10,22 +10,22 @@ export class DegreeAdapterService {
   constructor() { }
 
   public adaptDegreeClientToServer(degreeDto: DegreeClient): DegreeServer {
-    return new DegreeServer(
-      degreeDto.id,
-      degreeDto.name,
-      degreeDto.studyField,
-      degreeDto.type,
-      degreeDto.status
-    );
+      const serverObj = new DegreeServer();
+      serverObj.id = degreeDto.id;
+      serverObj.name = degreeDto.name;
+      serverObj.studyField = degreeDto.studyField;
+      serverObj.type = degreeDto.type;
+      serverObj.status = degreeDto.status;
+      return serverObj;
   }
 
   public adaptDegreeServerToClient(degreeServer: DegreeServer): DegreeClient {
-    return new DegreeClient(
-      degreeServer.id,
-      degreeServer.name,
-      degreeServer.studyField,
-      degreeServer.type,
-      degreeServer.status
-    );
+      const clientObj = new DegreeClient();
+      clientObj.id = degreeServer.id;
+      clientObj.name = degreeServer.name;
+      clientObj.studyField = degreeServer.studyField;
+      clientObj.type = degreeServer.type;
+      clientObj.status = degreeServer.status;
+      return clientObj;
   }
 }

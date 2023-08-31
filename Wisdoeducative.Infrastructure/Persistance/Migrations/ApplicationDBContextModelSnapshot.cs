@@ -22,6 +22,124 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Wisdoeducative.Domain.Entities.Course", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("CourseScheduleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CourseStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CurrentScore")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsFavorite")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("StudyPlanTermId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalCredits")
+                        .HasColumnType("int");
+
+                    b.Property<int>("status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseScheduleId");
+
+                    b.HasIndex("StudyPlanTermId");
+
+                    b.ToTable("Courses");
+                });
+
+            modelBuilder.Entity("Wisdoeducative.Domain.Entities.CourseEvaluation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("EvaluationStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Weight")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("CourseEvaluations");
+                });
+
+            modelBuilder.Entity("Wisdoeducative.Domain.Entities.CoursePrerequisite", b =>
+                {
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PrerequisiteOfId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.HasKey("CourseId", "PrerequisiteOfId");
+
+                    b.HasIndex("PrerequisiteOfId");
+
+                    b.ToTable("CoursePrerequisites");
+                });
+
+            modelBuilder.Entity("Wisdoeducative.Domain.Entities.CourseSchedule", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("EndTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WeekDay")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CourseSchedules");
+                });
+
             modelBuilder.Entity("Wisdoeducative.Domain.Entities.Degree", b =>
                 {
                     b.Property<int>("Id")
@@ -45,7 +163,43 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Degrees", (string)null);
+                    b.ToTable("Degrees");
+                });
+
+            modelBuilder.Entity("Wisdoeducative.Domain.Entities.GrandingSystem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MaximiumScore")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MinimumScore")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PassingGrade")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("GrandingSystem");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Entities.Institution", b =>
@@ -73,7 +227,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Institutions", (string)null);
+                    b.ToTable("Institutions");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Entities.Interest", b =>
@@ -93,7 +247,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Interests", (string)null);
+                    b.ToTable("Interests");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Entities.MenuOption", b =>
@@ -128,7 +282,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MenuOptions", (string)null);
+                    b.ToTable("MenuOptions");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Entities.Role", b =>
@@ -151,7 +305,79 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles", (string)null);
+                    b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("Wisdoeducative.Domain.Entities.StudyPlan", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("EarnedCredits")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("GradingSystemId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("GrandingSystemId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TotalCredits")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserDegreeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GrandingSystemId");
+
+                    b.HasIndex("UserDegreeId");
+
+                    b.ToTable("StudyPlans");
+                });
+
+            modelBuilder.Entity("Wisdoeducative.Domain.Entities.StudyPlanTerm", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PeriodNumber")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("StudyPlanId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("StudyTermStatus")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudyPlanId");
+
+                    b.ToTable("StudyPlanTerms");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Entities.Subscription", b =>
@@ -177,7 +403,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Subscriptions", (string)null);
+                    b.ToTable("Subscriptions");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Entities.SubscriptionRoleMenuOption", b =>
@@ -208,7 +434,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasIndex("SubscriptionId");
 
-                    b.ToTable("SubscriptionRoleMenuOptions", (string)null);
+                    b.ToTable("SubscriptionRoleMenuOptions");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Entities.User", b =>
@@ -252,7 +478,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Entities.UserDegree", b =>
@@ -275,6 +501,9 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
                     b.Property<int>("InstitutionId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsDefault")
+                        .HasColumnType("bit");
+
                     b.Property<int>("Schedule")
                         .HasColumnType("int");
 
@@ -295,7 +524,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserDegrees", (string)null);
+                    b.ToTable("UserDegrees");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Entities.UserHistory", b =>
@@ -349,7 +578,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("UserHistories", (string)null);
+                    b.ToTable("UserHistories");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Entities.UserInterest", b =>
@@ -375,7 +604,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserInterests", (string)null);
+                    b.ToTable("UserInterests");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Entities.UserSubscription", b =>
@@ -413,7 +642,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserSubscriptions", (string)null);
+                    b.ToTable("UserSubscriptions");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Entities.UserSubscriptionTransaction", b =>
@@ -449,7 +678,112 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasIndex("UserSubscriptionId");
 
-                    b.ToTable("UserSubscriptionTransactions", (string)null);
+                    b.ToTable("UserSubscriptionTransactions");
+                });
+
+            modelBuilder.Entity("Wisdoeducative.Domain.Histories.CourseEvaluationHistory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CourseEvaluationId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("EntityChangeType")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EvaluationStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ModifiedByUser")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Weight")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("CourseEvaluationHistories");
+                });
+
+            modelBuilder.Entity("Wisdoeducative.Domain.Histories.CourseHistory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CourseScheduleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CourseStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CurrentScore")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EntityChangeType")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsFavorite")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ModifiedByUser")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StudyPlanTermId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalCredits")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseScheduleId");
+
+                    b.HasIndex("StudyPlanTermId");
+
+                    b.ToTable("CourseHistories");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Histories.DegreeHistory", b =>
@@ -488,7 +822,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DegreeHistories", (string)null);
+                    b.ToTable("DegreeHistories");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Histories.InstitutionHistory", b =>
@@ -529,7 +863,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("InstitutionHistories", (string)null);
+                    b.ToTable("InstitutionHistories");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Histories.RoleHistory", b =>
@@ -565,7 +899,102 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RoleHistories", (string)null);
+                    b.ToTable("RoleHistories");
+                });
+
+            modelBuilder.Entity("Wisdoeducative.Domain.Histories.StudyPlanHistory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("EarnedCredits")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EntityChangeType")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("GradingSystemId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("GrandingSystemId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ModifiedByUser")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TotalCredits")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserDegreeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GrandingSystemId");
+
+                    b.HasIndex("UserDegreeId");
+
+                    b.ToTable("StudyPlanHistories");
+                });
+
+            modelBuilder.Entity("Wisdoeducative.Domain.Histories.StudyPlanTermHistory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("EntityChangeType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ModifiedByUser")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("PeriodNumber")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("StudyPlanId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("StudyPlanTermId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("StudyTermStatus")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudyPlanId");
+
+                    b.ToTable("StudyPlanTermHistories");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Histories.SubscriptionHistory", b =>
@@ -604,7 +1033,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SubscriptionHistories", (string)null);
+                    b.ToTable("SubscriptionHistories");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Histories.UserDegreeHistory", b =>
@@ -633,6 +1062,9 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
                     b.Property<int>("InstitutionId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsDefault")
+                        .HasColumnType("bit");
+
                     b.Property<string>("ModifiedByUser")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -660,7 +1092,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserDegreeHistories", (string)null);
+                    b.ToTable("UserDegreeHistories");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Histories.UserInterestHistory", b =>
@@ -695,7 +1127,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserInterestHistories", (string)null);
+                    b.ToTable("UserInterestHistories");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Histories.UserSubscriptionHistory", b =>
@@ -742,7 +1174,80 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserSubscriptionHistories", (string)null);
+                    b.ToTable("UserSubscriptionHistories");
+                });
+
+            modelBuilder.Entity("Wisdoeducative.Domain.Entities.Course", b =>
+                {
+                    b.HasOne("Wisdoeducative.Domain.Entities.CourseSchedule", "CourseSchedule")
+                        .WithMany()
+                        .HasForeignKey("CourseScheduleId");
+
+                    b.HasOne("Wisdoeducative.Domain.Entities.StudyPlanTerm", "StudyPlanTerm")
+                        .WithMany()
+                        .HasForeignKey("StudyPlanTermId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CourseSchedule");
+
+                    b.Navigation("StudyPlanTerm");
+                });
+
+            modelBuilder.Entity("Wisdoeducative.Domain.Entities.CourseEvaluation", b =>
+                {
+                    b.HasOne("Wisdoeducative.Domain.Entities.Course", "Course")
+                        .WithMany()
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+                });
+
+            modelBuilder.Entity("Wisdoeducative.Domain.Entities.CoursePrerequisite", b =>
+                {
+                    b.HasOne("Wisdoeducative.Domain.Entities.Course", "Course")
+                        .WithMany("PrerequisiteOfCourses")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Wisdoeducative.Domain.Entities.Course", "PrerequisiteOf")
+                        .WithMany("Prerequisites")
+                        .HasForeignKey("PrerequisiteOfId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+
+                    b.Navigation("PrerequisiteOf");
+                });
+
+            modelBuilder.Entity("Wisdoeducative.Domain.Entities.StudyPlan", b =>
+                {
+                    b.HasOne("Wisdoeducative.Domain.Entities.GrandingSystem", "GrandingSystem")
+                        .WithMany()
+                        .HasForeignKey("GrandingSystemId");
+
+                    b.HasOne("Wisdoeducative.Domain.Entities.UserDegree", "UserDegree")
+                        .WithMany()
+                        .HasForeignKey("UserDegreeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("GrandingSystem");
+
+                    b.Navigation("UserDegree");
+                });
+
+            modelBuilder.Entity("Wisdoeducative.Domain.Entities.StudyPlanTerm", b =>
+                {
+                    b.HasOne("Wisdoeducative.Domain.Entities.StudyPlan", "StudyPlan")
+                        .WithMany()
+                        .HasForeignKey("StudyPlanId");
+
+                    b.Navigation("StudyPlan");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Entities.SubscriptionRoleMenuOption", b =>
@@ -870,6 +1375,60 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
                     b.Navigation("UserSubscription");
                 });
 
+            modelBuilder.Entity("Wisdoeducative.Domain.Histories.CourseEvaluationHistory", b =>
+                {
+                    b.HasOne("Wisdoeducative.Domain.Entities.Course", "Course")
+                        .WithMany()
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+                });
+
+            modelBuilder.Entity("Wisdoeducative.Domain.Histories.CourseHistory", b =>
+                {
+                    b.HasOne("Wisdoeducative.Domain.Entities.CourseSchedule", "CourseSchedule")
+                        .WithMany()
+                        .HasForeignKey("CourseScheduleId");
+
+                    b.HasOne("Wisdoeducative.Domain.Entities.StudyPlanTerm", "StudyPlanTerm")
+                        .WithMany()
+                        .HasForeignKey("StudyPlanTermId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CourseSchedule");
+
+                    b.Navigation("StudyPlanTerm");
+                });
+
+            modelBuilder.Entity("Wisdoeducative.Domain.Histories.StudyPlanHistory", b =>
+                {
+                    b.HasOne("Wisdoeducative.Domain.Entities.GrandingSystem", "GrandingSystem")
+                        .WithMany()
+                        .HasForeignKey("GrandingSystemId");
+
+                    b.HasOne("Wisdoeducative.Domain.Entities.UserDegree", "UserDegree")
+                        .WithMany()
+                        .HasForeignKey("UserDegreeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("GrandingSystem");
+
+                    b.Navigation("UserDegree");
+                });
+
+            modelBuilder.Entity("Wisdoeducative.Domain.Histories.StudyPlanTermHistory", b =>
+                {
+                    b.HasOne("Wisdoeducative.Domain.Entities.StudyPlan", "StudyPlan")
+                        .WithMany()
+                        .HasForeignKey("StudyPlanId");
+
+                    b.Navigation("StudyPlan");
+                });
+
             modelBuilder.Entity("Wisdoeducative.Domain.Histories.UserDegreeHistory", b =>
                 {
                     b.HasOne("Wisdoeducative.Domain.Entities.Degree", "Degree")
@@ -895,6 +1454,13 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
                     b.Navigation("Institution");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Wisdoeducative.Domain.Entities.Course", b =>
+                {
+                    b.Navigation("PrerequisiteOfCourses");
+
+                    b.Navigation("Prerequisites");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,5 +1,5 @@
 export const environment = {
-    api : 'https://wisdoeducative-api-dev.azurewebsites.net/',
+    api : 'https://wisdo-educative-dev-linux.azurewebsites.net/',
     local : 'https://localhost:7254',
     domainName : 'wisdoeducativedev.onmicrosoft.com',
     authorityDomain : 'wisdoeducativedev.b2clogin.com',

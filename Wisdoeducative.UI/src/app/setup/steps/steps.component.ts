@@ -22,12 +22,11 @@ import { SetUpUserServer } from 'src/app/models/utils/setup.user.sever.model';
 import { ChipsContainerService } from 'src/app/services/components/chips-container.service';
 import { FormService } from 'src/app/services/components/form.service';
 import { SelectService } from 'src/app/services/components/select.service';
-import { AuthService } from 'src/app/services/core/auth.service';
-import { DegreeService } from 'src/app/services/core/degree.service';
 import { EnumService } from 'src/app/services/core/enum.service';
-import { InstitutionService } from 'src/app/services/core/institution.service';
-import { InterestService } from 'src/app/services/core/interest.service';
-import { UserService } from 'src/app/services/core/user.service';
+import { InstitutionService } from 'src/app/services/core/models/institution.service';
+import { InterestService } from 'src/app/services/core/models/interest.service';
+import { UserService } from 'src/app/services/core/models/user.service';
+import { StoreService } from 'src/app/services/core/store.service';
 import { WindowResizeService } from 'src/app/services/helpers/window-resize.service';
 
 @Component({
@@ -71,10 +70,10 @@ export class StepsComponent implements OnInit{
 
   constructor(private resizeService : WindowResizeService, 
               private fb : FormBuilder, 
+              private storeService : StoreService,
               private enumService : EnumService,
               private selectService : SelectService,
               private formService : FormService,
-              private authService : AuthService,
               private userService : UserService,
               private chipsContainerService : ChipsContainerService,
               private interestsService : InterestService,
@@ -82,14 +81,34 @@ export class StepsComponent implements OnInit{
               private institutionService : InstitutionService) {}
               
   ngOnInit(): void {
-    this.loadSelectOptions();
     this.createUserForm();
-    this.loadUserData();
+    this.manangeUserState();
+    this.loadSelectOptions();
     this.manageScreenSize();
     this.handleChipsContainerService();
     this.loadInterests();
     this.loadSelectInputs();
     this.createUserDegreeForm();
+  }
+
+  private manangeUserState(): void {
+    this.storeService.select('user').subscribe({
+      next: (user: UserClient) => {
+        this.user = user;
+        this.loadUserDataForm();
+        this.loading = false;
+      },
+      complete : () => {
+        this.userService.validateUser().subscribe({
+          next: (user: UserClient) => {
+            this.storeService.set('user', user);
+            this.user = user;
+            this.loadUserDataForm();
+            this.loading = false;
+          }
+        });
+      }
+    });
   }
 
   private handleChipsContainerService(): void {
@@ -144,20 +163,6 @@ export class StepsComponent implements OnInit{
       lastName: ['Loading...', [Validators.required]],
       dateOfBirth: [null, [ Validators.required]],
       category : [null, [Validators.required]]
-    });
-  }
-
-  private loadUserData(): void {
-    this.authService.getUserSubject().subscribe({
-      next: (user : UserClient) => {
-        this.user = user;
-        this.loadUserDataForm();
-        this.loading = false;
-      },
-      error: (error : ApplicationErrorModel) => {
-        alert(error);
-        this.loading = false;
-      }
     });
   }
 
@@ -259,7 +264,7 @@ export class StepsComponent implements OnInit{
 
     this.userService.setUserDetails(userSetupData).subscribe({
       next: (user : UserClient) => {
-        this.authService.setUserSubject(user);
+        this.storeService.set('user', user);
         this.router.navigate(['/workspace']);
       },
       error: (error : ApplicationErrorModel) => {

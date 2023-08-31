@@ -10,10 +10,18 @@ export class InterestAdapterService {
   constructor() { }
 
   public adaptInterestClientToServer(interestClient: InterestClient): InterestServer {
-    return new InterestServer(interestClient.id, interestClient.name, interestClient.status);
+      const serverObj = new InterestServer();
+      serverObj.id = interestClient.id;
+      serverObj.name = interestClient.name;
+      serverObj.status = interestClient.status;
+      return serverObj;
   }
-  
+
   public adaptInterestServerToClient(interestServer: InterestServer): InterestClient {
-    return new InterestClient(interestServer.id, interestServer.name, interestServer.status);
+      const clientObj = new InterestClient();
+      clientObj.id = interestServer.id;
+      clientObj.name = interestServer.name;
+      clientObj.status = interestServer.status;
+      return clientObj;
   }
 }

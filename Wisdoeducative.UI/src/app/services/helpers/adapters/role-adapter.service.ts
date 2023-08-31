@@ -9,15 +9,21 @@ export class RoleAdapterService {
 
   constructor() { }
 
-  public adaptRoleServerToClient(roleServer: RoleServer): RoleClient {
-    return new RoleClient(roleServer.id, roleServer.name, 
-      roleServer.description, 
-      roleServer.status);
+  public adaptRoleServerToClient(serverObj: RoleServer): RoleClient {
+      const clientObj = new RoleClient();
+      clientObj.id = serverObj.id;
+      clientObj.name = serverObj.name;
+      clientObj.description = serverObj.description;
+      clientObj.status = serverObj.status;
+      return clientObj;
   }
 
-  public adaptRoleClientToServer(roleClient: RoleClient): RoleServer {
-    return new RoleServer(roleClient.id, roleClient.name,
-       roleClient.description, 
-       roleClient.status);
+  public adaptRoleClientToServer(clientObj: RoleClient): RoleServer {
+      const serverObj = new RoleServer();
+      serverObj.id = clientObj.id;
+      serverObj.name = clientObj.name;
+      serverObj.description = clientObj.description;
+      serverObj.status = clientObj.status;
+      return serverObj;
   }
 }

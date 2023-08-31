@@ -12,53 +12,41 @@ import { InstitutionAdapterService } from './institution-adapter.service';
 })
 export class UserDegreeAdapterService {
 
-  constructor(private userAdapterService : UserAdapterService,
-              private degreeAdapterService : DegreeAdapterService,
-              private institutionAdapterService : InstitutionAdapterService) { }
+  constructor(private userAdapterService: UserAdapterService,
+              private degreeAdapterService: DegreeAdapterService,
+              private institutionAdapterService: InstitutionAdapterService) { }
 
   public adaptUserDegreeClientToServer(userDegreeDto: UserDegreeClient): UserDegreeServer {
-    const degreeServer = userDegreeDto.degree ?
-     this.degreeAdapterService.adaptDegreeClientToServer(userDegreeDto.degree) : null;
-    const userServer = userDegreeDto.user ? 
-      this.userAdapterService.adaptUserClientToServer(userDegreeDto.user) : null;
-    const institutionServer = userDegreeDto.institution ?
-     this.institutionAdapterService.adaptInstitutionClientToServer(userDegreeDto.institution) : null;
-  
-    return new UserDegreeServer(
-      degreeServer,
-      userDegreeDto.degreeId,
-      userServer,
-      userDegreeDto.userId,
-      institutionServer,
-      userDegreeDto.institutionId,
-      userDegreeDto.currentProgress,
-      userDegreeDto.startDate,
-      userDegreeDto.endDate,
-      userDegreeDto.schedule,
-      userDegreeDto.status
-    );
+    let serverObj = new UserDegreeServer();
+    serverObj.degree = userDegreeDto.degree ? this.degreeAdapterService.adaptDegreeClientToServer(userDegreeDto.degree) : null;
+    serverObj.user = userDegreeDto.user ? this.userAdapterService.adaptUserClientToServer(userDegreeDto.user) : null;
+    serverObj.institution = userDegreeDto.institution ? this.institutionAdapterService.adaptInstitutionClientToServer(userDegreeDto.institution) : null;
+    serverObj.id = userDegreeDto.id;
+    serverObj.degreeId = userDegreeDto.degreeId;
+    serverObj.userId = userDegreeDto.userId;
+    serverObj.institutionId = userDegreeDto.institutionId;
+    serverObj.currentProgress = userDegreeDto.currentProgress;
+    serverObj.startDate = userDegreeDto.startDate;
+    serverObj.endDate = userDegreeDto.endDate;
+    serverObj.schedule = userDegreeDto.schedule;
+    serverObj.status = userDegreeDto.status;
+    return serverObj;
   }
   
   public adaptUserDegreeServerToClient(userDegreeServer: UserDegreeServer): UserDegreeClient {
-    const degreeDto = userDegreeServer.degree ?
-      this.degreeAdapterService.adaptDegreeServerToClient(userDegreeServer.degree) : null;
-    const userDto = userDegreeServer.user ? 
-      this.userAdapterService.adaptUserServerToClient(userDegreeServer.user) : null;
-    const institutionDto = userDegreeServer.institution ?
-      this.institutionAdapterService.adaptInstitutionServerToClient(userDegreeServer.institution) : null;
-  
-    return new UserDegreeClient(
-      degreeDto,
-      userDegreeServer.degreeId,
-      userDto,
-      userDegreeServer.userId,
-      institutionDto,
-      userDegreeServer.institutionId,
-      userDegreeServer.currentProgress,
-      userDegreeServer.startDate,
-      userDegreeServer.endDate,
-      userDegreeServer.schedule,
-      userDegreeServer.status
-    );
+    let clientObj = new UserDegreeClient();
+    clientObj.degree = userDegreeServer.degree ? this.degreeAdapterService.adaptDegreeServerToClient(userDegreeServer.degree) : null;
+    clientObj.user = userDegreeServer.user ? this.userAdapterService.adaptUserServerToClient(userDegreeServer.user) : null;
+    clientObj.institution = userDegreeServer.institution ? this.institutionAdapterService.adaptInstitutionServerToClient(userDegreeServer.institution) : null;
+    clientObj.id = userDegreeServer.id;
+    clientObj.degreeId = userDegreeServer.degreeId;
+    clientObj.userId = userDegreeServer.userId;
+    clientObj.institutionId = userDegreeServer.institutionId;
+    clientObj.currentProgress = userDegreeServer.currentProgress;
+    clientObj.startDate = userDegreeServer.startDate;
+    clientObj.endDate = userDegreeServer.endDate;
+    clientObj.schedule = userDegreeServer.schedule;
+    clientObj.status = userDegreeServer.status;
+    return clientObj;
   }
 }

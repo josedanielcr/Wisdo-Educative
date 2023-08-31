@@ -7,6 +7,13 @@ import { InputDateComponent } from './input/input-date/input-date.component';
 import { ChipsContainerComponent } from './chips-container/chips-container.component';
 import { ChipComponent } from './chips-container/chip/chip.component';
 import { InstitutionSelectComponent } from './input/institution-select/institution-select.component';
+import { DialogComponent } from './dialog/dialog.component';
+import AddStudyPlanTermComponent from './add-study-plan-term/add-study-plan-term.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CourseGridComponent } from './course-grid/course-grid.component';
+import { CourseCardComponent } from './course-card/course-card.component';
+import { ProgressBarComponent } from './progress-bar/progress-bar.component';
+import { StudyPlanFiltersComponent } from './study-plan-filters/study-plan-filters.component';
 
 
 
@@ -18,7 +25,13 @@ import { InstitutionSelectComponent } from './input/institution-select/instituti
     InputDateComponent,
     ChipsContainerComponent,
     ChipComponent,
-    InstitutionSelectComponent
+    InstitutionSelectComponent,
+    DialogComponent,
+    AddStudyPlanTermComponent,
+    CourseGridComponent,
+    CourseCardComponent,
+    ProgressBarComponent,
+    StudyPlanFiltersComponent
   ],
   exports: [
     ButtonComponent,
@@ -26,10 +39,16 @@ import { InstitutionSelectComponent } from './input/institution-select/instituti
     InputSelectComponent,
     InputDateComponent,
     ChipsContainerComponent,
-    InstitutionSelectComponent
+    InstitutionSelectComponent,
+    DialogComponent,
+    AddStudyPlanTermComponent,
+    CourseCardComponent,
+    CourseGridComponent,
+    StudyPlanFiltersComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule,
   ]
 })
 export class ComponentsModule { }

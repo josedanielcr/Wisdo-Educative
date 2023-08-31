@@ -1,0 +1,23 @@
+.course-card {
+    border-radius: 0.3125rem;
+    min-height: 6.5rem;
+    max-height: 7.5rem;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 1.25rem;
+}
+
+.favorite-course-container {
+    background-color: #E064B92E;
+    width: 2.01706rem;
+    height: 1.5625rem;
+    border-radius: 0.3125rem;
+}
+
+.favorite-course-container img {
+    width: 1rem;
+    height: 1.1rem;
+}
+
+.card-course-name{
+    width: 70%;
+}

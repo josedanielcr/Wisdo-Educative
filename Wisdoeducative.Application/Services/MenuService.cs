@@ -36,28 +36,35 @@ namespace Wisdoeducative.Application.Services
         public async Task<MenuOptionDto> CreateMenuOption(MenuOptionDto menuOption, int subscriptionId,
             int roleId)
         {
-            using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-
-            MenuOption dbMenuOption = mapper.Map<MenuOption>(menuOption);
-            dBContext.MenuOptions.Add(dbMenuOption);
-            await dBContext.SaveChangesAsync();
-
-            //add connection
-            SubscriptionRoleMenuOption subscriptionRoleMenu = new SubscriptionRoleMenuOption
+            using var transaction = dBContext.Database.BeginTransaction();
+            try
             {
-                SubscriptionId = subscriptionId,
-                RoleId = roleId,
-                MenuOptionId = dbMenuOption.Id,
-                Status = Domain.Enums.EntityStatus.Active
-            };
 
-            dBContext.SubscriptionRoleMenuOptions.Add(subscriptionRoleMenu);
-            await dBContext.SaveChangesAsync();
+                MenuOption dbMenuOption = mapper.Map<MenuOption>(menuOption);
+                dBContext.MenuOptions.Add(dbMenuOption);
+                await dBContext.SaveChangesAsync();
 
-            //complete transaction
-            scope.Complete();
+                //add connection
+                SubscriptionRoleMenuOption subscriptionRoleMenu = new SubscriptionRoleMenuOption
+                {
+                    SubscriptionId = subscriptionId,
+                    RoleId = roleId,
+                    MenuOptionId = dbMenuOption.Id,
+                    Status = Domain.Enums.EntityStatus.Active
+                };
 
-            return menuOption;
+                dBContext.SubscriptionRoleMenuOptions.Add(subscriptionRoleMenu);
+                await dBContext.SaveChangesAsync();
+
+                transaction.Commit();
+
+                return menuOption;
+            }
+            catch (Exception)
+            {
+                transaction.Rollback();
+                throw;
+            }
         }
 
         public async Task<IEnumerable<MenuOptionDto>> GetMenuOptions(int userId)

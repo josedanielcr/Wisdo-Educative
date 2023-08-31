@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,8 @@ namespace Wisdoeducative.Infrastructure.Persistence
         {
             return base.Entry(entity);
         }
+        
+        public DatabaseFacade Database => base.Database;
 
         public DbSet<User> Users { get; set; }
         public DbSet<UserHistory> UserHistories { get; set; }
@@ -40,9 +43,38 @@ namespace Wisdoeducative.Infrastructure.Persistence
         public DbSet<UserDegreeHistory> UserDegreeHistories { get; set; }
         public DbSet<MenuOption> MenuOptions { get; set; }
         public DbSet<SubscriptionRoleMenuOption> SubscriptionRoleMenuOptions { get; set; }
+        public DbSet<StudyPlan> StudyPlans { get; set; }
+        public DbSet<StudyPlanHistory> StudyPlanHistories { get; set; }
+        public DbSet<StudyPlanTerm> StudyPlanTerms { get; set; }
+        public DbSet<CourseEvaluation> CourseEvaluations { get; set; }
+        public DbSet<CourseSchedule> CourseSchedules { get; set; }
+        public DbSet<CoursePrerequisite> CoursePrerequisites { get; set; }
+        public DbSet<Course> Courses { get; set; }
+        public DbSet<StudyPlanTermHistory> StudyPlanTermHistories { get; set; }
+        public DbSet<CourseEvaluationHistory> CourseEvaluationHistories { get; set; }
+        public DbSet<CourseHistory> CourseHistories { get; set; }
+
         public async Task<int> SaveChangesAsync()
         {
             return await base.SaveChangesAsync();
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<CoursePrerequisite>()
+               .HasKey(cp => new { cp.CourseId, cp.PrerequisiteOfId }); // Composite key
+
+            modelBuilder.Entity<CoursePrerequisite>()
+                .HasOne(cp => cp.Course)
+                .WithMany(c => c.PrerequisiteOfCourses)
+                .HasForeignKey(cp => cp.CourseId)
+                .OnDelete(DeleteBehavior.Restrict); // to prevent cascading deletes
+
+            modelBuilder.Entity<CoursePrerequisite>()
+                .HasOne(cp => cp.PrerequisiteOf)
+                .WithMany(c => c.Prerequisites)
+                .HasForeignKey(cp => cp.PrerequisiteOfId)
+                .OnDelete(DeleteBehavior.Restrict); // to prevent cascading deletes
         }
     }
 }

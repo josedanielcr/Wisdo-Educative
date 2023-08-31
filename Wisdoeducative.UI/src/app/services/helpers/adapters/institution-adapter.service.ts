@@ -10,24 +10,24 @@ export class InstitutionAdapterService {
   constructor() { }
 
   public adaptInstitutionClientToServer(institutionDto: InstitutionClient): InstitutionServer {
-    return new InstitutionServer(
-      institutionDto.id,
-      institutionDto.name,
-      institutionDto.country,
-      institutionDto.countryCode,
-      institutionDto.website,
-      institutionDto.status
-    );
+      const serverObj = new InstitutionServer();
+      serverObj.id = institutionDto.id;
+      serverObj.name = institutionDto.name;
+      serverObj.country = institutionDto.country;
+      serverObj.countryCode = institutionDto.countryCode;
+      serverObj.website = institutionDto.website;
+      serverObj.status = institutionDto.status;
+      return serverObj;
   }
-  
+
   public adaptInstitutionServerToClient(institutionServer: InstitutionServer): InstitutionClient {
-    return new InstitutionClient(
-      institutionServer.id,
-      institutionServer.name,
-      institutionServer.country,
-      institutionServer.countryCode,
-      institutionServer.website,
-      institutionServer.status
-    );
+      const clientObj = new InstitutionClient();
+      clientObj.id = institutionServer.id;
+      clientObj.name = institutionServer.name;
+      clientObj.country = institutionServer.country;
+      clientObj.countryCode = institutionServer.countryCode;
+      clientObj.website = institutionServer.website;
+      clientObj.status = institutionServer.status;
+      return clientObj;
   }
 }
