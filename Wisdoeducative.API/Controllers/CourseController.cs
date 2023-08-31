@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Web.Resource;
 using Wisdoeducative.Application.Common.Interfaces.Services;
 using Wisdoeducative.Application.DTOs;
+using Wisdoeducative.Application.DTOs.CustomDTOs;
 
 namespace Wisdoeducative.API.Controllers
 {
@@ -29,6 +30,12 @@ namespace Wisdoeducative.API.Controllers
         public async Task<IActionResult> CreateCourse(List<CourseDto> courses)
         {
             return Ok(await courseService.CreateCourse(courses));
+        }
+
+        [HttpPost("search/{studyPlanId}")]
+        public async Task<IActionResult> SearchCourses(int studyPlanId, SearchCourseDto searchCourseModel)
+        {
+            return Ok(await courseService.SearchCourses(studyPlanId, searchCourseModel));
         }
     }
 }

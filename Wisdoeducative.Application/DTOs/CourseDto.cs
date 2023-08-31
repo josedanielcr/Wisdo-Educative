@@ -21,6 +21,7 @@ namespace Wisdoeducative.Application.DTOs
         public int? CourseScheduleId { get; set; }
         public string Name { get; set; }
         public int TotalCredits { get; set; }
+        public bool IsFavorite { get; set; } = false;
         public string? CurrentScore { get; set; }
         public string? Status { get; set; }
         public string? CourseStatus { get; set; }

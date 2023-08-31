@@ -19,6 +19,7 @@ namespace Wisdoeducative.Domain.Entities
         public CourseSchedule? CourseSchedule { get; set; }
         public int? CourseScheduleId { get; set; }
         public string Name { get; set; }
+        public bool IsFavorite { get; set; } = false;
         public int TotalCredits { get; set; }
         public string? CurrentScore { get; set; }
         public EntityStatus status { get; set; }

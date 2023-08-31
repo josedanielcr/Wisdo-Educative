@@ -18,6 +18,7 @@ namespace Wisdoeducative.Domain.Histories
         public string Name { get; set; }
         public int TotalCredits { get; set; }
         public string? CurrentScore { get; set; }
+        public bool IsFavorite { get; set; } = false;
         public EntityStatus Status { get; set; }
         public CourseStatus CourseStatus { get; set; }
         public int CourseId { get; set; }

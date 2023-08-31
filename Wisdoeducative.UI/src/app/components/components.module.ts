@@ -10,6 +10,10 @@ import { InstitutionSelectComponent } from './input/institution-select/instituti
 import { DialogComponent } from './dialog/dialog.component';
 import AddStudyPlanTermComponent from './add-study-plan-term/add-study-plan-term.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CourseGridComponent } from './course-grid/course-grid.component';
+import { CourseCardComponent } from './course-card/course-card.component';
+import { ProgressBarComponent } from './progress-bar/progress-bar.component';
+import { StudyPlanFiltersComponent } from './study-plan-filters/study-plan-filters.component';
 
 
 
@@ -23,7 +27,11 @@ import { ReactiveFormsModule } from '@angular/forms';
     ChipComponent,
     InstitutionSelectComponent,
     DialogComponent,
-    AddStudyPlanTermComponent
+    AddStudyPlanTermComponent,
+    CourseGridComponent,
+    CourseCardComponent,
+    ProgressBarComponent,
+    StudyPlanFiltersComponent
   ],
   exports: [
     ButtonComponent,
@@ -33,7 +41,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     ChipsContainerComponent,
     InstitutionSelectComponent,
     DialogComponent,
-    AddStudyPlanTermComponent
+    AddStudyPlanTermComponent,
+    CourseCardComponent,
+    CourseGridComponent,
+    StudyPlanFiltersComponent
   ],
   imports: [
     CommonModule,

@@ -12,8 +12,10 @@ using Wisdoeducative.Application.Common.Interfaces.Helpers;
 using Wisdoeducative.Application.Common.Interfaces.Historics;
 using Wisdoeducative.Application.Common.Interfaces.Services;
 using Wisdoeducative.Application.DTOs;
+using Wisdoeducative.Application.DTOs.CustomDTOs;
 using Wisdoeducative.Application.Resources;
 using Wisdoeducative.Domain.Entities;
+using Wisdoeducative.Domain.Enums;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Wisdoeducative.Application.Services
@@ -111,6 +113,34 @@ namespace Wisdoeducative.Application.Services
                 .Where(c => c.Id == course.Id)
                 .Select(c => c.StudyPlanTerm!.StudyPlan!.UserDegree.User)
                 .FirstOrDefaultAsync() ?? throw new BadRequestException("User ID not found for the given course.");
+        }
+
+        public async Task<IEnumerable<CourseDto>> SearchCourses(int studyPlanId,
+            SearchCourseDto searchCourseModel)
+        {
+            List<CourseStatus> courseStatuses =
+                courseHelperService.ConvertStringCourseStatusToEnum(searchCourseModel.Statuses);
+
+            var query = dBContext.Courses
+                .Where(c => c.StudyPlanTerm.StudyPlan!.Id == studyPlanId);
+
+            if (courseStatuses.Count > 0)
+            {
+                query = query.Where(c => courseStatuses.Contains(c.CourseStatus));
+            }
+
+            if (!string.IsNullOrEmpty(searchCourseModel.Name))
+            {
+                query = query.Where(c => c.Name.Contains(searchCourseModel.Name));
+            }
+
+            if (searchCourseModel.IsFavorite)
+            {
+                query = query.Where(c => c.IsFavorite == true);
+            }
+
+            var results = await query.ToListAsync();
+            return mapper.Map<List<CourseDto>>(results);
         }
     }
 }

@@ -12,6 +12,7 @@ export class CourseServer {
     name: string;
     totalCredits: number;
     currentScore?: string;
+    isFavorite?: boolean;
     status: string;
     courseStatus: string;
 

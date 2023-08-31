@@ -6,6 +6,7 @@
 
 .app-content-container {
     width: 100%;
+    overflow: auto;
 }
 
 .app-content-container-desktop {

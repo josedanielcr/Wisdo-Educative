@@ -15,29 +15,31 @@ export class CourseAdapterService {
       const clientObj = new CourseClient();
       clientObj.id = serverObj.id;
       clientObj.studyPlanTermId = serverObj.studyPlanTermId;
-      clientObj.studyPlanTerm = this.studyPlanTermAdapter.adaptServerToClient(serverObj.studyPlanTerm);
-      clientObj.courseScheduleId = serverObj.courseScheduleId;
+      clientObj.studyPlanTerm = serverObj.studyPlanTerm ? this.studyPlanTermAdapter.adaptServerToClient(serverObj.studyPlanTerm): undefined;
+      clientObj.courseScheduleId = serverObj.courseScheduleId || null;
       clientObj.courseSchedule = serverObj.courseSchedule ? this.courseScheduleAdapter.adaptServerToClient(serverObj.courseSchedule) : undefined;
-      clientObj.name = serverObj.name;
-      clientObj.totalCredits = serverObj.totalCredits;
-      clientObj.currentScore = serverObj.currentScore;
-      clientObj.status = serverObj.status;
-      clientObj.courseStatus = serverObj.courseStatus;
+      clientObj.name = serverObj.name || null;
+      clientObj.totalCredits = serverObj.totalCredits || null;
+      clientObj.currentScore = serverObj.currentScore || null;
+      clientObj.status = serverObj.status || null;
+      clientObj.isFavorite = serverObj.isFavorite || null;
+      clientObj.courseStatus = serverObj.courseStatus || null;
       return clientObj;
   }
 
   public adaptClientToServer(clientObj: CourseClient): CourseServer {
       const serverObj = new CourseServer();
-      serverObj.id = clientObj.id;
-      serverObj.studyPlanTermId = clientObj.studyPlanTermId;
-      serverObj.studyPlanTerm = this.studyPlanTermAdapter.adaptClientToServer(clientObj.studyPlanTerm);
-      serverObj.courseScheduleId = clientObj.courseScheduleId;
+      serverObj.id = clientObj.id || null;
+      serverObj.studyPlanTermId = clientObj.studyPlanTermId || null;;
+      serverObj.studyPlanTerm = clientObj.studyPlanTerm ? this.studyPlanTermAdapter.adaptClientToServer(clientObj.studyPlanTerm) : undefined;
+      serverObj.courseScheduleId = clientObj.courseScheduleId || null;
       serverObj.courseSchedule = clientObj.courseSchedule ? this.courseScheduleAdapter.adaptClientToServer(clientObj.courseSchedule) : undefined;
-      serverObj.name = clientObj.name;
-      serverObj.totalCredits = clientObj.totalCredits;
-      serverObj.currentScore = clientObj.currentScore;
-      serverObj.status = clientObj.status;
-      serverObj.courseStatus = clientObj.courseStatus;
+      serverObj.name = clientObj.name || null;
+      serverObj.totalCredits = clientObj.totalCredits || null;
+      serverObj.currentScore = clientObj.currentScore || null;
+      serverObj.isFavorite = clientObj.isFavorite || null;
+      serverObj.status = clientObj.status || null;
+      serverObj.courseStatus = clientObj.courseStatus || null;
       return serverObj;
   }
 }

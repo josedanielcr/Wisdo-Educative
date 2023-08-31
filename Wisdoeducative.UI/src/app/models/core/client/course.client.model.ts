@@ -12,6 +12,7 @@ export class CourseClient {
     name: string;
     totalCredits: number;
     currentScore?: string;
+    isFavorite?: boolean;
     status: string;
     courseStatus: string;
 

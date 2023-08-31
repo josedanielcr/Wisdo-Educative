@@ -32,6 +32,7 @@ namespace Wisdoeducative.Application.Histories
                 TotalCredits = entity.TotalCredits,
                 CurrentScore = entity.CurrentScore,
                 Status = entity.status,
+                IsFavorite = entity.IsFavorite,
                 CourseStatus = entity.CourseStatus,
                 StudyPlanTermId = entity.StudyPlanTermId,
                 CourseScheduleId = entity.CourseScheduleId
