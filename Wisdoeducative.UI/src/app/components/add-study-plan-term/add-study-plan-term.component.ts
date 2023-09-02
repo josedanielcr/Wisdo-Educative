@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FormService } from 'src/app/services/components/form.service';
@@ -37,12 +37,16 @@ export default class AddStudyPlanTermComponent implements AfterViewInit {
   public isPhone: boolean;
   public ButtonType = ButtonType;
 
+  //util
+  @Output() dialogWasClosed : EventEmitter<boolean> = new EventEmitter<boolean>();
+
   constructor(private fb : FormBuilder,
     private formService : FormService,
     private router : Router,
     private studyPlanService : StudyPlanService,
     private storeService : StoreService,
-    private windowService : WindowResizeService) { }
+    private windowService : WindowResizeService,
+    private cdr : ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.subscribeToWindowService();
@@ -71,6 +75,7 @@ export default class AddStudyPlanTermComponent implements AfterViewInit {
       startDate: ['', [Validators.required]],
       endDate: ['', [Validators.required]],
     });
+    this.cdr.detectChanges();
     this.dialogComponent.show();
   }
 
@@ -135,8 +140,12 @@ export default class AddStudyPlanTermComponent implements AfterViewInit {
         if(!this.studyPlanTerms) this.studyPlanTerms = [];
         this.studyPlanTerms.push(studyTermCourses.studyPlanTermDto);
         this.dialogComponent.hide();
-        this.router.navigate(['/study-plan']);
+        this.router.navigate(['/workspace/study-plan']);
       }
     });
+  }
+
+  public emitDialogWasClosed(): void {
+    this.dialogWasClosed.emit(true);
   }
 }

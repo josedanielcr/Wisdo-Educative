@@ -11,4 +11,12 @@ export class CourseCardComponent {
   @Input() course: CourseClient;
 
   constructor() { }
+
+  public getCoursesProgress(): number {
+    try {
+      return Number(this.course.currentScore);
+    } catch (error) {
+      return 0;
+    }
+  }
 }

@@ -11,23 +11,62 @@
     <!-- filters -->
     <div>
         <app-study-plan-filters [studyPlanId]="studyPlan.id"
-        (coursesEmitter)="filterCourses($event)"
-        (isCardViewEmitter)="switchView($event)">
+                                (coursesEmitter)="filterCourses($event)"
+                                (isCardViewEmitter)="switchView($event)">
         </app-study-plan-filters>
     </div>
 
     <!-- courses list header -->
-    <div class="header-container wd-bg-secondary w-100 d-flex align-items-center">
+    <div class="header-container wd-bg-secondary w-100 d-flex align-items-center" [ngClass]="{
+        'mb-3' : isCardView
+    }">
         <h3 class="wd-text-h4 wd-text-white m-0 ps-3">{{defaultStudyPlanTerm.name}}</h3>
     </div>
 
     <!-- courses list -->
     <div class="w-100">
-        <app-course-grid [courses]="defaultStudyPlanTemCourses"></app-course-grid>
+        <app-course-grid [courses]="defaultStudyPlanTemCourses"
+                         *ngIf="isCardView">
+        </app-course-grid>
+        <app-study-plan-table [courses]="defaultStudyPlanTemCourses"
+                              *ngIf="!isCardView">
+        </app-study-plan-table>
     </div>
 
     <!-- other study plan terms header-->
-    <div class="header-container wd-bg-secondary w-100 d-flex align-items-center">
+    <div class="header-container wd-bg-secondary w-100 d-flex align-items-center" [ngClass]="{
+        'mb-3' : isCardView
+    }">
         <h3 class="wd-text-h4 wd-text-white m-0 ps-3">Otros {{userDegree.schedule}}</h3>
+        <div class="ms-auto pe-2 user-select-none">
+            <div class="new-study-plan-term-container wd-bg-primary d-flex 
+                justify-content-center align-items-center gap-3 cursor-pointer"
+                (click)="toggleNewStudyPlanTerm()">
+                <div *ngIf="isDesktop">
+                    <span class="wd-text-white fw-bold">Añadir bloque</span>
+                </div>
+                <div>
+                    <img src="../../../assets/icons/plus.png" width="20" height="20">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- other study plan terms list -->
+    <div class="w-100">
+        <app-study-plan-term-grid [studyPlanTerms]="studyPlanTerms"
+                                  *ngIf="isCardView">
+        </app-study-plan-term-grid>
+        <app-study-plan-table [studyPlanTerms]="studyPlanTerms"
+                              [typeOfSchedule]="userDegree.schedule"
+                               *ngIf="!isCardView">
+        </app-study-plan-table>
     </div>
 </div>
+
+<app-add-study-plan-term *ngIf="isNewStudyPlanTermOpen"
+                         [studyPlan]="studyPlan"
+                         [studyPlanTerms]="studyPlanTerms"
+                         [isNewStudyPlanInProgress]="false"
+                         (dialogWasClosed)="hideNewStudyPlanTermWindow()">
+</app-add-study-plan-term>

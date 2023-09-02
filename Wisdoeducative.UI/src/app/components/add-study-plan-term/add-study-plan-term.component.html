@@ -1,4 +1,4 @@
-<app-dialog title="Agregar bloque" [minHeight]="20">
+<app-dialog title="Agregar bloque" [minHeight]="20" (wasClosed)="this.emitDialogWasClosed()">
 
     <!-- study term -->
     <div class="w-100 d-flex flex-column" 

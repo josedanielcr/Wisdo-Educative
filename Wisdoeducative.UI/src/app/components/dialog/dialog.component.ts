@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ScreenSizeModel } from 'src/app/models/screenSize.model';
 import { WindowResizeService } from 'src/app/services/helpers/window-resize.service';
 
@@ -11,12 +11,14 @@ export class DialogComponent implements OnInit {
 
   @Input() public title: string = '';
   @Input() public minHeight : number = 30;
+  @Output() public wasClosed: EventEmitter<boolean> = new EventEmitter<boolean>();
   public isVisible: boolean = false;
   public isDesktop: boolean = false;
   public isTablet: boolean = false;
   public isPhone: boolean = false;
   
-  constructor(private windowService : WindowResizeService) { }
+  constructor(private windowService : WindowResizeService,
+    private cdr : ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.subscribeToWindowService();
@@ -32,6 +34,7 @@ export class DialogComponent implements OnInit {
 
   public show(): void {
     this.isVisible = true;
+    this.cdr.detectChanges();
   }
 
   public hide(): void {
@@ -40,5 +43,8 @@ export class DialogComponent implements OnInit {
 
   public toggle(): void {
     this.isVisible = !this.isVisible;
+    if(!this.isVisible) {
+      this.wasClosed.emit(true);
+    }
   }
 }

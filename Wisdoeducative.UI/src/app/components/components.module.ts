@@ -14,6 +14,9 @@ import { CourseGridComponent } from './course-grid/course-grid.component';
 import { CourseCardComponent } from './course-card/course-card.component';
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { StudyPlanFiltersComponent } from './study-plan-filters/study-plan-filters.component';
+import { StudyPlanTermGridComponent } from './study-plan-term-grid/study-plan-term-grid.component';
+import { StudyPlanTermCardComponent } from './study-plan-term-card/study-plan-term-card.component';
+import { StudyPlanTableComponent } from './study-plan-table/study-plan-table.component';
 
 
 
@@ -31,7 +34,10 @@ import { StudyPlanFiltersComponent } from './study-plan-filters/study-plan-filte
     CourseGridComponent,
     CourseCardComponent,
     ProgressBarComponent,
-    StudyPlanFiltersComponent
+    StudyPlanFiltersComponent,
+    StudyPlanTermGridComponent,
+    StudyPlanTermCardComponent,
+    StudyPlanTableComponent
   ],
   exports: [
     ButtonComponent,
@@ -44,7 +50,11 @@ import { StudyPlanFiltersComponent } from './study-plan-filters/study-plan-filte
     AddStudyPlanTermComponent,
     CourseCardComponent,
     CourseGridComponent,
-    StudyPlanFiltersComponent
+    StudyPlanFiltersComponent,
+    StudyPlanTermGridComponent,
+    StudyPlanTermCardComponent,
+    StudyPlanTableComponent,
+    ProgressBarComponent
   ],
   imports: [
     CommonModule,

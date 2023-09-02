@@ -131,3 +131,9 @@ body {
     font-size: 0.8rem;
 }
 /*#endregion errors*/
+
+/*#region util*/
+.cursor-pointer {
+    cursor: pointer;
+}
+/*#endregion util*/

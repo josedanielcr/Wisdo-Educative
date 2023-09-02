@@ -5,8 +5,10 @@ import { StudyPlanClient } from 'src/app/models/core/client/study.plan.client.mo
 import { StudyPlanTermClient } from 'src/app/models/core/client/study.plan.term.client.model';
 import { UserClient } from 'src/app/models/core/client/user.client.model';
 import { UserDegreeClient } from 'src/app/models/core/client/user.degree.client.model';
+import { ScreenSizeModel } from 'src/app/models/screenSize.model';
 import { CourseService } from 'src/app/services/core/models/course.service';
 import { UserInitializationService } from 'src/app/services/helpers/user-initialization.service';
+import { WindowResizeService } from 'src/app/services/helpers/window-resize.service';
 
 @Component({
   selector: 'app-study-plan',
@@ -14,7 +16,6 @@ import { UserInitializationService } from 'src/app/services/helpers/user-initial
   styleUrls: ['./study-plan.component.css']
 })
 export class StudyPlanComponent implements OnInit {
-
 
   //properties
   public user : UserClient;
@@ -24,11 +25,28 @@ export class StudyPlanComponent implements OnInit {
   public defaultStudyPlanTerm : StudyPlanTermClient;
   public defaultStudyPlanTemCourses : CourseClient[];
 
+  //util
+  public isNewStudyPlanTermOpen : boolean = false;
+  public isDesktop: boolean;
+  public isTablet: boolean;
+  public isPhone: boolean;
+  public isCardView : boolean = true;
+
   constructor(private userInitializationService : UserInitializationService,
-    private courseService : CourseService) { }
+    private courseService : CourseService,
+    private windowService : WindowResizeService) { }
 
   ngOnInit(): void {
     this.userInitialization();
+    this.subscribeToWindowService();
+  }
+
+  private subscribeToWindowService() {
+    this.windowService.getScreenSizeObservable().subscribe((screenSizes: ScreenSizeModel) => {
+      this.isDesktop = screenSizes.isDesktop;
+      this.isTablet = screenSizes.isTablet;
+      this.isPhone = screenSizes.isPhone;
+    });
   }
 
   private userInitialization(): void {
@@ -45,7 +63,20 @@ export class StudyPlanComponent implements OnInit {
   }
 
   private setInProgressStudyPlanTerm(studyPlanTerms: StudyPlanTermClient[]): StudyPlanTermClient {
-    return studyPlanTerms.filter((studyPlanTerm: StudyPlanTermClient) => studyPlanTerm.studyTermStatus = "InProgress")[0];
+    const currentStudyPlanTerm : StudyPlanTermClient =
+       studyPlanTerms.filter((studyPlanTerm: StudyPlanTermClient) => 
+        studyPlanTerm.studyTermStatus == "InProgress")[0];
+    this.studyPlanTerms = this.removeInProgressStudyPlanTerm(studyPlanTerms);
+    return currentStudyPlanTerm;
+  }
+
+  private removeInProgressStudyPlanTerm(studyPlanTerms : StudyPlanTermClient[]): StudyPlanTermClient[] {
+    studyPlanTerms.forEach((studyPlanTerm: StudyPlanTermClient) => {
+      if (studyPlanTerm.studyTermStatus == "InProgress") {
+        studyPlanTerms.splice(studyPlanTerms.indexOf(studyPlanTerm), 1);
+      }
+    });
+    return studyPlanTerms;
   }
 
   private setDefaultStudyPlanTermCourses(id: number): void  {
@@ -64,5 +95,14 @@ export class StudyPlanComponent implements OnInit {
   }
 
   public switchView(isCardView : boolean): void {
+    this.isCardView = isCardView;
+  }
+
+  public toggleNewStudyPlanTerm(): void {
+    this.isNewStudyPlanTermOpen = !this.isNewStudyPlanTermOpen;
+  }
+
+  public hideNewStudyPlanTermWindow(): void {
+    this.isNewStudyPlanTermOpen = false;
   }
 }

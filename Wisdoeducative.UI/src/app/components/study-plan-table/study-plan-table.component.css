@@ -1,0 +1,33 @@
+table {
+    margin: auto;
+    border-collapse: separate;
+    border-spacing: 0 0.40rem;
+}
+
+th, td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 1.40rem 0rem;
+}
+
+.th-name {
+    text-align: left;
+}
+
+.th-name-spacing-desktop {
+    padding-left: 15rem;
+}
+
+.th-name-spacing-phone {
+    padding-left: 2rem;
+}
+
+th:first-child {
+    border-top-left-radius: 0.3125rem;
+    border-bottom-left-radius: 0.3125rem;
+}
+
+th:last-child {
+    border-top-right-radius: 0.3125rem;
+    border-bottom-right-radius: 0.3125rem;
+}
