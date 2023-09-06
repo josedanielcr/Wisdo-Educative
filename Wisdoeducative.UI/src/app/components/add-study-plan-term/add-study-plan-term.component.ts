@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FormService } from 'src/app/services/components/form.service';
@@ -12,6 +12,7 @@ import { ScreenSizeModel } from 'src/app/models/screenSize.model';
 import { WindowResizeService } from 'src/app/services/helpers/window-resize.service';
 import { StudyPlanClient } from 'src/app/models/core/client/study.plan.client.model';
 import { ButtonType } from 'src/app/enums/button.enum';
+import { DialogType } from 'src/app/enums/dialog.type.enum';
 
 @Component({
   selector: 'app-add-study-plan-term',
@@ -26,6 +27,7 @@ export default class AddStudyPlanTermComponent implements AfterViewInit {
   @Input() studyPlan : StudyPlanClient;
   @Input() studyPlanTerms : StudyPlanTermClient[] = [];
   @Input() isNewStudyPlanInProgress : boolean = false;
+  @Input() needsToRouteToStudyPlan : boolean = true;
 
   //forms
   public courseForm : FormGroup;
@@ -36,13 +38,19 @@ export default class AddStudyPlanTermComponent implements AfterViewInit {
   public isTablet: boolean;
   public isPhone: boolean;
   public ButtonType = ButtonType;
+  public DialogType = DialogType;
+
+  //util
+  @Output() dialogWasClosed : EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() studyPlanTermWasCreated : EventEmitter<StudyTermCoursesModel> = new EventEmitter<StudyTermCoursesModel>();
 
   constructor(private fb : FormBuilder,
     private formService : FormService,
     private router : Router,
     private studyPlanService : StudyPlanService,
     private storeService : StoreService,
-    private windowService : WindowResizeService) { }
+    private windowService : WindowResizeService,
+    private cdr : ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.subscribeToWindowService();
@@ -71,6 +79,7 @@ export default class AddStudyPlanTermComponent implements AfterViewInit {
       startDate: ['', [Validators.required]],
       endDate: ['', [Validators.required]],
     });
+    this.cdr.detectChanges();
     this.dialogComponent.show();
   }
 
@@ -135,8 +144,16 @@ export default class AddStudyPlanTermComponent implements AfterViewInit {
         if(!this.studyPlanTerms) this.studyPlanTerms = [];
         this.studyPlanTerms.push(studyTermCourses.studyPlanTermDto);
         this.dialogComponent.hide();
-        this.router.navigate(['/study-plan']);
+        if(this.needsToRouteToStudyPlan){
+          this.router.navigate(['/workspace/study-plan']);
+        } else {
+          this.studyPlanTermWasCreated.emit(studyTermCourses);
+        }
       }
     });
+  }
+
+  public emitDialogWasClosed(): void {
+    this.dialogWasClosed.emit(true);
   }
 }

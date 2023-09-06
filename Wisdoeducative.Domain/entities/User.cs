@@ -13,7 +13,7 @@ namespace Wisdoeducative.Domain.Entities
         public string B2cId { get; set; }
         public string? Name { get; set; }
         public string? LastName { get; set; }
-        public DateTime? DateOfBirth { get; set; }
+        public DateTime DateOfBirth { get; set; }
         public string Email { get; set; }
         public string? ProfileImage { get; set; }
         public Role? Role { get; set; }

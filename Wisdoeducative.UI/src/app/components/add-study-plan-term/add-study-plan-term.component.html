@@ -1,4 +1,7 @@
-<app-dialog title="Agregar bloque" [minHeight]="20">
+<app-dialog title="Agregar bloque" 
+            [minHeight]="20" 
+            (wasClosed)="this.emitDialogWasClosed()" 
+            [type]="DialogType.Default">
 
     <!-- study term -->
     <div class="w-100 d-flex flex-column" 
@@ -14,7 +17,7 @@
                                 placeholder="">
                 </app-input-text>
             </div>
-            <div class="d-flex w-100 study-plan-term-container">
+            <div class="d-flex flex-wrap w-100 study-plan-term-container">
                 <div class="flex-fill">
                     <app-input-date label="Fecha de inicio"
                                     placeholder=""

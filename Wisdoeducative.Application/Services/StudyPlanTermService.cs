@@ -40,11 +40,7 @@ namespace Wisdoeducative.Application.Services
             using var transaction = dBContext.Database.BeginTransaction();
             try
             {
-                if (!studyPlanTermHelperService.ValidateStudyTermCreationDto(studyTermCreationDto))
-                {
-                    throw new BadRequestException($"{ErrorMessages.NullProperties} Study plan term, " +
-                        $"needs to have a study plan associated, and start date and the end date");
-                }
+                await studyPlanTermHelperService.ValidateStudyTermCreationDto(studyTermCreationDto);
 
                 var newStudyPlan = studyPlanTermHelperService.CreateNewStudyPlanTerm(studyTermCreationDto,
                     await GetUserStudyPlanTerms(studyTermCreationDto.StudyPlanTermDto.StudyPlanId));
@@ -53,7 +49,7 @@ namespace Wisdoeducative.Application.Services
 
                 if (studyPlanTermHelperService.HasCourses(studyTermCreationDto))
                 {
-                    studyPlanTermHelperService.AssignStudyPlanTermIdToCourses(studyTermCreationDto.coursesDtos, newStudyPlan.Id);
+                    studyPlanTermHelperService.AssignStudyPlanTermIdToCourses(studyTermCreationDto.coursesDtos, newStudyPlan);
                     studyTermCreationDto.coursesDtos =
                         await studyPlanTermHelperService.CreateCoursesForStudyPlanTerm(studyTermCreationDto.coursesDtos.ToList());
                 }
@@ -110,7 +106,7 @@ namespace Wisdoeducative.Application.Services
             {
                 return user;
             }
-            throw new NotFoundException($"{ErrorMessages.EntityNotFound} user, was not found inside the study plan");
+            throw new NotFoundException($"{ErrorMessages.EntityNotFound}");
         }
     }
 }

@@ -61,7 +61,16 @@ namespace Wisdoeducative.Application.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The following entity already exists:.
+        ///   Looks up a localized string similar to Oops! It looks like you&apos;ve selected a date in the future. Please choose a date that is today or earlier..
+        /// </summary>
+        internal static string DegreeDateFuture {
+            get {
+                return ResourceManager.GetString("DegreeDateFuture", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oops! It looks like this item already exists in the system..
         /// </summary>
         internal static string DuplicatedEntity {
             get {
@@ -70,16 +79,7 @@ namespace Wisdoeducative.Application.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The list of the following entity is null:.
-        /// </summary>
-        internal static string EmptyEntityList {
-            get {
-                return ResourceManager.GetString("EmptyEntityList", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The following entity was not found:.
+        ///   Looks up a localized string similar to Oops! We couldn&apos;t find the item you&apos;re looking for..
         /// </summary>
         internal static string EntityNotFound {
             get {
@@ -88,7 +88,7 @@ namespace Wisdoeducative.Application.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error occurred while saving entity history:.
+        ///   Looks up a localized string similar to Oops! We ran into an issue while trying to save the item&apos;s history..
         /// </summary>
         internal static string HistorySaveErrorMessage {
             get {
@@ -97,7 +97,7 @@ namespace Wisdoeducative.Application.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The following entity has null properties:.
+        ///   Looks up a localized string similar to Oops! It looks like some details for this item are missing..
         /// </summary>
         internal static string NullProperties {
             get {
@@ -106,7 +106,16 @@ namespace Wisdoeducative.Application.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User already exists:.
+        ///   Looks up a localized string similar to Oops! The dates for this study plan overlap with another term. Could you please pick different dates?.
+        /// </summary>
+        internal static string StudyTermOverlap {
+            get {
+                return ResourceManager.GetString("StudyTermOverlap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oops! It looks like there&apos;s already an account with this information..
         /// </summary>
         internal static string UserAlreadyExistsErrorMessage {
             get {

@@ -23,7 +23,6 @@ namespace Wisdoeducative.Application.Services
     {
         private readonly IApplicationDBContext dBContext;
         private readonly IMapper mapper;
-        private readonly IEntityHelperService entityHelperService;
         private readonly IDegreeHelperService degreeHelperService;
         private readonly IUserHelperService userHelperService;
         private readonly IEntityHistoryService<UserDegree> userDegreeHistory;
@@ -31,7 +30,6 @@ namespace Wisdoeducative.Application.Services
 
         public DegreeService(IApplicationDBContext dBContext,
             IMapper mapper,
-            IEntityHelperService entityHelperService,
             IDegreeHelperService degreeHelperService,
             IUserHelperService userHelperService,
             IEntityHistoryService<UserDegree> userDegreeHistory,
@@ -39,7 +37,6 @@ namespace Wisdoeducative.Application.Services
         {
             this.dBContext = dBContext;
             this.mapper = mapper;
-            this.entityHelperService = entityHelperService;
             this.degreeHelperService = degreeHelperService;
             this.userHelperService = userHelperService;
             this.userDegreeHistory = userDegreeHistory;
@@ -48,10 +45,9 @@ namespace Wisdoeducative.Application.Services
 
         public async Task<DegreeDto> CreateDegree(DegreeDto degree)
         {
-            string[] propertiesToCheck = new string[] { "Name", "StudyField", "Type" };
-            if (entityHelperService.AreAnyPropertiesNull(degree, propertiesToCheck)) 
-            { 
-                throw new BadRequestException($"{ErrorMessages.NullProperties} Degree");
+            if (degreeHelperService.IsDegreeInvalid(degree))
+            {
+                throw new BadRequestException($"{ErrorMessages.NullProperties}");
             }
 
             var dbDegree = mapper.Map<Degree>(degree);
@@ -74,29 +70,44 @@ namespace Wisdoeducative.Application.Services
             return mapper.Map<UserDegreeDto>(userDegree);
         }
 
+        public async Task<UserDegreeDto> GetUserDegreeById(int userDegreeId)
+        {
+            var result = await dBContext.UserDegrees
+                .Where(x => x.Id == userDegreeId)
+                .Where(x => x.Status == EntityStatus.Active)
+                .Include(x => x.Degree)
+                .Include(x => x.Institution)
+                .FirstOrDefaultAsync() ?? 
+                    throw new NotFoundException($"{ErrorMessages.EntityNotFound}");
+            return mapper.Map<UserDegreeDto>(result);
+        }
+
         public async Task SaveUserDegreeChanges(UserDegree userDegree)
         {
             User user = mapper.Map<User>(await userHelperService.GetUser(userDegree.UserId) ??
-                throw new NotFoundException($"{ErrorMessages.EntityNotFound} User"));
+                throw new NotFoundException($"{ErrorMessages.EntityNotFound}"));
 
             await userDegreeHistory.SaveChanges(userDegree, userDegree.Id, EntityChangeTypes.Added, user.B2cId);
         }
 
         public async Task<UserDegreeDto> SetupUserDegree(UserDegreeConfigDTO userDegreeConfig)
         {
-            await degreeHelperService.ValidateUserDegreeProperties(userDegreeConfig);
+            if (degreeHelperService.AreUserDegreePropertiesInvalid(userDegreeConfig))
+            {
+                throw new BadRequestException($"{ErrorMessages.NullProperties}");
+            }
+
+            if (degreeHelperService.AreDegreeDatesInvalid(userDegreeConfig))
+            {
+                throw new BadRequestException($"{ErrorMessages.DegreeDateFuture}");
+            }
 
             DegreeDto newDegree = await CreateDegree
                 (degreeHelperService.ParseUserDegreeDtoToDegree(userDegreeConfig))
-                ?? throw new BadRequestException($"{ErrorMessages.EntityNotFound} Degree");
+                ?? throw new BadRequestException($"{ErrorMessages.EntityNotFound}");
             InstitutionDto newInstitution = await institutionHelperService
                 .CreateInstituionByName(userDegreeConfig.InstitutionName)
-                ?? throw new BadRequestException($"{ErrorMessages.EntityNotFound} Institution");
-
-            if (userDegreeConfig.startDate > DateTime.Now)
-            {
-                throw new BadRequestException($"Initial date cannot be greater than today");
-            }
+                ?? throw new BadRequestException($"{ErrorMessages.EntityNotFound}");
 
             UserDegree userDegree = new()
             {

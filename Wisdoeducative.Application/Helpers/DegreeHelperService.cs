@@ -20,20 +20,24 @@ namespace Wisdoeducative.Application.Helpers
         private readonly IApplicationDBContext dBContext;
         private readonly IMapper mapper;
         private readonly IEntityHelperService entityHelper;
-        private readonly IUserHelperService userHelperService;
-        private readonly IInstitutionHelperService institutionHelperService;
 
         public DegreeHelperService(IApplicationDBContext dBContext,
             IMapper mapper,
-            IEntityHelperService entityHelper,
-            IUserHelperService userHelperService,
-            IInstitutionHelperService institutionHelperService)
+            IEntityHelperService entityHelper)
         {
             this.dBContext = dBContext;
             this.mapper = mapper;
             this.entityHelper = entityHelper;
-            this.userHelperService = userHelperService;
-            this.institutionHelperService = institutionHelperService;
+        }
+
+        public bool AreDegreeDatesInvalid(UserDegreeConfigDTO degree)
+        {
+            DateTime currentDate = DateTime.Now;
+            if(degree.startDate > currentDate)
+            {
+                return true;
+            }
+            return false;
         }
 
         public async Task<DegreeDto> GetById(int degreeId)
@@ -43,15 +47,25 @@ namespace Wisdoeducative.Application.Helpers
                 .FirstOrDefaultAsync();
 
             return dbDegree == null
-                ? throw new NotFoundException($"{ErrorMessages.EntityNotFound} Degree")
+                ? throw new NotFoundException($"{ErrorMessages.EntityNotFound}")
                 : mapper.Map<DegreeDto>(dbDegree);
+        }
+
+        public bool IsDegreeInvalid(DegreeDto degree)
+        {
+            string[] propertiesToCheck = new string[] { "Name", "StudyField", "Type" };
+            if (entityHelper.AreAnyPropertiesNull(degree, propertiesToCheck))
+            {
+                return true;
+            }
+            return false;
         }
 
         public DegreeDto ParseUserDegreeDtoToDegree(UserDegreeConfigDTO userDegree)
         {
             if (entityHelper.AreAnyPropertiesNull(userDegree))
             {
-                throw new BadRequestException($"{ErrorMessages.NullProperties} Degree information");
+                throw new BadRequestException($"{ErrorMessages.NullProperties}");
             }
             
             var newDegree = new DegreeDto();
@@ -60,14 +74,14 @@ namespace Wisdoeducative.Application.Helpers
             newDegree.Type = userDegree.DegreeType;
             return newDegree;
         }
-
-        public async Task ValidateUserDegreeProperties(UserDegreeConfigDTO userDegree)
+        
+        public bool AreUserDegreePropertiesInvalid(UserDegreeConfigDTO userDegree)
         {
             if (entityHelper.AreAnyPropertiesNull(userDegree))
             {
-                throw new BadRequestException($"{ErrorMessages.NullProperties} User information");
+                return true;
             }
-            await Task.CompletedTask;
+            return false;
         }
     }
 }

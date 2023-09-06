@@ -1,0 +1,16 @@
+.message-desktop {
+    width: 35.5rem;
+    min-height: 4.4375rem;
+    padding-top: 0.40rem;
+    padding-bottom: 0.40rem;
+    border-radius: 0.3125rem 0rem 0rem 0.3125rem;
+}
+
+.message-phone {
+    width: 100%;
+    margin-left: 1rem;
+    min-height: 4.4375rem;
+    padding-top: 0.40rem;
+    padding-bottom: 0.40rem;
+    border-radius: 0.3125rem 0rem 0rem 0.3125rem;
+}

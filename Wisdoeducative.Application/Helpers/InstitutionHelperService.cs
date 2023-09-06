@@ -30,7 +30,7 @@ namespace Wisdoeducative.Application.Helpers
         public async Task<InstitutionDto> CreateInstituionByName(string name)
         {
             if(name == null){
-                throw new BadRequestException($"{ErrorMessages.NullProperties} Institution name");
+                throw new BadRequestException($"{ErrorMessages.NullProperties}");
             }
             var institution = await ValidateInstitutionByName(name)!;
             if(institution != null)
@@ -52,7 +52,7 @@ namespace Wisdoeducative.Application.Helpers
                 .FirstOrDefaultAsync();
 
             return dbInstitution == null
-                ? throw new NotFoundException($"{ErrorMessages.EntityNotFound} Institution")
+                ? throw new NotFoundException($"{ErrorMessages.EntityNotFound}")
                 : mapper.Map<InstitutionDto>(dbInstitution);
         }
 

@@ -43,7 +43,7 @@ namespace Wisdoeducative.Application.Services
             {
                 if (!studyPlanHelperService.ValidateStudyPlanBeforeCreate(studyPlan))
                 {
-                    throw new BadRequestException($"{ErrorMessages.NullProperties} Study plan degree");
+                    throw new BadRequestException($"{ErrorMessages.NullProperties}");
                 }
 
                 StudyPlan studyPlanEntity = studyPlanHelperService.CreateNewStudyPlanFromDto(studyPlan);
@@ -73,7 +73,7 @@ namespace Wisdoeducative.Application.Services
             var studyPlan = await dBContext.StudyPlans
                 .Where(s => s.UserDegreeId == userDegreeId)
                 .FirstOrDefaultAsync()
-            ?? throw new NotFoundException($"{ErrorMessages.EntityNotFound} Study plan");
+            ?? throw new NotFoundException($"{ErrorMessages.EntityNotFound}");
 
             return mapper.Map<StudyPlanDTO>(studyPlan);
         } 
@@ -94,8 +94,18 @@ namespace Wisdoeducative.Application.Services
                 .FirstOrDefaultAsync();
 
             return user == null 
-                ? throw new InternalServerErrorException($"{ErrorMessages.EntityNotFound} User") 
+                ? throw new InternalServerErrorException($"{ErrorMessages.EntityNotFound}") 
                 : user;
+        }
+
+        public async Task<StudyPlanDTO> GetStudyPlanById(int studyPlanId)
+        {
+            var result = await dBContext.StudyPlans
+                .Where(s => s.Id == studyPlanId)
+                .Where(s => s.Status == Domain.Enums.EntityStatus.Active)
+                .FirstOrDefaultAsync() ??
+                throw new NotFoundException($"{ErrorMessages.EntityNotFound}");
+            return mapper.Map<StudyPlanDTO>(result);
         }
     }
 }
