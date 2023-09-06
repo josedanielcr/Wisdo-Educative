@@ -69,7 +69,7 @@ namespace Wisdoeducative.Application.Services
 
                 if (!courseHelperService.ValidateCourseBeforeCreation(course))
                 {
-                    throw new BadRequestException($"{ErrorMessages.NullProperties} Course");
+                    throw new BadRequestException($"{ErrorMessages.NullProperties}");
                 }
 
                 Course entityCourse = courseHelperService.CreateNewCourseFromDto(course);

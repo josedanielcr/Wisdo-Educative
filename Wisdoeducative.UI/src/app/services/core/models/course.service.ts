@@ -36,7 +36,9 @@ export class CourseService {
         map((courses : CourseServer[]) => {
           return courses.map(course => this.courseAdapter.adaptServerToClient(course));
         }),
-        catchError((error: any) => {throw this.applicationErrorService.parseHttpError(error)})
+        catchError((error: any) => {
+          throw this.applicationErrorService.parseHttpError(error)
+        })
       )
   }
 }

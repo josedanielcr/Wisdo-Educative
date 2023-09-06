@@ -35,8 +35,7 @@ namespace Wisdoeducative.Application.Services
         public async Task LinkSubscriptionToAccount(SubscriptionNames subscription, int userId, string b2cId)
         {
             var subscriptiondb = await subscriptionHelper.GetSubscriptionByName(subscription)
-                ?? throw new NotFoundException($"{ErrorMessages.EntityNotFound} " +
-                $"Subscription={subscription}");
+                ?? throw new NotFoundException($"{ErrorMessages.EntityNotFound}");
 
             var newUserSubscription = new UserSubscription
             {

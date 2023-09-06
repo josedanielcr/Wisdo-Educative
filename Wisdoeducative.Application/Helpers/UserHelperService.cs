@@ -22,14 +22,17 @@ namespace Wisdoeducative.Application.Helpers
         private readonly IApplicationDBContext DbContext;
         private readonly IMapper mapper;
         private readonly IEntityHistoryService<User> userHistoryService;
+        private readonly IEntityHelperService entityHelperService;
 
         public UserHelperService(IApplicationDBContext DbContext,
             IMapper mapper,
-              IEntityHistoryService<User> userHistoryService)
+              IEntityHistoryService<User> userHistoryService,
+              IEntityHelperService entityHelperService)
         {
             this.DbContext = DbContext;
             this.mapper = mapper;
             this.userHistoryService = userHistoryService;
+            this.entityHelperService = entityHelperService;
         }
 
         public async Task<UserDto> GetUser(int? id = null, string? email = null, string? name = null, 
@@ -56,6 +59,35 @@ namespace Wisdoeducative.Application.Helpers
         public async Task SaveUserHistory(User user, EntityChangeTypes type, string modifiedBy)
         {
             await userHistoryService.SaveChanges(user, user.Id, type, modifiedBy);
+        }
+        public bool IsUserAgeInvalid(DateTime age)
+        {
+            DateTime validDate = DateTime.Now.AddYears(-13);
+            if (age >= validDate)
+            {
+                return true;
+            }
+            return false;
+        }
+    
+        public bool IsUserConfigurationInvalid(UserDto user)
+        {
+            string[] propertiesToCheck = new string[] { "Name", "LastName", "DateOfBirth", "Category" };
+            if (entityHelperService.AreAnyPropertiesNull(user, propertiesToCheck))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool IsGeneralUserDataInvalid(UserDto user)
+        {
+            string[] propertiesToCheck = new string[] { "B2cId", "Email" };
+            if (entityHelperService.AreAnyPropertiesNull(user, propertiesToCheck))
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

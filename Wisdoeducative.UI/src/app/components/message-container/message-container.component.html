@@ -1,0 +1,9 @@
+<div class="message-container" *ngIf="isVisible">
+    <div *ngFor="let message of messages; let i=index">
+        <app-message [title]="message.title" 
+                     [text]="message.text" 
+                     [type]="message.type"
+                     (wasClosed)="closeMessage(i)">
+        </app-message>
+    </div>
+</div>

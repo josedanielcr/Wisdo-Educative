@@ -1,5 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
-import { ApplicationErrorModel } from '../models/application.error.model';
+import { AfterViewInit, Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { UserClient } from '../models/core/client/user.client.model';
 import { Router } from '@angular/router';
 import { MenuService } from '../services/components/menu.service';
@@ -7,13 +6,16 @@ import { WindowResizeService } from '../services/helpers/window-resize.service';
 import { ScreenSizeModel } from '../models/screenSize.model';
 import { StoreService } from '../services/core/store.service';
 import { UserService } from '../services/core/models/user.service';
+import { MessageService } from '../services/core/message.service';
 
 @Component({
   selector: 'app-workspace',
   templateUrl: './workspace.component.html',
   styleUrls: ['./workspace.component.css']
 })
-export class WorkspaceComponent {
+export class WorkspaceComponent implements OnInit, AfterViewInit{
+
+  @ViewChild('messageContainer', { read: ViewContainerRef }) messageContainer: ViewContainerRef;
 
   public isSidebarContracted : boolean;
   public isDesktop : boolean;
@@ -24,14 +26,18 @@ export class WorkspaceComponent {
     private router : Router,
     private menuService : MenuService,
     private windowService : WindowResizeService,
-    private userService : UserService) { }
-
+    private userService : UserService,
+    private messageService : MessageService) { }
+    
   ngOnInit() {
     this.manageUserState();
     this.subscribeToSidebarService();
     this.subscribeToWindowService();
   }
-
+  
+  ngAfterViewInit(): void {
+    this.messageService.setContainer(this.messageContainer);
+  }
   private subscribeToWindowService() {
     this.windowService.getScreenSizeObservable().subscribe((screenSizes: ScreenSizeModel) => {
       this.isDesktop = screenSizes.isDesktop;

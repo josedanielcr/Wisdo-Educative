@@ -11,7 +11,7 @@ namespace Wisdoeducative.Application.Common.Interfaces.Helpers
 {
     public interface IStudyPlanTermHelperService
     {
-        bool ValidateStudyTermCreationDto(StudyTermCreationDto studyTermCreationDto);
+        Task ValidateStudyTermCreationDto(StudyTermCreationDto studyTermCreationDto);
         StudyPlanTerm CreateNewStudyPlanTerm(StudyTermCreationDto studyTermCreationDto,
             IEnumerable<StudyPlanTermDto> studyPlanTermDtos);
         bool HasCourses(StudyTermCreationDto studyTermCreationDto);

@@ -17,6 +17,8 @@ import { StudyPlanFiltersComponent } from './study-plan-filters/study-plan-filte
 import { StudyPlanTermGridComponent } from './study-plan-term-grid/study-plan-term-grid.component';
 import { StudyPlanTermCardComponent } from './study-plan-term-card/study-plan-term-card.component';
 import { StudyPlanTableComponent } from './study-plan-table/study-plan-table.component';
+import { MessageComponent } from './message/message.component';
+import { MessageContainerComponent } from './message-container/message-container.component';
 
 
 
@@ -37,7 +39,9 @@ import { StudyPlanTableComponent } from './study-plan-table/study-plan-table.com
     StudyPlanFiltersComponent,
     StudyPlanTermGridComponent,
     StudyPlanTermCardComponent,
-    StudyPlanTableComponent
+    StudyPlanTableComponent,
+    MessageComponent,
+    MessageContainerComponent
   ],
   exports: [
     ButtonComponent,
@@ -54,7 +58,9 @@ import { StudyPlanTableComponent } from './study-plan-table/study-plan-table.com
     StudyPlanTermGridComponent,
     StudyPlanTermCardComponent,
     StudyPlanTableComponent,
-    ProgressBarComponent
+    ProgressBarComponent,
+    MessageComponent,
+    MessageContainerComponent
   ],
   imports: [
     CommonModule,

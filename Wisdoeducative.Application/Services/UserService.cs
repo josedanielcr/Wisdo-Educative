@@ -28,7 +28,6 @@ namespace Wisdoeducative.Application.Services
         private readonly IRoleService roleService;
         private readonly IInterestService interestService;
         private readonly ISubscriptionService subscriptionService;
-        private readonly IEntityHelperService entityHelperService;
         private readonly IDegreeService degreeService;
 
         public UserService(IApplicationDBContext dBContext, 
@@ -37,7 +36,6 @@ namespace Wisdoeducative.Application.Services
             IRoleService roleService,
             IInterestService interestService,
             ISubscriptionService subscriptionService,
-            IEntityHelperService entityHelperService,
             IDegreeService degreeService)
         {
             this.dBContext = dBContext;
@@ -46,7 +44,6 @@ namespace Wisdoeducative.Application.Services
             this.roleService = roleService;
             this.interestService = interestService;
             this.subscriptionService = subscriptionService;
-            this.entityHelperService = entityHelperService;
             this.degreeService = degreeService;
         }
 
@@ -54,7 +51,7 @@ namespace Wisdoeducative.Application.Services
         {
             User userEntity = mapper.Map<User>(user);
             var role = await roleService.GetRoleByName(UserRoles.Student)
-                ?? throw new NotFoundException($"{ErrorMessages.EntityNotFound} {UserRoles.Student}");
+                ?? throw new NotFoundException($"{ErrorMessages.EntityNotFound}");
             userEntity.RoleId = role.Id;
             userEntity.UserStatus = UserStatus.Pending;
             dBContext.Users.Add(userEntity);
@@ -66,8 +63,7 @@ namespace Wisdoeducative.Application.Services
 
         public async Task<UserDto> UserConfiguration(UserSetupDTO userSetupDTO)
         {
-            using var scope = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled);
-
+            using var transaction = dBContext.Database.BeginTransaction();
             try
             {
                 var userSetup = await SetUserData(userSetupDTO.User);
@@ -80,27 +76,24 @@ namespace Wisdoeducative.Application.Services
 
                 //save changes
                 await dBContext.SaveChangesAsync();
-
-                //complete
-                scope.Complete();
+                transaction.Commit();
+                return mapper.Map<UserDto>(dBContext.Users.Find(userSetupDTO.User.Id));
             }
             catch (Exception)
             {
+                transaction.Rollback();
                 throw;
             }
-            return mapper.Map<UserDto>(dBContext.Users.Find(userSetupDTO.User.Id));
         }
 
         public async Task<UserDto> SetUserData(UserDto user)
         {
-            string[] propertiesToCheck = new string[] { "Name", "LastName", "DateOfBirth", "Category" };
-            if (entityHelperService.AreAnyPropertiesNull(user, propertiesToCheck))
+            if (userServiceHelper.IsUserConfigurationInvalid(user))
             {
-                throw new BadRequestException($"{ErrorMessages.NullProperties} User={user}");
+                throw new BadRequestException($"{ErrorMessages.NullProperties}");
             }
 
-            DateTime validDate = DateTime.Now.AddYears(-13);
-            if (user.DateOfBirth >= validDate)
+            if (userServiceHelper.IsUserAgeInvalid(user.DateOfBirth))
             {
                 throw new BadRequestException($"You need to have more than 13 years old");
             }
@@ -113,7 +106,7 @@ namespace Wisdoeducative.Application.Services
         public async Task<UserDto> SetUserInterests(int userId, IEnumerable<InterestDto> interests)
         {
             var user = await userServiceHelper.GetUser(userId)
-                ?? throw new NotFoundException($"{ErrorMessages.EntityNotFound} {userId}");
+                ?? throw new NotFoundException($"{ErrorMessages.EntityNotFound}");
             await interestService.SetInterestToUser(interests, user);
             return mapper.Map<UserDto>(user);
         }
@@ -129,16 +122,13 @@ namespace Wisdoeducative.Application.Services
 
         public async Task<UserDto> ValidateUser(UserDto user)
         {
-            string[] propertiesToCheck = new string[] { "B2cId", "Email" };
-            if (entityHelperService.AreAnyPropertiesNull(user, propertiesToCheck))
+            if (userServiceHelper.IsGeneralUserDataInvalid(user))
             {
-                throw new BadRequestException($"{ErrorMessages.NullProperties} User={user}");
+                throw new BadRequestException($"{ErrorMessages.NullProperties}");
             }
 
             bool isExistingUser = await userServiceHelper.DoesUserExist(user);
-
             if (!isExistingUser) await CreateUser(user);
-
             return await userServiceHelper.GetUser(null,user.Email,null,null,user.B2cId);
         }
 
@@ -147,7 +137,7 @@ namespace Wisdoeducative.Application.Services
             var user = await dBContext.Users
                 .Where(u => u.Id == UserId)
                 .FirstOrDefaultAsync() 
-            ?? throw new NotFoundException($"{ErrorMessages.EntityNotFound} User");
+            ?? throw new NotFoundException($"{ErrorMessages.EntityNotFound}");
             
             user.UserStatus = UserStatus.Omitted;
             dBContext.Users.Attach(user);

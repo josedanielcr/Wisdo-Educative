@@ -1,0 +1,23 @@
+<div *ngIf="isVisible"[ngClass]="{
+    'wd-bg-danger' : type === MessageTypeEnum.Error,
+    'wd-bg-success' : type === MessageTypeEnum.Success,
+    'message-desktop' : isDesktop,
+    'message-phone' : isPhone
+}">
+    <div class="d-flex gap-2 align-items-center" [ngClass]="{
+        'message-desktop' : isDesktop
+    }">
+        <!-- icon -->
+        <div class="ms-3">
+            <img [src]="getImagePath()">
+        </div>
+        <!-- title -->
+        <div class="fw-bold wd-text-white" *ngIf="isDesktop">{{title}}</div>
+        <!-- text -->
+        <div class="wd-text-white">{{text}}</div>
+        <!-- close -->
+        <div class="ms-auto cursor-pointer" (click)="close()">
+            <img src="../../../assets/icons/reject 3.png" class="pe-3">
+        </div>
+    </div>
+</div>

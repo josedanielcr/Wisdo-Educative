@@ -72,14 +72,14 @@ namespace Wisdoeducative.Application.Services
             string[] propertiesToCheck = new string[] { "Name" };
             if (!interests.Any() || interests == null)
             {
-                throw new BadRequestException($"{ErrorMessages.EmptyEntityList} Interests={interests}");
+                throw new BadRequestException($"There are no interests in the database");
             }
 
             foreach (var interest in interests)
             {
                 if(entityHelperService.AreAnyPropertiesNull(interest, propertiesToCheck))
                 {
-                    throw new BadRequestException($"{ErrorMessages.NullProperties} Interest={interest}");
+                    throw new BadRequestException($"{ErrorMessages.NullProperties}");
                 }
             }
             return Task.CompletedTask;
