@@ -6,8 +6,8 @@
             'dialog-content-desktop': isDesktop
         }"
         [style.minHeight]="minHeight+'rem'">
-        <div class="w-100 h-100">
-            <div class="w-100 d-flex align-items-center justify-content-center mb-5 mt-4">
+        <div class="w-100 h-100" *ngIf="type === DialogType.Default">
+            <div class="w-100 d-flex align-items-center justify-content-center mb-5 mt-4" >
                 <div class="ms-auto">
                     <h3 class="mb-0" [ngClass]="{
                         'wd-text-h3' : isPhone,
@@ -21,6 +21,29 @@
                 </div>
             </div>
             <ng-content></ng-content>
+        </div>
+        <div class="w-100 h-100" *ngIf="type === DialogType.TermCreationCompleted">
+            <div class="d-flex mb-2">
+                <div>
+                    <!-- completed card -->
+                    <div class="mb-3 completed-card d-flex justify-content-center align-items-center">
+                        <span class="wd-text-h4">Completado</span>
+                    </div>
+                    <div>
+                        <h1 class="wd-text-h1 wd-text-primary mb-0">
+                            {{newStudyPlanTerm.studyPlanTermDto.name}}
+                        </h1>
+                        <span>{{newStudyPlanTerm.studyPlanTermDto.startDate | date:'MMM'}} 
+                            -
+                            {{newStudyPlanTerm.studyPlanTermDto.endDate | date:'MMM'}}
+                        </span>
+                    </div>
+                </div>
+                <div class="ms-auto close-container" (click)="toggle()">
+                    <img src="../../../assets/icons/close-outline 1.png" alt="">
+                </div>
+            </div>
+            <ng-content select=".forTypeTermCreationCompleted"></ng-content>
         </div>
     </div>
 </div>

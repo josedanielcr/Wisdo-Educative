@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { DialogComponent } from 'src/app/components/dialog/dialog.component';
+import { DialogType } from 'src/app/enums/dialog.type.enum';
 import { ApplicationErrorModel } from 'src/app/models/application.error.model';
 import { CourseClient } from 'src/app/models/core/client/course.client.model';
 import { StudyPlanClient } from 'src/app/models/core/client/study.plan.client.model';
@@ -6,6 +8,7 @@ import { StudyPlanTermClient } from 'src/app/models/core/client/study.plan.term.
 import { UserClient } from 'src/app/models/core/client/user.client.model';
 import { UserDegreeClient } from 'src/app/models/core/client/user.degree.client.model';
 import { ScreenSizeModel } from 'src/app/models/screenSize.model';
+import { StudyTermCoursesModel } from 'src/app/models/utils/study.term.courses.model';
 import { CourseService } from 'src/app/services/core/models/course.service';
 import { UserInitializationService } from 'src/app/services/helpers/user-initialization.service';
 import { WindowResizeService } from 'src/app/services/helpers/window-resize.service';
@@ -17,6 +20,9 @@ import { WindowResizeService } from 'src/app/services/helpers/window-resize.serv
 })
 export class StudyPlanComponent implements OnInit {
 
+  //children
+  @ViewChild(DialogComponent) dialogComponent: DialogComponent;
+
   //properties
   public user : UserClient;
   public userDegree : UserDegreeClient;
@@ -24,6 +30,7 @@ export class StudyPlanComponent implements OnInit {
   public studyPlanTerms : StudyPlanTermClient[];
   public defaultStudyPlanTerm : StudyPlanTermClient;
   public defaultStudyPlanTemCourses : CourseClient[];
+  public newlyCreatedStudyPlanTerm : StudyTermCoursesModel;
 
   //util
   public isNewStudyPlanTermOpen : boolean = false;
@@ -31,10 +38,12 @@ export class StudyPlanComponent implements OnInit {
   public isTablet: boolean;
   public isPhone: boolean;
   public isCardView : boolean = true;
+  public DialogType = DialogType;
 
   constructor(private userInitializationService : UserInitializationService,
     private courseService : CourseService,
-    private windowService : WindowResizeService) { }
+    private windowService : WindowResizeService,
+    private cdr : ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.userInitialization();
@@ -104,5 +113,11 @@ export class StudyPlanComponent implements OnInit {
 
   public hideNewStudyPlanTermWindow(): void {
     this.isNewStudyPlanTermOpen = false;
+  }
+
+  public planTermCreationPostAction(studyPlanTerm : StudyTermCoursesModel): void {
+    this.newlyCreatedStudyPlanTerm = studyPlanTerm;
+    this.cdr.detectChanges();
+    this.dialogComponent.show();
   }
 }

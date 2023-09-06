@@ -32,3 +32,14 @@
 .close-container {
     cursor: pointer;
 }
+
+.completed-card {
+    width: 10.25rem;
+    height: 2.4375rem;
+    border-radius: 0.3125rem;
+    background: rgba(30, 207, 69, 0.15);
+}
+
+.completed-card span {
+    color: #0B5354;
+}

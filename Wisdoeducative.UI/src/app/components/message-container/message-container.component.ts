@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { MessageModel } from 'src/app/models/message.model';
 
 @Component({
@@ -10,8 +10,20 @@ export class MessageContainerComponent {
 
   public messages : MessageModel[] = [];
   public isVisible : boolean = false;
+  private intervalId : any;
 
-  constructor() { }
+  constructor() {
+    this.initAutoRemove();
+   }
+
+  private initAutoRemove() {
+    if(this.intervalId) clearInterval(this.intervalId);
+    this.intervalId = setInterval(() => {
+      if(!this.isVisible) return;
+      if(this.messages.length > 0) this.remove();
+      if(this.messages.length == 0) this.isVisible = false;
+    }, 5000);
+  }
 
   public show(message : MessageModel) : void {
     this.add(message);
@@ -26,6 +38,7 @@ export class MessageContainerComponent {
   public add(message : MessageModel) : void {
     if(this.messages.length >= 3) this.remove();
     this.messages.push(message);
+    this.initAutoRemove();
   }
 
   public remove() : void {

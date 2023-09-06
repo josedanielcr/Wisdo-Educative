@@ -129,11 +129,19 @@ namespace Wisdoeducative.Application.Helpers
             return studyTermCreationDto.coursesDtos != null;
         }
 
-        public void AssignStudyPlanTermIdToCourses(IEnumerable<CourseDto> courses, int studyPlanTermId)
+        public void AssignStudyPlanTermIdToCourses(IEnumerable<CourseDto> courses, StudyPlanTerm studyPlanTerm)
         {
             foreach (var course in courses)
             {
-                course.StudyPlanTermId = studyPlanTermId;
+                course.StudyPlanTermId = studyPlanTerm.Id;
+                if (studyPlanTerm.StudyTermStatus == StudyTermStatus.InProgress)
+                {
+                    course.CourseStatus = StudyTermStatus.InProgress.ToString();
+                }
+                else
+                {
+                    course.CourseStatus = StudyTermStatus.NotStarted.ToString();
+                }
             }
         }
 

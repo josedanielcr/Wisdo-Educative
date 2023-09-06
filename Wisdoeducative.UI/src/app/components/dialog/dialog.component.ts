@@ -1,5 +1,7 @@
 import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { DialogType } from 'src/app/enums/dialog.type.enum';
 import { ScreenSizeModel } from 'src/app/models/screenSize.model';
+import { StudyTermCoursesModel } from 'src/app/models/utils/study.term.courses.model';
 import { WindowResizeService } from 'src/app/services/helpers/window-resize.service';
 
 @Component({
@@ -9,13 +11,22 @@ import { WindowResizeService } from 'src/app/services/helpers/window-resize.serv
 })
 export class DialogComponent implements OnInit {
 
+  //input
   @Input() public title: string = '';
   @Input() public minHeight : number = 30;
+  @Input() public type : DialogType = DialogType.Default;
+  @Input() public newStudyPlanTerm : StudyTermCoursesModel = null;
+
+  //output
   @Output() public wasClosed: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  //util
+  public DialogType = DialogType;
   public isVisible: boolean = false;
   public isDesktop: boolean = false;
   public isTablet: boolean = false;
   public isPhone: boolean = false;
+
   
   constructor(private windowService : WindowResizeService,
     private cdr : ChangeDetectorRef) { }

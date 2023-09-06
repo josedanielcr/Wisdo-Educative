@@ -15,7 +15,7 @@ namespace Wisdoeducative.Application.Common.Interfaces.Helpers
         StudyPlanTerm CreateNewStudyPlanTerm(StudyTermCreationDto studyTermCreationDto,
             IEnumerable<StudyPlanTermDto> studyPlanTermDtos);
         bool HasCourses(StudyTermCreationDto studyTermCreationDto);
-        void AssignStudyPlanTermIdToCourses(IEnumerable<CourseDto> courses, int studyPlanTermId);
+        void AssignStudyPlanTermIdToCourses(IEnumerable<CourseDto> courses, StudyPlanTerm studyPlanTerm);
 
         Task<List<CourseDto>> CreateCoursesForStudyPlanTerm(List<CourseDto> courses);
     }

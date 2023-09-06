@@ -49,7 +49,7 @@ namespace Wisdoeducative.Application.Services
 
                 if (studyPlanTermHelperService.HasCourses(studyTermCreationDto))
                 {
-                    studyPlanTermHelperService.AssignStudyPlanTermIdToCourses(studyTermCreationDto.coursesDtos, newStudyPlan.Id);
+                    studyPlanTermHelperService.AssignStudyPlanTermIdToCourses(studyTermCreationDto.coursesDtos, newStudyPlan);
                     studyTermCreationDto.coursesDtos =
                         await studyPlanTermHelperService.CreateCoursesForStudyPlanTerm(studyTermCreationDto.coursesDtos.ToList());
                 }

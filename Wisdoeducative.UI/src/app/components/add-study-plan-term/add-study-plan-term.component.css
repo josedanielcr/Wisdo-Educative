@@ -4,10 +4,6 @@
     gap: 1.25rem;
 }
 
-.study-plan-term-container .flex-fill {
-    max-width: 50%;
-}
-
 .add-course-container {
     display: flex;
     flex-direction: row;
