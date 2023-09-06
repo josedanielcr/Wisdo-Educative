@@ -7,6 +7,7 @@ import { ScreenSizeModel } from '../models/screenSize.model';
 import { StoreService } from '../services/core/store.service';
 import { UserService } from '../services/core/models/user.service';
 import { MessageService } from '../services/core/message.service';
+import { SpinnerService } from '../services/core/spinner.service';
 
 @Component({
   selector: 'app-workspace',
@@ -16,6 +17,8 @@ import { MessageService } from '../services/core/message.service';
 export class WorkspaceComponent implements OnInit, AfterViewInit{
 
   @ViewChild('messageContainer', { read: ViewContainerRef }) messageContainer: ViewContainerRef;
+  @ViewChild('spinnerContainer', { read: ViewContainerRef }) spinnerContainer: ViewContainerRef;
+
 
   public isSidebarContracted : boolean;
   public isDesktop : boolean;
@@ -27,7 +30,8 @@ export class WorkspaceComponent implements OnInit, AfterViewInit{
     private menuService : MenuService,
     private windowService : WindowResizeService,
     private userService : UserService,
-    private messageService : MessageService) { }
+    private messageService : MessageService,
+    private spinnerService : SpinnerService) { }
     
   ngOnInit() {
     this.manageUserState();
@@ -37,6 +41,7 @@ export class WorkspaceComponent implements OnInit, AfterViewInit{
   
   ngAfterViewInit(): void {
     this.messageService.setContainer(this.messageContainer);
+    this.spinnerService.setContainer(this.spinnerContainer);
   }
   private subscribeToWindowService() {
     this.windowService.getScreenSizeObservable().subscribe((screenSizes: ScreenSizeModel) => {

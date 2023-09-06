@@ -19,6 +19,7 @@ import { StudyPlanTermCardComponent } from './study-plan-term-card/study-plan-te
 import { StudyPlanTableComponent } from './study-plan-table/study-plan-table.component';
 import { MessageComponent } from './message/message.component';
 import { MessageContainerComponent } from './message-container/message-container.component';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 
 
@@ -41,7 +42,8 @@ import { MessageContainerComponent } from './message-container/message-container
     StudyPlanTermCardComponent,
     StudyPlanTableComponent,
     MessageComponent,
-    MessageContainerComponent
+    MessageContainerComponent,
+    SpinnerComponent
   ],
   exports: [
     ButtonComponent,
@@ -60,7 +62,8 @@ import { MessageContainerComponent } from './message-container/message-container
     StudyPlanTableComponent,
     ProgressBarComponent,
     MessageComponent,
-    MessageContainerComponent
+    MessageContainerComponent,
+    SpinnerComponent
   ],
   imports: [
     CommonModule,
