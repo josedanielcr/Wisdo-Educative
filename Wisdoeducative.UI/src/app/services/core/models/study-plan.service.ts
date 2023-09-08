@@ -24,9 +24,24 @@ export class StudyPlanService {
     private studyPlanTermAdapter : StudyPlanTermAdapterService,
     private spinnerService : SpinnerService) { }
 
-  public getUserStudyPlan(userDegreeId : number): Observable<StudyPlanClient> {
+  public getUserStudyPlan(studyPlanId : number): Observable<StudyPlanClient> {
     this.spinnerService.show();
-    return this.http.get<StudyPlanClient>(`${this.apiUrlService.checkEnvironment()}/studyPlan/${userDegreeId}`)
+    return this.http.get<StudyPlanClient>(`${this.apiUrlService.checkEnvironment()}/studyPlan/${studyPlanId}`)
+      .pipe(
+        finalize(() => {
+          this.spinnerService.hide();
+        }),
+        map((studyPlan: StudyPlanServer) => {
+          return this.studyPlanAdapterService.adaptServerToClient(studyPlan);
+        }),
+        catchError((error: any) => { throw this.applicationErrorService.parseHttpError(error); })
+      );
+  }
+
+  
+  public getUserStudyPlanByUserDegree(userDegreeId : number): Observable<StudyPlanClient> {
+    this.spinnerService.show();
+    return this.http.get<StudyPlanClient>(`${this.apiUrlService.checkEnvironment()}/studyPlan/user-degree/${userDegreeId}`)
       .pipe(
         finalize(() => {
           this.spinnerService.hide();

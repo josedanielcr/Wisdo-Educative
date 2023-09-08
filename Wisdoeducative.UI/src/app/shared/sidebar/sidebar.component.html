@@ -25,7 +25,8 @@
             <!-- single option -->
             <div class="d-flex align-items-center options-container-single-option cursor-pointer" 
                 *ngFor="let menuOption of menuOptions"
-                [routerLink]="menuOption.path">
+                [routerLink]="menuOption.path"
+                (click)="closeSidebar()">
     
                 <!-- option -->
                 <div class="d-flex align-items-center single-option option-flex-child"

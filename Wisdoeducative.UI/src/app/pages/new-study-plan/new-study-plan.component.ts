@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ButtonType } from 'src/app/enums/button.enum';
 import { ApplicationErrorModel } from 'src/app/models/application.error.model';
 import { StudyPlanClient } from 'src/app/models/core/client/study.plan.client.model';
@@ -36,7 +37,8 @@ export class NewStudyPlanComponent implements OnInit {
   constructor(private storeService : StoreService,
     private studyPlanService : StudyPlanService,
     private windowService : WindowResizeService,
-    private userInitializationService : UserInitializationService) { }
+    private userInitializationService : UserInitializationService,
+    private router : Router) { }
 
   ngOnInit(): void {
     this.manageUserData();
@@ -58,11 +60,20 @@ export class NewStudyPlanComponent implements OnInit {
         this.userDegree = userDegree;
         this.studyPlan = studyPlan;
         this.studyPlanTerms = studyPlanTerms;
+        this.newStudyPlanValidations();
       },
       error : (err : any) => {
         console.log(err);
       }
     })
+  }
+
+  private newStudyPlanValidations(): void {
+    if(this.studyPlan && this.studyPlanTerms.length === 0){
+      this.isNewStudyPlanTermOpen = true;
+    } else if (this.studyPlan && this.studyPlanTerms.length > 0) {
+      this.router.navigate(['/workspace/study-plan']);
+    }
   }
 
   public createStudyPlan(): void {

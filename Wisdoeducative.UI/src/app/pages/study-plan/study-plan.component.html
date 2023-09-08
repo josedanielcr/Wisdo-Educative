@@ -69,28 +69,5 @@
                          [studyPlanTerms]="studyPlanTerms"
                          [isNewStudyPlanInProgress]="false"
                          [needsToRouteToStudyPlan]="false"
-                         (dialogWasClosed)="hideNewStudyPlanTermWindow()"
-                         (studyPlanTermWasCreated)="planTermCreationPostAction($event)">
+                         (dialogWasClosed)="hideNewStudyPlanTermWindow()">
 </app-add-study-plan-term>
-
-<app-dialog title="" 
-            [type]="DialogType.TermCreationCompleted"
-            [newStudyPlanTerm]="newlyCreatedStudyPlanTerm"
-            *ngIf="newlyCreatedStudyPlanTerm">
-    <div class="forTypeTermCreationCompleted w-100">
-        <table class="w-100">
-            <thead class="w-100">
-                <tr>
-                    <th>Materia</th>
-                    <th>Estado</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let course of newlyCreatedStudyPlanTerm.coursesDtos">
-                    <td>{{course.name}}</td>
-                    <td>{{course.courseStatus}}</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</app-dialog>

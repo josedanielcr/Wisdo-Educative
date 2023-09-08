@@ -63,9 +63,47 @@
         </div>
     </div>
 
-    <!-- <div *ngIf="isPhone" class="phone-filter-select wd-bg-white d-flex align-items-center justify-content-center">
+    <div *ngIf="isPhone" class="phone-filter-select wd-bg-white d-flex align-items-center justify-content-center"
+        (click)="togglePhoneFilters()">
         <img src="../../../assets/icons/filter.png" width="20" height="20">
-    </div> -->
+    </div>
+
+    <div class="phone-filter-container" *ngIf="arePhoneFiltersOpen">
+        <div class="w-100 h-100 d-flex flex-column position-relative">
+            <div>
+                <form [formGroup]="filterForm" class="p-3">
+                    <div>
+                        <div class="fw-bold wd-text-dark-grey d-flex align-items-center gap-2 custom-checkbox">
+                            <input type="checkbox" formControlName="isFavorite" id="isFavorite">
+                            <label for="isFavorite"  class="d-flex align-items-center">Favoritos</label>
+                            <img src="../../../assets/icons/heart-filled.png" width="20" height="20">
+                        </div>
+                    </div>
+    
+                    <h4 class="wd-text-h4 mt-3 wd-text-dark-grey">Estado</h4>
+                    <div formArrayName="status" class="d-flex flex-column">
+                        <div *ngFor="let status of courseStatuses; let i = index" 
+                               class="fw-bold wd-text-dark-grey gap-2 custom-checkbox" 
+                               [class.mt-2]="i !== 0">
+                            <input type="checkbox" [formControlName]="i" [id]="'status' + i">
+                            <label [for]="'status' + i" class="d-flex align-items-center">{{status.name}}</label>
+                        </div>
+                    </div>
+                 </form>
+            </div>
+            <div class="mt-auto actions-phone d-flex">
+                <div class="flex-fill cancel-phone d-flex justify-content-center align-items-center"
+                (click)="togglePhoneFilters()">
+                    <span>Cancelar</span>
+                </div>
+                <div class="flex-fill apply-phone wd-bg-secondary d-flex justify-content-center align-items-center"
+                     (click)="search()">
+                    <span class="wd-text-white">Aplicar</span>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
     <!-- view -->
     <div class="ms-auto view-container d-flex user-select-none">

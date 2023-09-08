@@ -35,6 +35,7 @@ export class StudyPlanFiltersComponent implements OnInit {
   public isPhone: boolean = false;
   public isCardView : boolean = true;
   public isFilterWindowOpen : boolean = false;
+  public arePhoneFiltersOpen : boolean = false;
 
   //constants
   public readonly courseStatuses : CourseStatus[] = [
@@ -89,6 +90,7 @@ export class StudyPlanFiltersComponent implements OnInit {
       next : (courses) => {
         this.coursesEmitter.emit(courses);
         this.isFilterWindowOpen = false;
+        this.arePhoneFiltersOpen = false;
       },
       error : (err : ApplicationErrorModel) => {
         console.log(err);
@@ -102,6 +104,10 @@ export class StudyPlanFiltersComponent implements OnInit {
       if(value) selectedStatuses.push(this.courseStatuses[index].value);
     });
     return selectedStatuses;
+  }
+
+  public togglePhoneFilters() {
+    this.arePhoneFiltersOpen = !this.arePhoneFiltersOpen;
   }
 
 

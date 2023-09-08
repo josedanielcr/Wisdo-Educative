@@ -92,7 +92,7 @@ namespace Wisdoeducative.Application.Helpers
         {
             var userDegree = mapper.Map<UserDegree>(degree);
             int numberOfMonths = ((studyPlanTermDto.EndDate.Year - studyPlanTermDto.StartDate.Year) 
-                * 12) +  (studyPlanTermDto.EndDate.Month - studyPlanTermDto.StartDate.Month);
+                * 12) +  (studyPlanTermDto.EndDate.Month - studyPlanTermDto.StartDate.Month) + 1;
 
             var scheduleToMonths = new Dictionary<Domain.Enums.AcademicSchedule, int>
             {
