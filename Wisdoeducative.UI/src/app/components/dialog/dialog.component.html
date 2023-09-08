@@ -8,7 +8,9 @@
         [style.minHeight]="minHeight+'rem'">
         <div class="w-100 h-100" *ngIf="type === DialogType.Default">
             <div class="w-100 d-flex align-items-center justify-content-center mb-5 mt-4" >
-                <div class="ms-auto">
+                <div [ngClass]="{
+                    'ms-auto' : canBeClosed
+                }">
                     <h3 class="mb-0" [ngClass]="{
                         'wd-text-h3' : isPhone,
                         'wd-text-h1' : isTablet || isDesktop
@@ -16,7 +18,7 @@
                      {{title}}
                     </h3>
                 </div>
-                <div class="ms-auto close-container" (click)="toggle()">
+                <div class="ms-auto close-container" (click)="toggle()" *ngIf="canBeClosed">
                     <img src="../../../assets/icons/close-outline 1.png" alt="">
                 </div>
             </div>
@@ -39,7 +41,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="ms-auto close-container" (click)="toggle()">
+                <div class="ms-auto close-container" (click)="toggle()" *ngIf="canBeClosed">
                     <img src="../../../assets/icons/close-outline 1.png" alt="">
                 </div>
             </div>

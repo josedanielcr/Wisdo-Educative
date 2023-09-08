@@ -28,6 +28,7 @@ export default class AddStudyPlanTermComponent implements AfterViewInit {
   @Input() studyPlanTerms : StudyPlanTermClient[] = [];
   @Input() isNewStudyPlanInProgress : boolean = false;
   @Input() needsToRouteToStudyPlan : boolean = true;
+  public canBeClosed : boolean = true;
 
   //forms
   public courseForm : FormGroup;
@@ -54,6 +55,9 @@ export default class AddStudyPlanTermComponent implements AfterViewInit {
 
   ngOnInit(): void {
     this.subscribeToWindowService();
+    if(this.isNewStudyPlanInProgress) {
+      this.canBeClosed = false;
+    }
   }
 
   ngAfterViewInit(): void {

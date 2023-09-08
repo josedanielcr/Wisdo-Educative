@@ -83,7 +83,7 @@ export class UserInitializationService {
         throw new Error();
       }),
       catchError(() => {
-        return this.studyPlanService.getUserStudyPlan(userDegreeId).pipe(
+        return this.studyPlanService.getUserStudyPlanByUserDegree(userDegreeId).pipe(
           tap((fetchedUserStudyPlan: StudyPlanClient) => {
             this.storeService.set('studyPlan', fetchedUserStudyPlan);
           }),

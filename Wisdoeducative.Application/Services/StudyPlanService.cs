@@ -68,10 +68,10 @@ namespace Wisdoeducative.Application.Services
             await dBContext.SaveChangesAsync();
         }
 
-        public async Task<StudyPlanDTO> GetUserStudyPlan(int userDegreeId)
+        public async Task<StudyPlanDTO> GetUserStudyPlan(int studyPlanId)
         {
             var studyPlan = await dBContext.StudyPlans
-                .Where(s => s.UserDegreeId == userDegreeId)
+                .Where(s => s.Id == studyPlanId)
                 .FirstOrDefaultAsync()
             ?? throw new NotFoundException($"{ErrorMessages.EntityNotFound}");
 
@@ -106,6 +106,16 @@ namespace Wisdoeducative.Application.Services
                 .FirstOrDefaultAsync() ??
                 throw new NotFoundException($"{ErrorMessages.EntityNotFound}");
             return mapper.Map<StudyPlanDTO>(result);
+        }
+
+        public async Task<StudyPlanDTO> GetUserStudyPlanByUserDegreeId(int userDegreeId)
+        {
+            var studyPlan = await dBContext.StudyPlans
+                .Where(s => s.UserDegree.Id == userDegreeId)
+                .FirstOrDefaultAsync()
+                ?? throw new NotFoundException($"{ErrorMessages.EntityNotFound}");
+
+            return mapper.Map<StudyPlanDTO>(studyPlan);
         }
     }
 }

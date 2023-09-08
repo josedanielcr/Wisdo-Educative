@@ -4,6 +4,7 @@ import { ButtonType } from 'src/app/enums/button.enum';
 import { UserStatus } from 'src/app/enums/core/user.status.enum';
 import { ApplicationErrorModel } from 'src/app/models/application.error.model';
 import { StudyPlanClient } from 'src/app/models/core/client/study.plan.client.model';
+import { StudyPlanTermClient } from 'src/app/models/core/client/study.plan.term.client.model';
 import { UserClient } from 'src/app/models/core/client/user.client.model';
 import { UserDegreeClient } from 'src/app/models/core/client/user.degree.client.model';
 import { ScreenSizeModel } from 'src/app/models/screenSize.model';
@@ -11,6 +12,7 @@ import { DegreeService } from 'src/app/services/core/models/degree.service';
 import { StudyPlanService } from 'src/app/services/core/models/study-plan.service';
 import { UserService } from 'src/app/services/core/models/user.service';
 import { StoreService } from 'src/app/services/core/store.service';
+import { UserInitializationService } from 'src/app/services/helpers/user-initialization.service';
 import { WindowResizeService } from 'src/app/services/helpers/window-resize.service';
 
 enum TimeOfDay {
@@ -38,6 +40,7 @@ export class HomeComponent implements OnInit {
   public user : UserClient;
   public userDegree : UserDegreeClient;
   public studyPlan : StudyPlanClient;
+  public studyPlanTerms : StudyPlanTermClient[] = [];
   
   // util
   public currentTimeOfDay : TimeOfDay;
@@ -53,36 +56,27 @@ export class HomeComponent implements OnInit {
   public isTablet: boolean;
   public isPhone: boolean;
 
-  constructor(private degreeService : DegreeService,
-    private windowService : WindowResizeService,
-    private studyPlanService : StudyPlanService,
+  constructor(private windowService : WindowResizeService,
     private router : Router,
-    private storeService : StoreService,
-    private userService : UserService){}
+    private userInitializationService : UserInitializationService){}
 
   ngOnInit(): void {
     this.subscribeToWindowService();
-    this.getUser();
+    this.initializeUser();
     this.setCurrentTimeOfDay();
     this.setTimeOfDayIcon();
   }
 
-  private getUser(): void {
-    this.storeService.select('user').subscribe({
-      next: (user: UserClient) => {
+
+  private initializeUser(): void {
+    this.userInitializationService.initializeUser().subscribe(
+      ([user, userDegree, studyPlan, studyPlanTerms]) => {
         this.user = user;
-        this.getUserDegree();
-      },
-      complete : () => {
-        this.userService.validateUser().subscribe({
-          next: (user: UserClient) => {
-            this.storeService.set('user', user);
-            this.user = user;
-            this.getUserDegree();
-          }
-        });
+        this.userDegree = userDegree;
+        this.studyPlan = studyPlan;
+        this.studyPlanTerms = studyPlanTerms;
       }
-    });
+    );
   }
 
   private subscribeToWindowService() {
@@ -121,35 +115,16 @@ export class HomeComponent implements OnInit {
   }
 
   public executeSetup(): void {
-    if(this.user.userStatus === UserStatus.Omitted) this.router.navigate(['/setup']);
-    else if (this.user.userStatus !== UserStatus.Omitted 
-      && this.userDegree && !this.studyPlan) this.router.navigate(['workspace/new-study-plan']);
+    if(this.isOmitted()) this.router.navigate(['/setup']);
+    else this.router.navigate(['workspace/new-study-plan']);
   }
 
-  private getUserDegree(): void {
-    this.degreeService.getUserDegree(this.user.id).subscribe({
-      next: (userDegree: UserDegreeClient) => {
-        this.userDegree = userDegree;
-        this.storeService.set('userDegree', userDegree);
-        this.getStudyPlan();
-      },
-      error : (err : ApplicationErrorModel) => {
-        console.log(err);
-      }
-    });
+  public isOmitted(): boolean {
+    return (this.user.userStatus === UserStatus.Omitted || !this.userDegree);
   }
 
-  private getStudyPlan(): void {
-    this.studyPlanService.getUserStudyPlan(this.userDegree.id).subscribe({
-      next: (studyPlan: StudyPlanClient) => {
-        this.studyPlan = studyPlan;
-        this.storeService.set('studyPlan', studyPlan);
-        this.loading = false;
-      },
-      error : (err : ApplicationErrorModel) => {
-        console.log(err);
-        this.loading = false;
-      }
-    });
+  public notCompletedSetup(): boolean {
+    return (this.user.userStatus !== UserStatus.Omitted 
+      && ((!this.studyPlan) || (this.studyPlan && this.studyPlanTerms.length === 0)))
   }
 }

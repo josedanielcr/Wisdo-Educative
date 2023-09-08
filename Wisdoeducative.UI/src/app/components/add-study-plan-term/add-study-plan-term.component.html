@@ -1,7 +1,8 @@
 <app-dialog title="Agregar bloque" 
             [minHeight]="20" 
             (wasClosed)="this.emitDialogWasClosed()" 
-            [type]="DialogType.Default">
+            [type]="DialogType.Default"
+            [canBeClosed]="canBeClosed">
 
     <!-- study term -->
     <div class="w-100 d-flex flex-column" 
@@ -47,13 +48,13 @@
             <div *ngFor="let course of coursesFormArray.controls; let i = index; trackBy: trackByFn">
               <div [formGroupName]="i" class="add-course-container">
                 <div class="course-name">
-                    <app-input-text [label]="i === 0 ? 'Materia' : ''"
+                    <app-input-text [label]="'Materia'"
                                     formControlName="name"
                                     placeholder="">
                     </app-input-text>
                 </div>
                 <div class="course-credits">
-                    <app-input-text [label]="i === 0 ? 'Créditos' : ''"
+                    <app-input-text [label]="'Créditos'"
                                     formControlName="totalCredits"
                                     placeholder="">
                     </app-input-text>

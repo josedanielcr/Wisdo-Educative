@@ -10,8 +10,9 @@ namespace Wisdoeducative.Application.Common.Interfaces.Services
 {
     public interface IStudyPlanService
     {
-        Task<StudyPlanDTO> GetUserStudyPlan(int userDegreeId);
+        Task<StudyPlanDTO> GetUserStudyPlan(int studyPlanId);
         Task<StudyPlanDTO> CreateStudyPlan(StudyPlanDTO studyPlan);
         Task<StudyPlanDTO> GetStudyPlanById(int studyPlanId);
+        Task<StudyPlanDTO> GetUserStudyPlanByUserDegreeId(int userDegreeId);
     }
 }
