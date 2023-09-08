@@ -22,6 +22,7 @@ export class StudyPlanFiltersComponent implements OnInit {
 
   //properties
   @Output() public isCardViewEmitter : EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() public isSearchActiveEmitter : EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() public coursesEmitter : EventEmitter<CourseClient[]> = new EventEmitter<CourseClient[]>();
   @Input() public studyPlanId : number;
 
@@ -36,6 +37,7 @@ export class StudyPlanFiltersComponent implements OnInit {
   public isCardView : boolean = true;
   public isFilterWindowOpen : boolean = false;
   public arePhoneFiltersOpen : boolean = false;
+  public isSearchActive : boolean = false;
 
   //constants
   public readonly courseStatuses : CourseStatus[] = [
@@ -67,6 +69,7 @@ export class StudyPlanFiltersComponent implements OnInit {
     this.windowService.getScreenSizeObservable().subscribe((screenSizes: ScreenSizeModel) => {
       this.isDesktop = screenSizes.isDesktop;
       this.isTablet = screenSizes.isTablet;
+
       this.isPhone = screenSizes.isPhone;
     });
   }
@@ -81,12 +84,14 @@ export class StudyPlanFiltersComponent implements OnInit {
   }
 
   public search(): void {
-    let courseSearchModel : CourseSearchModel = new CourseSearchModel();
-    courseSearchModel.isFavorite = this.filterForm.value.isFavorite;
-    courseSearchModel.name = this.courseNameForm.value.name;
-    courseSearchModel.Statuses = this.parseSelectedStatuses(this.filterForm.value.status);
+    let courseSearchModel : CourseSearchModel = this.createCourseModel();
+    this.executeSearch(this.studyPlanId, courseSearchModel);
+    this.isSearchActive = true;
+    this.isSearchActiveEmitter.emit(this.isSearchActive);
+  }
 
-    this.courseService.searchCouse(this.studyPlanId, courseSearchModel).subscribe({
+  private executeSearch(studyPlanId, courseSearchModel : CourseSearchModel) {
+    this.courseService.searchCouse(studyPlanId, courseSearchModel).subscribe({
       next : (courses) => {
         this.coursesEmitter.emit(courses);
         this.isFilterWindowOpen = false;
@@ -110,5 +115,31 @@ export class StudyPlanFiltersComponent implements OnInit {
     this.arePhoneFiltersOpen = !this.arePhoneFiltersOpen;
   }
 
+  public clearFilters() {
+    this.cleanFilterForm();
+    this.cleanCourseNameForm();
+    this.isSearchActive = false;
+    this.isSearchActiveEmitter.emit(this.isSearchActive);
+  }
 
+  public getIconSize() : number{
+    return (this.isDesktop || this.isTablet) ? 30 : 25;
+  }
+
+  private createCourseModel(): CourseSearchModel {
+    let courseSearchModel : CourseSearchModel = new CourseSearchModel();
+    courseSearchModel.isFavorite = this.filterForm.value.isFavorite;
+    courseSearchModel.name = this.courseNameForm.value.name;
+    courseSearchModel.Statuses = this.parseSelectedStatuses(this.filterForm.value.status);
+    return courseSearchModel;
+  }
+
+  private cleanFilterForm(): void {
+    this.filterForm.get('isFavorite').setValue(false);
+    this.filterForm.get('status').setValue([false, false, false]);
+  }
+
+  private cleanCourseNameForm(): void {
+    this.courseNameForm.get('name').setValue('');
+  }
 }

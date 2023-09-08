@@ -1,6 +1,7 @@
 import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { DialogComponent } from 'src/app/components/dialog/dialog.component';
+import { StudyPlanFiltersComponent } from 'src/app/components/study-plan-filters/study-plan-filters.component';
 import { DialogType } from 'src/app/enums/dialog.type.enum';
 import { ApplicationErrorModel } from 'src/app/models/application.error.model';
 import { CourseClient } from 'src/app/models/core/client/course.client.model';
@@ -23,6 +24,7 @@ export class StudyPlanComponent implements OnInit {
 
   //children
   @ViewChild(DialogComponent) dialogComponent: DialogComponent;
+  @ViewChild(StudyPlanFiltersComponent) studyPlanFiltersComponent: StudyPlanFiltersComponent;
 
   //properties
   public user : UserClient;
@@ -31,6 +33,7 @@ export class StudyPlanComponent implements OnInit {
   public studyPlanTerms : StudyPlanTermClient[];
   public defaultStudyPlanTerm : StudyPlanTermClient;
   public defaultStudyPlanTemCourses : CourseClient[];
+  public activeStudyPlanTermCourses : CourseClient[];
   public newlyCreatedStudyPlanTerm : StudyTermCoursesModel;
 
   //util
@@ -40,6 +43,7 @@ export class StudyPlanComponent implements OnInit {
   public isPhone: boolean;
   public isCardView : boolean = true;
   public DialogType = DialogType;
+  public isSearchActive : boolean = false;
 
   constructor(private userInitializationService : UserInitializationService,
     private courseService : CourseService,
@@ -101,6 +105,7 @@ export class StudyPlanComponent implements OnInit {
     this.courseService.getStudyPlanTermCourses(id).subscribe({
       next : (courses : CourseClient[]) => {
         this.defaultStudyPlanTemCourses = courses; 
+        this.activeStudyPlanTermCourses = courses;
       },
       error : (err : ApplicationErrorModel) => {
         console.log(err);
@@ -108,8 +113,17 @@ export class StudyPlanComponent implements OnInit {
     })
   }
 
+  public cleanSearchResults(): void {
+    this.studyPlanFiltersComponent.clearFilters();
+    this.activeStudyPlanTermCourses = this.defaultStudyPlanTemCourses;
+  }
+
+  public switchSearchBar(isSearchActive : boolean): void {
+    this.isSearchActive = isSearchActive;
+  }
+
   public filterCourses(courses : CourseClient[]){
-    this.defaultStudyPlanTemCourses = courses;
+    this.activeStudyPlanTermCourses = courses;
   }
 
   public switchView(isCardView : boolean): void {
