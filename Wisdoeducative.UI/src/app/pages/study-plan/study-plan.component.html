@@ -70,11 +70,13 @@
     <!-- other study plan terms list -->
     <div class="w-100">
         <app-study-plan-term-grid [studyPlanTerms]="studyPlanTerms"
-                                  *ngIf="isCardView">
+                                  *ngIf="isCardView"
+                                  (wasCardClicked)="toggleSelectedStudyPlanTerm($event)">
         </app-study-plan-term-grid>
         <app-study-plan-table [studyPlanTerms]="studyPlanTerms"
                               [typeOfSchedule]="userDegree.schedule"
-                               *ngIf="!isCardView">
+                               *ngIf="!isCardView"
+                               (clickedStudyTerm)="toggleSelectedStudyPlanTerm($event)">
         </app-study-plan-table>
     </div>
 </div>
@@ -86,3 +88,25 @@
                          [needsToRouteToStudyPlan]="false"
                          (dialogWasClosed)="hideNewStudyPlanTermWindow()">
 </app-add-study-plan-term>
+
+<app-dialog title="" 
+            [type]="DialogType.StudyPlanTermOverview"
+            [selectedStudyPlanTerm]="selectedStudyPlanTerm"
+            *ngIf="isSelectedStudyPlanTermOpen">
+    <div class="forTypeTermCreationCompleted w-100">
+        <table class="w-100">
+            <thead class="w-100">
+                <tr>
+                    <th>Materia</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let course of selectedStudyPlanTerm.coursesDtos">
+                    <td>{{course.name}}</td>
+                    <td>{{course.courseStatus}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</app-dialog>

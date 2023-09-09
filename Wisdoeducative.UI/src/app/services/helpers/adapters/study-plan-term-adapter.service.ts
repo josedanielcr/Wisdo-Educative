@@ -20,6 +20,8 @@ export class StudyPlanTermAdapterService {
       clientObj.status = serverObj.status;
       clientObj.startDate = serverObj.startDate;
       clientObj.endDate = serverObj.endDate;
+      clientObj.currentProgress = serverObj.currentProgress;
+      clientObj.totalCredits = serverObj.totalCredits;
       clientObj.name = serverObj.name;
       return clientObj;
   }
@@ -32,6 +34,8 @@ export class StudyPlanTermAdapterService {
       serverObj.periodNumber = clientObj.periodNumber;
       serverObj.studyTermStatus = clientObj.studyTermStatus;
       serverObj.status = clientObj.status;
+      serverObj.currentProgress = clientObj.currentProgress;
+      serverObj.totalCredits = clientObj.totalCredits;
       serverObj.startDate = clientObj.startDate;
       serverObj.endDate = clientObj.endDate;
       serverObj.name = clientObj.name;

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CourseClient } from 'src/app/models/core/client/course.client.model';
 import { StudyPlanTermClient } from 'src/app/models/core/client/study.plan.term.client.model';
 import { ScreenSizeModel } from 'src/app/models/screenSize.model';
@@ -23,6 +23,8 @@ export class StudyPlanTableComponent implements OnInit {
   @Input() courses: CourseClient[] = [];
   @Input() studyPlanTerms : StudyPlanTermClient[] = [];
   @Input() typeOfSchedule : string;
+  @Output() clickedStudyTerm : EventEmitter<StudyPlanTermClient> 
+    = new EventEmitter<StudyPlanTermClient>();
   public isCourseTable: boolean;
 
   //util
@@ -65,5 +67,9 @@ export class StudyPlanTableComponent implements OnInit {
       this.isTablet = screenSizes.isTablet;
       this.isPhone = screenSizes.isPhone;
     });
+  }
+
+  public emitClickedStudyTerm(studyPlanTerm : StudyPlanTermClient): void {
+    this.clickedStudyTerm.emit(studyPlanTerm);
   }
 }

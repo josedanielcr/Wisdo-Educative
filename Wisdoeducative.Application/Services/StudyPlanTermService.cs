@@ -77,6 +77,7 @@ namespace Wisdoeducative.Application.Services
 
         public async Task<IEnumerable<StudyPlanTermDto>> GetUserStudyPlanTerms(int studyPlanId)
         {
+            List<StudyPlanTermDto> studyPlanTermsResult = new List<StudyPlanTermDto>();
             if (studyPlanId == 0)
                 throw new BadRequestException($"You must provide a study plan to retrive all it's terms");
 
@@ -84,8 +85,15 @@ namespace Wisdoeducative.Application.Services
                     .Where(s => s.StudyPlanId == studyPlanId)
                     .ToListAsync();
 
-            return studyPlanTerms.Select(studyPlanTerm => 
+            var studyPlanTermsDto = studyPlanTerms.Select(studyPlanTerm =>
                 mapper.Map<StudyPlanTermDto>(studyPlanTerm));
+
+            foreach(var studyPlanTerm in studyPlanTermsDto)
+            {
+                studyPlanTermsResult
+                    .Add(await studyPlanTermHelperService.AddCalculatedFieldsToTerm(studyPlanTerm));
+            }
+            return studyPlanTermsResult;
         }
 
         private async Task SaveStudyPlanTermHistory(StudyPlanTerm studyPlanTerm,

@@ -8,6 +8,8 @@ export class StudyPlanTermServer {
     name: string;
     startDate: Date;
     endDate: Date;
+    totalCredits: number;
+    currentProgress: number;
     studyTermStatus: string;
     status: string;
 
