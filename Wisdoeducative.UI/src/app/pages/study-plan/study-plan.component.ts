@@ -34,7 +34,7 @@ export class StudyPlanComponent implements OnInit {
   public defaultStudyPlanTerm : StudyPlanTermClient;
   public defaultStudyPlanTemCourses : CourseClient[];
   public activeStudyPlanTermCourses : CourseClient[];
-  public newlyCreatedStudyPlanTerm : StudyTermCoursesModel;
+  public selectedStudyPlanTerm : StudyTermCoursesModel;
 
   //util
   public isNewStudyPlanTermOpen : boolean = false;
@@ -44,6 +44,7 @@ export class StudyPlanComponent implements OnInit {
   public isCardView : boolean = true;
   public DialogType = DialogType;
   public isSearchActive : boolean = false;
+  public isSelectedStudyPlanTermOpen : boolean = false;
 
   constructor(private userInitializationService : UserInitializationService,
     private courseService : CourseService,
@@ -136,5 +137,25 @@ export class StudyPlanComponent implements OnInit {
 
   public hideNewStudyPlanTermWindow(): void {
     this.isNewStudyPlanTermOpen = false;
+  }
+
+  public toggleSelectedStudyPlanTerm(studyPlanTerm : StudyPlanTermClient): void {
+    this.setStudyPlanTermCourses(studyPlanTerm);
+  }
+
+  private setStudyPlanTermCourses(studyPlanTerm: StudyPlanTermClient): void {
+    this.courseService.getStudyPlanTermCourses(studyPlanTerm.id).subscribe({
+      next: (courses: CourseClient[]) => {
+        this.selectedStudyPlanTerm = new StudyTermCoursesModel();
+        this.selectedStudyPlanTerm.studyPlanTermDto = studyPlanTerm;
+        this.selectedStudyPlanTerm.coursesDtos = courses;
+        this.isSelectedStudyPlanTermOpen = true;
+        this.cdr.detectChanges();
+        this.dialogComponent.show();
+      },
+      error: (err: ApplicationErrorModel) => {
+        console.log(err);
+      }
+    });
   }
 }

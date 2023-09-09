@@ -15,7 +15,7 @@ export class DialogComponent implements OnInit {
   @Input() public title: string = '';
   @Input() public minHeight : number = 30;
   @Input() public type : DialogType = DialogType.Default;
-  @Input() public newStudyPlanTerm : StudyTermCoursesModel = null;
+  @Input() public selectedStudyPlanTerm : StudyTermCoursesModel = null;
   @Input() public canBeClosed : boolean = true;
 
   //output
@@ -27,6 +27,13 @@ export class DialogComponent implements OnInit {
   public isDesktop: boolean = false;
   public isTablet: boolean = false;
   public isPhone: boolean = false;
+
+  //constants
+  public readonly STUDY_PLAN_TERM_STATUSES : Map<string, string> = new Map<string, string>([
+    ['NotStarted', 'Not started'],
+    ['InProgress', 'In progress'],
+    ['Completed', 'Completed']
+  ]);
 
   
   constructor(private windowService : WindowResizeService,

@@ -79,12 +79,22 @@ namespace Wisdoeducative.Application.Helpers
                 .Where(spt => spt.StudyPlanId == studyPlanTermDto.StudyPlanId)
                 .ToListAsync();
 
+            await ValidateTermStartAfterDegree(studyPlanTermDto, degree);
             await MatchTermToUserDegreeSchedule(studyPlanTermDto, degree);
 
             if (studyPlanTerms!.Count != 0)
             {
                 await CheckStudyTermOverlaping(studyPlanTerms, studyPlanTermDto);
             }
+        }
+
+        private Task<bool> ValidateTermStartAfterDegree(StudyPlanTermDto studyPlanTermDto, UserDegreeDto degree)
+        {
+            if(studyPlanTermDto.StartDate < degree.StartDate)
+            {
+                throw new BadRequestException($"Your study plan term needs to start after the start date of your degree, which is {degree.StartDate}");
+            }
+            return Task.FromResult(true);
         }
 
         private Task<bool> MatchTermToUserDegreeSchedule(StudyPlanTermDto studyPlanTermDto, 
@@ -148,6 +158,44 @@ namespace Wisdoeducative.Application.Helpers
         public async Task<List<CourseDto>> CreateCoursesForStudyPlanTerm(List<CourseDto> courses)
         {
             return await courseService.CreateCourse(courses);
+        }
+
+        public async Task<StudyPlanTermDto> AddCalculatedFieldsToTerm(StudyPlanTermDto studyPlanTermDto)
+        {
+            var courses = await courseService.GetStudyTermCourses((int) studyPlanTermDto.Id!);
+            if (courses == null)
+            {
+                studyPlanTermDto.CurrentProgress = 0;
+                studyPlanTermDto.TotalCredits = 0;
+            } else
+            {
+                studyPlanTermDto.TotalCredits = GetStudyTermTotalOfCredits(courses);
+                studyPlanTermDto.CurrentProgress = GetStudyTermProgress(courses);
+            }
+            return studyPlanTermDto;
+        }
+        public int GetStudyTermTotalOfCredits(IEnumerable<CourseDto> courseDtos)
+        {
+            int totalCredits = 0;
+            foreach (var item in courseDtos)
+            {
+                totalCredits += item.TotalCredits;
+            }
+            return totalCredits;
+        }
+
+        public int GetStudyTermProgress(IEnumerable<CourseDto> courseDtos)
+        {
+            int totalOfCourses = courseDtos.Count();
+            int completedCourses = 0;
+            foreach(var item in courseDtos)
+            {
+                if(item.CourseStatus == CourseStatus.Finished.ToString())
+                {
+                    completedCourses++;
+                }
+            }
+            return completedCourses * 100 / totalOfCourses;
         }
     }
 }

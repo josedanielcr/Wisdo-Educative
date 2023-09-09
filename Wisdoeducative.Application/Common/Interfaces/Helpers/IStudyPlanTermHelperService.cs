@@ -16,7 +16,9 @@ namespace Wisdoeducative.Application.Common.Interfaces.Helpers
             IEnumerable<StudyPlanTermDto> studyPlanTermDtos);
         bool HasCourses(StudyTermCreationDto studyTermCreationDto);
         void AssignStudyPlanTermIdToCourses(IEnumerable<CourseDto> courses, StudyPlanTerm studyPlanTerm);
-
         Task<List<CourseDto>> CreateCoursesForStudyPlanTerm(List<CourseDto> courses);
+        Task<StudyPlanTermDto> AddCalculatedFieldsToTerm(StudyPlanTermDto studyPlanTermDto);
+        int GetStudyTermTotalOfCredits(IEnumerable<CourseDto> courseDtos);
+        int GetStudyTermProgress(IEnumerable<CourseDto> courseDtos);
     }
 }

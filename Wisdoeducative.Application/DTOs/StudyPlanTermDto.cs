@@ -18,6 +18,8 @@ namespace Wisdoeducative.Application.DTOs
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public string? StudyTermStatus { get; set; }
+        public int? TotalCredits { get; set; }
+        public int? CurrentProgress { get; set; }
         public string? Status { get; set; }
     }
 }

@@ -59,17 +59,21 @@
                 <td [ngClass]="{
                     'ps-3' : true
                 }">
-                    <img src="../../../assets/icons/next.png" width="20" height="20">
+                    <img src="../../../assets/icons/next.png" width="20" height="20"
+                    (click)="emitClickedStudyTerm(studyPlanTerm)">
                 </td>
                 <td class="th-name" [ngClass]="{
                     'th-name-spacing-desktop': isDesktop,
                     'th-name-spacing-phone': !isDesktop
                 }">{{studyPlanTerm.name}}</td>
-                <td *ngIf="isDesktop">CampoCalculado</td>
+                <td *ngIf="isDesktop" class="d-flex justify-content-center">
+                    <app-progress-bar [progress]="studyPlanTerm.currentProgress">
+                    </app-progress-bar>
+                </td>
                 <td *ngIf="isDesktop">{{statusMap.get(studyPlanTerm.studyTermStatus)}}</td>
                 <td [ngClass]="{
                     'pe-2' : isPhone
-                }">==============</td>
+                }">{{studyPlanTerm.totalCredits}}</td>
             </tr>
         </tbody>
     </table>
