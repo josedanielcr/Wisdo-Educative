@@ -43,7 +43,7 @@
             'dropdown-container-phone': isPhone
         }"
          *ngIf="isDropdownOpen">
-        <div class="dropdown-content h-100 d-flex flex-column">
+        <div class="dropdown-content h-100 d-flex flex-column" *transloco="let t; scope : 'shared'">
 
             <!-- profile -->
             <div class="d-flex gap-4 mb-3">
@@ -62,41 +62,41 @@
 
             <!-- options general-->
             <div>
-                <span class="fw-bold">General</span>
+                <span class="fw-bold">{{t('shared.General')}}</span>
                 <div class="d-flex flex-column gap-3 mt-3">
 
                     <div class="d-flex gap-3 cursor-pointer">
                         <object data="../../../assets/icons/user.svg" type="image/svg+xml">
                         </object>
-                        <span>Perfil</span>
+                        <span>{{t('shared.Profile')}}</span>
                     </div>
                     <div class="d-flex gap-3 cursor-pointer">
                         <object data="../../../assets/icons/setting.svg" type="image/svg+xml">
                         </object>
-                        <span>Ajustes</span>
+                        <span>{{t('shared.Settings')}}</span>
                     </div>
                     <div class="d-flex gap-3 cursor-pointer">
                         <object data="../../../assets/icons/night-mode 1.svg" type="image/svg+xml">
                         </object>
-                        <span>Dark mode</span>
+                        <span>{{t('shared.DarkMode')}}</span>
                     </div>
                 </div>
             </div>
 
             <!-- options payments -->
             <div class="mt-3">
-                <span class="fw-bold">Pagos</span>
+                <span class="fw-bold">{{t('shared.Payments')}}</span>
                 <div class="d-flex flex-column gap-3 mt-3">
 
                     <div class="d-flex align-items-center gap-3 cursor-pointer">
                         <img src="../../../assets/icons/subscription-icon.png"
                         height="18" width="18">
-                        <span>Subscripción</span>
+                        <span>{{t('shared.Subscription')}}</span>
                     </div>
                     <div class="d-flex gap-3 cursor-pointer">
                         <object data="../../../assets/icons/Icon-Invoice.svg" type="image/svg+xml">
                         </object>
-                        <span>Facturas</span>
+                        <span>{{t('shared.Invoices')}}</span>
                     </div>
                 </div>
             </div>
@@ -107,7 +107,7 @@
                     <div class="d-flex gap-3 cursor-pointer">
                         <object data="../../../assets/icons/Icon-logOut.svg" type="image/svg+xml">
                         </object>
-                        <span>Cerrar sesión</span>
+                        <span>{{t('shared.LogOut')}}</span>
                     </div>
                 </div>
             </div>

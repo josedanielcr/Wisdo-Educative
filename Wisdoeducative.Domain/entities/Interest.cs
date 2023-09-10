@@ -11,6 +11,7 @@ namespace Wisdoeducative.Domain.Entities
     public class Interest : BaseEntity
     {
         public string Name { get; set; }
+        public string Code { get; set; }
         public EntityStatus Status { get; set; }
     }
 }

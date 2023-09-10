@@ -13,6 +13,7 @@ export class InterestAdapterService {
       const serverObj = new InterestServer();
       serverObj.id = interestClient.id;
       serverObj.name = interestClient.name;
+      serverObj.code = interestClient.code;
       serverObj.status = interestClient.status;
       return serverObj;
   }
@@ -21,6 +22,7 @@ export class InterestAdapterService {
       const clientObj = new InterestClient();
       clientObj.id = interestServer.id;
       clientObj.name = interestServer.name;
+      clientObj.code = interestServer.code;
       clientObj.status = interestServer.status;
       return clientObj;
   }

@@ -14,6 +14,8 @@ import { CourseGridComponent } from './course-grid/course-grid.component';
 import { CourseCardComponent } from './course-card/course-card.component';
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { StudyPlanFiltersComponent } from './study-plan-filters/study-plan-filters.component';
+import { TranslationComponent } from './translation/translation.component';
+import { TranslocoRootModule } from '../transloco-root.module';
 
 
 
@@ -31,7 +33,8 @@ import { StudyPlanFiltersComponent } from './study-plan-filters/study-plan-filte
     CourseGridComponent,
     CourseCardComponent,
     ProgressBarComponent,
-    StudyPlanFiltersComponent
+    StudyPlanFiltersComponent,
+    TranslationComponent
   ],
   exports: [
     ButtonComponent,
@@ -44,11 +47,13 @@ import { StudyPlanFiltersComponent } from './study-plan-filters/study-plan-filte
     AddStudyPlanTermComponent,
     CourseCardComponent,
     CourseGridComponent,
-    StudyPlanFiltersComponent
+    StudyPlanFiltersComponent,
+    TranslationComponent
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    TranslocoRootModule
   ]
 })
 export class ComponentsModule { }

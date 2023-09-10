@@ -2,7 +2,7 @@
   <label for="">{{label}}</label>
 </div>
 
-<div class="select-wrapper w-100">
+<div class="select-wrapper w-100" *transloco="let t; scope : 'select'">
     <select #selectComponent
             (change)="updateValue($event)"
             [value]="value"
@@ -11,12 +11,12 @@
             && ngControl?.control?.invalid }">  
 
       <!-- loading-->
-      <option [value]="null" [selected]="true">Seleccione una opción</option>
+      <option [value]="null" [selected]="true">{{t('select.ChooseOption')}}</option>
       
       <!-- options -->
       <option *ngFor="let option of options" 
               [value]="option.value">
-          {{option.name}}
+          {{t('select.' + option.value)}}
       </option>
     </select>
     <div class="arrow">

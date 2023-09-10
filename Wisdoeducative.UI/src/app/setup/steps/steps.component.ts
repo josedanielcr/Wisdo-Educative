@@ -126,7 +126,7 @@ export class StepsComponent implements OnInit{
         if(interests && interests.length > 0){
           this.interests = interests;
           this.chips = interests.map((interest : InterestClient) => {
-            return new ChipModel(interest.id, interest.name, false);
+            return new ChipModel(interest.id, interest.name, false, interest.code);
           });
         }
       },
@@ -176,23 +176,12 @@ export class StepsComponent implements OnInit{
   }
 
   private loadSelectOptions(): void {
-    this.userCategoryOptions = this.getUserCategoryNames(
-      this.selectService.transformObjectToSelectOptions(
-        this.enumService.getEnumValues(UserCategoryEnum),null,null));
+    this.userCategoryOptions = this.selectService.transformObjectToSelectOptions(
+        this.enumService.getEnumValues(UserCategoryEnum),null,null);
     this.institutionService.getInstitutions().subscribe({
       next: (institutions : InstitutionClient[]) => {
         this.institutions = institutions;
       }
-    });
-  }
-
-  private getUserCategoryNames(userCategories : SelectOptionModel[]) : SelectOptionModel[] {
-    return userCategories.map((category : SelectOptionModel) => {
-      const name = category.name;
-      const spacedString = name.replace(/([A-Z])/g, ' $1');
-      spacedString.charAt(0).toUpperCase() + spacedString.slice(1).toLowerCase();
-      category.name = spacedString;
-      return category;
     });
   }
 

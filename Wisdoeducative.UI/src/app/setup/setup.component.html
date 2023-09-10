@@ -1,4 +1,4 @@
-<div class="setup-container">
+<div class="setup-container" *transloco="let t; scope: 'setup'">
   <div class="wd-bg-primary page-container startup-window"
       *ngIf="isStartupWindowOpen">
     <!-- logo -->
@@ -6,20 +6,20 @@
         class="logo">
 
     <div class="setup-header text-center">
-        <h1 class="wd-text-h1 wd-text-white">¡Bienvenido a Wisdo!</h1>
+        <h1 class="wd-text-h1 wd-text-white">{{t('setup.welcomeMsg')}}</h1>
     </div>
 
     <!-- subheader -->
     <div class="setup-subheader">
       <span class="wd-text-white">
-        Configura la herramienta en <span class="fw-bold">4 sencillos pasos</span> 
-        y empieza una nueva etapa de aprendizaje.
+        {{t('setup.setupIntro')}} <span class="fw-bold">{{t('setup.numSteps')}}</span> 
+        {{t('setup.learningPhase')}}
       </span>
     </div>
 
       <!-- button -->
     <div class="setup-skip btn-container">
-      <app-button text="Configurar ahora" 
+      <app-button [text]="t('setup.setupNow')" 
               [disabled]="false" 
               [type]="ButtonType.SECONDARY"
               (click)="startSetup()"
@@ -29,7 +29,7 @@
 
     <!-- skip button -->
     <div class="setup-skip btn-container">
-      <app-button text="Omitir este paso" 
+      <app-button [text]="t('setup.skipStep')" 
               [disabled]="false"
               [type]="ButtonType.NOSTYLE"
               (click)="skipSetup()">
@@ -40,4 +40,7 @@
   <div class="page-container" *ngIf="!isStartupWindowOpen">
     <app-steps></app-steps>
   </div>
+</div>
+<div class="translation-panel">
+  <app-translation></app-translation>
 </div>

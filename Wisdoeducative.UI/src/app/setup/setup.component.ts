@@ -83,3 +83,7 @@ export class SetupComponent implements OnInit {
     this.isStartupWindowOpen = false;
   }
 }
+
+function provideTranslocoScope(arg0: string): import("@angular/core").Provider {
+  throw new Error('Function not implemented.');
+}

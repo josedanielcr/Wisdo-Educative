@@ -36,3 +36,9 @@
 .btn-container {
     width: 14.0625rem;
 }
+
+.translation-panel {
+    position: absolute;
+    top: 1rem;
+    left: 70%;
+}

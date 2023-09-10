@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { NavbarComponent } from './navbar/navbar.component';
 import { PipesModule } from '../pipes/pipes.module';
 import { TitleComponent } from './title/title.component';
+import { TranslocoRootModule } from '../transloco-root.module';
 
 
 
@@ -17,7 +18,8 @@ import { TitleComponent } from './title/title.component';
   imports: [
     CommonModule,
     RouterModule,
-    PipesModule
+    PipesModule,
+    TranslocoRootModule
   ],
   exports : [
     SidebarComponent,

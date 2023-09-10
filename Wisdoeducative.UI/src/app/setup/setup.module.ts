@@ -4,6 +4,7 @@ import { SetupComponent } from './setup.component';
 import { StepsComponent } from './steps/steps.component';
 import { ComponentsModule } from '../components/components.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TranslocoRootModule } from '../transloco-root.module';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     ComponentsModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslocoRootModule
   ]
 })
 export class SetupModule { }
