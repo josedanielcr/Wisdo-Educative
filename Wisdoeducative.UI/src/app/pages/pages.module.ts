@@ -8,6 +8,7 @@ import { ComponentsModule } from '../components/components.module';
 import { NewStudyPlanComponent } from './new-study-plan/new-study-plan.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { StudyPlanComponent } from './study-plan/study-plan.component';
+import { TranslocoRootModule } from '../transloco-root.module';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { StudyPlanComponent } from './study-plan/study-plan.component';
     SharedModule,
     RouterModule,
     ComponentsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslocoRootModule
   ]
 })
 export class PagesModule { }

@@ -1,4 +1,4 @@
-<app-dialog title="Agregar bloque" [minHeight]="20">
+<app-dialog [title]="t('studyplan.AddBlock')" [minHeight]="20" *transloco="let t; scope : 'studyplan'">
 
     <!-- study term -->
     <div class="w-100 d-flex flex-column" 
@@ -8,24 +8,24 @@
         *ngIf="studyTermForm">
         <form [formGroup]="studyTermForm" class="w-100">
             <div class="w-100 mb-3">
-                <app-input-text [label]="'Nombre del bloque'"
+                <app-input-text [label]="t('studyplan.BlockName')"
                                 formControlName="name"
-                                error="El nombre del bloque es requerido"
+                                [error]="t('studyplan.BlockNameError')"
                                 placeholder="">
                 </app-input-text>
             </div>
             <div class="d-flex w-100 study-plan-term-container">
                 <div class="flex-fill">
-                    <app-input-date label="Fecha de inicio"
+                    <app-input-date [label]="t('studyplan.StartDate')"
                                     placeholder=""
-                                    error="La fecha de inicio es requerida"
+                                    [error]="t('studyplan.StartDateError')"
                                     formControlName="startDate">
                     </app-input-date>
                 </div>
                 <div class="flex-fill">
-                    <app-input-date label="Fecha estimada de finalización"
+                    <app-input-date [label]="t('studyplan.EstimatedEndDate')"
                                     placeholder=""
-                                    error="La fecha estimada de finalización es requerida"
+                                    [error]="t('studyplan.EstimatedEndDateError')"
                                     formControlName="endDate">
                     </app-input-date>
                 </div>
@@ -44,13 +44,13 @@
             <div *ngFor="let course of coursesFormArray.controls; let i = index; trackBy: trackByFn">
               <div [formGroupName]="i" class="add-course-container">
                 <div class="course-name">
-                    <app-input-text [label]="i === 0 ? 'Materia' : ''"
+                    <app-input-text [label]="i === 0 ? t('studypla.Course') : ''"
                                     formControlName="name"
                                     placeholder="">
                     </app-input-text>
                 </div>
                 <div class="course-credits">
-                    <app-input-text [label]="i === 0 ? 'Créditos' : ''"
+                    <app-input-text [label]="i === 0 ? t('studyplan.Credits') : ''"
                                     formControlName="totalCredits"
                                     placeholder="">
                     </app-input-text>
@@ -71,7 +71,7 @@
             'w-100': isPhone || isTablet,
             'btn-create-course-desktop': isDesktop 
         }">
-            <app-button text="Finalizar"
+            <app-button [text]="t('studyplan.Finish')"
                         [type]="ButtonType.SECONDARY"
                         (click)="createStudyPlanTermWithCourses()">
             </app-button>

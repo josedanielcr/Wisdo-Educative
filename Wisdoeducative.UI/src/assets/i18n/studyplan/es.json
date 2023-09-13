@@ -1,0 +1,16 @@
+{
+    "HelloUser": "¡Hola! ",
+    "BoldUserName": "{{name}}",
+    "RecommendCourseInput": "Te recomendamos ingresar las materias que estás cursando actualmente.",
+    "EnterCurrentCourses": "Ingresar materias actuales",
+    "AddBlock": "Agregar bloque",
+    "BlockName": "Nombre del bloque",
+    "BlockNameError": "El nombre del bloque es requerido",
+    "StartDate": "Fecha de inicio",
+    "StartDateError": "La fecha de inicio es requerida",
+    "EstimatedEndDate": "Fecha estimada de finalización",
+    "EstimatedEndDateError": "La fecha estimada de finalización es requerida",
+    "Course": "Materia",
+    "Credits": "Créditos",
+    "Finish": "Finalizar"
+}

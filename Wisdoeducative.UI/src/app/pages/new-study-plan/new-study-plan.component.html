@@ -13,14 +13,15 @@
         'no-studyplan-card-desktop': isDesktop || isTablet,
         }">
     
-    <div class="no-studyplan-content text-center d-flex flex-column justify-content-center align-items-center">
+    <div class="no-studyplan-content text-center d-flex flex-column justify-content-center align-items-center"
+        *transloco="let t; scope : 'studyplan'">
         <span>
-            ¡Hola! <span class="fw-bold">{{user.name}}</span> <br>
-            Te recomendamos ingresar las materias que estás cursando actualmente. 
+            {{t('studyplan.HelloUser')}} <span class="fw-bold">{{user.name}}</span> <br>
+            {{t('studyplan.RecommendCourseInput')}}
         </span>
 
         <div class="no-studyplan-button mt-4">
-            <app-button text="Ingresar materias actuales"
+            <app-button [text]="t('studyplan.EnterCurrentCourses')"
                         [type]="ButtonType.SECONDARY"
                         (click)="createStudyPlan()">
             </app-button>

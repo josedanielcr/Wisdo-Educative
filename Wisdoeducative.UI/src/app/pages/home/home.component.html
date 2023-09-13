@@ -1,10 +1,10 @@
-<div class="row">
+<div class="row" *transloco="let t; scope : 'home'">
     <div class="col-md-10">
         <!-- header -->
         <div *ngIf="user">
             <div class="row">
                 <div class="col-md-8">
-                   <app-title [title]="timeOfDayGreeting + ' ' + user.name"
+                   <app-title [title]="t('home.'+timeOfDayGreeting) + ' ' + user.name"
                               [iconPath]="timeOfDayIcon"
                               [iconBackgroundColor]="currentTimeOfDay === TimeOfDay.Morning 
                                  ? 'rgba(218, 199, 9, 0.20)' : (currentTimeOfDay === TimeOfDay.Afternoon 
@@ -47,26 +47,25 @@
                     'text-center' : isPhone,
                     'mt-3': true
                 }">
-                    <h3 class="wd-text-h4 wd-text-dark-grey">INICIEMOS JUNTOS</h3>
+                    <h3 class="wd-text-h4 wd-text-dark-grey">{{t('home.LetsStartTogether')}}</h3>
                     <span [ngClass]="{
                         'text-center' : isPhone
                         }"
                         *ngIf="user.userStatus === UserStatus.Omitted">
-                        ¡Optimiza tu experiencia con Wisdo! Configura tu espacio de estudio siguiendo estos sencillos
-                        pasos y aprovecha al máximo todas nuestras herramientas. ¡Comienza ahora!
+                        {{t('home.OptimizeExperience1')}}
                     </span>
                     <span [ngClass]="{
                         'text-center' : isPhone
                         }"
                         *ngIf="user.userStatus !== UserStatus.Omitted && userDegree && !studyPlan">
-                        ¡Optimiza tu experiencia con Wisdo! <span class="fw-bold">Crea un plan de estudios automatico</span>
-                        y aprovecha al máximo todas nuestras herramientas. ¡Comienza ahora!
+                        {{t('home.OptimizeExperience2')}}<span class="fw-bold">{{t('home.BoldPart')}}</span>
+                        {{t('home.AndMakeMost')}}
                     </span>
                     <div [ngClass]="{
                         'button-setup-container' : isDesktop || isTablet,
                         'mt-3 mb-3' : true
                     }">
-                        <app-button [text]="user.userStatus === UserStatus.Omitted ? 'Iniciar configuración' : 'Crear plan de estudios'"
+                        <app-button [text]="user.userStatus === UserStatus.Omitted ? t('home.StartSetup') : t('home.CreateStudyPlan')"
                                     [type]="ButtonType.SECONDARY"
                                     (click)="executeSetup()"
                                     [disabled]="false">
