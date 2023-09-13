@@ -6,13 +6,9 @@ import { CourseClient } from 'src/app/models/core/client/course.client.model';
   templateUrl: './course-grid.component.html',
   styleUrls: ['./course-grid.component.css']
 })
-export class CourseGridComponent implements OnInit {
+export class CourseGridComponent  {
 
   @Input() courses: CourseClient[];
 
   constructor() { }
-
-  ngOnInit(): void {
-    console.log(this.courses);
-  }
 }

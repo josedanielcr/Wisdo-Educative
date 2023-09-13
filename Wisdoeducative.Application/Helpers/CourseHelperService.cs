@@ -38,7 +38,6 @@ namespace Wisdoeducative.Application.Helpers
         public Course CreateNewCourseFromDto(CourseDto courseDto)
         {
             Course course = mapper.Map<Course>(courseDto);
-            course.CourseStatus = Domain.Enums.CourseStatus.InProgress;
             course.status = Domain.Enums.EntityStatus.Active;
             return course;
         }

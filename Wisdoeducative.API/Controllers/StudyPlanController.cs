@@ -4,6 +4,7 @@ using Microsoft.Identity.Web.Resource;
 using Wisdoeducative.Application.Common.Interfaces.Services;
 using Wisdoeducative.Application.DTOs;
 using Wisdoeducative.Application.DTOs.CustomDTOs;
+using Wisdoeducative.Domain.Entities;
 
 namespace Wisdoeducative.API.Controllers
 {
@@ -23,10 +24,16 @@ namespace Wisdoeducative.API.Controllers
             this.studyPlanTermService = studyPlanTermService;
         }
 
-        [HttpGet("{userDegreeId}")]
-        public async Task<IActionResult> GetUserStudyPlan(int userDegreeId)
+        [HttpGet("{studyPlanId}")]
+        public async Task<IActionResult> GetUserStudyPlan(int studyPlanId)
         {
-            return Ok(await studyPlanService.GetUserStudyPlan(userDegreeId));
+            return Ok(await studyPlanService.GetUserStudyPlan(studyPlanId));
+        }
+
+        [HttpGet("user-degree/{userDegreeId}")]
+        public async Task<IActionResult> GetUserStudyPlanByUserDegree(int userDegreeId)
+        {
+            return Ok(await studyPlanService.GetUserStudyPlanByUserDegreeId(userDegreeId));
         }
 
         [HttpPost]

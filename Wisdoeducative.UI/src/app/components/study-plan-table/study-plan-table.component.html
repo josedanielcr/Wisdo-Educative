@@ -1,0 +1,80 @@
+<div class="w-100">
+    <table class="w-100">
+        <thead class="w-100">
+            <tr class="wd-bg-white">
+                <th [ngClass]="{
+                    'ps-3' : true
+                }">
+                  <img [src]="isCourseTable ? '../../../assets/icons/heart-filled.png' 
+                    : '../../../assets/icons/next.png'" width="20" height="20">
+                </th>
+                <th class="fw-bold th-name" [ngClass]="{
+                    'th-name-spacing-desktop': isDesktop,
+                    'th-name-spacing-phone': !isDesktop
+                }"
+                    *ngIf="isCourseTable">
+                    Materia
+                </th>
+                <th class="fw-bold th-name" *ngIf="!isCourseTable" [ngClass]="{
+                    'th-name-spacing-desktop': isDesktop,
+                    'th-name-spacing-phone': !isDesktop
+                }">
+                    {{typeOfSchedule}}
+                </th>
+                <th class="fw-bold" *ngIf="canShowProgress()" [ngClass]="{
+                    'pe-2' : isPhone
+                }">Avance</th>
+                <th class="fw-bold" *ngIf="isDesktop">Estado</th>
+                <th class="fw-bold" *ngIf="canShowCredits()" [ngClass]="{
+                    'pe-2' : isPhone
+                }">Créditos</th>
+              </tr>
+        </thead>
+        <tbody *ngIf="isCourseTable">
+            <tr *ngFor="let course of courses" class="wd-bg-white">
+                <td [ngClass]="{
+                    'ps-3' : true
+                }">
+                    <img [src]="course.isFavorite ?
+                         '../../../assets/icons/heart-filled.png' :
+                         '../../../assets/icons/heart-empty.png'" width="20" height="20">
+                </td>
+                <td class="th-name" [ngClass]="{
+                    'th-name-spacing-desktop': isDesktop,
+                    'th-name-spacing-phone': !isDesktop
+                }">{{ course.name }}</td>
+                <td [ngClass]="{
+                    'pe-2' : isPhone,
+                    'd-flex justify-content-center' : true
+                }">
+                    <app-progress-bar [progress]="getCourseProgress(course.currentScore)">
+                    </app-progress-bar>
+                </td>
+                <td *ngIf="isDesktop">{{statusMap.get(course.courseStatus)}}</td>
+                <td *ngIf="isDesktop">{{ course.totalCredits }}</td>
+            </tr>
+        </tbody>
+        <tbody *ngIf="!isCourseTable">
+            <tr *ngFor="let studyPlanTerm of studyPlanTerms" class="wd-bg-white cursor-pointer">
+                <td [ngClass]="{
+                    'ps-3' : true
+                }">
+                    <img src="../../../assets/icons/next.png" width="20" height="20"
+                    (click)="emitClickedStudyTerm(studyPlanTerm)">
+                </td>
+                <td class="th-name" [ngClass]="{
+                    'th-name-spacing-desktop': isDesktop,
+                    'th-name-spacing-phone': !isDesktop
+                }">{{studyPlanTerm.name}}</td>
+                <td *ngIf="isDesktop" class="d-flex justify-content-center">
+                    <app-progress-bar [progress]="studyPlanTerm.currentProgress">
+                    </app-progress-bar>
+                </td>
+                <td *ngIf="isDesktop">{{statusMap.get(studyPlanTerm.studyTermStatus)}}</td>
+                <td [ngClass]="{
+                    'pe-2' : isPhone
+                }">{{studyPlanTerm.totalCredits}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

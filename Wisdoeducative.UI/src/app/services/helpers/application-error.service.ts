@@ -6,9 +6,13 @@ import { ApplicationErrorModel } from 'src/app/models/application.error.model';
 })
 export class ApplicationErrorService {
 
+  private readonly DEFAULT_ERROR_MESSAGE : string = 'Something went wrong!';
+
   constructor() { }
 
   public parseHttpError(error : any): ApplicationErrorModel {
-    return new ApplicationErrorModel(error.message,error.statusCode);
+    const errorData = error.error;
+    const erorr : ApplicationErrorModel = new ApplicationErrorModel(errorData.error,errorData.statusCode);
+    return erorr;
   }
 }

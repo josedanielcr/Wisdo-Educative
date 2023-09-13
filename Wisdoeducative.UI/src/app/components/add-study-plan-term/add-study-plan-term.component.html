@@ -1,4 +1,8 @@
-<app-dialog [title]="t('studyplan.AddBlock')" [minHeight]="20" *transloco="let t; scope : 'studyplan'">
+<app-dialog title="Agregar bloque" 
+            [minHeight]="20" 
+            (wasClosed)="this.emitDialogWasClosed()" 
+            [type]="DialogType.Default"
+            [canBeClosed]="canBeClosed">
 
     <!-- study term -->
     <div class="w-100 d-flex flex-column" 
@@ -14,7 +18,7 @@
                                 placeholder="">
                 </app-input-text>
             </div>
-            <div class="d-flex w-100 study-plan-term-container">
+            <div class="d-flex flex-wrap w-100 study-plan-term-container">
                 <div class="flex-fill">
                     <app-input-date [label]="t('studyplan.StartDate')"
                                     placeholder=""
@@ -44,13 +48,13 @@
             <div *ngFor="let course of coursesFormArray.controls; let i = index; trackBy: trackByFn">
               <div [formGroupName]="i" class="add-course-container">
                 <div class="course-name">
-                    <app-input-text [label]="i === 0 ? t('studypla.Course') : ''"
+                    <app-input-text [label]="'Materia'"
                                     formControlName="name"
                                     placeholder="">
                     </app-input-text>
                 </div>
                 <div class="course-credits">
-                    <app-input-text [label]="i === 0 ? t('studyplan.Credits') : ''"
+                    <app-input-text [label]="'Créditos'"
                                     formControlName="totalCredits"
                                     placeholder="">
                     </app-input-text>

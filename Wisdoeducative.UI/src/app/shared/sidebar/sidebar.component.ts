@@ -97,4 +97,8 @@ export class SidebarComponent implements OnInit {
   public hideSidebar(): void {
     this.menuService.setSidebarHidden(!this.isHidden);
   }
+
+  public closeSidebar(): void {
+    if(this.isPhone) this.menuService.setSidebarHidden(true);
+  }
 }

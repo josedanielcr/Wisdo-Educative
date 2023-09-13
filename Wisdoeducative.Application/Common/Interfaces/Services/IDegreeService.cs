@@ -15,5 +15,7 @@ namespace Wisdoeducative.Application.Common.Interfaces.Services
         Task<UserDegreeDto> SetupUserDegree(UserDegreeConfigDTO userDegreeConfig);
         Task SaveUserDegreeChanges(UserDegree userDegree);
         Task<UserDegreeDto> GetUserDegree(int userId);
+
+        Task<UserDegreeDto> GetUserDegreeById(int userDegreeId);
     }
 }

@@ -40,11 +40,7 @@ namespace Wisdoeducative.Application.Services
             using var transaction = dBContext.Database.BeginTransaction();
             try
             {
-                if (!studyPlanTermHelperService.ValidateStudyTermCreationDto(studyTermCreationDto))
-                {
-                    throw new BadRequestException($"{ErrorMessages.NullProperties} Study plan term, " +
-                        $"needs to have a study plan associated, and start date and the end date");
-                }
+                await studyPlanTermHelperService.ValidateStudyTermCreationDto(studyTermCreationDto);
 
                 var newStudyPlan = studyPlanTermHelperService.CreateNewStudyPlanTerm(studyTermCreationDto,
                     await GetUserStudyPlanTerms(studyTermCreationDto.StudyPlanTermDto.StudyPlanId));
@@ -53,7 +49,7 @@ namespace Wisdoeducative.Application.Services
 
                 if (studyPlanTermHelperService.HasCourses(studyTermCreationDto))
                 {
-                    studyPlanTermHelperService.AssignStudyPlanTermIdToCourses(studyTermCreationDto.coursesDtos, newStudyPlan.Id);
+                    studyPlanTermHelperService.AssignStudyPlanTermIdToCourses(studyTermCreationDto.coursesDtos, newStudyPlan);
                     studyTermCreationDto.coursesDtos =
                         await studyPlanTermHelperService.CreateCoursesForStudyPlanTerm(studyTermCreationDto.coursesDtos.ToList());
                 }
@@ -81,6 +77,7 @@ namespace Wisdoeducative.Application.Services
 
         public async Task<IEnumerable<StudyPlanTermDto>> GetUserStudyPlanTerms(int studyPlanId)
         {
+            List<StudyPlanTermDto> studyPlanTermsResult = new List<StudyPlanTermDto>();
             if (studyPlanId == 0)
                 throw new BadRequestException($"You must provide a study plan to retrive all it's terms");
 
@@ -88,8 +85,15 @@ namespace Wisdoeducative.Application.Services
                     .Where(s => s.StudyPlanId == studyPlanId)
                     .ToListAsync();
 
-            return studyPlanTerms.Select(studyPlanTerm => 
+            var studyPlanTermsDto = studyPlanTerms.Select(studyPlanTerm =>
                 mapper.Map<StudyPlanTermDto>(studyPlanTerm));
+
+            foreach(var studyPlanTerm in studyPlanTermsDto)
+            {
+                studyPlanTermsResult
+                    .Add(await studyPlanTermHelperService.AddCalculatedFieldsToTerm(studyPlanTerm));
+            }
+            return studyPlanTermsResult;
         }
 
         private async Task SaveStudyPlanTermHistory(StudyPlanTerm studyPlanTerm,
@@ -110,7 +114,7 @@ namespace Wisdoeducative.Application.Services
             {
                 return user;
             }
-            throw new NotFoundException($"{ErrorMessages.EntityNotFound} user, was not found inside the study plan");
+            throw new NotFoundException($"{ErrorMessages.EntityNotFound}");
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Wisdoeducative.Application.Common.Interfaces.Helpers;
+using Wisdoeducative.Application.Resources;
 
 namespace Wisdoeducative.Application.Helpers
 {
@@ -26,7 +27,7 @@ namespace Wisdoeducative.Application.Helpers
                 foreach (var property in propertiesToCheck)
                 {
                     PropertyInfo propInfo = obj.GetType().GetProperty(property) 
-                        ?? throw new Exception($"Property {property} not found on {obj.GetType().Name}");
+                        ?? throw new Exception($"{ErrorMessages.EntityNotFound}");
                     if (propInfo.GetValue(obj) == null)
                     {
                         return true;

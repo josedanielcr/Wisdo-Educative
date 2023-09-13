@@ -14,6 +14,9 @@ namespace Wisdoeducative.Application.Common.Interfaces.Helpers
         Task<UserDto> GetUser(int? id = null, string? email = null, 
             string? name = null,string? lastname = null, string? b2cId = null);
         Task<bool> DoesUserExist(UserDto user);
+        bool IsGeneralUserDataInvalid(UserDto user);
+        bool IsUserAgeInvalid(DateTime age);
+        bool IsUserConfigurationInvalid(UserDto user);
         Task SaveUserHistory(User user, EntityChangeTypes type, string modifiedBy);
     }
 }

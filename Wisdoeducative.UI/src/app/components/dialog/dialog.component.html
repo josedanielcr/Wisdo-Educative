@@ -6,9 +6,11 @@
             'dialog-content-desktop': isDesktop
         }"
         [style.minHeight]="minHeight+'rem'">
-        <div class="w-100 h-100">
-            <div class="w-100 d-flex align-items-center justify-content-center mb-5 mt-4">
-                <div class="ms-auto">
+        <div class="w-100 h-100" *ngIf="type === DialogType.Default">
+            <div class="w-100 d-flex align-items-center justify-content-center mb-5 mt-4" >
+                <div [ngClass]="{
+                    'ms-auto' : canBeClosed
+                }">
                     <h3 class="mb-0" [ngClass]="{
                         'wd-text-h3' : isPhone,
                         'wd-text-h1' : isTablet || isDesktop
@@ -16,11 +18,39 @@
                      {{title}}
                     </h3>
                 </div>
-                <div class="ms-auto close-container" (click)="toggle()">
+                <div class="ms-auto close-container" (click)="toggle()" *ngIf="canBeClosed">
                     <img src="../../../assets/icons/close-outline 1.png" alt="">
                 </div>
             </div>
             <ng-content></ng-content>
+        </div>
+        <div class="w-100 h-100" *ngIf="type === DialogType.StudyPlanTermOverview">
+            <div class="d-flex mb-2">
+                <div>
+                    <!-- completed card -->
+                    <div class="mb-3 d-flex status-card justify-content-center align-items-center"
+                        [ngClass]="{
+                            'not-started-card' : selectedStudyPlanTerm.studyPlanTermDto.studyTermStatus === 'NotStarted',
+                            'completed-card' : selectedStudyPlanTerm.studyPlanTermDto.studyTermStatus === 'Completed',
+                            'in-progress-card' : selectedStudyPlanTerm.studyPlanTermDto.studyTermStatus === 'InProgress'
+                        }">
+                        <span class="wd-text-h4">{{STUDY_PLAN_TERM_STATUSES.get(selectedStudyPlanTerm.studyPlanTermDto.studyTermStatus)}}</span>
+                    </div>
+                    <div>
+                        <h1 class="wd-text-h1 wd-text-primary mb-0">
+                            {{selectedStudyPlanTerm.studyPlanTermDto.name}}
+                        </h1>
+                        <span>{{selectedStudyPlanTerm.studyPlanTermDto.startDate | date:'MMM'}} 
+                            -
+                            {{selectedStudyPlanTerm.studyPlanTermDto.endDate | date:'MMM'}}
+                        </span>
+                    </div>
+                </div>
+                <div class="ms-auto close-container" (click)="toggle()" *ngIf="canBeClosed">
+                    <img src="../../../assets/icons/close-outline 1.png" alt="">
+                </div>
+            </div>
+            <ng-content select=".forTypeTermCreationCompleted"></ng-content>
         </div>
     </div>
 </div>

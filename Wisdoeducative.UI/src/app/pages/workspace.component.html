@@ -1,4 +1,4 @@
-<div class="app-container wd-bg-general">
+<div class="app-container wd-bg-general position-relative">
     
     <!-- sidebar -->
     <div class="h-100"
@@ -27,6 +27,8 @@
                 'app-content-container-desktop': isDesktop || isTablet
               }">
             <router-outlet></router-outlet>
+            <ng-container #spinnerContainer></ng-container>
          </div>
     </div>
+    <ng-container #messageContainer></ng-container>
 </div>

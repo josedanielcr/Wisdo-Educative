@@ -117,22 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DuplicatedEntity" xml:space="preserve">
-    <value>The following entity already exists:</value>
+  <data name="DegreeDateFuture" xml:space="preserve">
+    <value>Oops! It looks like you've selected a date in the future. Please choose a date that is today or earlier.</value>
   </data>
-  <data name="EmptyEntityList" xml:space="preserve">
-    <value>The list of the following entity is null:</value>
+  <data name="DuplicatedEntity" xml:space="preserve">
+    <value>Oops! It looks like this item already exists in the system.</value>
   </data>
   <data name="EntityNotFound" xml:space="preserve">
-    <value>The following entity was not found:</value>
+    <value>Oops! We couldn't find the item you're looking for.</value>
   </data>
   <data name="HistorySaveErrorMessage" xml:space="preserve">
-    <value>Error occurred while saving entity history:</value>
+    <value>Oops! We ran into an issue while trying to save the item's history.</value>
   </data>
   <data name="NullProperties" xml:space="preserve">
-    <value>The following entity has null properties:</value>
+    <value>Oops! It looks like some details for this item are missing.</value>
+  </data>
+  <data name="StudyTermOverlap" xml:space="preserve">
+    <value>Oops! The dates for this study plan overlap with another term. Could you please pick different dates?</value>
   </data>
   <data name="UserAlreadyExistsErrorMessage" xml:space="preserve">
-    <value>User already exists:</value>
+    <value>Oops! It looks like there's already an account with this information.</value>
   </data>
 </root>

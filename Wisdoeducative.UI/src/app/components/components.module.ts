@@ -14,6 +14,12 @@ import { CourseGridComponent } from './course-grid/course-grid.component';
 import { CourseCardComponent } from './course-card/course-card.component';
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { StudyPlanFiltersComponent } from './study-plan-filters/study-plan-filters.component';
+import { StudyPlanTermGridComponent } from './study-plan-term-grid/study-plan-term-grid.component';
+import { StudyPlanTermCardComponent } from './study-plan-term-card/study-plan-term-card.component';
+import { StudyPlanTableComponent } from './study-plan-table/study-plan-table.component';
+import { MessageComponent } from './message/message.component';
+import { MessageContainerComponent } from './message-container/message-container.component';
+import { SpinnerComponent } from './spinner/spinner.component';
 import { TranslationComponent } from './translation/translation.component';
 import { TranslocoRootModule } from '../transloco-root.module';
 
@@ -34,6 +40,13 @@ import { TranslocoRootModule } from '../transloco-root.module';
     CourseCardComponent,
     ProgressBarComponent,
     StudyPlanFiltersComponent,
+    StudyPlanTermGridComponent,
+    StudyPlanTermCardComponent,
+    StudyPlanTableComponent,
+    MessageComponent,
+    MessageContainerComponent,
+    SpinnerComponent
+    StudyPlanFiltersComponent,
     TranslationComponent
   ],
   exports: [
@@ -47,6 +60,14 @@ import { TranslocoRootModule } from '../transloco-root.module';
     AddStudyPlanTermComponent,
     CourseCardComponent,
     CourseGridComponent,
+    StudyPlanFiltersComponent,
+    StudyPlanTermGridComponent,
+    StudyPlanTermCardComponent,
+    StudyPlanTableComponent,
+    ProgressBarComponent,
+    MessageComponent,
+    MessageContainerComponent,
+    SpinnerComponent
     StudyPlanFiltersComponent,
     TranslationComponent
   ],

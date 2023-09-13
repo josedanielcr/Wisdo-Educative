@@ -32,3 +32,24 @@
 .close-container {
     cursor: pointer;
 }
+
+.status-card {
+    width: 10.25rem;
+    height: 2.4375rem;
+    border-radius: 0.3125rem;
+}
+
+.completed-card {
+    background-color: #1ECF4526;
+    color: #0B5354;
+}
+
+.in-progress-card {
+    background-color: #256E8E26;
+    color: #033043;
+}
+
+.not-started-card {
+    background-color: #83838338;
+    color: #1E1E1E;
+}

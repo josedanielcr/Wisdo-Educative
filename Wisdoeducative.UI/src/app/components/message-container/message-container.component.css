@@ -1,0 +1,10 @@
+.message-container {
+    display: flex;
+    flex-direction: column-reverse;
+    position: fixed;
+    right: 0;
+    top: 95%; 
+    transform: translateY(-95%);
+    max-width: 100%;
+    gap: 0.80rem;
+}
