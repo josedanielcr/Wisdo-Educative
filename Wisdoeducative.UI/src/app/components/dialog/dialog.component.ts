@@ -28,14 +28,6 @@ export class DialogComponent implements OnInit {
   public isTablet: boolean = false;
   public isPhone: boolean = false;
 
-  //constants
-  public readonly STUDY_PLAN_TERM_STATUSES : Map<string, string> = new Map<string, string>([
-    ['NotStarted', 'Not started'],
-    ['InProgress', 'In progress'],
-    ['Completed', 'Completed']
-  ]);
-
-  
   constructor(private windowService : WindowResizeService,
     private cdr : ChangeDetectorRef) { }
 

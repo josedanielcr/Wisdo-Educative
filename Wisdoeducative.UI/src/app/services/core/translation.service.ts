@@ -13,6 +13,10 @@ export class TranslationService {
     this.setUserDefaultLang(lang);
   }
 
+  public getActiveLang(): string {
+    return this.translocoService.getActiveLang();
+  }
+
   public setUserDefaultLang(lang: string): void {
   }
 }

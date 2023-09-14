@@ -8,7 +8,6 @@ import { CourseService } from 'src/app/services/core/models/course.service';
 import { WindowResizeService } from 'src/app/services/helpers/window-resize.service';
 
 interface CourseStatus {
-  name: string;
   value: string;
 }
 
@@ -41,9 +40,9 @@ export class StudyPlanFiltersComponent implements OnInit {
 
   //constants
   public readonly courseStatuses : CourseStatus[] = [
-    {name: 'Not started', value: 'NotStarted'},
-    {name: 'In progress', value: 'InProgress'},
-    {name: 'Finished', value: 'Finished'}
+    {value: 'NotStarted'},
+    {value: 'InProgress'},
+    {value: 'Finished'}
   ];
 
   constructor(private windowService : WindowResizeService,

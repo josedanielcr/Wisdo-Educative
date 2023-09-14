@@ -10,16 +10,7 @@ import { WindowResizeService } from 'src/app/services/helpers/window-resize.serv
   styleUrls: ['./study-plan-table.component.css']
 })
 export class StudyPlanTableComponent implements OnInit {
-
-  //constants 
-  public readonly statusMap : Map<string, string> = new Map([
-    ['Failed', 'Failed'],
-    ['Completed', 'Completed'],
-    ['InProgress', 'In progress'],
-    ['NotStarted', 'Not started'],
-    ['Finished', 'Finished']
-  ]);
-
+  
   @Input() courses: CourseClient[] = [];
   @Input() studyPlanTerms : StudyPlanTermClient[] = [];
   @Input() typeOfSchedule : string;

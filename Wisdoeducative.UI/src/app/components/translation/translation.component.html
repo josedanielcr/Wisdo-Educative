@@ -1,4 +1,19 @@
-<div class="d-flex flex-column wd-text-white fw-bold">
-    <span (click)="setActiveLang('es')">Español</span>
-    <span (click)="setActiveLang('en')">English</span>
+<div class="d-flex gap-2">
+    <span (click)="setActiveLang('es')" [ngClass]="{
+        'fw-bold': activeLang === 'es',
+        'wd-text-white' : isSetup
+    }" class="cursor-pointer">
+        Español
+    </span>
+    <span [ngClass]="{
+        'wd-text-white' : isSetup
+    }">
+        -
+    </span>
+    <span (click)="setActiveLang('en')" [ngClass]="{
+        'fw-bold': activeLang === 'en',
+        'wd-text-white' : isSetup
+    }" class="cursor-pointer">
+        English
+    </span>
 </div>

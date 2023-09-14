@@ -34,7 +34,7 @@ export class HomeComponent implements OnInit {
   private eveningPath = '../../../assets/icons/moon 1.svg';
   private morningGreeting = 'GoodMorning';
   private afternoonGreeting = 'GoodAfternoon';
-  private eveningGreeting = ' GoodEvening';
+  private eveningGreeting = 'GoodEvening';
 
 
   // properties

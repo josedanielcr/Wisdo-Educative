@@ -43,19 +43,17 @@
                          [ngClass]="{
                             'justify-content-center text-center mt-3 mb-3' : isPhone
                          }">
-                        <h4 class="wd-text-h4">INICIEMOS JUNTOS</h4>
+                        <h4 class="wd-text-h4">{{t('home.LetsStartTogether')}}</h4>
                         <span class="pe-3" *ngIf="isOmitted()">
-                            ¡Optimiza tu experiencia con Wisdo! Configura tu espacio siguiendo estos sencillos 
-                            pasos y aprovecha al máximo todas nuestras herramientas. ¡Comienza ahora!
+                            {{t('home.OptimizeExperience')}}
                         </span>
                         <span class="pe-3" *ngIf="notCompletedSetup() && !isOmitted()">
-                            En este espacio podrás encontrar un dashboard con información útil del avance
-                            que tienes en tus estudios. Pero para eso necesitamos crear un espacio.
+                           {{t('home.SpaceInfo')}}
                         </span>
                         <div class="config-button" [ngClass]="{
                             'w-100 p-3' : isPhone 
                         }">
-                            <app-button [text]="isOmitted() ? 'Configurar espacio' : 'Crear plan de estudios'"
+                            <app-button [text]="isOmitted() ? t('home.ConfigureSpace') : t('home.CreateStudyPlan')"
                                         [type]="ButtonType.SECONDARY"
                                         (click)="executeSetup()"
                                         [disabled]="false">

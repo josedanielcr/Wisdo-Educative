@@ -45,7 +45,7 @@ import { TranslocoRootModule } from '../transloco-root.module';
     StudyPlanTableComponent,
     MessageComponent,
     MessageContainerComponent,
-    SpinnerComponent
+    SpinnerComponent,
     StudyPlanFiltersComponent,
     TranslationComponent
   ],
@@ -67,7 +67,7 @@ import { TranslocoRootModule } from '../transloco-root.module';
     ProgressBarComponent,
     MessageComponent,
     MessageContainerComponent,
-    SpinnerComponent
+    SpinnerComponent,
     StudyPlanFiltersComponent,
     TranslationComponent
   ],
