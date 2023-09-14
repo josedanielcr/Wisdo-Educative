@@ -1,4 +1,4 @@
-<div class="w-100 d-flex study-plan-filters align-items-center gap-4">
+<div class="w-100 d-flex study-plan-filters align-items-center gap-4" *transloco="let t; scope : 'studyplan'">
 
     <!-- text -->
     <form [formGroup]="courseNameForm" 
@@ -6,7 +6,7 @@
             : 'phone-filter-text'" class="wd-bg-white d-flex">
         <input type="text" class="h-100" 
                [placeholder]="(isDesktop || isTablet)
-                ? 'Buscar por materia' : 'Materia'" 
+                ? t('studyplan.SearchBySubject') : t('studyplan.Subject')" 
                 formControlName="name"
                 (keydown.enter)="search()">
         <div class="d-flex justify-content-center align-items-center wd-bg-secondary cursor-pointer"
@@ -25,7 +25,7 @@
          }">
         <div class="desktop-filter-select-padding d-flex align-items-center h-100"
             (click)="toggleFilterWindow()">
-            <span class="ps-4">Filtrar</span>
+            <span class="ps-4">{{t('studyplan.Filter')}}</span>
             <div class="ms-auto d-flex justify-content-center align-items-center">
                 <img [src]="isSearchActive ? '../../../assets/icons/cancelar.png' :
                 '../../../assets/icons/filter.png'" [width]="getIconSize()" [height]="getIconSize()">
@@ -40,28 +40,28 @@
                 <div>
                     <div class="fw-bold wd-text-dark-grey d-flex align-items-center gap-2 custom-checkbox">
                         <input type="checkbox" formControlName="isFavorite" id="isFavorite">
-                        <label for="isFavorite"  class="d-flex align-items-center">Favoritos</label>
+                        <label for="isFavorite"  class="d-flex align-items-center">{{t('studyplan.Favorites')}}</label>
                         <img [src]="'../../../assets/icons/heart-filled.png'" 
                         [width]="getIconSize()" [height]="getIconSize()">
                     </div>
                 </div>
 
-                <h4 class="wd-text-h4 mt-3 wd-text-dark-grey">Estado</h4>
+                <h4 class="wd-text-h4 mt-3 wd-text-dark-grey">{{t('studyplan.Status')}}</h4>
                 <div formArrayName="status" class="d-flex flex-column">
                     <div *ngFor="let status of courseStatuses; let i = index" 
                            class="fw-bold wd-text-dark-grey gap-2 custom-checkbox" 
                            [class.mt-2]="i !== 0">
                         <input type="checkbox" [formControlName]="i" [id]="'status' + i">
-                        <label [for]="'status' + i" class="d-flex align-items-center">{{status.name}}</label>
+                        <label [for]="'status' + i" class="d-flex align-items-center">{{t('studyplan.'+status.value)}}</label>
                     </div>
                 </div>
              </form>
              <div class="filter-window-actions d-flex w-100 cursor-pointer">
                 <div class="p-2 check-child flex-child-cancel" (click)="toggleFilterWindow()">
-                    <span>Cancelar</span>
+                    <span>{{t('studyplan.Cancel')}}</span>
                 </div>
                 <div class="wd-bg-primary p-2 check-child flex-child-apply" (click)="search()">
-                    <span class="wd-text-white">Aplicar</span>
+                    <span class="wd-text-white">{{t('studyplan.Apply')}}</span>
                 </div>
              </div>
         </div>
@@ -80,18 +80,18 @@
                     <div>
                         <div class="fw-bold wd-text-dark-grey d-flex align-items-center gap-2 custom-checkbox">
                             <input type="checkbox" formControlName="isFavorite" id="isFavorite">
-                            <label for="isFavorite"  class="d-flex align-items-center">Favoritos</label>
+                            <label for="isFavorite"  class="d-flex align-items-center">{{t('studyplan.Favorites')}}</label>
                             <img src="../../../assets/icons/heart-filled.png" width="20" height="20">
                         </div>
                     </div>
     
-                    <h4 class="wd-text-h4 mt-3 wd-text-dark-grey">Estado</h4>
+                    <h4 class="wd-text-h4 mt-3 wd-text-dark-grey">{{t('studyplan.Status')}}</h4>
                     <div formArrayName="status" class="d-flex flex-column">
                         <div *ngFor="let status of courseStatuses; let i = index" 
                                class="fw-bold wd-text-dark-grey gap-2 custom-checkbox" 
                                [class.mt-2]="i !== 0">
                             <input type="checkbox" [formControlName]="i" [id]="'status' + i">
-                            <label [for]="'status' + i" class="d-flex align-items-center">{{status.name}}</label>
+                            <label [for]="'status' + i" class="d-flex align-items-center">{{t('studyplan.'+status.value)}}</label>
                         </div>
                     </div>
                  </form>
@@ -99,11 +99,11 @@
             <div class="mt-auto actions-phone d-flex">
                 <div class="flex-fill cancel-phone d-flex justify-content-center align-items-center"
                 (click)="togglePhoneFilters()">
-                    <span>Cancelar</span>
+                    <span>{{t('studyplan.Cancel')}}</span>
                 </div>
                 <div class="flex-fill apply-phone wd-bg-secondary d-flex justify-content-center align-items-center"
                      (click)="search()">
-                    <span class="wd-text-white">Aplicar</span>
+                    <span class="wd-text-white">{{t('studyplan.Apply')}}</span>
                 </div>
             </div>
 

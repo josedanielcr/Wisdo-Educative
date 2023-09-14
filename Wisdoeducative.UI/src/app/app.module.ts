@@ -18,6 +18,7 @@ import { msalConfig, protectedResources } from '../config/azure-ad-b2c.config';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { SetupModule } from './setup/setup.module';
+import { TranslocoRootModule } from './transloco-root.module';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { SetupModule } from './setup/setup.module';
       protectedResourceMap: new Map([
         [protectedResources.wisdoeducativeApi.endpoint, protectedResources.wisdoeducativeApi.scopes]
       ])
-    })
+    }),
+    TranslocoRootModule
   ],
   providers: [
     {

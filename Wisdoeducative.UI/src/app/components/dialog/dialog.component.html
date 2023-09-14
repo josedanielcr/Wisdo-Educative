@@ -5,7 +5,8 @@
             'dialog-content-phone': isPhone || isTablet,
             'dialog-content-desktop': isDesktop
         }"
-        [style.minHeight]="minHeight+'rem'">
+        [style.minHeight]="minHeight+'rem'"
+        *transloco="let t; scope : 'studyplan'">
         <div class="w-100 h-100" *ngIf="type === DialogType.Default">
             <div class="w-100 d-flex align-items-center justify-content-center mb-5 mt-4" >
                 <div [ngClass]="{
@@ -34,7 +35,7 @@
                             'completed-card' : selectedStudyPlanTerm.studyPlanTermDto.studyTermStatus === 'Completed',
                             'in-progress-card' : selectedStudyPlanTerm.studyPlanTermDto.studyTermStatus === 'InProgress'
                         }">
-                        <span class="wd-text-h4">{{STUDY_PLAN_TERM_STATUSES.get(selectedStudyPlanTerm.studyPlanTermDto.studyTermStatus)}}</span>
+                        <span class="wd-text-h4">{{(t('studyplan.'+selectedStudyPlanTerm.studyPlanTermDto.studyTermStatus))}}</span>
                     </div>
                     <div>
                         <h1 class="wd-text-h1 wd-text-primary mb-0">

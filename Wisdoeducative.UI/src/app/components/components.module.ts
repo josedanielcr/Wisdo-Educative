@@ -20,6 +20,8 @@ import { StudyPlanTableComponent } from './study-plan-table/study-plan-table.com
 import { MessageComponent } from './message/message.component';
 import { MessageContainerComponent } from './message-container/message-container.component';
 import { SpinnerComponent } from './spinner/spinner.component';
+import { TranslationComponent } from './translation/translation.component';
+import { TranslocoRootModule } from '../transloco-root.module';
 
 
 
@@ -43,7 +45,9 @@ import { SpinnerComponent } from './spinner/spinner.component';
     StudyPlanTableComponent,
     MessageComponent,
     MessageContainerComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    StudyPlanFiltersComponent,
+    TranslationComponent
   ],
   exports: [
     ButtonComponent,
@@ -63,11 +67,14 @@ import { SpinnerComponent } from './spinner/spinner.component';
     ProgressBarComponent,
     MessageComponent,
     MessageContainerComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    StudyPlanFiltersComponent,
+    TranslationComponent
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    TranslocoRootModule
   ]
 })
 export class ComponentsModule { }

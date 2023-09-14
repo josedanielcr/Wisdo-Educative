@@ -2,6 +2,6 @@
     [ngClass]="{ 
         'selected': chip.selected 
     }"
-    (click)="toggleSelected()">
-    <span>{{ chip.name }}</span>
+    (click)="toggleSelected()" *transloco="let t; scope: 'chips'">
+    <span>{{t('chips.'+chip.code)}}</span>
 </div>

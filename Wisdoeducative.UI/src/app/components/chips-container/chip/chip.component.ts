@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ChipModel } from 'src/app/models/chip.model';
 
 @Component({
@@ -13,7 +13,7 @@ export class ChipComponent {
   @Input() currentSelectedChips : number;
   @Output() toggleChip : EventEmitter<any> = new EventEmitter<any>();
 
-  constructor() { }
+  constructor() {}
 
   public toggleSelected() : void {
     if(this.currentSelectedChips >= this.limit && this.chip.selected === false) return;

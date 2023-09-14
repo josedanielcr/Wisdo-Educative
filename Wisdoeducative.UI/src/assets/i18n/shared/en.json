@@ -1,0 +1,14 @@
+{
+    "Inicio" : "home",
+    "Explorar" : "Explore",
+    "Estudios": "Studies",
+    "Collapse" : "Collapse",
+    "General": "General",
+    "Profile": "Profile",
+    "Settings": "Settings",
+    "DarkMode": "Dark Mode",
+    "Payments": "Payments",
+    "Subscription": "Subscription",
+    "Invoices": "Invoices",
+    "LogOut": "Log Out"
+}

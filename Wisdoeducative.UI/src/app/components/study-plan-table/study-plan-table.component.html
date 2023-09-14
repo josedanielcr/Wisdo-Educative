@@ -1,4 +1,4 @@
-<div class="w-100">
+<div class="w-100" *transloco="let t; scope : 'studyplan'">
     <table class="w-100">
         <thead class="w-100">
             <tr class="wd-bg-white">
@@ -13,21 +13,21 @@
                     'th-name-spacing-phone': !isDesktop
                 }"
                     *ngIf="isCourseTable">
-                    Materia
+                    {{t('studyplan.Subject')}}
                 </th>
                 <th class="fw-bold th-name" *ngIf="!isCourseTable" [ngClass]="{
                     'th-name-spacing-desktop': isDesktop,
                     'th-name-spacing-phone': !isDesktop
                 }">
-                    {{typeOfSchedule}}
+                    {{t('studyplan.'+typeOfSchedule)}}
                 </th>
                 <th class="fw-bold" *ngIf="canShowProgress()" [ngClass]="{
                     'pe-2' : isPhone
-                }">Avance</th>
-                <th class="fw-bold" *ngIf="isDesktop">Estado</th>
+                }">{{t('studyplan.Progress')}}</th>
+                <th class="fw-bold" *ngIf="isDesktop">{{t('studyplan.Status')}}</th>
                 <th class="fw-bold" *ngIf="canShowCredits()" [ngClass]="{
                     'pe-2' : isPhone
-                }">Créditos</th>
+                }">{{t('studyplan.Credits')}}</th>
               </tr>
         </thead>
         <tbody *ngIf="isCourseTable">
@@ -50,7 +50,7 @@
                     <app-progress-bar [progress]="getCourseProgress(course.currentScore)">
                     </app-progress-bar>
                 </td>
-                <td *ngIf="isDesktop">{{statusMap.get(course.courseStatus)}}</td>
+                <td *ngIf="isDesktop">{{t('studyplan.'+course.courseStatus)}}</td>
                 <td *ngIf="isDesktop">{{ course.totalCredits }}</td>
             </tr>
         </tbody>
@@ -70,7 +70,7 @@
                     <app-progress-bar [progress]="studyPlanTerm.currentProgress">
                     </app-progress-bar>
                 </td>
-                <td *ngIf="isDesktop">{{statusMap.get(studyPlanTerm.studyTermStatus)}}</td>
+                <td *ngIf="isDesktop">{{t('studyplan.'+studyPlanTerm.studyTermStatus)}}</td>
                 <td [ngClass]="{
                     'pe-2' : isPhone
                 }">{{studyPlanTerm.totalCredits}}</td>

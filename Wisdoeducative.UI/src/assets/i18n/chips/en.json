@@ -1,0 +1,17 @@
+{
+    "ARCH": "Architecture",
+    "DM": "Digital Marketing",
+    "CD": "Coding",
+    "GD": "Graphic Design",
+    "FI": "Finance",
+    "SI": "Scientific Investigation",
+    "MED": "Medicine",
+    "LAW": "Law",
+    "HR": "Human Resources",
+    "FD": "Fashion Design",
+    "TU": "Tourism",
+    "HE": "Health",
+    "EDU": "Education",
+    "PHOTO": "Photography",
+    "ANI": "Animation"
+}

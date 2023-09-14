@@ -20,7 +20,7 @@
             }">
     
         <!-- sidebar options -->
-        <div class="options-container w-100">
+        <div class="options-container w-100" *transloco="let t; scope : 'shared'">
     
             <!-- single option -->
             <div class="d-flex align-items-center options-container-single-option cursor-pointer" 
@@ -34,7 +34,7 @@
                     <!-- icon -->
                     <i [class]="menuOption.icon + ' wd-text-white menu-option-icon'"></i>
                     <!-- name -->
-                    <span class="wd-text-white fw-bold user-select-none">{{menuOption.name}}</span>
+                    <span class="wd-text-white fw-bold user-select-none">{{t('shared.'+menuOption.name)}}</span>
                 </div>
     
                 <!-- active dot -->
@@ -51,7 +51,9 @@
              (click)="contractSidebar()"
              *ngIf="!isPhone">
             <img src="../../../assets/icons/expand-arrows 1.svg">
-            <span class="wd-text-white fw-bold user-select-none">Contraer</span>
+            <span class="wd-text-white fw-bold user-select-none" *transloco="let t; scope : 'shared'">
+                {{t('shared.Collapse')}}
+            </span>
         </div>
     </div>
     <div *ngIf="isContracted"
