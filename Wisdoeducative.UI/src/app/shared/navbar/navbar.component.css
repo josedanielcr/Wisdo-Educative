@@ -1,3 +1,7 @@
+span {
+    font-size: 0.875rem;
+}
+
 /*#region main structure*/
 .navbar-desktop {
     background: rgba(3, 48, 67, 0.50);
@@ -78,5 +82,10 @@ i {
 
 .profile-names-container {
     font-weight: 400;
+}
+
+.divisor {
+    width: 100%;
+    height: 0.1875rem;
 }
 /*#endregion dropdown*/

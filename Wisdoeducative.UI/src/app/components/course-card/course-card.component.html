@@ -8,7 +8,9 @@
         <app-progress-bar [progress]="getCoursesProgress()"></app-progress-bar>
 
         <!-- favorite -->
-        <div class="favorite-course-container d-flex justify-content-center align-items-center ms-auto">
+        <div class="favorite-course-container d-flex 
+        justify-content-center align-items-center ms-auto cursor-pointer"
+            (click)="addToFavorite()">
             <img [src]="course.isFavorite ? '../../../assets/icons/heart-filled.png' 
                 : '../../../assets/icons/heart-empty.png'">
         </div>

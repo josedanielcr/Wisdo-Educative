@@ -1,7 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MessageTypeEnum } from 'src/app/enums/message.type.enum';
+import { ApplicationErrorModel } from 'src/app/models/application.error.model';
 import { CourseClient } from 'src/app/models/core/client/course.client.model';
 import { StudyPlanTermClient } from 'src/app/models/core/client/study.plan.term.client.model';
+import { MessageModel } from 'src/app/models/message.model';
 import { ScreenSizeModel } from 'src/app/models/screenSize.model';
+import { MessageService } from 'src/app/services/core/message.service';
+import { CourseService } from 'src/app/services/core/models/course.service';
 import { WindowResizeService } from 'src/app/services/helpers/window-resize.service';
 
 @Component({
@@ -16,6 +21,7 @@ export class StudyPlanTableComponent implements OnInit {
   @Input() typeOfSchedule : string;
   @Output() clickedStudyTerm : EventEmitter<StudyPlanTermClient> 
     = new EventEmitter<StudyPlanTermClient>();
+  @Output() courseChanges : EventEmitter<CourseClient[]> = new EventEmitter<CourseClient[]>();
   public isCourseTable: boolean;
 
   //util
@@ -23,7 +29,9 @@ export class StudyPlanTableComponent implements OnInit {
   public isTablet: boolean;
   public isPhone: boolean;
 
-  constructor(private windowService : WindowResizeService) { }
+  constructor(private windowService : WindowResizeService,
+    private courseService : CourseService,
+    private messageService : MessageService) { }
 
   ngOnInit(): void {
     this.setTypeOfTable();
@@ -62,5 +70,20 @@ export class StudyPlanTableComponent implements OnInit {
 
   public emitClickedStudyTerm(studyPlanTerm : StudyPlanTermClient): void {
     this.clickedStudyTerm.emit(studyPlanTerm);
+  }
+
+  public addToFavorite(courseId : number): void {
+    this.courseService.addToFavorite(courseId).subscribe({
+      next : (course : CourseClient) => {
+        this.messageService.show(new MessageModel(MessageTypeEnum.Success, 'Success' 
+        ,`${course.name} successfully modified to your favorite list`));
+        let index = this.courses.findIndex(c => c.id == course.id);
+        this.courses[index] = course;
+        this.courseChanges.emit(this.courses);
+      },
+      error : (error : ApplicationErrorModel) => {
+        this.messageService.show(new MessageModel(MessageTypeEnum.Error, 'Error' ,error.message))
+      }
+    });
   }
 }

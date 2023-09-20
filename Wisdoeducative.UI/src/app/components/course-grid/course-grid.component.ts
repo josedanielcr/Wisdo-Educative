@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CourseClient } from 'src/app/models/core/client/course.client.model';
 
 @Component({
@@ -9,6 +9,11 @@ import { CourseClient } from 'src/app/models/core/client/course.client.model';
 export class CourseGridComponent  {
 
   @Input() courses: CourseClient[];
+  @Output() courseChanges : EventEmitter<CourseClient> = new EventEmitter<CourseClient>();
 
   constructor() { }
+
+  public emitCourseChanges(course : CourseClient) : void {
+    this.courseChanges.emit(course);
+  }
 }

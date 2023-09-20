@@ -43,34 +43,38 @@
     <!-- courses list -->
     <div class="w-100">
         <app-course-grid [courses]="activeStudyPlanTermCourses"
-                         *ngIf="isCardView">
+                         *ngIf="isCardView"
+                         (courseChanges)="updateSingleActiveCourse($event)">
         </app-course-grid>
         <app-study-plan-table [courses]="activeStudyPlanTermCourses"
-                              *ngIf="!isCardView">
+                              *ngIf="!isCardView"
+                              (courseChanges)="updateCoursesList($event)">
         </app-study-plan-table>
     </div>
 
     <!-- other study plan terms header-->
-    <div class="header-container wd-bg-secondary w-100 d-flex align-items-center" [ngClass]="{
-        'mb-3' : isCardView
-    }" *transloco="let t; scope : 'studyplan'">
-        <h3 class="wd-text-h4 wd-text-white m-0 ps-3">{{t('studyplan.Other')}} {{t('studyplan.'+userDegree.schedule)}}s</h3>
-        <div class="ms-auto pe-2 user-select-none">
-            <div class="new-study-plan-term-container wd-bg-primary d-flex 
-                justify-content-center align-items-center gap-3 cursor-pointer"
-                (click)="toggleNewStudyPlanTerm()">
-                <div *ngIf="isDesktop">
-                    <span class="wd-text-white fw-bold">{{t('studyplan.AddBlock')}}</span>
-                </div>
-                <div>
-                    <img src="../../../assets/icons/plus.png" width="15" height="15">
+    <div *ngIf="!isSearchActive">
+        <div class="header-container wd-bg-secondary w-100 d-flex align-items-center" [ngClass]="{
+            'mb-3' : isCardView
+        }" *transloco="let t; scope : 'studyplan'">
+            <h3 class="wd-text-h4 wd-text-white m-0 ps-3">{{t('studyplan.Other')}} {{t('studyplan.'+userDegree.schedule)}}s</h3>
+            <div class="ms-auto pe-2 user-select-none">
+                <div class="new-study-plan-term-container wd-bg-primary d-flex 
+                    justify-content-center align-items-center gap-3 cursor-pointer"
+                    (click)="toggleNewStudyPlanTerm()">
+                    <div *ngIf="isDesktop">
+                        <span class="wd-text-white fw-bold">{{t('studyplan.AddBlock')}}</span>
+                    </div>
+                    <div>
+                        <img src="../../../assets/icons/plus.png" width="15" height="15">
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- other study plan terms list -->
-    <div class="w-100">
+    <div class="w-100" *ngIf="!isSearchActive">
         <app-study-plan-term-grid [studyPlanTerms]="studyPlanTerms"
                                   *ngIf="isCardView"
                                   (wasCardClicked)="toggleSelectedStudyPlanTerm($event)">

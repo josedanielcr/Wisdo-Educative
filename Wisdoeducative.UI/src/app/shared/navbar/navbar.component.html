@@ -37,7 +37,7 @@
     </div>
 
     <!-- dropdown menu -->
-    <div class="wd-bg-white user-select-none dropdown-container" 
+    <div class="wd-bg-general user-select-none dropdown-container" 
         [ngClass]="{
             'dropdown-container-desktop': isDesktop || isTablet,
             'dropdown-container-phone': isPhone
@@ -46,14 +46,7 @@
         <div class="dropdown-content h-100 d-flex flex-column" *transloco="let t; scope : 'shared'">
 
             <!-- profile -->
-            <div class="d-flex gap-4 mb-3">
-                <img class="profile-image cursor-pointer" 
-                [ngClass]="{
-                    'desktop-profile-image': isDesktop || isTablet,
-                    'phone-profile-image': isPhone
-                }"
-                [src]="user.profileImage | noProfileImage">
-                
+            <div class="d-flex gap-4 mb-3">   
                 <div class="d-flex flex-column profile-names-container">
                     <span class="fw-bold">{{user.name}}</span>
                     <span>{{user.lastName}}</span>
@@ -61,7 +54,7 @@
             </div>
 
             <!-- options general-->
-            <div>
+            <div class="mb-3">
                 <span class="fw-bold">{{t('shared.General')}}</span>
                 <div class="d-flex flex-column gap-3 mt-3">
 
@@ -86,9 +79,10 @@
                     </div>
                 </div>
             </div>
+            <div class="divisor wd-bg-white"></div>
 
             <!-- options payments -->
-            <div class="mt-3">
+            <div class="mt-3 mb-3">
                 <span class="fw-bold">{{t('shared.Payments')}}</span>
                 <div class="d-flex flex-column gap-3 mt-3">
 
@@ -104,6 +98,7 @@
                     </div>
                 </div>
             </div>
+            <div class="divisor wd-bg-white"></div>
 
             <!-- logout -->
             <div class="mt-auto">

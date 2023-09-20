@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column-reverse;
     position: fixed;
+    z-index: 99999;
     right: 0;
     top: 95%; 
     transform: translateY(-95%);

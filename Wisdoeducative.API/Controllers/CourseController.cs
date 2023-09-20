@@ -37,5 +37,11 @@ namespace Wisdoeducative.API.Controllers
         {
             return Ok(await courseService.SearchCourses(studyPlanId, searchCourseModel));
         }
+
+        [HttpPost("add-favorite/{courseId}")]
+        public async Task<IActionResult> AddFavoriteCourse(int courseId)
+        {
+            return Ok(await courseService.AddFavoriteCourse(courseId));
+        }
     }
 }

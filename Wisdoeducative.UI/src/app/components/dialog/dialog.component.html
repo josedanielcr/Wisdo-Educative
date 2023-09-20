@@ -8,16 +8,16 @@
         [style.minHeight]="minHeight+'rem'"
         *transloco="let t; scope : 'studyplan'">
         <div class="w-100 h-100" *ngIf="type === DialogType.Default">
-            <div class="w-100 d-flex align-items-center justify-content-center mb-5 mt-4" >
-                <div [ngClass]="{
-                    'ms-auto' : canBeClosed
-                }">
-                    <h3 class="mb-0" [ngClass]="{
-                        'wd-text-h3' : isPhone,
-                        'wd-text-h1' : isTablet || isDesktop
-                     }">
+            <div class="w-100 d-flex align-items-center mb-5" [ngClass]="{
+                'mt-4' : isDesktop
+            }">
+                <div>
+                    <h3 class="mb-0 wd-text-h4">
                      {{title}}
                     </h3>
+                    <span *ngIf="description">
+                        {{description}}
+                    </span>
                 </div>
                 <div class="ms-auto close-container" (click)="toggle()" *ngIf="canBeClosed">
                     <img src="../../../assets/icons/close-outline 1.png" alt="">

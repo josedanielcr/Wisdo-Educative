@@ -107,11 +107,24 @@ export class StudyPlanComponent implements OnInit {
       next : (courses : CourseClient[]) => {
         this.defaultStudyPlanTemCourses = courses; 
         this.activeStudyPlanTermCourses = courses;
+        this.sortCoursesByFavorite();
       },
       error : (err : ApplicationErrorModel) => {
         console.log(err);
       }
     })
+  }
+
+  private sortCoursesByFavorite(): void {
+    this.activeStudyPlanTermCourses.sort((a: CourseClient, b: CourseClient) => {
+      if (a.isFavorite && !b.isFavorite) {
+        return -1;
+      }
+      if (!a.isFavorite && b.isFavorite) {
+        return 1;
+      }
+      return 0;
+    });
   }
 
   public cleanSearchResults(): void {
@@ -157,5 +170,16 @@ export class StudyPlanComponent implements OnInit {
         console.log(err);
       }
     });
+  }
+
+  public updateCoursesList(coursesClient : CourseClient[]): void {
+    this.activeStudyPlanTermCourses = coursesClient;
+    this.sortCoursesByFavorite();
+  }
+
+  public updateSingleActiveCourse(courseClient : CourseClient) : void {
+    let index = this.activeStudyPlanTermCourses.findIndex(c => c.id == courseClient.id);
+    this.activeStudyPlanTermCourses[index] = courseClient;
+    this.sortCoursesByFavorite();
   }
 }
