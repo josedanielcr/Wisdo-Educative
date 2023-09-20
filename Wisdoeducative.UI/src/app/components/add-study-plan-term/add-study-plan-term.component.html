@@ -1,4 +1,5 @@
-<app-dialog title="Agregar bloque" 
+<app-dialog [title]="t('studyplan.AddBlock')" 
+            [description]="t('studyplan.AddBlockDescription')"
             [minHeight]="20" 
             (wasClosed)="this.emitDialogWasClosed()" 
             [type]="DialogType.Default"
@@ -6,10 +7,7 @@
             *transloco="let t; scope : 'studyplan'">
 
     <!-- study term -->
-    <div class="w-100 d-flex flex-column" 
-        [ngClass]="{
-        'pe-5 ps-5' : isDesktop || isTablet
-        }"
+    <div class="w-100 d-flex flex-column"
         *ngIf="studyTermForm">
         <form [formGroup]="studyTermForm" class="w-100">
             <div class="w-100 mb-3">
@@ -40,11 +38,8 @@
 
     <!-- courses -->
     <div class="w-100 d-flex flex-column mt-5" 
-         *ngIf="coursesFormArray && coursesFormArray.length"
-         [ngClass]="{
-            'pe-5 ps-5' : isDesktop || isTablet
-         }">
-        <form [formGroup]="courseForm">
+         *ngIf="coursesFormArray && coursesFormArray.length">
+        <form [formGroup]="courseForm" class="mb-5">
           <div formArrayName="courses">
             <div *ngFor="let course of coursesFormArray.controls; let i = index; trackBy: trackByFn">
               <div [formGroupName]="i" class="add-course-container">
@@ -60,19 +55,11 @@
                                     placeholder="">
                     </app-input-text>
                 </div>
-                <div *ngIf="i !== coursesFormArray.controls.length-1" class="placeholder-button"></div>
-                <div class="course-button mt-auto"
-                     *ngIf="i === coursesFormArray.controls.length-1">
-                    <app-button iconPath="../../../assets/icons/plus.png"
-                                [type]="ButtonType.SUCCESS"
-                                (click)="addCourse()">
-                    </app-button>
-                </div>
               </div>
             </div>
           </div>
         </form>
-        <div class="mt-5 ms-auto" [ngClass]="{
+        <!-- <div class="mt-5 ms-auto" [ngClass]="{
             'w-100': isPhone || isTablet,
             'btn-create-course-desktop': isDesktop 
         }">
@@ -80,6 +67,26 @@
                         [type]="ButtonType.SECONDARY"
                         (click)="createStudyPlanTermWithCourses()">
             </app-button>
+        </div> -->
+        <div class="mt-auto d-flex flex-wrap">
+            <div [ngClass]="{
+                'w-100 mb-3': isPhone || isTablet,
+                'btn-add-course-desktop': isDesktop 
+            }">
+                <app-button [text]="t('studyplan.AddAnotherCourse')"
+                            [type]="ButtonType.BONE"
+                            (click)="addCourse()">
+                </app-button>
+            </div>
+            <div class="ms-auto" [ngClass]="{
+                'w-100': isPhone || isTablet,
+                'btn-create-course-desktop': isDesktop 
+            }">
+                <app-button [text]="t('studyplan.Finish')"
+                            [type]="ButtonType.SECONDARY"
+                            (click)="createStudyPlanTermWithCourses()">
+                </app-button>
+            </div>
         </div>
     </div>      
 </app-dialog>

@@ -32,9 +32,9 @@
         </thead>
         <tbody *ngIf="isCourseTable">
             <tr *ngFor="let course of courses" class="wd-bg-white">
-                <td [ngClass]="{
+                <td class="cursor-pointer" [ngClass]="{
                     'ps-3' : true
-                }">
+                }" (click)="addToFavorite(course.id)">
                     <img [src]="course.isFavorite ?
                          '../../../assets/icons/heart-filled.png' :
                          '../../../assets/icons/heart-empty.png'" width="20" height="20">

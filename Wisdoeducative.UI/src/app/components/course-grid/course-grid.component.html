@@ -1,7 +1,7 @@
 <div class="container-fluid" *ngIf="courses">
     <div class="row">
         <div class="col-lg-3 col-md-6 col-12 mb-4" *ngFor="let course of courses">
-            <app-course-card [course]="course"></app-course-card>
+            <app-course-card [course]="course" (courseChanges)="emitCourseChanges($event)"></app-course-card>
         </div>
     </div>
 </div>

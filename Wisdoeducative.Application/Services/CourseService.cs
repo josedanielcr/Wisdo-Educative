@@ -142,5 +142,30 @@ namespace Wisdoeducative.Application.Services
             var results = await query.ToListAsync();
             return mapper.Map<List<CourseDto>>(results);
         }
+
+        public async Task<CourseDto> AddFavoriteCourse(int courseId)
+        {
+            using var transaction = dBContext.Database.BeginTransaction();
+            try
+            {
+                var course = await dBContext.Courses.FirstOrDefaultAsync(c => c.Id == courseId)
+                    ?? throw new BadRequestException("Course not found");
+                dBContext.Entry(course).State = EntityState.Modified;
+               
+                if(course.IsFavorite == false) course.IsFavorite = true;
+                else course.IsFavorite = false;
+
+                await dBContext.SaveChangesAsync();
+                await SaveCourseHistory(course);
+                await dBContext.SaveChangesAsync();
+                transaction.Commit();
+                return mapper.Map<CourseDto>(course);
+            }
+            catch (Exception)
+            {
+                transaction.Rollback();
+                throw;
+            }
+        }
     }
 }

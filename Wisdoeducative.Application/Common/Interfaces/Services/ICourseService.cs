@@ -13,5 +13,6 @@ namespace Wisdoeducative.Application.Common.Interfaces.Services
         Task<List<CourseDto>> CreateCourse(List<CourseDto> courses);
         Task<IEnumerable<CourseDto>> GetStudyTermCourses(int studyTermId);
         Task<IEnumerable<CourseDto>> SearchCourses(int studyPlanId, SearchCourseDto searchCourseModel);
+        Task<CourseDto> AddFavoriteCourse(int courseId);
     }
 }

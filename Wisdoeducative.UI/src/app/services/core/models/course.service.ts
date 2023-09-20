@@ -51,4 +51,20 @@ export class CourseService {
         })
       )
   }
+
+  public addToFavorite(courseId : number) : Observable<CourseClient>{
+    this.spinnerService.show();
+    return this.http.post(`${this.apiUrlService.checkEnvironment()}/Course/add-favorite/${courseId}`, null)
+      .pipe(
+        finalize(() => {
+          this.spinnerService.hide();
+        }),
+        map((course : CourseServer) => {
+          return this.courseAdapter.adaptServerToClient(course);
+        }),
+        catchError((error: any) => {
+          throw this.applicationErrorService.parseHttpError(error)
+        })
+      )
+  }
 }

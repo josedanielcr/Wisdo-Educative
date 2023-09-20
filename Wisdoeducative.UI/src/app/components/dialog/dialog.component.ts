@@ -17,6 +17,7 @@ export class DialogComponent implements OnInit {
   @Input() public type : DialogType = DialogType.Default;
   @Input() public selectedStudyPlanTerm : StudyTermCoursesModel = null;
   @Input() public canBeClosed : boolean = true;
+  @Input() public description : string = '';
 
   //output
   @Output() public wasClosed: EventEmitter<boolean> = new EventEmitter<boolean>();
