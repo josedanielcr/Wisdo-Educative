@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MsalService } from '@azure/msal-angular';
 import { UserClient } from 'src/app/models/core/client/user.client.model';
 import { ScreenSizeModel } from 'src/app/models/screenSize.model';
 import { MenuService } from 'src/app/services/components/menu.service';
@@ -23,7 +24,8 @@ export class NavbarComponent implements OnInit {
   constructor(private windowResizeService: WindowResizeService,
               private menuService : MenuService,
               private storeService : StoreService,
-              private userService : UserService) {}
+              private userService : UserService,
+              private msalService: MsalService) {}
 
   ngOnInit(): void {
     this.manageWindowSizes();
@@ -59,6 +61,22 @@ export class NavbarComponent implements OnInit {
       }
     });
   }
+  /**
+   * Initiates the logout flow using the MSAL service.
+   * The postLogoutRedirectUri parameter is set to the app's /auth route.
+ */
+  public logout() { 
+    let redirectUri : string;
+    if(window.location.href.indexOf('localhost') > -1) {
+        redirectUri = 'http://localhost:4200/landing';
+    } else {
+      redirectUri = 'https://lemon-glacier-05e76cc10.3.azurestaticapps.net/landing'
+    }
+    this.msalService.logoutRedirect({
+      postLogoutRedirectUri: redirectUri
+    });
+  }
+  
 
   private manageWindowSizes(): void {
     this.windowResizeService.getScreenSizeObservable().subscribe((screenSizes: ScreenSizeModel) => {

@@ -5,7 +5,7 @@ import { StudyPlanTermServer } from "./study.plan.term.server.model";
 export class CourseServer {
     id: number;
     studyPlanTermId: number;
-    studyPlanTerm: StudyPlanTermServer;
+    studyPlanTermDto: StudyPlanTermServer;
     courseScheduleId?: number;
     courseSchedule?: CourseScheduleServer;
     coursePrerequisites?: CoursePrerequisiteServer[];

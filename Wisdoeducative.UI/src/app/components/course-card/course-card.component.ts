@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { TranslocoService } from '@ngneat/transloco';
 import { MessageTypeEnum } from 'src/app/enums/message.type.enum';
 import { ApplicationErrorModel } from 'src/app/models/application.error.model';
 import { CourseClient } from 'src/app/models/core/client/course.client.model';
@@ -11,13 +12,19 @@ import { CourseService } from 'src/app/services/core/models/course.service';
   templateUrl: './course-card.component.html',
   styleUrls: ['./course-card.component.css']
 })
-export class CourseCardComponent {
+export class CourseCardComponent implements OnInit {
 
   @Input() course: CourseClient;
   @Output() courseChanges : EventEmitter<CourseClient> = new EventEmitter<CourseClient>();
 
   constructor(private courseService : CourseService,
-    private messageService : MessageService) { }
+    private messageService : MessageService,
+    private translocoService : TranslocoService) { }
+
+  ngOnInit(): void {
+    console.log(this.course);
+    
+  }
 
   public getCoursesProgress(): number {
     try {
@@ -31,7 +38,7 @@ export class CourseCardComponent {
     this.courseService.addToFavorite(this.course.id).subscribe({
       next : (course : CourseClient) => {
         this.messageService.show(new MessageModel(MessageTypeEnum.Success, 'Success' 
-        ,`${course.name} successfully modified to your favorite list`));
+        ,`CourseToFavorite`));
         this.courseChanges.emit(course);
       },
       error : (error : ApplicationErrorModel) => {

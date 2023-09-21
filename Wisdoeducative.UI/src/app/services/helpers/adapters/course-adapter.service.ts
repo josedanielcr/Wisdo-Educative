@@ -15,7 +15,7 @@ export class CourseAdapterService {
       const clientObj = new CourseClient();
       clientObj.id = serverObj.id;
       clientObj.studyPlanTermId = serverObj.studyPlanTermId;
-      clientObj.studyPlanTerm = serverObj.studyPlanTerm ? this.studyPlanTermAdapter.adaptServerToClient(serverObj.studyPlanTerm): undefined;
+      clientObj.studyPlanTermDto = serverObj.studyPlanTermDto ? this.studyPlanTermAdapter.adaptServerToClient(serverObj.studyPlanTermDto): undefined;
       clientObj.courseScheduleId = serverObj.courseScheduleId || null;
       clientObj.courseSchedule = serverObj.courseSchedule ? this.courseScheduleAdapter.adaptServerToClient(serverObj.courseSchedule) : undefined;
       clientObj.name = serverObj.name || null;
@@ -31,7 +31,7 @@ export class CourseAdapterService {
       const serverObj = new CourseServer();
       serverObj.id = clientObj.id || null;
       serverObj.studyPlanTermId = clientObj.studyPlanTermId || null;;
-      serverObj.studyPlanTerm = clientObj.studyPlanTerm ? this.studyPlanTermAdapter.adaptClientToServer(clientObj.studyPlanTerm) : undefined;
+      serverObj.studyPlanTermDto = clientObj.studyPlanTermDto ? this.studyPlanTermAdapter.adaptClientToServer(clientObj.studyPlanTermDto) : undefined;
       serverObj.courseScheduleId = clientObj.courseScheduleId || null;
       serverObj.courseSchedule = clientObj.courseSchedule ? this.courseScheduleAdapter.adaptClientToServer(clientObj.courseSchedule) : undefined;
       serverObj.name = clientObj.name || null;

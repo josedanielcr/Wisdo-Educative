@@ -37,13 +37,13 @@
                         }">
                         <span class="wd-text-h4">{{(t('studyplan.'+selectedStudyPlanTerm.studyPlanTermDto.studyTermStatus))}}</span>
                     </div>
-                    <div>
+                    <div *transloco="let t; scope : 'months'">
                         <h1 class="wd-text-h1 wd-text-primary mb-0">
                             {{selectedStudyPlanTerm.studyPlanTermDto.name}}
                         </h1>
-                        <span>{{selectedStudyPlanTerm.studyPlanTermDto.startDate | date:'MMM'}} 
+                        <span>{{t('months.'+(selectedStudyPlanTerm.studyPlanTermDto.startDate | date:'MMM'))}} 
                             -
-                            {{selectedStudyPlanTerm.studyPlanTermDto.endDate | date:'MMM'}}
+                            {{t('months.'+(selectedStudyPlanTerm.studyPlanTermDto.endDate | date:'MMM'))}} 
                         </span>
                     </div>
                 </div>

@@ -110,7 +110,12 @@
             <tbody>
                 <tr *ngFor="let course of selectedStudyPlanTerm.coursesDtos">
                     <td>{{course.name}}</td>
-                    <td>{{t('studyplan.'+course.courseStatus)}}</td>
+                    <td>
+                        <span class="me-2">
+                            <img [src]="getCurrentStatusIcon(course.courseStatus)">
+                        </span>
+                        {{t('studyplan.'+course.courseStatus)}}
+                    </td>
                 </tr>
             </tbody>
         </table>
