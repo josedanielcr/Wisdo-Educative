@@ -40,7 +40,7 @@ namespace Wisdoeducative.Application.Services
         {
             if(interestDto == null || interestDto.Name == "")
             {
-                throw new BadRequestException($"{ErrorMessages.NullProperties} Interest={interestDto}");
+                throw new BadRequestException($"{ErrorMessages.NullProperties}", "NullProperties");
             }
 
             dBContext.Interests.Add(mapper.Map<Interest>(interestDto));
@@ -72,14 +72,14 @@ namespace Wisdoeducative.Application.Services
             string[] propertiesToCheck = new string[] { "Name" };
             if (!interests.Any() || interests == null)
             {
-                throw new BadRequestException($"There are no interests in the database");
+                throw new BadRequestException($"{ErrorMessages.NoInterestsAvailable}", "NoInterestsAvailable");
             }
 
             foreach (var interest in interests)
             {
                 if(entityHelperService.AreAnyPropertiesNull(interest, propertiesToCheck))
                 {
-                    throw new BadRequestException($"{ErrorMessages.NullProperties}");
+                    throw new BadRequestException($"{ErrorMessages.NullProperties}", "NullProperties");
                 }
             }
             return Task.CompletedTask;

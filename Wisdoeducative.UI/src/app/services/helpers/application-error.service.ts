@@ -12,7 +12,7 @@ export class ApplicationErrorService {
 
   public parseHttpError(error : any): ApplicationErrorModel {
     const errorData = error.error;
-    const erorr : ApplicationErrorModel = new ApplicationErrorModel(errorData.error,errorData.statusCode);
+    const erorr : ApplicationErrorModel = new ApplicationErrorModel(errorData.error,errorData.statusCode, errorData.errorCode);
     return erorr;
   }
 }

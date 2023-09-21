@@ -36,26 +36,60 @@ namespace Wisdoeducative.API.Middlewares
 
         private async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
-            var code = HttpStatusCode.InternalServerError;
+            var code = GetHttpStatusCode(exception);
             var message = exception.Message;
             var stackTrace = exception.StackTrace;
+            string errorCode = GetErrorCode(exception);
 
-            if (exception is NotFoundException) code = HttpStatusCode.NotFound;
-            else if (exception is BadRequestException) code = HttpStatusCode.BadRequest;
-            else if (exception is UnauthorizedException) code = HttpStatusCode.Unauthorized;
-            else if (exception is ForbiddenException) code = HttpStatusCode.Forbidden;
-            else if (exception is NotImplementedException) code = HttpStatusCode.NotImplemented;
-            else if (exception is TimeoutException) code = HttpStatusCode.RequestTimeout;
-            else if (exception is InternalServerErrorException) code = HttpStatusCode.InternalServerError;
+            var result = CreateErrorResponse(message, stackTrace, code, errorCode);
 
-            var result = JsonSerializer.Serialize(
-                new { error = message, 
+            SetResponseProperties(context, code, result);
+            await context.Response.WriteAsync(result);
+        }
+
+        private HttpStatusCode GetHttpStatusCode(Exception exception)
+        {
+            if (exception is NotFoundException) return HttpStatusCode.NotFound;
+            if (exception is BadRequestException) return HttpStatusCode.BadRequest;
+            if (exception is UnauthorizedException) return HttpStatusCode.Unauthorized;
+            if (exception is ForbiddenException) return HttpStatusCode.Forbidden;
+            if (exception is NotImplementedException) return HttpStatusCode.NotImplemented;
+            if (exception is TimeoutException) return HttpStatusCode.RequestTimeout;
+            if (exception is InternalServerErrorException) return HttpStatusCode.InternalServerError;
+
+            return HttpStatusCode.InternalServerError;
+        }
+
+        private string GetErrorCode(Exception exception)
+        {
+            if (exception is NotFoundException notFoundException) return notFoundException.Code;
+            if (exception is BadRequestException badRequestException) return badRequestException.Code;
+            if (exception is UnauthorizedException unauthorizedException) return unauthorizedException.Code;
+            if (exception is ForbiddenException forbiddenException) return forbiddenException.Code;
+            if (exception is NotImplementedException notImplementedException) return "";
+            if (exception is TimeoutException timeoutException) return "";
+            if (exception is InternalServerErrorException internalServerErrorException) return internalServerErrorException.Code;
+
+            return "";
+        }
+
+        private string CreateErrorResponse(string message, string stackTrace, HttpStatusCode code, string errorCode)
+        {
+            return JsonSerializer.Serialize(
+                new
+                {
+                    error = message,
                     stackTrace = stackTrace,
-                    statusCode = (int)code }
+                    statusCode = (int)code,
+                    errorCode = errorCode
+                }
             );
+        }
+
+        private void SetResponseProperties(HttpContext context, HttpStatusCode code, string result)
+        {
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)code;
-            await context.Response.WriteAsync(result);
         }
 
         private void LogExceptionDetails(Exception exception)

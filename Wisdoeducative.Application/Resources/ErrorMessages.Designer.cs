@@ -97,11 +97,65 @@ namespace Wisdoeducative.Application.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Oops! There are no interests available.
+        /// </summary>
+        internal static string NoInterestsAvailable {
+            get {
+                return ResourceManager.GetString("NoInterestsAvailable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oops! You must provide a study plan to retrive all it&apos;s terms.
+        /// </summary>
+        internal static string NoStudyPlanProvided {
+            get {
+                return ResourceManager.GetString("NoStudyPlanProvided", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oops! You must provide a study plan term.
+        /// </summary>
+        internal static string NotStudyPlanTermProvided {
+            get {
+                return ResourceManager.GetString("NotStudyPlanTermProvided", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Oops! It looks like some details for this item are missing..
         /// </summary>
         internal static string NullProperties {
             get {
                 return ResourceManager.GetString("NullProperties", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oops! You need to have more than 13 years old.
+        /// </summary>
+        internal static string RestrictedAgeError {
+            get {
+                return ResourceManager.GetString("RestrictedAgeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oops! Your study plan term needs to start after the start date of your degre.
+        /// </summary>
+        internal static string StudyPlanAfterCreationDate {
+            get {
+                return ResourceManager.GetString("StudyPlanAfterCreationDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oops! The provided dates do not match with the schedule type of your degree.
+        /// </summary>
+        internal static string StudyPlanTermNotMatchWithSchedule {
+            get {
+                return ResourceManager.GetString("StudyPlanTermNotMatchWithSchedule", resourceCulture);
             }
         }
         

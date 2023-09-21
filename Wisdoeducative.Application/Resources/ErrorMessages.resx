@@ -129,8 +129,26 @@
   <data name="HistorySaveErrorMessage" xml:space="preserve">
     <value>Oops! We ran into an issue while trying to save the item's history.</value>
   </data>
+  <data name="NoInterestsAvailable" xml:space="preserve">
+    <value>Oops! There are no interests available</value>
+  </data>
+  <data name="NoStudyPlanProvided" xml:space="preserve">
+    <value>Oops! You must provide a study plan to retrive all it's terms</value>
+  </data>
+  <data name="NotStudyPlanTermProvided" xml:space="preserve">
+    <value>Oops! You must provide a study plan term</value>
+  </data>
   <data name="NullProperties" xml:space="preserve">
     <value>Oops! It looks like some details for this item are missing.</value>
+  </data>
+  <data name="RestrictedAgeError" xml:space="preserve">
+    <value>Oops! You need to have more than 13 years old</value>
+  </data>
+  <data name="StudyPlanAfterCreationDate" xml:space="preserve">
+    <value>Oops! Your study plan term needs to start after the start date of your degre</value>
+  </data>
+  <data name="StudyPlanTermNotMatchWithSchedule" xml:space="preserve">
+    <value>Oops! The provided dates do not match with the schedule type of your degree</value>
   </data>
   <data name="StudyTermOverlap" xml:space="preserve">
     <value>Oops! The dates for this study plan overlap with another term. Could you please pick different dates?</value>

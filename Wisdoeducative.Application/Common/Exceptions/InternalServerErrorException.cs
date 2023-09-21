@@ -8,12 +8,15 @@ namespace Wisdoeducative.Application.Common.Exceptions
 {
     public class InternalServerErrorException : Exception
     {
-        public InternalServerErrorException(string message) : base(message)
+        public string Code { get; set; } = string.Empty;
+        public InternalServerErrorException(string message, string code) : base(message)
         {
+            Code = code;
         }
 
-        public InternalServerErrorException(string message, Exception innerException) : base(message, innerException)
+        public InternalServerErrorException(string message, Exception innerException, string code) : base(message, innerException)
         {
+            Code = code;
         }
 
         public InternalServerErrorException()
