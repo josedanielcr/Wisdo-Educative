@@ -93,10 +93,21 @@ namespace Wisdoeducative.Application.Services
             if (studyTermId == 0)
                 throw new BadRequestException("You must provide a study plan term to get its courses");
 
-            return await dBContext.Courses
+            List<CourseDto> results = new List<CourseDto>();
+
+            var courses = await dBContext.Courses
+                .Include(c => c.StudyPlanTerm)
                 .Where(c => c.StudyPlanTermId == studyTermId && c.status == Domain.Enums.EntityStatus.Active)
-                .Select(c => mapper.Map<CourseDto>(c))
                 .ToListAsync();
+
+            foreach ( Course course in courses )
+            {
+                CourseDto courseDto = mapper.Map<CourseDto>(course);
+                courseDto.StudyPlanTermDto = mapper.Map<StudyPlanTermDto>(course.StudyPlanTerm);
+                results.Add(courseDto);
+            }
+
+            return results;
         }
 
         public async Task SaveCourseHistory(Course course)
@@ -122,6 +133,7 @@ namespace Wisdoeducative.Application.Services
                 courseHelperService.ConvertStringCourseStatusToEnum(searchCourseModel.Statuses);
 
             var query = dBContext.Courses
+                 .Include(c => c.StudyPlanTerm)
                 .Where(c => c.StudyPlanTerm.StudyPlan!.Id == studyPlanId);
 
             if (courseStatuses.Count > 0)
@@ -140,7 +152,16 @@ namespace Wisdoeducative.Application.Services
             }
 
             var results = await query.ToListAsync();
-            return mapper.Map<List<CourseDto>>(results);
+            List<CourseDto> coursesResult = new List<CourseDto>();
+
+            foreach (Course course in results)
+            {
+                CourseDto courseDto = mapper.Map<CourseDto>(course);
+                courseDto.StudyPlanTermDto = mapper.Map<StudyPlanTermDto>(course.StudyPlanTerm);
+                coursesResult.Add(courseDto);
+            }
+
+            return coursesResult;
         }
 
         public async Task<CourseDto> AddFavoriteCourse(int courseId)
@@ -148,7 +169,9 @@ namespace Wisdoeducative.Application.Services
             using var transaction = dBContext.Database.BeginTransaction();
             try
             {
-                var course = await dBContext.Courses.FirstOrDefaultAsync(c => c.Id == courseId)
+                var course = await dBContext.Courses
+                    .Include(c => c.StudyPlanTerm)
+                    .FirstOrDefaultAsync(c => c.Id == courseId)
                     ?? throw new BadRequestException("Course not found");
                 dBContext.Entry(course).State = EntityState.Modified;
                
@@ -159,7 +182,11 @@ namespace Wisdoeducative.Application.Services
                 await SaveCourseHistory(course);
                 await dBContext.SaveChangesAsync();
                 transaction.Commit();
-                return mapper.Map<CourseDto>(course);
+
+                CourseDto courseDto = mapper.Map<CourseDto>(course);
+                courseDto.StudyPlanTermDto = mapper.Map<StudyPlanTermDto>(course.StudyPlanTerm);
+
+                return courseDto;
             }
             catch (Exception)
             {

@@ -182,4 +182,19 @@ export class StudyPlanComponent implements OnInit {
     this.activeStudyPlanTermCourses[index] = courseClient;
     this.sortCoursesByFavorite();
   }
+
+  public getCurrentStatusIcon(status : string): string {
+    switch(status) {
+      case 'Completed':
+        return '../../../assets/icons/check.png';
+      case 'Finished':
+        return '../../../assets/icons/check.png';
+      case 'InProgress':
+        return '../../../assets/icons/in-progress.png';
+      case 'NotStarted':
+        return '../../../assets/icons/pending.png';
+      default:
+        return '';
+    }
+  }
 }

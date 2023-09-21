@@ -5,7 +5,7 @@ import { StudyPlanTermClient } from "./study.plan.term.client.model";
 export class CourseClient {
     id: number;
     studyPlanTermId: number;
-    studyPlanTerm: StudyPlanTermClient;
+    studyPlanTermDto: StudyPlanTermClient;
     courseScheduleId?: number;
     courseSchedule?: CourseScheduleClient;
     coursePrerequisites?: CoursePrerequisiteClient[];

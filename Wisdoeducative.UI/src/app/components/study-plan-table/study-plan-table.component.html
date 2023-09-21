@@ -50,7 +50,12 @@
                     <app-progress-bar [progress]="getCourseProgress(course.currentScore)">
                     </app-progress-bar>
                 </td>
-                <td *ngIf="isDesktop">{{t('studyplan.'+course.courseStatus)}}</td>
+                <td *ngIf="isDesktop">
+                    <span class="me-2">
+                        <img [src]="getCurrentStatusIcon(course.courseStatus)">
+                    </span>
+                    <span>{{t('studyplan.'+course.courseStatus)}}</span>
+                </td>
                 <td *ngIf="isDesktop">{{ course.totalCredits }}</td>
             </tr>
         </tbody>
@@ -70,7 +75,14 @@
                     <app-progress-bar [progress]="studyPlanTerm.currentProgress">
                     </app-progress-bar>
                 </td>
-                <td *ngIf="isDesktop">{{t('studyplan.'+studyPlanTerm.studyTermStatus)}}</td>
+                <td *ngIf="isDesktop">
+                    <span class="me-2">
+                        <img [src]="getCurrentStatusIcon(studyPlanTerm.studyTermStatus)">
+                    </span>
+                    <span>
+                        {{t('studyplan.'+studyPlanTerm.studyTermStatus)}}
+                    </span>
+                </td>
                 <td [ngClass]="{
                     'pe-2' : isPhone
                 }">{{studyPlanTerm.totalCredits}}</td>

@@ -76,7 +76,7 @@ export class StudyPlanTableComponent implements OnInit {
     this.courseService.addToFavorite(courseId).subscribe({
       next : (course : CourseClient) => {
         this.messageService.show(new MessageModel(MessageTypeEnum.Success, 'Success' 
-        ,`${course.name} successfully modified to your favorite list`));
+        ,`CourseToFavorite`));
         let index = this.courses.findIndex(c => c.id == course.id);
         this.courses[index] = course;
         this.courseChanges.emit(this.courses);
@@ -85,5 +85,20 @@ export class StudyPlanTableComponent implements OnInit {
         this.messageService.show(new MessageModel(MessageTypeEnum.Error, 'Error' ,error.message))
       }
     });
+  }
+
+  public getCurrentStatusIcon(status : string): string {
+    switch(status) {
+      case 'Completed':
+        return '../../../assets/icons/check.png';
+      case 'Finished':
+        return '../../../assets/icons/check.png';
+      case 'InProgress':
+        return '../../../assets/icons/in-progress.png';
+      case 'NotStarted':
+        return '../../../assets/icons/pending.png';
+      default:
+        return '';
+    }
   }
 }

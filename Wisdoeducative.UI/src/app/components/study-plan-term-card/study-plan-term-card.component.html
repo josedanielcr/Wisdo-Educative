@@ -2,14 +2,14 @@
      *ngIf="studyPlanTerm">
 
     <!-- name and date -->
-    <div class="d-flex flex-column">
+    <div class="d-flex flex-column" *transloco="let t; scope : 'months'">
         <!-- name -->
         <h4 class="wd-text-h4">{{studyPlanTerm.name}}</h4>
         <!-- date -->
         <div class="d-flex">
-            <h5 class="wd-text-h5">{{studyPlanTerm.startDate | date:'MMMM'}}</h5>
+            <h5 class="wd-text-h5">{{t('months.'+(studyPlanTerm.startDate| date:'MMMM'))}}</h5>
             <span>-</span>
-            <h5 class="wd-text-h5">{{studyPlanTerm.endDate| date:'MMMM'}}</h5>
+            <h5 class="wd-text-h5">{{t('months.'+(studyPlanTerm.endDate| date:'MMMM'))}}</h5>
         </div>
 
     </div>
