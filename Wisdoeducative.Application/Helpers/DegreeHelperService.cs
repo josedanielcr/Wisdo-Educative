@@ -47,7 +47,7 @@ namespace Wisdoeducative.Application.Helpers
                 .FirstOrDefaultAsync();
 
             return dbDegree == null
-                ? throw new NotFoundException($"{ErrorMessages.EntityNotFound}")
+                ? throw new NotFoundException($"{ErrorMessages.EntityNotFound}", "EntityNotFound")
                 : mapper.Map<DegreeDto>(dbDegree);
         }
 
@@ -65,7 +65,7 @@ namespace Wisdoeducative.Application.Helpers
         {
             if (entityHelper.AreAnyPropertiesNull(userDegree))
             {
-                throw new BadRequestException($"{ErrorMessages.NullProperties}");
+                throw new BadRequestException($"{ErrorMessages.NullProperties}", "NullProperties");
             }
             
             var newDegree = new DegreeDto();

@@ -61,7 +61,7 @@ namespace Wisdoeducative.Application.Helpers
             string[] propertiesToCheck = { "StudyPlanId", "StartDate", "EndDate" };
             if (helperService.AreAnyPropertiesNull(studyTermCreationDto.StudyPlanTermDto, propertiesToCheck))
             {
-                throw new BadRequestException($"{ErrorMessages.NullProperties}");
+                throw new BadRequestException($"{ErrorMessages.NullProperties}", "NullProperties");
             }
             await ValidateStudyPlanTermDates(studyTermCreationDto.StudyPlanTermDto);
         }
@@ -70,10 +70,10 @@ namespace Wisdoeducative.Application.Helpers
         {
 
             var studyPlan = await studyPlanService.GetUserStudyPlan(studyPlanTermDto.StudyPlanId)
-                ?? throw new NotFoundException($"{ErrorMessages.EntityNotFound}");
+                ?? throw new NotFoundException($"{ErrorMessages.EntityNotFound}", "EntityNotFound");
 
             var degree = await degreeService.GetUserDegreeById(studyPlan.UserDegreeId)
-                ?? throw new NotFoundException($"{ErrorMessages.EntityNotFound}");
+                ?? throw new NotFoundException($"{ErrorMessages.EntityNotFound}", "EntityNotFound");
 
             var studyPlanTerms = await dBContext.StudyPlanTerms
                 .Where(spt => spt.StudyPlanId == studyPlanTermDto.StudyPlanId)
@@ -92,7 +92,7 @@ namespace Wisdoeducative.Application.Helpers
         {
             if(studyPlanTermDto.StartDate < degree.StartDate)
             {
-                throw new BadRequestException($"Your study plan term needs to start after the start date of your degree, which is {degree.StartDate}");
+                throw new BadRequestException($"{ErrorMessages.StudyPlanAfterCreationDate}", "StudyPlanAfterCreationDate");
             }
             return Task.FromResult(true);
         }
@@ -116,7 +116,7 @@ namespace Wisdoeducative.Application.Helpers
             {
                 if (numberOfMonths != expectedMonths)
                 {
-                    throw new Exception($"The provided dates do not match with the schedule type of your degree({userDegree.Schedule})");
+                    throw new BadRequestException($"{ErrorMessages.StudyPlanTermNotMatchWithSchedule}", "StudyPlanTermNotMatchWithSchedule");
                 }
             }
             return Task.FromResult(true);
@@ -128,7 +128,7 @@ namespace Wisdoeducative.Application.Helpers
                 if(newStudyPlanTermDto.StartDate >= studyPlanTerm.StartDate && 
                     newStudyPlanTermDto.EndDate <= studyPlanTerm.EndDate)
                 {
-                    throw new BadRequestException(ErrorMessages.StudyTermOverlap);
+                    throw new BadRequestException(ErrorMessages.StudyTermOverlap, "StudyTermOverlap");
                 }
             }
             return Task.FromResult(true);

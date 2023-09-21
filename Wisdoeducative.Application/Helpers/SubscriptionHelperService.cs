@@ -68,7 +68,7 @@ namespace Wisdoeducative.Application.Helpers
             
             if(subscription == null)
             {
-                throw new NotFoundException($"{ErrorMessages.EntityNotFound}");
+                throw new NotFoundException($"{ErrorMessages.EntityNotFound}", "EntityNotFound");
             }
 
             return mapper.Map<SubscriptionDto>(subscription.Subscription);

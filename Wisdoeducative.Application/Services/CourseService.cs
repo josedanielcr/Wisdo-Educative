@@ -69,7 +69,7 @@ namespace Wisdoeducative.Application.Services
 
                 if (!courseHelperService.ValidateCourseBeforeCreation(course))
                 {
-                    throw new BadRequestException($"{ErrorMessages.NullProperties}");
+                    throw new BadRequestException($"{ErrorMessages.NullProperties}", "NullProperties");
                 }
 
                 Course entityCourse = courseHelperService.CreateNewCourseFromDto(course);
@@ -91,7 +91,7 @@ namespace Wisdoeducative.Application.Services
         public async Task<IEnumerable<CourseDto>> GetStudyTermCourses(int studyTermId)
         {
             if (studyTermId == 0)
-                throw new BadRequestException("You must provide a study plan term to get its courses");
+                throw new BadRequestException($"{ErrorMessages.NotStudyPlanTermProvided}", "NotStudyPlanProvided");
 
             List<CourseDto> results = new List<CourseDto>();
 
@@ -123,7 +123,7 @@ namespace Wisdoeducative.Application.Services
             return await dBContext.Courses
                 .Where(c => c.Id == course.Id)
                 .Select(c => c.StudyPlanTerm!.StudyPlan!.UserDegree.User)
-                .FirstOrDefaultAsync() ?? throw new BadRequestException("User ID not found for the given course.");
+                .FirstOrDefaultAsync() ?? throw new BadRequestException($"{ErrorMessages.EntityNotFound}", "EntityNotFound");
         }
 
         public async Task<IEnumerable<CourseDto>> SearchCourses(int studyPlanId,
@@ -172,7 +172,7 @@ namespace Wisdoeducative.Application.Services
                 var course = await dBContext.Courses
                     .Include(c => c.StudyPlanTerm)
                     .FirstOrDefaultAsync(c => c.Id == courseId)
-                    ?? throw new BadRequestException("Course not found");
+                    ?? throw new BadRequestException($"{ErrorMessages.EntityNotFound}", "EntityNotFound");
                 dBContext.Entry(course).State = EntityState.Modified;
                
                 if(course.IsFavorite == false) course.IsFavorite = true;

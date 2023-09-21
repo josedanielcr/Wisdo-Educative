@@ -51,7 +51,7 @@ namespace Wisdoeducative.Application.Services
         {
             User userEntity = mapper.Map<User>(user);
             var role = await roleService.GetRoleByName(UserRoles.Student)
-                ?? throw new NotFoundException($"{ErrorMessages.EntityNotFound}");
+                ?? throw new NotFoundException($"{ErrorMessages.EntityNotFound}", "EntityNotFound");
             userEntity.RoleId = role.Id;
             userEntity.UserStatus = UserStatus.Pending;
             dBContext.Users.Add(userEntity);
@@ -90,12 +90,12 @@ namespace Wisdoeducative.Application.Services
         {
             if (userServiceHelper.IsUserConfigurationInvalid(user))
             {
-                throw new BadRequestException($"{ErrorMessages.NullProperties}");
+                throw new BadRequestException($"{ErrorMessages.NullProperties}", "NullProperties");
             }
 
             if (userServiceHelper.IsUserAgeInvalid(user.DateOfBirth))
             {
-                throw new BadRequestException($"You need to have more than 13 years old");
+                throw new BadRequestException($"{ErrorMessages.RestrictedAgeError}", "RestrictedAgeError");
             }
 
             await subscriptionService.LinkSubscriptionToAccount(SubscriptionNames.Free, user.Id, user.B2cId);
@@ -106,7 +106,7 @@ namespace Wisdoeducative.Application.Services
         public async Task<UserDto> SetUserInterests(int userId, IEnumerable<InterestDto> interests)
         {
             var user = await userServiceHelper.GetUser(userId)
-                ?? throw new NotFoundException($"{ErrorMessages.EntityNotFound}");
+                ?? throw new NotFoundException($"{ErrorMessages.EntityNotFound}", "EntityNotFound");
             await interestService.SetInterestToUser(interests, user);
             return mapper.Map<UserDto>(user);
         }
@@ -124,7 +124,7 @@ namespace Wisdoeducative.Application.Services
         {
             if (userServiceHelper.IsGeneralUserDataInvalid(user))
             {
-                throw new BadRequestException($"{ErrorMessages.NullProperties}");
+                throw new BadRequestException($"{ErrorMessages.NullProperties}", "NullProperties");
             }
 
             bool isExistingUser = await userServiceHelper.DoesUserExist(user);
@@ -137,7 +137,7 @@ namespace Wisdoeducative.Application.Services
             var user = await dBContext.Users
                 .Where(u => u.Id == UserId)
                 .FirstOrDefaultAsync() 
-            ?? throw new NotFoundException($"{ErrorMessages.EntityNotFound}");
+            ?? throw new NotFoundException($"{ErrorMessages.EntityNotFound}", "EntityNotFound");
             
             user.UserStatus = UserStatus.Omitted;
             dBContext.Users.Attach(user);

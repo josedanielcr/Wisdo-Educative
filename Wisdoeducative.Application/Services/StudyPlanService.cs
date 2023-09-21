@@ -43,7 +43,7 @@ namespace Wisdoeducative.Application.Services
             {
                 if (!studyPlanHelperService.ValidateStudyPlanBeforeCreate(studyPlan))
                 {
-                    throw new BadRequestException($"{ErrorMessages.NullProperties}");
+                    throw new BadRequestException($"{ErrorMessages.NullProperties}", "NullProperties");
                 }
 
                 StudyPlan studyPlanEntity = studyPlanHelperService.CreateNewStudyPlanFromDto(studyPlan);
@@ -73,7 +73,7 @@ namespace Wisdoeducative.Application.Services
             var studyPlan = await dBContext.StudyPlans
                 .Where(s => s.Id == studyPlanId)
                 .FirstOrDefaultAsync()
-            ?? throw new NotFoundException($"{ErrorMessages.EntityNotFound}");
+            ?? throw new NotFoundException($"{ErrorMessages.EntityNotFound}", "EntityNotFound");
 
             return mapper.Map<StudyPlanDTO>(studyPlan);
         } 
@@ -94,7 +94,7 @@ namespace Wisdoeducative.Application.Services
                 .FirstOrDefaultAsync();
 
             return user == null 
-                ? throw new InternalServerErrorException($"{ErrorMessages.EntityNotFound}") 
+                ? throw new InternalServerErrorException($"{ErrorMessages.EntityNotFound}", "EntityNotFound") 
                 : user;
         }
 
@@ -104,7 +104,7 @@ namespace Wisdoeducative.Application.Services
                 .Where(s => s.Id == studyPlanId)
                 .Where(s => s.Status == Domain.Enums.EntityStatus.Active)
                 .FirstOrDefaultAsync() ??
-                throw new NotFoundException($"{ErrorMessages.EntityNotFound}");
+                throw new NotFoundException($"{ErrorMessages.EntityNotFound}", "EntityNotFound");
             return mapper.Map<StudyPlanDTO>(result);
         }
 
@@ -113,7 +113,7 @@ namespace Wisdoeducative.Application.Services
             var studyPlan = await dBContext.StudyPlans
                 .Where(s => s.UserDegree.Id == userDegreeId)
                 .FirstOrDefaultAsync()
-                ?? throw new NotFoundException($"{ErrorMessages.EntityNotFound}");
+                ?? throw new NotFoundException($"{ErrorMessages.EntityNotFound}", "EntityNotFound");
 
             return mapper.Map<StudyPlanDTO>(studyPlan);
         }

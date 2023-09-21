@@ -1,3 +1,16 @@
 {
-    "CourseToFavorite" : "El curso ha sido modificado" 
+    "CourseToFavorite" : "El curso ha sido modificado",
+    "DegreeDateFuture": "¡Vaya! Parece que has seleccionado una fecha en el futuro. Por favor, elige una fecha que sea hoy o anterior.",
+    "DuplicatedEntity": "¡Vaya! Parece que este artículo ya existe en el sistema.",
+    "EntityNotFound": "¡Vaya! No pudimos encontrar el artículo que estás buscando.",
+    "HistorySaveErrorMessage": "¡Vaya! Tuvimos un problema al intentar guardar el historial del artículo.",
+    "NoInterestsAvailable": "¡Vaya! No hay intereses disponibles",
+    "NoStudyPlanProvided": "¡Vaya! Debes proporcionar un plan de estudio para recuperar todos sus términos",
+    "NotStudyPlanTermProvided": "¡Vaya! Debes proporcionar un bloque del plan de estudio",
+    "NullProperties": "¡Vaya! Parece que faltan algunos detalles para este artículo.",
+    "RestrictedAgeError": "¡Vaya! Debes tener más de 13 años",
+    "StudyPlanAfterCreationDate": "¡Vaya! Tu bloque del plan de estudio debe comenzar después de la fecha de inicio de tu grado",
+    "StudyPlanTermNotMatchWithSchedule": "¡Vaya! Las fechas proporcionadas no coinciden con el tipo de horario de tu grado",
+    "StudyTermOverlap": "¡Vaya! Las fechas de este plan de estudio se superponen con otro bloque. ¿Podrías elegir fechas diferentes?",
+    "UserAlreadyExistsErrorMessage": "¡Vaya! Parece que ya existe una cuenta con esta información."
 }

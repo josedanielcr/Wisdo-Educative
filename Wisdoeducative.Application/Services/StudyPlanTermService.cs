@@ -79,7 +79,7 @@ namespace Wisdoeducative.Application.Services
         {
             List<StudyPlanTermDto> studyPlanTermsResult = new List<StudyPlanTermDto>();
             if (studyPlanId == 0)
-                throw new BadRequestException($"You must provide a study plan to retrive all it's terms");
+                throw new BadRequestException($"{ErrorMessages.NoStudyPlanProvided}", "NoStudyPlanProvided");
 
             var studyPlanTerms = await dBContext.StudyPlanTerms
                     .Where(s => s.StudyPlanId == studyPlanId)
@@ -114,7 +114,7 @@ namespace Wisdoeducative.Application.Services
             {
                 return user;
             }
-            throw new NotFoundException($"{ErrorMessages.EntityNotFound}");
+            throw new NotFoundException($"{ErrorMessages.EntityNotFound}", "EntityNotFound");
         }
     }
 }

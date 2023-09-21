@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { ButtonType } from '../enums/button.enum';
 import { Router } from '@angular/router';
 import { UserClient } from '../models/core/client/user.client.model';
@@ -7,13 +7,14 @@ import { WindowResizeService } from '../services/helpers/window-resize.service';
 import { ScreenSizeModel } from '../models/screenSize.model';
 import { UserService } from '../services/core/models/user.service';
 import { StoreService } from '../services/core/store.service';
+import { MessageService } from '../services/core/message.service';
 
 @Component({
   selector: 'app-setup',
   templateUrl: './setup.component.html',
   styleUrls: ['./setup.component.css']
 })
-export class SetupComponent implements OnInit {
+export class SetupComponent implements OnInit, AfterViewInit {
 
   public ButtonType = ButtonType;
   public isStartupWindowOpen: boolean = true;
@@ -21,16 +22,23 @@ export class SetupComponent implements OnInit {
   public isTablet: boolean = false;
   public isDesktop: boolean = false;
   public user : UserClient;
+  @ViewChild('messageContainer', { read: ViewContainerRef }) messageContainer: ViewContainerRef;
 
   constructor(private router: Router,
     private storeService : StoreService,
     private resizeService: WindowResizeService,
-    private userService : UserService) {
-  }
+    private userService : UserService,
+    private messageService : MessageService,
+    private cdr : ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.manangeUserState();
     this.manageWindowSize();
+  }
+
+  ngAfterViewInit(): void {
+    this.messageService.setContainer(this.messageContainer);
+    this.cdr.detectChanges();
   }
 
   private manangeUserState(): void {

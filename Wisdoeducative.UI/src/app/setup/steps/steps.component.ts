@@ -8,12 +8,14 @@ import { AcademicScheduleEnum } from 'src/app/enums/core/academic.schedule.enum'
 import { DegreeTypeEnum } from 'src/app/enums/core/degree.type.enum';
 import { StudyFieldEnum } from 'src/app/enums/core/study.field.enum';
 import { UserCategoryEnum } from 'src/app/enums/core/user.category.enum';
+import { MessageTypeEnum } from 'src/app/enums/message.type.enum';
 import { ApplicationErrorModel } from 'src/app/models/application.error.model';
 import { ChipModel } from 'src/app/models/chip.model';
 import { InstitutionClient } from 'src/app/models/core/client/institution.client.model';
 import { InterestClient } from 'src/app/models/core/client/interest.client.model';
 import { UserClient } from 'src/app/models/core/client/user.client.model';
 import { UserDegreeClient } from 'src/app/models/core/client/user.degree.client.model';
+import { MessageModel } from 'src/app/models/message.model';
 import { ScreenSizeModel } from 'src/app/models/screenSize.model';
 import { SelectOptionModel } from 'src/app/models/select.option.model';
 import { SetUpDegree } from 'src/app/models/utils/setup.degree.model';
@@ -23,6 +25,7 @@ import { ChipsContainerService } from 'src/app/services/components/chips-contain
 import { FormService } from 'src/app/services/components/form.service';
 import { SelectService } from 'src/app/services/components/select.service';
 import { EnumService } from 'src/app/services/core/enum.service';
+import { MessageService } from 'src/app/services/core/message.service';
 import { InstitutionService } from 'src/app/services/core/models/institution.service';
 import { InterestService } from 'src/app/services/core/models/interest.service';
 import { UserService } from 'src/app/services/core/models/user.service';
@@ -78,7 +81,8 @@ export class StepsComponent implements OnInit{
               private chipsContainerService : ChipsContainerService,
               private interestsService : InterestService,
               private router : Router,
-              private institutionService : InstitutionService) {}
+              private institutionService : InstitutionService,
+              private messageService : MessageService) {}
               
   ngOnInit(): void {
     this.createUserForm();
@@ -131,7 +135,7 @@ export class StepsComponent implements OnInit{
         }
       },
       error: (error : ApplicationErrorModel) => {
-        alert(error.message);
+        this.messageService.show(new MessageModel(MessageTypeEnum.Error,'Error', error.errorCode));
       }
     });
   }
@@ -181,6 +185,9 @@ export class StepsComponent implements OnInit{
     this.institutionService.getInstitutions().subscribe({
       next: (institutions : InstitutionClient[]) => {
         this.institutions = institutions;
+      }, 
+      error : (error : ApplicationErrorModel) => {
+        this.messageService.show(new MessageModel(MessageTypeEnum.Error,'Error', error.errorCode));
       }
     });
   }
@@ -254,13 +261,11 @@ export class StepsComponent implements OnInit{
     this.userService.setUserDetails(userSetupData).subscribe({
       next: (user : UserClient) => {
         this.storeService.set('user', user);
-        this.router.navigate(['/workspace']);
+        this.router.navigate(['/workspace']); 
       },
       error: (error : ApplicationErrorModel) => {
-        alert(error);
-        setTimeout(() => {
-          window.location.reload();
-        },2000);
+        this.messageService.show(new MessageModel(MessageTypeEnum.Error,'Error', error.errorCode));
+        this.currentStep--;
       }
     });
   }

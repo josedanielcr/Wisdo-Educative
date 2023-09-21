@@ -8,12 +8,15 @@ namespace Wisdoeducative.Application.Common.Exceptions
 {
     public class ForbiddenException : Exception
     {
-        public ForbiddenException(string message) : base(message)
+        public string Code { get; set; } = string.Empty;
+        public ForbiddenException(string message, string code) : base(message)
         {
+            Code = code;
         }
 
-        public ForbiddenException(string message, Exception innerException) : base(message, innerException)
+        public ForbiddenException(string message, Exception innerException, string code) : base(message, innerException)
         {
+            Code = code;
         }
 
         public ForbiddenException()

@@ -47,7 +47,7 @@ namespace Wisdoeducative.Application.Services
         {
             if (degreeHelperService.IsDegreeInvalid(degree))
             {
-                throw new BadRequestException($"{ErrorMessages.NullProperties}");
+                throw new BadRequestException($"{ErrorMessages.NullProperties}", "NullProperties");
             }
 
             var dbDegree = mapper.Map<Degree>(degree);
@@ -78,14 +78,14 @@ namespace Wisdoeducative.Application.Services
                 .Include(x => x.Degree)
                 .Include(x => x.Institution)
                 .FirstOrDefaultAsync() ?? 
-                    throw new NotFoundException($"{ErrorMessages.EntityNotFound}");
+                    throw new NotFoundException($"{ErrorMessages.EntityNotFound}", "EntityNotFound");
             return mapper.Map<UserDegreeDto>(result);
         }
 
         public async Task SaveUserDegreeChanges(UserDegree userDegree)
         {
             User user = mapper.Map<User>(await userHelperService.GetUser(userDegree.UserId) ??
-                throw new NotFoundException($"{ErrorMessages.EntityNotFound}"));
+                throw new NotFoundException($"{ErrorMessages.EntityNotFound}", "EntityNotFound"));
 
             await userDegreeHistory.SaveChanges(userDegree, userDegree.Id, EntityChangeTypes.Added, user.B2cId);
         }
@@ -94,20 +94,20 @@ namespace Wisdoeducative.Application.Services
         {
             if (degreeHelperService.AreUserDegreePropertiesInvalid(userDegreeConfig))
             {
-                throw new BadRequestException($"{ErrorMessages.NullProperties}");
+                throw new BadRequestException($"{ErrorMessages.NullProperties}", "NullProperties");
             }
 
             if (degreeHelperService.AreDegreeDatesInvalid(userDegreeConfig))
             {
-                throw new BadRequestException($"{ErrorMessages.DegreeDateFuture}");
+                throw new BadRequestException($"{ErrorMessages.DegreeDateFuture}", "DegreeDateFuture");
             }
 
             DegreeDto newDegree = await CreateDegree
                 (degreeHelperService.ParseUserDegreeDtoToDegree(userDegreeConfig))
-                ?? throw new BadRequestException($"{ErrorMessages.EntityNotFound}");
+                ?? throw new BadRequestException($"{ErrorMessages.EntityNotFound}", "EntityNotFound");
             InstitutionDto newInstitution = await institutionHelperService
                 .CreateInstituionByName(userDegreeConfig.InstitutionName)
-                ?? throw new BadRequestException($"{ErrorMessages.EntityNotFound}");
+                ?? throw new BadRequestException($"{ErrorMessages.EntityNotFound}", "EntityNotFound");
 
             UserDegree userDegree = new()
             {

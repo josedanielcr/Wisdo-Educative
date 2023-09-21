@@ -36,7 +36,7 @@ namespace Wisdoeducative.API.Controllers
         //create get interests method
         [HttpGet]
         public async Task<IActionResult> GetInterests()
-        {
+        { 
             return Ok(await interestService.GetInterests());
         }
     }

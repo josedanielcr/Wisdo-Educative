@@ -8,12 +8,15 @@ namespace Wisdoeducative.Application.Common.Exceptions
 {
     public class UnauthorizedException : Exception
     {
-        public UnauthorizedException(string message) : base(message)
+        public string Code { get; set; } = string.Empty;
+        public UnauthorizedException(string message, string code) : base(message)
         {
+            Code = code;
         }
 
-        public UnauthorizedException(string message, Exception innerException) : base(message, innerException)
+        public UnauthorizedException(string message, Exception innerException, string code) : base(message, innerException)
         {
+            Code = code;
         }
 
         public UnauthorizedException()

@@ -13,6 +13,10 @@ import { WindowResizeService } from 'src/app/services/helpers/window-resize.serv
 import { StudyPlanClient } from 'src/app/models/core/client/study.plan.client.model';
 import { ButtonType } from 'src/app/enums/button.enum';
 import { DialogType } from 'src/app/enums/dialog.type.enum';
+import { ApplicationErrorModel } from 'src/app/models/application.error.model';
+import { MessageService } from 'src/app/services/core/message.service';
+import { MessageModel } from 'src/app/models/message.model';
+import { MessageTypeEnum } from 'src/app/enums/message.type.enum';
 
 @Component({
   selector: 'app-add-study-plan-term',
@@ -51,7 +55,8 @@ export default class AddStudyPlanTermComponent implements AfterViewInit {
     private studyPlanService : StudyPlanService,
     private storeService : StoreService,
     private windowService : WindowResizeService,
-    private cdr : ChangeDetectorRef) { }
+    private cdr : ChangeDetectorRef,
+    private messageService : MessageService) { }
 
   ngOnInit(): void {
     this.subscribeToWindowService();
@@ -153,6 +158,9 @@ export default class AddStudyPlanTermComponent implements AfterViewInit {
         } else {
           this.studyPlanTermWasCreated.emit(studyTermCourses);
         }
+      },
+      error : (error : ApplicationErrorModel) => {
+        this.messageService.show(new MessageModel(MessageTypeEnum.Error, 'Error', error.errorCode));
       }
     });
   }
