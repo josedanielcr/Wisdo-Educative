@@ -88,8 +88,18 @@ export default class AddStudyPlanTermComponent implements AfterViewInit {
       startDate: ['', [Validators.required]],
       endDate: ['', [Validators.required]],
     });
+    this.openNewStudyPlanTermDialog();
+  }
+
+  private openNewStudyPlanTermDialog() {
     this.cdr.detectChanges();
-    this.dialogComponent.show();
+    if(!this.dialogComponent){
+      setTimeout(() => {
+        this.dialogComponent.show();
+      },100);
+    } else {
+      this.dialogComponent.show();
+    }
   }
 
   get coursesFormArray(): FormArray {

@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { ButtonType } from '../enums/button.enum';
 import { Router } from '@angular/router';
 import { UserClient } from '../models/core/client/user.client.model';
@@ -8,13 +8,14 @@ import { ScreenSizeModel } from '../models/screenSize.model';
 import { UserService } from '../services/core/models/user.service';
 import { StoreService } from '../services/core/store.service';
 import { MessageService } from '../services/core/message.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-setup',
   templateUrl: './setup.component.html',
   styleUrls: ['./setup.component.css']
 })
-export class SetupComponent implements OnInit, AfterViewInit {
+export class SetupComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public ButtonType = ButtonType;
   public isStartupWindowOpen: boolean = true;
@@ -23,6 +24,9 @@ export class SetupComponent implements OnInit, AfterViewInit {
   public isDesktop: boolean = false;
   public user : UserClient;
   @ViewChild('messageContainer', { read: ViewContainerRef }) messageContainer: ViewContainerRef;
+
+  //subscriptions
+  private subscriptions : Subscription[] = [];
 
   constructor(private router: Router,
     private storeService : StoreService,
@@ -41,8 +45,14 @@ export class SetupComponent implements OnInit, AfterViewInit {
     this.cdr.detectChanges();
   }
 
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription: Subscription) => {
+      subscription.unsubscribe();
+    });
+  }
+
   private manangeUserState(): void {
-    this.storeService.select('user').subscribe({
+    this.subscriptions.push(this.storeService.select('user').subscribe({
       next: (user: UserClient) => {
         if (user.userStatus !== UserStatus.Pending && user.userStatus !== UserStatus.Omitted) {
           this.router.navigate(['/workspace']);
@@ -60,15 +70,15 @@ export class SetupComponent implements OnInit, AfterViewInit {
           }
         });
       }
-    });
+    }));
   }
 
   private manageWindowSize() {
-    this.resizeService.getScreenSizeObservable().subscribe((screenSizes: ScreenSizeModel) => {
+    this.subscriptions.push(this.resizeService.getScreenSizeObservable().subscribe((screenSizes: ScreenSizeModel) => {
       this.isDesktop = screenSizes.isDesktop;
       this.isTablet = screenSizes.isTablet;
       this.isPhone = screenSizes.isPhone;
-    });
+    }));
   }
 
   public skipSetup(): void {
@@ -77,21 +87,17 @@ export class SetupComponent implements OnInit, AfterViewInit {
       return;
     }
 
-    this.userService.omitUserSetup(this.user.id).subscribe({
+    this.subscriptions.push(this.userService.omitUserSetup(this.user.id).subscribe({
       next: () => {
         this.router.navigate(['workspace']);
       },
       error: (error: any) => {
         console.log(error);
       }
-    });
+    }));
   }
 
   public startSetup(): void {
     this.isStartupWindowOpen = false;
   }
-}
-
-function provideTranslocoScope(arg0: string): import("@angular/core").Provider {
-  throw new Error('Function not implemented.');
 }

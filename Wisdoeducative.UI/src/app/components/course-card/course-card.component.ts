@@ -12,19 +12,13 @@ import { CourseService } from 'src/app/services/core/models/course.service';
   templateUrl: './course-card.component.html',
   styleUrls: ['./course-card.component.css']
 })
-export class CourseCardComponent implements OnInit {
+export class CourseCardComponent {
 
   @Input() course: CourseClient;
   @Output() courseChanges : EventEmitter<CourseClient> = new EventEmitter<CourseClient>();
 
   constructor(private courseService : CourseService,
-    private messageService : MessageService,
-    private translocoService : TranslocoService) { }
-
-  ngOnInit(): void {
-    console.log(this.course);
-    
-  }
+    private messageService : MessageService) { }
 
   public getCoursesProgress(): number {
     try {
@@ -33,7 +27,7 @@ export class CourseCardComponent implements OnInit {
       return 0;
     }
   }
-
+  
   public addToFavorite(): void {
     this.courseService.addToFavorite(this.course.id).subscribe({
       next : (course : CourseClient) => {
