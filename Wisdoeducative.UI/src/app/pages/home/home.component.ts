@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { ButtonType } from 'src/app/enums/button.enum';
 import { UserStatus } from 'src/app/enums/core/user.status.enum';
 import { ApplicationErrorModel } from 'src/app/models/application.error.model';
@@ -26,7 +27,7 @@ enum TimeOfDay {
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   
   // constants
   private morningPath = '../../../assets/icons/sun 1.svg';
@@ -57,9 +58,18 @@ export class HomeComponent implements OnInit {
   public isTablet: boolean;
   public isPhone: boolean;
 
+  //subscriptions
+  private subscriptions : Subscription[] = [];
+
   constructor(private windowService : WindowResizeService,
     private router : Router,
     private userInitializationService : UserInitializationService){}
+  
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription: Subscription) => {
+      subscription.unsubscribe();
+    });
+  }
 
   ngOnInit(): void {
     this.subscribeToWindowService();
@@ -70,22 +80,22 @@ export class HomeComponent implements OnInit {
 
 
   private initializeUser(): void {
-    this.userInitializationService.initializeUser().subscribe(
+    this.subscriptions.push(this.userInitializationService.initializeUser().subscribe(
       ([user, userDegree, studyPlan, studyPlanTerms]) => {
         this.user = user;
         this.userDegree = userDegree;
         this.studyPlan = studyPlan;
         this.studyPlanTerms = studyPlanTerms;
       }
-    );
+    ));
   }
 
   private subscribeToWindowService() {
-    this.windowService.getScreenSizeObservable().subscribe((screenSizes: ScreenSizeModel) => {
+    this.subscriptions.push(this.windowService.getScreenSizeObservable().subscribe((screenSizes: ScreenSizeModel) => {
       this.isDesktop = screenSizes.isDesktop;
       this.isTablet = screenSizes.isTablet;
       this.isPhone = screenSizes.isPhone;
-    });
+    }));
   }
 
   private setCurrentTimeOfDay(): void {

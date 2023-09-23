@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { ButtonType } from 'src/app/enums/button.enum';
 import { ApplicationErrorModel } from 'src/app/models/application.error.model';
 import { StudyPlanClient } from 'src/app/models/core/client/study.plan.client.model';
@@ -19,7 +20,7 @@ import { WindowResizeService } from 'src/app/services/helpers/window-resize.serv
   templateUrl: './new-study-plan.component.html',
   styleUrls: ['./new-study-plan.component.css']
 })
-export class NewStudyPlanComponent implements OnInit {
+export class NewStudyPlanComponent implements OnInit, OnDestroy {
 
   //properties
   public user : UserClient;
@@ -34,11 +35,21 @@ export class NewStudyPlanComponent implements OnInit {
   public ButtonType = ButtonType;
   public isNewStudyPlanTermOpen : boolean = false;
 
+  //subscriptions
+  private subscriptions : Subscription[] = [];
+
   constructor(private storeService : StoreService,
     private studyPlanService : StudyPlanService,
     private windowService : WindowResizeService,
     private userInitializationService : UserInitializationService,
     private router : Router) { }
+
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription: Subscription) => {
+      subscription.unsubscribe();
+    });
+  }
 
   ngOnInit(): void {
     this.manageUserData();
@@ -46,15 +57,15 @@ export class NewStudyPlanComponent implements OnInit {
   }
 
   private subscribeToWindowService() {
-    this.windowService.getScreenSizeObservable().subscribe((screenSizes: ScreenSizeModel) => {
+    this.subscriptions.push(this.windowService.getScreenSizeObservable().subscribe((screenSizes: ScreenSizeModel) => {
       this.isDesktop = screenSizes.isDesktop;
       this.isTablet = screenSizes.isTablet;
       this.isPhone = screenSizes.isPhone;
-    });
+    }));
   }
 
   private manageUserData() {
-    this.userInitializationService.initializeUser().subscribe({
+    this.subscriptions.push(this.userInitializationService.initializeUser().subscribe({
       next : ([user, userDegree, studyPlan, studyPlanTerms]) => {
         this.user = user;
         this.userDegree = userDegree;
@@ -65,7 +76,7 @@ export class NewStudyPlanComponent implements OnInit {
       error : (err : any) => {
         console.log(err);
       }
-    })
+    }));
   }
 
   private newStudyPlanValidations(): void {
@@ -88,7 +99,7 @@ export class NewStudyPlanComponent implements OnInit {
     studyPlan.earnedCredits = null;
     studyPlan.status = null;
   
-    this.studyPlanService.createStudyPlan(studyPlan).subscribe({
+    this.subscriptions.push(this.studyPlanService.createStudyPlan(studyPlan).subscribe({
       next: (studyPlan: StudyPlanClient) => {
         this.storeService.set('studyPlan', studyPlan);
         this.studyPlan = studyPlan;
@@ -97,7 +108,7 @@ export class NewStudyPlanComponent implements OnInit {
       error: (err: ApplicationErrorModel) => {
         console.log(err);
       }
-    });
+    }));
   } 
 
   public openDialog() : void {

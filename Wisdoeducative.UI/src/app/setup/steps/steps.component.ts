@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { concat, toArray } from 'rxjs';
+import { Subscription, concat, toArray } from 'rxjs';
 import { ChipsContainerComponent } from 'src/app/components/chips-container/chips-container.component';
 import { ButtonType } from 'src/app/enums/button.enum';
 import { AcademicScheduleEnum } from 'src/app/enums/core/academic.schedule.enum';
@@ -37,7 +37,7 @@ import { WindowResizeService } from 'src/app/services/helpers/window-resize.serv
   templateUrl: './steps.component.html',
   styleUrls: ['./steps.component.css']
 })
-export class StepsComponent implements OnInit{
+export class StepsComponent implements OnInit, OnDestroy{
 
   //containers
   @ViewChild('chipsContainer') chipsContainer : ChipsContainerComponent;
@@ -71,6 +71,9 @@ export class StepsComponent implements OnInit{
   public selectedChips : ChipModel[] = [];
   public userDegreeSetupData : SetUpDegree;
 
+  //subscriptions
+  private subscriptions : Subscription[] = [];
+
   constructor(private resizeService : WindowResizeService, 
               private fb : FormBuilder, 
               private storeService : StoreService,
@@ -95,37 +98,43 @@ export class StepsComponent implements OnInit{
     this.createUserDegreeForm();
   }
 
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription: Subscription) => {
+      subscription.unsubscribe();
+    });
+  }
+
   private manangeUserState(): void {
-    this.storeService.select('user').subscribe({
+    this.subscriptions.push(this.storeService.select('user').subscribe({
       next: (user: UserClient) => {
         this.user = user;
         this.loadUserDataForm();
         this.loading = false;
       },
       complete : () => {
-        this.userService.validateUser().subscribe({
+        this.subscriptions.push(this.userService.validateUser().subscribe({
           next: (user: UserClient) => {
             this.storeService.set('user', user);
             this.user = user;
             this.loadUserDataForm();
             this.loading = false;
           }
-        });
+        }));
       }
-    });
+    }));
   }
 
   private handleChipsContainerService(): void {
-    this.chipsContainerService.getVariableSubject().subscribe((chips : ChipModel[]) => {
+    this.subscriptions.push(this.chipsContainerService.getVariableSubject().subscribe((chips : ChipModel[]) => {
       if(chips && chips.length > 0 && chips.length <= 4){
         this.selectedChips = chips;
         if(chips.length >= 4) this.notEnoughInterestsError = false;
       }
-    });
+    }));
   }
 
   private loadInterests(): void {
-    this.interestsService.getInterests().subscribe({
+    this.subscriptions.push(this.interestsService.getInterests().subscribe({
       next: (interests : InterestClient[]) => {
         if(interests && interests.length > 0){
           this.interests = interests;
@@ -137,7 +146,7 @@ export class StepsComponent implements OnInit{
       error: (error : ApplicationErrorModel) => {
         this.messageService.show(new MessageModel(MessageTypeEnum.Error,'Error', error.errorCode));
       }
-    });
+    }));
   }
 
   private loadSelectInputs(): void {
@@ -154,11 +163,11 @@ export class StepsComponent implements OnInit{
   }
 
   private manageScreenSize() {
-    this.resizeService.getScreenSizeObservable().subscribe((resizeData : ScreenSizeModel) => {
+    this.subscriptions.push(this.resizeService.getScreenSizeObservable().subscribe((resizeData : ScreenSizeModel) => {
       this.isPhone = resizeData.isPhone;
       this.isTablet = resizeData.isTablet;
       this.isDesktop = resizeData.isDesktop;
-    });
+    }));
   }
 
   private createUserForm(): void {
@@ -182,14 +191,14 @@ export class StepsComponent implements OnInit{
   private loadSelectOptions(): void {
     this.userCategoryOptions = this.selectService.transformObjectToSelectOptions(
         this.enumService.getEnumValues(UserCategoryEnum),null,null);
-    this.institutionService.getInstitutions().subscribe({
+    this.subscriptions.push(this.institutionService.getInstitutions().subscribe({
       next: (institutions : InstitutionClient[]) => {
         this.institutions = institutions;
       }, 
       error : (error : ApplicationErrorModel) => {
         this.messageService.show(new MessageModel(MessageTypeEnum.Error,'Error', error.errorCode));
       }
-    });
+    }));
   }
 
   public submitUserData(): void {
@@ -258,7 +267,7 @@ export class StepsComponent implements OnInit{
     userSetupData.interestsDtos = this.selectedInterests;
     userSetupData.userDegreConfig = this.userDegreeSetupData;
 
-    this.userService.setUserDetails(userSetupData).subscribe({
+    this.subscriptions.push(this.userService.setUserDetails(userSetupData).subscribe({
       next: (user : UserClient) => {
         this.storeService.set('user', user);
         this.router.navigate(['/workspace']); 
@@ -267,6 +276,6 @@ export class StepsComponent implements OnInit{
         this.messageService.show(new MessageModel(MessageTypeEnum.Error,'Error', error.errorCode));
         this.currentStep--;
       }
-    });
+    }));
   }
 }

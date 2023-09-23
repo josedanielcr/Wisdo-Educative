@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, map } from 'rxjs';
+import { Observable, catchError, map, shareReplay } from 'rxjs';
 import { ApplicationErrorService } from '../../helpers/application-error.service';
 import { UserServer } from 'src/app/models/core/server/user.server.model';
 import { UserClient } from 'src/app/models/core/client/user.client.model';

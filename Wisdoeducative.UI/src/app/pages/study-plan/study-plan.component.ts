@@ -1,5 +1,6 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { DialogComponent } from 'src/app/components/dialog/dialog.component';
 import { StudyPlanFiltersComponent } from 'src/app/components/study-plan-filters/study-plan-filters.component';
 import { DialogType } from 'src/app/enums/dialog.type.enum';
@@ -20,7 +21,7 @@ import { WindowResizeService } from 'src/app/services/helpers/window-resize.serv
   templateUrl: './study-plan.component.html',
   styleUrls: ['./study-plan.component.css']
 })
-export class StudyPlanComponent implements OnInit {
+export class StudyPlanComponent implements OnInit, OnDestroy {
 
   //children
   @ViewChild(DialogComponent) dialogComponent: DialogComponent;
@@ -46,6 +47,9 @@ export class StudyPlanComponent implements OnInit {
   public isSearchActive : boolean = false;
   public isSelectedStudyPlanTermOpen : boolean = false;
 
+  //subscriptions
+  private subscriptions : Subscription[] = [];
+
   constructor(private userInitializationService : UserInitializationService,
     private courseService : CourseService,
     private windowService : WindowResizeService,
@@ -57,16 +61,22 @@ export class StudyPlanComponent implements OnInit {
     this.subscribeToWindowService();
   }
 
-  private subscribeToWindowService() {
-    this.windowService.getScreenSizeObservable().subscribe((screenSizes: ScreenSizeModel) => {
-      this.isDesktop = screenSizes.isDesktop;
-      this.isTablet = screenSizes.isTablet;
-      this.isPhone = screenSizes.isPhone;
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((subscription: Subscription) => {
+      subscription.unsubscribe();
     });
   }
 
+  private subscribeToWindowService() {
+    this.subscriptions.push(this.windowService.getScreenSizeObservable().subscribe((screenSizes: ScreenSizeModel) => {
+      this.isDesktop = screenSizes.isDesktop;
+      this.isTablet = screenSizes.isTablet;
+      this.isPhone = screenSizes.isPhone;
+    }));
+  }
+
   private userInitialization(): void {
-    this.userInitializationService.initializeUser().subscribe(
+    this.subscriptions.push(this.userInitializationService.initializeUser().subscribe(
       ([user, userDegree, studyPlan, studyPlanTerms]) => {
         this.user = user;
         this.userDegree = userDegree;
@@ -76,13 +86,12 @@ export class StudyPlanComponent implements OnInit {
         this.defaultStudyPlanTerm = this.setInProgressStudyPlanTerm(studyPlanTerms);
         this.setDefaultStudyPlanTermCourses(this.defaultStudyPlanTerm.id);
       }
-    );
+    ));
   }
 
   private validateStudyPlanTerms(studyPlanTerms : StudyPlanTermClient[]): void {
-    if(studyPlanTerms.length === 0) {
-      this.router.navigate(['/workspace/new-study-plan'])
-    }
+    if(!studyPlanTerms)this.router.navigate(['/workspace/new-study-plan']);
+    if(studyPlanTerms.length === 0) this.router.navigate(['/workspace/new-study-plan']);
   }
 
   private setInProgressStudyPlanTerm(studyPlanTerms: StudyPlanTermClient[]): StudyPlanTermClient {
@@ -103,7 +112,7 @@ export class StudyPlanComponent implements OnInit {
   }
 
   private setDefaultStudyPlanTermCourses(id: number): void  {
-    this.courseService.getStudyPlanTermCourses(id).subscribe({
+    this.subscriptions.push(this.courseService.getStudyPlanTermCourses(id).subscribe({
       next : (courses : CourseClient[]) => {
         this.defaultStudyPlanTemCourses = courses; 
         this.activeStudyPlanTermCourses = courses;
@@ -112,7 +121,7 @@ export class StudyPlanComponent implements OnInit {
       error : (err : ApplicationErrorModel) => {
         console.log(err);
       }
-    })
+    }));
   }
 
   private sortCoursesByFavorite(): void {
@@ -157,7 +166,7 @@ export class StudyPlanComponent implements OnInit {
   }
 
   private setStudyPlanTermCourses(studyPlanTerm: StudyPlanTermClient): void {
-    this.courseService.getStudyPlanTermCourses(studyPlanTerm.id).subscribe({
+    this.subscriptions.push(this.courseService.getStudyPlanTermCourses(studyPlanTerm.id).subscribe({
       next: (courses: CourseClient[]) => {
         this.selectedStudyPlanTerm = new StudyTermCoursesModel();
         this.selectedStudyPlanTerm.studyPlanTermDto = studyPlanTerm;
@@ -169,7 +178,7 @@ export class StudyPlanComponent implements OnInit {
       error: (err: ApplicationErrorModel) => {
         console.log(err);
       }
-    });
+    }));
   }
 
   public updateCoursesList(coursesClient : CourseClient[]): void {
