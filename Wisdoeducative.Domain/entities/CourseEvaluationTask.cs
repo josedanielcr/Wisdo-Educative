@@ -8,13 +8,14 @@ using Wisdoeducative.Domain.Enums;
 
 namespace Wisdoeducative.Domain.Entities
 {
-    public class CourseEvaluation : BaseEntity
+    public class CourseEvaluationTask : BaseEntity
     {
-        public Course Course { get; set; }
-        public int CourseId { get; set; }
+        public CourseEvaluation CourseEvaluation { get; set; }
+        public int CourseEvaluationId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Weight { get; set; }
         public EntityStatus Status { get; set; }
+        public CourseEvaluationStatus EvaluationStatus { get; set; }
     }
 }

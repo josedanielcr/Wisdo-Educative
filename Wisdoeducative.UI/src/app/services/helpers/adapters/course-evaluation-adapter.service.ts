@@ -19,7 +19,6 @@ export class CourseEvaluationAdapterService {
       clientObj.description = serverObj.description;
       clientObj.weight = serverObj.weight;
       clientObj.status = serverObj.status;
-      clientObj.evaluationStatus = serverObj.evaluationStatus;
       return clientObj;
   }
 
@@ -32,7 +31,6 @@ export class CourseEvaluationAdapterService {
       serverObj.description = clientObj.description;
       serverObj.weight = clientObj.weight;
       serverObj.status = clientObj.status;
-      serverObj.evaluationStatus = clientObj.evaluationStatus;
       return serverObj;
   }
 }

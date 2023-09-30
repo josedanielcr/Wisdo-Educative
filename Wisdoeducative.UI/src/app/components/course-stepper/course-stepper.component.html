@@ -1,0 +1,32 @@
+<div class="w-100" *transloco="let t; scope : 'courses'">
+    <div class="d-flex flex-column w-100 gap-3" *ngIf="isDesktop">
+        <div *ngFor="let item of items" class="stepper-item d-flex 
+            align-items-center ps-5 fw-bold cursor-pointer user-select-none"
+            [ngClass]="{
+                'wd-bg-secondary wd-text-white': item.isActive,
+                'wd-bg-white': !item.isActive
+            }"
+            (click)="activate(item.code)">
+            <div class="d-flex gap-3 align-items-center">
+                <i [class]="item.icon"></i>
+                <span>{{t('courses.'+item.code)}}</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- tablet and phone -->
+    <div *ngIf="isPhone || isTablet" class="w-100 phone-stepper-item">
+        <div class="w-100 h-100 d-flex align-items-center">
+            <div *ngFor="let item of items; let i=index" 
+                [ngClass]="{
+                    'wd-bg-secondary wd-text-white': item.isActive,
+                    'wd-bg-white': !item.isActive,
+                    'first-stepper-item-phone': i===0,
+                    'last-stepper-item-phone': i===items.length-1
+                }" class="flex-fill d-flex justify-content-center align-items-center w-100 h-100"
+                (click)="activate(item.code)">
+                    <i [class]="item.icon"></i>
+            </div>
+        </div>
+    </div>
+</div>

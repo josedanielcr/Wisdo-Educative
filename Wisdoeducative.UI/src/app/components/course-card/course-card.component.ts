@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TranslocoService } from '@ngneat/transloco';
 import { MessageTypeEnum } from 'src/app/enums/message.type.enum';
 import { ApplicationErrorModel } from 'src/app/models/application.error.model';
@@ -18,7 +19,8 @@ export class CourseCardComponent {
   @Output() courseChanges : EventEmitter<CourseClient> = new EventEmitter<CourseClient>();
 
   constructor(private courseService : CourseService,
-    private messageService : MessageService) { }
+    private messageService : MessageService,
+    private router : Router) { }
 
   public getCoursesProgress(): number {
     try {
@@ -39,5 +41,10 @@ export class CourseCardComponent {
         this.messageService.show(new MessageModel(MessageTypeEnum.Error, 'Error' ,error.message))
       }
     });
+  }
+
+  public openCourseDetails(): void {
+    let currentRoutePath = this.router.url.concat(`/course/${this.course.id}`);
+    this.router.navigate([currentRoutePath]);
   }
 }

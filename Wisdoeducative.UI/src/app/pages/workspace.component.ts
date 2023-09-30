@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { UserClient } from '../models/core/client/user.client.model';
 import { Router } from '@angular/router';
 import { MenuService } from '../services/components/menu.service';
@@ -34,7 +34,8 @@ export class WorkspaceComponent implements OnInit, AfterViewInit, OnDestroy {
     private windowService : WindowResizeService,
     private userService : UserService,
     private messageService : MessageService,
-    private spinnerService : SpinnerService) { }
+    private spinnerService : SpinnerService,
+    private cdr : ChangeDetectorRef) { }
 
   ngOnInit() {
     this.manageUserState();
@@ -51,7 +52,9 @@ export class WorkspaceComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     this.messageService.setContainer(this.messageContainer);
     this.spinnerService.setContainer(this.spinnerContainer);
+    this.cdr.detectChanges();
   }
+
   private subscribeToWindowService() {
     this.subscriptions.push(this.windowService.getScreenSizeObservable().subscribe((screenSizes: ScreenSizeModel) => {
       this.isDesktop = screenSizes.isDesktop;

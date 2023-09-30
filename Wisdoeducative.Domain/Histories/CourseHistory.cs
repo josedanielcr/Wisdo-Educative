@@ -13,8 +13,6 @@ namespace Wisdoeducative.Domain.Histories
     {
         public StudyPlanTerm StudyPlanTerm { get; set; }
         public int StudyPlanTermId { get; set; }
-        public CourseSchedule? CourseSchedule { get; set; }
-        public int? CourseScheduleId { get; set; }
         public string Name { get; set; }
         public int TotalCredits { get; set; }
         public string? CurrentScore { get; set; }

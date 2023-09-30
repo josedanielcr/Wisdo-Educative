@@ -1,0 +1,27 @@
+<div *ngIf="course">
+    <app-title [title]="course.name"
+                [iconPath]="
+                    course.isFavorite ? '../../../assets/icons/heart-filled.png' 
+                    : '../../../assets/icons/heart-empty.png'"
+                [iconBackgroundColor]="''">
+    </app-title>
+</div>
+<div class="row mt-5" *ngIf="course">
+    <div class="col-md-2">
+        <app-course-stepper (stepperItemIndexEmitter)="changeStep($event)"></app-course-stepper>
+    </div>
+    <div class="col-md-7">
+        <div *ngIf="currentStep === 0">
+            hola 1
+        </div>
+        <div *ngIf="currentStep === 1">
+            hola 2
+        </div>
+        <div *ngIf="currentStep === 2">
+            hola 3
+        </div>
+    </div>
+    <div class="col-md-3">
+        pomodoro
+    </div>
+</div>

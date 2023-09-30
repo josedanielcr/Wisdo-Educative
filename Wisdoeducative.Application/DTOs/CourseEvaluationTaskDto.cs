@@ -8,14 +8,15 @@ using Wisdoeducative.Domain.Entities;
 
 namespace Wisdoeducative.Application.DTOs
 {
-    public class CourseEvaluationDto : IMapFrom<CourseEvaluation>
+    public class CourseEvaluationTaskDto : IMapFrom<CourseEvaluationTask>
     {
         public int Id { get; set; }
-        public CourseDto CourseDto { get; set; } 
-        public int CourseId { get; set; }
+        public CourseEvaluationDto CourseEvaluationDto { get; set; }
+        public int CourseEvaluationId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Weight { get; set; }
         public string Status { get; set; }
+        public string EvaluationStatus { get; set; }
     }
 }

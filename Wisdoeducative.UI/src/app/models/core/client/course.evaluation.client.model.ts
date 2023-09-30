@@ -8,7 +8,6 @@ export class CourseEvaluationClient {
     description: string;
     weight: string;
     status: string;
-    evaluationStatus: string;
 
     constructor(){}
 }

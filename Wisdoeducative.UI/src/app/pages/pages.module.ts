@@ -9,6 +9,7 @@ import { NewStudyPlanComponent } from './new-study-plan/new-study-plan.component
 import { ReactiveFormsModule } from '@angular/forms';
 import { StudyPlanComponent } from './study-plan/study-plan.component';
 import { TranslocoRootModule } from '../transloco-root.module';
+import { CourseComponent } from './course/course.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { TranslocoRootModule } from '../transloco-root.module';
     WorkspaceComponent,
     HomeComponent,
     NewStudyPlanComponent,
-    StudyPlanComponent
+    StudyPlanComponent,
+    CourseComponent
   ],
   imports: [
     CommonModule,

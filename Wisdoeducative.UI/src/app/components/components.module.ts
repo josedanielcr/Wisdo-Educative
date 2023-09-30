@@ -22,6 +22,7 @@ import { MessageContainerComponent } from './message-container/message-container
 import { SpinnerComponent } from './spinner/spinner.component';
 import { TranslationComponent } from './translation/translation.component';
 import { TranslocoRootModule } from '../transloco-root.module';
+import { CourseStepperComponent } from './course-stepper/course-stepper.component';
 
 
 
@@ -47,7 +48,8 @@ import { TranslocoRootModule } from '../transloco-root.module';
     MessageContainerComponent,
     SpinnerComponent,
     StudyPlanFiltersComponent,
-    TranslationComponent
+    TranslationComponent,
+    CourseStepperComponent
   ],
   exports: [
     ButtonComponent,
@@ -69,7 +71,8 @@ import { TranslocoRootModule } from '../transloco-root.module';
     MessageContainerComponent,
     SpinnerComponent,
     StudyPlanFiltersComponent,
-    TranslationComponent
+    TranslationComponent,
+    CourseStepperComponent
   ],
   imports: [
     CommonModule,

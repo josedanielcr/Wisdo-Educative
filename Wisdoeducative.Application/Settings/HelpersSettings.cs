@@ -24,6 +24,7 @@ namespace Wisdoeducative.Application.Settings
             services.AddScoped<ICourseHelperService, CourseHelperService>();
             services.AddScoped<IStudyPlanHelperService, StudyPlanHelperService>();
             services.AddScoped<IStudyPlanTermHelperService, StudyPlanTermHelperService>();
+            services.AddScoped<ICourseEvaluationHelperService, CourseEvaluationHelperService>();
             return services;
         }
     }

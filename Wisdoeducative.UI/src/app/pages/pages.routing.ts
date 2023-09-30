@@ -6,6 +6,7 @@ import { WorkspaceComponent } from './workspace.component';
 import { HomeComponent } from './home/home.component';
 import { NewStudyPlanComponent } from './new-study-plan/new-study-plan.component';
 import { StudyPlanComponent } from './study-plan/study-plan.component';
+import { CourseComponent } from './course/course.component';
 
 const routes: Routes = [
   {
@@ -16,7 +17,8 @@ const routes: Routes = [
         { path: '', redirectTo: 'home', pathMatch: 'full' },
         { path: 'home', component: HomeComponent }, 
         { path: 'new-study-plan', component: NewStudyPlanComponent },
-        { path : 'study-plan', component : StudyPlanComponent }
+        { path : 'study-plan', component : StudyPlanComponent },
+        { path : 'study-plan/course/:id', component: CourseComponent}
       ]
   }
 ];
