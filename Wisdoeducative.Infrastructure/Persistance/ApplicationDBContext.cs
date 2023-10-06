@@ -52,6 +52,7 @@ namespace Wisdoeducative.Infrastructure.Persistence
         public DbSet<CourseEvaluationHistory> CourseEvaluationHistories { get; set; }
         public DbSet<CourseHistory> CourseHistories { get; set; }
         public DbSet<CourseEvaluationTask> CourseEvaluationTasks { get; set; }
+        public DbSet<CourseLink> CourseLinks { get; set; }
 
         public async Task<int> SaveChangesAsync()
         {

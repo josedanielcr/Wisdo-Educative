@@ -42,6 +42,7 @@ namespace Wisdoeducative.Application.Common.Interfaces
         DbSet<CourseEvaluationHistory> CourseEvaluationHistories { get; set; }
         DbSet<CourseHistory> CourseHistories { get; set; }
         DbSet<CourseEvaluationTask> CourseEvaluationTasks { get; set; }
+        DbSet<CourseLink> CourseLinks { get; set; }
 
         Task<int> SaveChangesAsync();
         EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;

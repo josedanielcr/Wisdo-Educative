@@ -36,4 +36,23 @@ export class CourseEvaluationService {
         })
       )
   }
+
+  public getCourseEvaluations(courseId : number): Observable<CourseEvaluationClient[]>{
+    this.spinnerService.show();
+    return this.http.get<CourseEvaluationClient[]>(
+      `${this.apiUrlService.checkEnvironment()}/CourseEvaluation/${courseId}`)
+      .pipe(
+        finalize(() => {
+          this.spinnerService.hide();
+        }),
+        map((courseEvaluations : CourseEvaluationServer[]) => {
+          return courseEvaluations.map((courseEvaluation : CourseEvaluationServer) => {
+            return this.courseEvaluationAdapter.adaptServerToClient(courseEvaluation);
+          });
+        }),
+        catchError((error: any) => {
+          throw this.applicationErrorService.parseHttpError(error)
+        })
+      )
+  }
 }

@@ -26,6 +26,7 @@ import { CourseStepperComponent } from './course-stepper/course-stepper.componen
 import { PomodoroTimerComponent } from './pomodoro-timer/pomodoro-timer.component';
 import { EvaluationCalculatorComponent } from './evaluation-calculator/evaluation-calculator.component';
 import { InputPercentageComponent } from './input/input-percentage/input-percentage.component';
+import { CourseLinkComponent } from './course-link/course-link.component';
 
 
 
@@ -55,7 +56,8 @@ import { InputPercentageComponent } from './input/input-percentage/input-percent
     CourseStepperComponent,
     PomodoroTimerComponent,
     EvaluationCalculatorComponent,
-    InputPercentageComponent
+    InputPercentageComponent,
+    CourseLinkComponent
   ],
   exports: [
     ButtonComponent,
@@ -81,7 +83,8 @@ import { InputPercentageComponent } from './input/input-percentage/input-percent
     CourseStepperComponent,
     PomodoroTimerComponent,
     EvaluationCalculatorComponent,
-    InputPercentageComponent
+    InputPercentageComponent,
+    CourseLinkComponent
   ],
   imports: [
     CommonModule,

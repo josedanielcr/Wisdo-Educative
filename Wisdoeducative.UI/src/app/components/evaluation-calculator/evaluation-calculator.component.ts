@@ -40,6 +40,22 @@ export class EvaluationCalculatorComponent implements OnInit {
       name : ['', Validators.required],
       weight : [0, [Validators.required, Validators.min(0), Validators.max(100)]]
     });
+    this.getCourseEvaluations();
+  }
+
+  private getCourseEvaluations() {
+    this.subscriptions.push(
+      this.courseEvalutationService.getCourseEvaluations(this.course.id).subscribe({
+        next : (courseEvaluations : CourseEvaluationClient[]) => {
+          this.evaluations = courseEvaluations;
+          console.log(this.evaluations);
+          
+        },
+        error : (error : ApplicationErrorModel) => {
+          this.messageService.show(new MessageModel(MessageTypeEnum.Error, 'Error', error.errorCode))
+        }
+      })
+    );
   }
 
   public addEvaluation(): void {
