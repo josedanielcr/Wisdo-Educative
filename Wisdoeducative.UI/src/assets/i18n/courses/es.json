@@ -1,5 +1,16 @@
 {
     "Prom" : "Promedio",
     "Cal": "Notas",
-    "Link" : "Enlaces"
+    "Link" : "Enlaces",
+    "EvalCalc": "Calculadora de promedios",
+    "AddEval": "Agregar evaluación",
+    "evaluation": "Evaluacion",
+    "percentage": "Procentaje",
+    "grade": "Nota",
+    "AddCourseDesc": "Ingrese la información de la evaluación para crearla.",
+    "EvalutionName": "Nombre de la evaluación",
+    "EvalutionPercentage": "Peso de la evaluación",
+    "EvaluationDescription": "Descripción de la evaluación",
+    "EvalNameError" : "El nombre de la evaluación es requerido",
+    "EvalPercentageError" : "El peso de la evaluación es requerido y debe de estar entre 0 y 100"
 }

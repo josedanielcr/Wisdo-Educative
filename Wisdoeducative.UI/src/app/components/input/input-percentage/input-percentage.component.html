@@ -1,0 +1,17 @@
+<div class="input-label-container">
+    <label for="" *ngIf="label">{{label}}</label>
+</div>
+
+<input type="number"
+       [placeholder]="placeholder"
+       class="wd-input w-100"
+       [disabled]="isDisabled"
+       [value]="value"
+       (input)="updateValue($event)"
+       [ngClass]="{'wd-bg-input-error' : ngControl?.control?.touched 
+       && ngControl?.control?.invalid }"/>
+<div class="w-100 d-flex">
+    <span *ngIf="ngControl?.control?.touched 
+    && ngControl?.control?.invalid" 
+    class="ms-auto wd-text-danger wd-text-input-error-size">{{error}}</span>
+</div>

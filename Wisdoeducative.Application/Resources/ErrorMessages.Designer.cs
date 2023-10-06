@@ -97,6 +97,15 @@ namespace Wisdoeducative.Application.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Oops! your total course weight cannot exceed 100..
+        /// </summary>
+        internal static string InvalidWeight {
+            get {
+                return ResourceManager.GetString("InvalidWeight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Oops! There are no interests available.
         /// </summary>
         internal static string NoInterestsAvailable {

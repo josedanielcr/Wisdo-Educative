@@ -14,7 +14,7 @@ namespace Wisdoeducative.Domain.Entities
         public int CourseId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public string Weight { get; set; }
+        public int Weight { get; set; }
         public EntityStatus Status { get; set; }
     }
 }

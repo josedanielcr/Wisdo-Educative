@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Wisdoeducative.Infrastructure.Persistence;
 
@@ -11,9 +12,11 @@ using Wisdoeducative.Infrastructure.Persistence;
 namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20231004061053_course-pt-2")]
+    partial class coursept2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -56,7 +59,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasIndex("StudyPlanTermId");
 
-                    b.ToTable("Courses", (string)null);
+                    b.ToTable("Courses");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Entities.CourseEvaluation", b =>
@@ -88,7 +91,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("CourseEvaluations", (string)null);
+                    b.ToTable("CourseEvaluations");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Entities.CourseEvaluationTask", b =>
@@ -124,7 +127,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasIndex("CourseEvaluationId");
 
-                    b.ToTable("CourseEvaluationTasks", (string)null);
+                    b.ToTable("CourseEvaluationTasks");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Entities.Degree", b =>
@@ -150,7 +153,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Degrees", (string)null);
+                    b.ToTable("Degrees");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Entities.GrandingSystem", b =>
@@ -186,7 +189,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GrandingSystem", (string)null);
+                    b.ToTable("GrandingSystem");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Entities.Institution", b =>
@@ -214,7 +217,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Institutions", (string)null);
+                    b.ToTable("Institutions");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Entities.Interest", b =>
@@ -238,7 +241,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Interests", (string)null);
+                    b.ToTable("Interests");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Entities.MenuOption", b =>
@@ -273,7 +276,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MenuOptions", (string)null);
+                    b.ToTable("MenuOptions");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Entities.Role", b =>
@@ -296,7 +299,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles", (string)null);
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Entities.StudyPlan", b =>
@@ -331,7 +334,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasIndex("UserDegreeId");
 
-                    b.ToTable("StudyPlans", (string)null);
+                    b.ToTable("StudyPlans");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Entities.StudyPlanTerm", b =>
@@ -368,7 +371,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasIndex("StudyPlanId");
 
-                    b.ToTable("StudyPlanTerms", (string)null);
+                    b.ToTable("StudyPlanTerms");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Entities.Subscription", b =>
@@ -394,7 +397,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Subscriptions", (string)null);
+                    b.ToTable("Subscriptions");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Entities.SubscriptionRoleMenuOption", b =>
@@ -425,7 +428,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasIndex("SubscriptionId");
 
-                    b.ToTable("SubscriptionRoleMenuOptions", (string)null);
+                    b.ToTable("SubscriptionRoleMenuOptions");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Entities.User", b =>
@@ -469,7 +472,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("Users", (string)null);
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Entities.UserDegree", b =>
@@ -515,7 +518,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserDegrees", (string)null);
+                    b.ToTable("UserDegrees");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Entities.UserHistory", b =>
@@ -569,7 +572,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("UserHistories", (string)null);
+                    b.ToTable("UserHistories");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Entities.UserInterest", b =>
@@ -595,7 +598,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserInterests", (string)null);
+                    b.ToTable("UserInterests");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Entities.UserSubscription", b =>
@@ -633,7 +636,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserSubscriptions", (string)null);
+                    b.ToTable("UserSubscriptions");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Entities.UserSubscriptionTransaction", b =>
@@ -669,7 +672,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasIndex("UserSubscriptionId");
 
-                    b.ToTable("UserSubscriptionTransactions", (string)null);
+                    b.ToTable("UserSubscriptionTransactions");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Histories.CourseEvaluationHistory", b =>
@@ -719,7 +722,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasIndex("CourseId");
 
-                    b.ToTable("CourseEvaluationHistories", (string)null);
+                    b.ToTable("CourseEvaluationHistories");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Histories.CourseHistory", b =>
@@ -769,7 +772,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasIndex("StudyPlanTermId");
 
-                    b.ToTable("CourseHistories", (string)null);
+                    b.ToTable("CourseHistories");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Histories.DegreeHistory", b =>
@@ -808,7 +811,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("DegreeHistories", (string)null);
+                    b.ToTable("DegreeHistories");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Histories.InstitutionHistory", b =>
@@ -849,7 +852,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("InstitutionHistories", (string)null);
+                    b.ToTable("InstitutionHistories");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Histories.RoleHistory", b =>
@@ -885,7 +888,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RoleHistories", (string)null);
+                    b.ToTable("RoleHistories");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Histories.StudyPlanHistory", b =>
@@ -930,7 +933,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasIndex("UserDegreeId");
 
-                    b.ToTable("StudyPlanHistories", (string)null);
+                    b.ToTable("StudyPlanHistories");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Histories.StudyPlanTermHistory", b =>
@@ -980,7 +983,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasIndex("StudyPlanId");
 
-                    b.ToTable("StudyPlanTermHistories", (string)null);
+                    b.ToTable("StudyPlanTermHistories");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Histories.SubscriptionHistory", b =>
@@ -1019,7 +1022,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SubscriptionHistories", (string)null);
+                    b.ToTable("SubscriptionHistories");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Histories.UserDegreeHistory", b =>
@@ -1078,7 +1081,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserDegreeHistories", (string)null);
+                    b.ToTable("UserDegreeHistories");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Histories.UserInterestHistory", b =>
@@ -1113,7 +1116,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserInterestHistories", (string)null);
+                    b.ToTable("UserInterestHistories");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Histories.UserSubscriptionHistory", b =>
@@ -1160,7 +1163,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserSubscriptionHistories", (string)null);
+                    b.ToTable("UserSubscriptionHistories");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Entities.Course", b =>

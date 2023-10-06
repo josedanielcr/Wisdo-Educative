@@ -12,5 +12,7 @@
     "StudyPlanAfterCreationDate": "Oops! Your study plan term needs to start after the start date of your degree",
     "StudyPlanTermNotMatchWithSchedule": "Oops! The provided dates do not match with the schedule type of your degree",
     "StudyTermOverlap": "Oops! The dates for this study plan overlap with another term. Could you please pick different dates?",
-    "UserAlreadyExistsErrorMessage": "Oops! It looks like there's already an account with this information."
+    "UserAlreadyExistsErrorMessage": "Oops! It looks like there's already an account with this information.",
+    "CourseEvaluationCreation": "Evaluation created successfully!",
+    "InvalidWeight": "Oops! your total course weight cannot exceed 100."
 }

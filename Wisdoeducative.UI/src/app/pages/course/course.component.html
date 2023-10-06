@@ -11,8 +11,10 @@
         <app-course-stepper (stepperItemIndexEmitter)="changeStep($event)"></app-course-stepper>
     </div>
     <div class="col-md-7">
-        <div *ngIf="currentStep === 0">
-            hola 1
+        <div *ngIf="currentStep === 0"
+             [class.d-none]="">
+            <!-- evaluation calculator -->
+            <app-evaluation-calculator [course]="course"></app-evaluation-calculator>
         </div>
         <div *ngIf="currentStep === 1">
             hola 2
@@ -22,6 +24,6 @@
         </div>
     </div>
     <div class="col-md-3">
-        pomodoro
+        <app-pomodoro-timer [course]="course"></app-pomodoro-timer>
     </div>
 </div>

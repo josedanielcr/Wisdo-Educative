@@ -41,6 +41,16 @@ namespace Wisdoeducative.Application.Services
                 {
                     throw new BadRequestException(ErrorMessages.NullProperties, "NullProperties");
                 }
+
+                IEnumerable<CourseEvaluationDto> courseEvaluations 
+                    = await GetAllCourseEvaluations(courseId);
+
+                if (!courseEvaluationHelperService.IsCourseEvaluationWeightValid(courseEvaluations, 
+                    courseEvaluationDto.Weight))
+                {
+                    throw new BadRequestException(ErrorMessages.InvalidWeight, "InvalidWeight");
+                }
+
                 dBContext.CourseEvaluations.Add(courseEvaluation);
                 await dBContext.SaveChangesAsync();
                 transaction.Commit();

@@ -1,5 +1,17 @@
 {
     "Prom" : "Percentage score",
     "Cal": "Grades",
-    "Link" : "Links"
+    "Link" : "Links",
+    "EvalCalc": "Evaluation Calculator",
+    "AddEval": "Add Evaluation",
+    "evaluation": "Evaluation",
+    "percentage": "Percentage",
+    "grade": "Grade",
+    "AddCourseDesc": "Add course information to create a new course",
+    "EvalutionName": " Evaluation name",
+    "EvalutionPercentage": "Evalution weight",
+    "EvaluationDescription": "Evalution description",
+    "EvalNameError" : "Evaluation name is required",
+    "EvalPercentageError" : "Evaluation weight is required and it must be between 0 and 100"
+
 }

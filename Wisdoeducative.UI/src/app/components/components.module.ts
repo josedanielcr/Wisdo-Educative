@@ -23,6 +23,9 @@ import { SpinnerComponent } from './spinner/spinner.component';
 import { TranslationComponent } from './translation/translation.component';
 import { TranslocoRootModule } from '../transloco-root.module';
 import { CourseStepperComponent } from './course-stepper/course-stepper.component';
+import { PomodoroTimerComponent } from './pomodoro-timer/pomodoro-timer.component';
+import { EvaluationCalculatorComponent } from './evaluation-calculator/evaluation-calculator.component';
+import { InputPercentageComponent } from './input/input-percentage/input-percentage.component';
 
 
 
@@ -49,7 +52,10 @@ import { CourseStepperComponent } from './course-stepper/course-stepper.componen
     SpinnerComponent,
     StudyPlanFiltersComponent,
     TranslationComponent,
-    CourseStepperComponent
+    CourseStepperComponent,
+    PomodoroTimerComponent,
+    EvaluationCalculatorComponent,
+    InputPercentageComponent
   ],
   exports: [
     ButtonComponent,
@@ -72,7 +78,10 @@ import { CourseStepperComponent } from './course-stepper/course-stepper.componen
     SpinnerComponent,
     StudyPlanFiltersComponent,
     TranslationComponent,
-    CourseStepperComponent
+    CourseStepperComponent,
+    PomodoroTimerComponent,
+    EvaluationCalculatorComponent,
+    InputPercentageComponent
   ],
   imports: [
     CommonModule,

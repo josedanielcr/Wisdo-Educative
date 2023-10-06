@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -38,14 +39,6 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
                 name: "CourseScheduleId",
                 table: "CourseHistories");
 
-            migrationBuilder.DropColumn(
-                name: "EvaluationStatus",
-                table: "CourseEvaluations");
-
-            migrationBuilder.RenameColumn(
-                name: "status",
-                table: "CourseEvaluations",
-                newName: "Status");
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "DateOfBirth",
@@ -56,6 +49,29 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
                 oldClrType: typeof(DateTime),
                 oldType: "datetime2",
                 oldNullable: true);
+
+            migrationBuilder.CreateTable(
+    name: "CourseEvaluations",
+    columns: table => new
+    {
+        Id = table.Column<int>(nullable: false)
+            .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+        CourseId = table.Column<int>(nullable: false),
+        Name = table.Column<string>(nullable: true),
+        Description = table.Column<string>(nullable: true),
+        Weight = table.Column<int>(nullable: false),
+        Status = table.Column<int>(nullable: false)
+    },
+    constraints: table =>
+    {
+        table.PrimaryKey("PK_CourseEvaluations", x => x.Id);
+        table.ForeignKey(
+            name: "FK_CourseEvaluations_Courses_CourseId",
+            column: x => x.CourseId,
+            principalTable: "Courses",
+            principalColumn: "Id",
+            onDelete: ReferentialAction.Cascade);
+    });
 
             migrationBuilder.CreateTable(
                 name: "CourseEvaluationTasks",
@@ -92,6 +108,9 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
         {
             migrationBuilder.DropTable(
                 name: "CourseEvaluationTasks");
+
+            migrationBuilder.DropTable(
+    name: "CourseEvaluations");
 
             migrationBuilder.RenameColumn(
                 name: "Status",

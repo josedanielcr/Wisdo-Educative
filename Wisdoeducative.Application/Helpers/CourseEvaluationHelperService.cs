@@ -27,6 +27,21 @@ namespace Wisdoeducative.Application.Helpers
             return true;
         }
 
+        public bool IsCourseEvaluationWeightValid(IEnumerable<CourseEvaluationDto> courseEvaluations,
+            int newWeight)
+        {
+            int total = newWeight;
+            foreach (var courseEvaluation in courseEvaluations)
+            {
+                total += courseEvaluation.Weight;
+            }
+            if(total > 100)
+            {
+                return false;
+            }
+            return true;
+        }
+
         public bool IsCourseEvalutionTaskCreationDataValid(CourseEvaluationTask courseEvaluationTask)
         {
             string[] propertiesToCheck = new string[] { "CourseEvaluationId", "Name", "Weight" };

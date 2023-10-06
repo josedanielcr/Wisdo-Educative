@@ -14,11 +14,11 @@ export class CourseEvaluationAdapterService {
       const clientObj = new CourseEvaluationClient();
       clientObj.id = serverObj.id;
       clientObj.courseId = serverObj.courseId;
-      clientObj.course = this.courseAdapter.adaptServerToClient(serverObj.course);
-      clientObj.name = serverObj.name;
-      clientObj.description = serverObj.description;
-      clientObj.weight = serverObj.weight;
-      clientObj.status = serverObj.status;
+      clientObj.course = serverObj.course ? this.courseAdapter.adaptServerToClient(serverObj.course) : undefined;
+      clientObj.name = serverObj.name || null;
+      clientObj.description = serverObj.description || null;
+      clientObj.weight = serverObj.weight || null;
+      clientObj.status = serverObj.status || null;
       return clientObj;
   }
 
@@ -26,11 +26,11 @@ export class CourseEvaluationAdapterService {
       const serverObj = new CourseEvaluationServer();
       serverObj.id = clientObj.id;
       serverObj.courseId = clientObj.courseId;
-      serverObj.course = this.courseAdapter.adaptClientToServer(clientObj.course);
-      serverObj.name = clientObj.name;
-      serverObj.description = clientObj.description;
-      serverObj.weight = clientObj.weight;
-      serverObj.status = clientObj.status;
+      serverObj.course = clientObj.course ? this.courseAdapter.adaptClientToServer(clientObj.course) : undefined;
+      serverObj.name = clientObj.name || null;
+      serverObj.description = clientObj.description || null;
+      serverObj.weight = clientObj.weight || null;
+      serverObj.status = clientObj.status || null;
       return serverObj;
   }
 }

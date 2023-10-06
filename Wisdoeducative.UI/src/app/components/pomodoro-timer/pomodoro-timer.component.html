@@ -1,0 +1,38 @@
+<div class="w-100 d-flex align-items-center flex-column">
+    <h1 class="wd-text-h1">Pomodoro</h1>
+
+    <!-- timer -->
+    <div class="clock-container wd-bg-white d-flex justify-content-center align-items-center">
+        <!-- SVG container -->
+        <svg width="200" height="200" class="mt-5 mb-5">
+
+            <!-- main circle -->
+            <circle class="progress-ring__circle"
+                    stroke="#C2C6CF"
+                    stroke-width="4"
+                    fill="transparent"
+                    r="82"
+                    cx="100"
+                    cy="100"/>
+
+            <!-- progress circle -->
+            <circle class="progress-ring__circle"
+                    stroke="#A92353"
+                    #circleProgress
+                    stroke-width="4"
+                    fill="transparent"
+                    r="82"
+                    cx="100"
+                    cy="100"/>
+
+            <!-- Text for displaying the time -->
+            <text x="50%" 
+                  y="50%" 
+                  text-anchor="middle"
+                  dy=".3em"
+                  font-size="2.25rem">
+                {{displayTime}}
+            </text>
+        </svg>
+    </div>
+</div>

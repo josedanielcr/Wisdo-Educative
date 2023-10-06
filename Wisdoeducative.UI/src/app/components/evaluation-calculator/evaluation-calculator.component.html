@@ -1,0 +1,61 @@
+<div class="w-100" *transloco="let t; scope : 'courses'">
+    <div class="d-flex">
+        <span class="wd-text-h3">{{t('courses.EvalCalc')}}</span>
+        <div class="ms-auto">
+            <app-button [type]="ButtonType.SECONDARY"
+                        [text]="t('courses.AddEval')"
+                        (click)="addEvaluation()">
+            </app-button>
+        </div>
+    </div>
+
+    <!-- evaluation table -->
+    <div class="w-100 mt-2">
+        <table class="w-100">
+            <thead>
+                <tr>
+                    <td class="fw-bold">{{t('courses.evaluation')}}</td>
+                    <td class="fw-bold">{{t('courses.percentage')}}</td>
+                    <td class="fw-bold">{{t('courses.grade')}}</td>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<app-dialog [title]="t('courses.AddEval')"
+            *transloco="let t; scope : 'courses'"
+            [description]="t('courses.AddCourseDesc')">
+
+    <div class="w-100" *ngIf="evaluationForm">
+        <form [formGroup]="evaluationForm">
+            <div class="w-100 d-flex flex-wrap gap-3 mb-2">
+                <div class="flex-fill">
+                    <app-input-text [label]="t('courses.EvalutionName')"
+                                    formControlName="name"
+                                    placeholder=""
+                                    [error]="t('courses.EvalNameError')">
+                    </app-input-text>
+                </div>
+
+                <div class="flex-fill">
+                    <app-input-percentage [label]="t('courses.EvalutionPercentage')"
+                                            formControlName="weight"
+                                            placeholder=""
+                                            [error]="t('courses.EvalPercentageError')">
+                    </app-input-percentage>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="position-absolute bottom-0 end-0 mb-5 me-5">
+        <app-button [type]="ButtonType.SECONDARY"
+                    [text]="t('courses.AddEval')"
+                    (click)="createEvalution()">
+        </app-button>
+    </div>
+</app-dialog>

@@ -37,7 +37,6 @@ namespace Wisdoeducative.Application.Common.Interfaces
         DbSet<StudyPlanHistory> StudyPlanHistories { get; set; }
         DbSet<StudyPlanTerm> StudyPlanTerms { get; set; }
         DbSet<CourseEvaluation> CourseEvaluations { get; set; }
-        DbSet<CoursePrerequisite> CoursePrerequisites { get; set; }
         DbSet<Course> Courses { get; set; }
         DbSet<StudyPlanTermHistory> StudyPlanTermHistories { get; set; }
         DbSet<CourseEvaluationHistory> CourseEvaluationHistories { get; set; }
