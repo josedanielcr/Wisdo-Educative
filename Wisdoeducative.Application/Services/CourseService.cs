@@ -194,5 +194,20 @@ namespace Wisdoeducative.Application.Services
                 throw;
             }
         }
+
+        public async Task<CourseDto> GetCourseById(int courseId)
+        {
+            var result = await dBContext.Courses
+                .Where(c => c.Id == courseId)
+                .Where(c => c.status == EntityStatus.Active)
+                .Include(c => c.StudyPlanTerm)
+                .FirstOrDefaultAsync() 
+                ?? throw new BadRequestException($"{ErrorMessages.EntityNotFound}", "EntityNotFound");
+
+            CourseDto courseDto = mapper.Map<CourseDto>(result);
+            StudyPlanTermDto studyPlanTermDto = mapper.Map<StudyPlanTermDto>(result.StudyPlanTerm);
+            courseDto.StudyPlanTermDto = studyPlanTermDto;
+            return courseDto;
+        }
     }
 }

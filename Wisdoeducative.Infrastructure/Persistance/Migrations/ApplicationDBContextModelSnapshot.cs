@@ -30,9 +30,6 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("CourseScheduleId")
-                        .HasColumnType("int");
-
                     b.Property<int>("CourseStatus")
                         .HasColumnType("int");
 
@@ -57,8 +54,6 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CourseScheduleId");
-
                     b.HasIndex("StudyPlanTermId");
 
                     b.ToTable("Courses");
@@ -79,18 +74,14 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("EvaluationStatus")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Weight")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
-                    b.Property<int>("status")
+                    b.Property<int>("Weight")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -100,25 +91,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
                     b.ToTable("CourseEvaluations");
                 });
 
-            modelBuilder.Entity("Wisdoeducative.Domain.Entities.CoursePrerequisite", b =>
-                {
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PrerequisiteOfId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.HasKey("CourseId", "PrerequisiteOfId");
-
-                    b.HasIndex("PrerequisiteOfId");
-
-                    b.ToTable("CoursePrerequisites");
-                });
-
-            modelBuilder.Entity("Wisdoeducative.Domain.Entities.CourseSchedule", b =>
+            modelBuilder.Entity("Wisdoeducative.Domain.Entities.CourseEvaluationTask", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -126,18 +99,67 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("EndTime")
+                    b.Property<int>("CourseEvaluationId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("StartTime")
+                    b.Property<int>("EvaluationStatus")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("WeekDay")
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TotalScore")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Weight")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.ToTable("CourseSchedules");
+                    b.HasIndex("CourseEvaluationId");
+
+                    b.ToTable("CourseEvaluationTasks");
+                });
+
+            modelBuilder.Entity("Wisdoeducative.Domain.Entities.CourseLink", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Link")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Platform")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("CourseLinks");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Entities.Degree", b =>
@@ -456,7 +478,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
                     b.Property<int?>("Category")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("DateOfBirth")
+                    b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
@@ -746,9 +768,6 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("CourseScheduleId")
-                        .HasColumnType("int");
-
                     b.Property<int>("CourseStatus")
                         .HasColumnType("int");
 
@@ -782,8 +801,6 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CourseScheduleId");
 
                     b.HasIndex("StudyPlanTermId");
 
@@ -1183,17 +1200,11 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
             modelBuilder.Entity("Wisdoeducative.Domain.Entities.Course", b =>
                 {
-                    b.HasOne("Wisdoeducative.Domain.Entities.CourseSchedule", "CourseSchedule")
-                        .WithMany()
-                        .HasForeignKey("CourseScheduleId");
-
                     b.HasOne("Wisdoeducative.Domain.Entities.StudyPlanTerm", "StudyPlanTerm")
                         .WithMany()
                         .HasForeignKey("StudyPlanTermId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("CourseSchedule");
 
                     b.Navigation("StudyPlanTerm");
                 });
@@ -1209,23 +1220,26 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
                     b.Navigation("Course");
                 });
 
-            modelBuilder.Entity("Wisdoeducative.Domain.Entities.CoursePrerequisite", b =>
+            modelBuilder.Entity("Wisdoeducative.Domain.Entities.CourseEvaluationTask", b =>
                 {
-                    b.HasOne("Wisdoeducative.Domain.Entities.Course", "Course")
-                        .WithMany("PrerequisiteOfCourses")
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                    b.HasOne("Wisdoeducative.Domain.Entities.CourseEvaluation", "CourseEvaluation")
+                        .WithMany("Tasks")
+                        .HasForeignKey("CourseEvaluationId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Wisdoeducative.Domain.Entities.Course", "PrerequisiteOf")
-                        .WithMany("Prerequisites")
-                        .HasForeignKey("PrerequisiteOfId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                    b.Navigation("CourseEvaluation");
+                });
+
+            modelBuilder.Entity("Wisdoeducative.Domain.Entities.CourseLink", b =>
+                {
+                    b.HasOne("Wisdoeducative.Domain.Entities.Course", "Course")
+                        .WithMany()
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Course");
-
-                    b.Navigation("PrerequisiteOf");
                 });
 
             modelBuilder.Entity("Wisdoeducative.Domain.Entities.StudyPlan", b =>
@@ -1392,17 +1406,11 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
             modelBuilder.Entity("Wisdoeducative.Domain.Histories.CourseHistory", b =>
                 {
-                    b.HasOne("Wisdoeducative.Domain.Entities.CourseSchedule", "CourseSchedule")
-                        .WithMany()
-                        .HasForeignKey("CourseScheduleId");
-
                     b.HasOne("Wisdoeducative.Domain.Entities.StudyPlanTerm", "StudyPlanTerm")
                         .WithMany()
                         .HasForeignKey("StudyPlanTermId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("CourseSchedule");
 
                     b.Navigation("StudyPlanTerm");
                 });
@@ -1460,11 +1468,9 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Wisdoeducative.Domain.Entities.Course", b =>
+            modelBuilder.Entity("Wisdoeducative.Domain.Entities.CourseEvaluation", b =>
                 {
-                    b.Navigation("PrerequisiteOfCourses");
-
-                    b.Navigation("Prerequisites");
+                    b.Navigation("Tasks");
                 });
 #pragma warning restore 612, 618
         }

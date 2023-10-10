@@ -34,8 +34,7 @@ namespace Wisdoeducative.Application.Histories
                 Status = entity.status,
                 IsFavorite = entity.IsFavorite,
                 CourseStatus = entity.CourseStatus,
-                StudyPlanTermId = entity.StudyPlanTermId,
-                CourseScheduleId = entity.CourseScheduleId
+                StudyPlanTermId = entity.StudyPlanTermId
             });
         }
     }

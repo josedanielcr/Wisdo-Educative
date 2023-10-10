@@ -3,7 +3,7 @@ import { StudyPlanServer } from "./study.plan.server.model";
 export class StudyPlanTermServer {
     id: number;
     studyPlanId: number;
-    studyPlan: StudyPlanServer;
+    studyPlanDto: StudyPlanServer;
     periodNumber: number;
     name: string;
     startDate: Date;

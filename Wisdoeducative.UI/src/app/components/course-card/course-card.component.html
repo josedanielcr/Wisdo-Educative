@@ -1,5 +1,6 @@
-<div class="w-100 wd-bg-white course-card d-flex flex-column"
-     *ngIf="course">
+<div class="w-100 wd-bg-white course-card d-flex flex-column user-select-none cursor-pointer"
+     *ngIf="course"
+     (click)="openCourseDetails()">
 
     <!-- header -->
     <div class="w-100 d-flex mb-2">

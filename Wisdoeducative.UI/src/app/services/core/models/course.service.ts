@@ -20,10 +20,20 @@ export class CourseService {
     private applicationErrorService : ApplicationErrorService,
     private spinnerService : SpinnerService) { }
 
+  
+  public getCourseById(courseId : number) : Observable<CourseClient> {
+    return this.http.get<CourseServer>(`${this.apiUrlService.checkEnvironment()}/Course/${courseId}`)
+      .pipe(
+        map((course : CourseServer) => {
+          return this.courseAdapter.adaptServerToClient(course);
+        }),
+        catchError((error: any) => {throw this.applicationErrorService.parseHttpError(error)})
+      )
+  }
 
   public getStudyPlanTermCourses(studyPlanTermId : number) {
     this.spinnerService.show();
-    return this.http.get<CourseServer[]>(`${this.apiUrlService.checkEnvironment()}/Course/${studyPlanTermId}`)
+    return this.http.get<CourseServer[]>(`${this.apiUrlService.checkEnvironment()}/Course/study-plan-term/${studyPlanTermId}`)
       .pipe(
         finalize(() => {
           this.spinnerService.hide();

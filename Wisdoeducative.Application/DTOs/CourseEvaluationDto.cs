@@ -11,12 +11,12 @@ namespace Wisdoeducative.Application.DTOs
     public class CourseEvaluationDto : IMapFrom<CourseEvaluation>
     {
         public int Id { get; set; }
-        public CourseDto CourseDto { get; set; }  // Reference to CourseDto
+        public CourseDto? CourseDto { get; set; } 
         public int CourseId { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
-        public string Weight { get; set; }
-        public string Status { get; set; }
-        public string EvaluationStatus { get; set; }
+        public string? Description { get; set; }
+        public IEnumerable<CourseEvaluationTaskDto>? Tasks { get; set; }
+        public int Weight { get; set; }
+        public string? Status { get; set; }
     }
 }

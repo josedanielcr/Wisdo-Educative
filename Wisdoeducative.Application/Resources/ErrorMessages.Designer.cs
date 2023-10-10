@@ -97,6 +97,33 @@ namespace Wisdoeducative.Application.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Oops! it looks like your selected dates are not valid, please check if the start date greater than the end date.
+        /// </summary>
+        internal static string InvalidEvaluationTaskDates {
+            get {
+                return ResourceManager.GetString("InvalidEvaluationTaskDates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oops! It looks like you&apos;re trying to assing more weight than the evaluation category has assigned..
+        /// </summary>
+        internal static string InvalidEvaluationTaskWeight {
+            get {
+                return ResourceManager.GetString("InvalidEvaluationTaskWeight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Oops! your total course weight cannot exceed 100..
+        /// </summary>
+        internal static string InvalidWeight {
+            get {
+                return ResourceManager.GetString("InvalidWeight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Oops! There are no interests available.
         /// </summary>
         internal static string NoInterestsAvailable {

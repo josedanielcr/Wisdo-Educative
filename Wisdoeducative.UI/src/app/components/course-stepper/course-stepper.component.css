@@ -1,0 +1,18 @@
+.stepper-item {
+    height: 3.5rem;
+    border-radius: 0.3125rem;
+}
+
+.phone-stepper-item {
+    height: 2.4375rem;
+}
+
+.first-stepper-item-phone {
+    border-top-left-radius: 0.3125rem;
+    border-bottom-left-radius: 0.3125rem;
+}
+
+.last-stepper-item-phone {
+    border-top-right-radius: 0.3125rem;
+    border-bottom-right-radius: 0.3125rem;
+}

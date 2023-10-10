@@ -47,12 +47,12 @@ namespace Wisdoeducative.Infrastructure.Persistence
         public DbSet<StudyPlanHistory> StudyPlanHistories { get; set; }
         public DbSet<StudyPlanTerm> StudyPlanTerms { get; set; }
         public DbSet<CourseEvaluation> CourseEvaluations { get; set; }
-        public DbSet<CourseSchedule> CourseSchedules { get; set; }
-        public DbSet<CoursePrerequisite> CoursePrerequisites { get; set; }
         public DbSet<Course> Courses { get; set; }
         public DbSet<StudyPlanTermHistory> StudyPlanTermHistories { get; set; }
         public DbSet<CourseEvaluationHistory> CourseEvaluationHistories { get; set; }
         public DbSet<CourseHistory> CourseHistories { get; set; }
+        public DbSet<CourseEvaluationTask> CourseEvaluationTasks { get; set; }
+        public DbSet<CourseLink> CourseLinks { get; set; }
 
         public async Task<int> SaveChangesAsync()
         {
@@ -61,20 +61,6 @@ namespace Wisdoeducative.Infrastructure.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<CoursePrerequisite>()
-               .HasKey(cp => new { cp.CourseId, cp.PrerequisiteOfId }); // Composite key
-
-            modelBuilder.Entity<CoursePrerequisite>()
-                .HasOne(cp => cp.Course)
-                .WithMany(c => c.PrerequisiteOfCourses)
-                .HasForeignKey(cp => cp.CourseId)
-                .OnDelete(DeleteBehavior.Restrict); // to prevent cascading deletes
-
-            modelBuilder.Entity<CoursePrerequisite>()
-                .HasOne(cp => cp.PrerequisiteOf)
-                .WithMany(c => c.Prerequisites)
-                .HasForeignKey(cp => cp.PrerequisiteOfId)
-                .OnDelete(DeleteBehavior.Restrict); // to prevent cascading deletes
         }
     }
 }

@@ -37,12 +37,12 @@ namespace Wisdoeducative.Application.Common.Interfaces
         DbSet<StudyPlanHistory> StudyPlanHistories { get; set; }
         DbSet<StudyPlanTerm> StudyPlanTerms { get; set; }
         DbSet<CourseEvaluation> CourseEvaluations { get; set; }
-        DbSet<CourseSchedule> CourseSchedules { get; set; }
-        DbSet<CoursePrerequisite> CoursePrerequisites { get; set; }
         DbSet<Course> Courses { get; set; }
         DbSet<StudyPlanTermHistory> StudyPlanTermHistories { get; set; }
         DbSet<CourseEvaluationHistory> CourseEvaluationHistories { get; set; }
         DbSet<CourseHistory> CourseHistories { get; set; }
+        DbSet<CourseEvaluationTask> CourseEvaluationTasks { get; set; }
+        DbSet<CourseLink> CourseLinks { get; set; }
 
         Task<int> SaveChangesAsync();
         EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;
