@@ -11,6 +11,15 @@ import { ApplicationErrorModel } from 'src/app/models/application.error.model';
 import { MessageService } from 'src/app/services/core/message.service';
 import { MessageModel } from 'src/app/models/message.model';
 import { MessageTypeEnum } from 'src/app/enums/message.type.enum';
+import { CourseEvaluationTaskClient } from 'src/app/models/core/client/course.evaluation.task.client.model';
+
+
+interface EvaluationRow {
+  evaluation : CourseEvaluationClient;
+  totalScore : string;
+  isOpen : boolean;
+  tasks : CourseEvaluationTaskClient[];
+}
 
 @Component({
   selector: 'app-evaluation-calculator',
@@ -21,14 +30,20 @@ export class EvaluationCalculatorComponent implements OnInit {
 
   @Input() course : CourseClient;
   @ViewChild(DialogComponent) dialog: DialogComponent;
+  @ViewChild('courseEvaluationTaskDialog') courseEvaluationTaskDialog: DialogComponent;
 
   //util
   public ButtonType = ButtonType;
   public subscriptions : Subscription[] = [];
+  public evaluationRows : EvaluationRow[] = [];
+  public selectedEvaluationRow : EvaluationRow | null = null;
 
   //properties
-  public evaluationForm : FormGroup;
   public evaluations : CourseEvaluationClient[] = [];
+  
+  //forms
+  public evaluationForm : FormGroup;
+  public evaluationTaskForm : FormGroup;
 
   constructor(private fb : FormBuilder,
     private formService : FormService,
@@ -36,11 +51,21 @@ export class EvaluationCalculatorComponent implements OnInit {
     private messageService : MessageService) { }
   
   ngOnInit(): void {
+    this.initiateForms();
+    this.getCourseEvaluations();
+  }
+
+  private initiateForms(): void {
     this.evaluationForm = this.fb.group({
       name : ['', Validators.required],
       weight : [0, [Validators.required, Validators.min(0), Validators.max(100)]]
     });
-    this.getCourseEvaluations();
+    this.evaluationTaskForm = this.fb.group({
+      name : ['', Validators.required],
+      weight : [0, [Validators.required]],
+      startDate : ['', Validators.required],
+      endDate : ['', Validators.required]
+    });
   }
 
   private getCourseEvaluations() {
@@ -48,8 +73,14 @@ export class EvaluationCalculatorComponent implements OnInit {
       this.courseEvalutationService.getCourseEvaluations(this.course.id).subscribe({
         next : (courseEvaluations : CourseEvaluationClient[]) => {
           this.evaluations = courseEvaluations;
-          console.log(this.evaluations);
-          
+          this.evaluations.forEach(evaluation => {
+            this.evaluationRows.push({
+              evaluation : evaluation,
+              totalScore : this.getEvaluationTasksWeight(evaluation.tasks),
+              isOpen : false,
+              tasks : evaluation.tasks
+            });
+          });
         },
         error : (error : ApplicationErrorModel) => {
           this.messageService.show(new MessageModel(MessageTypeEnum.Error, 'Error', error.errorCode))
@@ -58,8 +89,49 @@ export class EvaluationCalculatorComponent implements OnInit {
     );
   }
 
+  private getEvaluationTasksWeight(tasks: CourseEvaluationTaskClient[]): string {
+    let weight : number = 0;
+    tasks.forEach((task : CourseEvaluationTaskClient) => {
+      weight += task.totalScore;
+    });
+    return weight.toString();
+  }
+
   public addEvaluation(): void {
     this.dialog.show();
+  }
+
+  public openEvaluationRow(evaluationRow : EvaluationRow): void {
+    evaluationRow.isOpen = !evaluationRow.isOpen;
+  }
+
+  public openAddCourseEvaluationTask(evaluationRow : EvaluationRow): void {
+    this.selectedEvaluationRow = evaluationRow;
+    this.courseEvaluationTaskDialog.show();
+  }
+
+  public createEvaluationTask(): void {
+    let evaluationTask : CourseEvaluationTaskClient | null =
+    this.formService.validateForm(this.evaluationTaskForm, CourseEvaluationTaskClient);
+    if(!evaluationTask) return null;
+    this.executeCreateEvaluationTask(evaluationTask);
+  }
+
+  private executeCreateEvaluationTask(evaluationTask: CourseEvaluationTaskClient): void {
+    evaluationTask.courseEvaluationId = this.selectedEvaluationRow.evaluation.id;
+    this.subscriptions.push(
+      this.courseEvalutationService.createCourseEvaluationTask(evaluationTask.courseEvaluationId, evaluationTask).subscribe({
+        next : (courseEvaluationTaskClient : CourseEvaluationTaskClient) => {
+          this.selectedEvaluationRow.tasks.push(courseEvaluationTaskClient);
+          this.messageService.show(new MessageModel(MessageTypeEnum.Success, 
+            'Success', 'CourseEvaluationTaskCreation'));
+            this.courseEvaluationTaskDialog.hide();
+        },
+        error : (error : ApplicationErrorModel) => {
+          this.messageService.show(new MessageModel(MessageTypeEnum.Error, 'Error', error.errorCode))
+        }
+      })
+    );
   }
 
   public createEvalution(): void {
@@ -77,8 +149,15 @@ export class EvaluationCalculatorComponent implements OnInit {
       this.courseEvalutationService.createCourseEvaluation(this.course.id, evaluation).subscribe({
         next : (courseEvaluationClient : CourseEvaluationClient) => {
           this.evaluations.push(courseEvaluationClient);
+          this.evaluationRows.push({
+            evaluation : courseEvaluationClient,
+            totalScore : '0',
+            isOpen : false,
+            tasks : []
+          });
           this.messageService.show(new MessageModel(MessageTypeEnum.Success, 
             'Success', 'CourseEvaluationCreation'));
+          this.dialog.hide();
         },
         error : (error : ApplicationErrorModel) => {
           this.messageService.show(new MessageModel(MessageTypeEnum.Error, 'Error', error.errorCode))

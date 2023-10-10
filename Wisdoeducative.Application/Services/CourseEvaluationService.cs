@@ -75,6 +75,22 @@ namespace Wisdoeducative.Application.Services
                     throw new BadRequestException(ErrorMessages.NullProperties, "NullProperties");
                 }
 
+                IEnumerable<CourseEvaluationTaskDto> courseEvaluationTasks
+                    = await GetAllCourseEvaluationTasks(courseEvaluationId);
+
+                CourseEvaluationDto courseEvaluationDto = await GetCourseEvaluation(courseEvaluationId);
+
+                if (!courseEvaluationHelperService.IsCourseEvaluationTaskWeightValid(
+                    courseEvaluationTasks,courseEvaluationTaskDto.Weight, courseEvaluationDto))
+                {
+                    throw new BadRequestException(ErrorMessages.InvalidEvaluationTaskWeight, "InvalidEvaluationTaskWeight");
+                }
+
+                if(!courseEvaluationHelperService.IsCourseEvaluationTaskDatesValid(courseEvaluationTaskDto))
+                {
+                    throw new BadRequestException(ErrorMessages.InvalidEvaluationTaskDates, "InvalidEvaluationTaskDates");
+                }
+
                 courseEvaluationTask.CourseEvaluationId = courseEvaluationId;
                 dBContext.CourseEvaluationTasks.Add(courseEvaluationTask);
                 await dBContext.SaveChangesAsync();
@@ -93,6 +109,7 @@ namespace Wisdoeducative.Application.Services
             return await dBContext.CourseEvaluations
                 .Where(ce => ce.CourseId == courseId)
                 .Where(ce => ce.Status == Domain.Enums.EntityStatus.Active)
+                .Include(ce => ce.Tasks)
                 .Select(ce => mapper.Map<CourseEvaluationDto>(ce))
                 .ToListAsync();
         }
@@ -104,6 +121,17 @@ namespace Wisdoeducative.Application.Services
                 .Where(cet => cet.Status == Domain.Enums.EntityStatus.Active)
                 .Select(cet => mapper.Map<CourseEvaluationTaskDto>(cet))
                 .ToListAsync();
+        }
+
+        public async Task<CourseEvaluationDto> GetCourseEvaluation(int courseEvaluationId)
+        {
+            return await dBContext.CourseEvaluations
+                .Where(ce => ce.Id == courseEvaluationId)
+                .Where(ce => ce.Status == Domain.Enums.EntityStatus.Active)
+                .Include(ce => ce.Tasks)
+                .Select(ce => mapper.Map<CourseEvaluationDto>(ce))
+                .FirstOrDefaultAsync()
+                ?? throw new NotFoundException(ErrorMessages.EntityNotFound, "EntityNotFound"); ;
         }
     }
 }

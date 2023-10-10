@@ -14,5 +14,8 @@
     "StudyTermOverlap": "Oops! The dates for this study plan overlap with another term. Could you please pick different dates?",
     "UserAlreadyExistsErrorMessage": "Oops! It looks like there's already an account with this information.",
     "CourseEvaluationCreation": "Evaluation created successfully!",
-    "InvalidWeight": "Oops! your total course weight cannot exceed 100."
+    "InvalidWeight": "Oops! your total course weight cannot exceed 100.",
+    "InvalidEvaluationTaskWeight":"Oops! It looks like you're trying to assing more weight than the evaluation category has assigned.",
+    "CourseEvaluationTaskCreation": "Evaluation task created successfully!",
+    "InvalidEvaluationTaskDates": "Oops! it looks like your selected dates are not valid, please check if the start date greater than the end date."
 }

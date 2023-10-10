@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Wisdoeducative.Infrastructure.Persistence;
 
@@ -11,9 +12,11 @@ using Wisdoeducative.Infrastructure.Persistence;
 namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20231006061355_courses-pt-4")]
+    partial class coursespt4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -119,9 +122,6 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("TotalScore")
                         .HasColumnType("int");
 
                     b.Property<int>("Weight")
@@ -1223,7 +1223,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
             modelBuilder.Entity("Wisdoeducative.Domain.Entities.CourseEvaluationTask", b =>
                 {
                     b.HasOne("Wisdoeducative.Domain.Entities.CourseEvaluation", "CourseEvaluation")
-                        .WithMany("Tasks")
+                        .WithMany()
                         .HasForeignKey("CourseEvaluationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1466,11 +1466,6 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
                     b.Navigation("Institution");
 
                     b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Wisdoeducative.Domain.Entities.CourseEvaluation", b =>
-                {
-                    b.Navigation("Tasks");
                 });
 #pragma warning restore 612, 618
         }

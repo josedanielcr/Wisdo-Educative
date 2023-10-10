@@ -17,21 +17,56 @@
                     <td class="fw-bold">{{t('courses.evaluation')}}</td>
                     <td class="fw-bold">{{t('courses.percentage')}}</td>
                     <td class="fw-bold">{{t('courses.grade')}}</td>
+                    <td></td>
                 </tr>
             </thead>
             <tbody *ngIf="evaluations">
-                <tr *ngFor="let evaluation of evaluations">
-                    <td class="d-flex">
-                        <span>
-                            {{evaluation.name}}
-                        </span>
-                        <span class="ms-auto me-5 pe-5">
-                            <i class="fa-solid fa-chevron-down"></i>
-                        </span>
-                    </td>
-                    <td>{{evaluation.weight}}%</td>
-                    <td>campo calculado</td>
-                </tr>
+                <ng-container *ngFor="let evaluation of evaluationRows">
+                    <tr>
+                        <td (click)="openEvaluationRow(evaluation)" class="cursor-pointer">
+                            <div class="d-flex">
+                                <span>
+                                    {{evaluation.evaluation.name}}
+                                </span>
+                                <span class="ms-auto me-5 pe-5">
+                                    <i [class]="evaluation.isOpen ? 'fa-solid fa-chevron-up' 
+                                    : 'fa-solid fa-chevron-down' + ' cursor-pointer'" ></i>
+                                </span>
+                            </div>
+                        </td>
+                        <td (click)="openEvaluationRow(evaluation)"
+                            class="cursor-pointer">{{evaluation.evaluation.weight}}%</td>
+                        <td (click)="openEvaluationRow(evaluation)"
+                            class="cursor-pointer">{{evaluation.totalScore}}%</td>
+                        <td>
+                            <i class="fa-solid fa-square-plus fa-2x cursor-pointer"
+                                (click)="openAddCourseEvaluationTask(evaluation)">
+                            </i>
+                        </td>
+                    </tr>
+                    <ng-container *ngIf="evaluation.isOpen">
+                        <ng-container *ngIf="evaluation.tasks.length === 0">
+                            <tr>
+                                <td colspan="4">
+                                    <div class="d-flex justify-content-center align-items-center gap-2">
+                                        <img src="../../../assets/icons/pending.png">
+                                        <span>{{t('courses.NoEvalTasks')}}</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-container>
+                        <ng-container *ngIf="evaluation.tasks.length > 0">
+                            <tr *ngFor="let task of evaluation.tasks">
+                                <td>{{task.name}}</td>
+                                <td>{{task.weight}}%</td>
+                                <td>{{task.totalScore == null ? 0 : task.totalScore}}%</td>
+                                <td>
+                                    <i class="fa-solid fa-circle-chevron-right cursor-pointer"></i>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </ng-container>
+                </ng-container>
             </tbody>
         </table>
     </div>
@@ -39,7 +74,7 @@
 
 <app-dialog [title]="t('courses.AddEval')"
             *transloco="let t; scope : 'courses'"
-            [description]="t('courses.AddCourseDesc')">
+            [description]="t('courses.AddCourseEvalDesc')">
 
     <div class="w-100" *ngIf="evaluationForm">
         <form [formGroup]="evaluationForm">
@@ -67,6 +102,56 @@
         <app-button [type]="ButtonType.SECONDARY"
                     [text]="t('courses.AddEval')"
                     (click)="createEvalution()">
+        </app-button>
+    </div>
+</app-dialog>
+
+<app-dialog #courseEvaluationTaskDialog
+            *transloco="let t; scope : 'courses'"
+            [description]="t('courses.AddCourseEvalTaskDesc')"
+            [title]="t('courses.AddCourseEvalTask')">
+
+    <div class="w-100">
+        <form [formGroup]="evaluationTaskForm">
+            <div class="d-flex gap-3 flex-wrap mb-2">
+                <div class="flex-fill">
+                    <app-input-text [label]="t('courses.EvalTaskName')"
+                                    formControlName="name"
+                                    placeholder=""
+                                    [error]="t('courses.EvalTaskNameError')">
+                    </app-input-text>
+                </div>
+                <div class="flex-fill">
+                    <app-input-percentage [label]="t('courses.EvalTaskPercentage')"
+                                            formControlName="weight"
+                                            placeholder=""
+                                            [error]="t('courses.EvalTaskPercentageError')">
+                    </app-input-percentage>
+                </div>
+            </div>
+            <div class="d-flex gap-3 flex-wrap">
+                <div class="flex-fill">
+                    <app-input-date [label]="t('courses.EvalTaskStartDate')"
+                                    placeholder=""
+                                    [error]="t('courses.EvalTaskStartDateError')"
+                                    formControlName="startDate">
+                    </app-input-date>
+                </div>
+                <div class="flex-fill">
+                    <app-input-date [label]="t('courses.EvalTaskEndDate')"
+                                    placeholder=""
+                                    [error]="t('courses.EvalTaskEndDateError')"
+                                    formControlName="endDate">
+                    </app-input-date>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="position-absolute bottom-0 end-0 mb-5 me-5">
+        <app-button [type]="ButtonType.SECONDARY"
+                    [text]="t('courses.EvalTaskSubmit')"
+                    (click)="createEvaluationTask()">
         </app-button>
     </div>
 </app-dialog>

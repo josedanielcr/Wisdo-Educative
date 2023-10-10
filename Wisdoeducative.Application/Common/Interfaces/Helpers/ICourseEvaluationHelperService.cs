@@ -15,5 +15,9 @@ namespace Wisdoeducative.Application.Common.Interfaces.Helpers
         bool IsCourseEvaluationWeightValid(IEnumerable<CourseEvaluationDto> courseEvaluations,
             int newWeight);
         bool IsCourseEvalutionTaskCreationDataValid(CourseEvaluationTask courseEvaluationTask);
+        bool IsCourseEvaluationTaskWeightValid(IEnumerable<CourseEvaluationTaskDto> courseEvaluationTasks,
+                       int newWeight, CourseEvaluationDto courseEvaluationDto);
+
+        bool IsCourseEvaluationTaskDatesValid(CourseEvaluationTaskDto courseEvaluationTaskDto);
     }
 }

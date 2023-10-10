@@ -19,8 +19,31 @@ namespace Wisdoeducative.Application.Helpers
         }
         public bool IsCourseEvaluationCreationDataValid(CourseEvaluation courseEvaluation)
         {
-            string[] propertiesToCheck = new string[] { "Weight", "Name" };
+            string[] propertiesToCheck = new string[] { "CourseId", "Name", "Weight" };
             if (entityHelperService.AreAnyPropertiesNull(courseEvaluation, propertiesToCheck))
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool IsCourseEvaluationTaskDatesValid(CourseEvaluationTaskDto courseEvaluationTaskDto)
+        {
+            if(courseEvaluationTaskDto.StartDate > courseEvaluationTaskDto.EndDate)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public bool IsCourseEvaluationTaskWeightValid(IEnumerable<CourseEvaluationTaskDto> courseEvaluationTasks, int newWeight, CourseEvaluationDto courseEvaluationDto)
+        {
+            int total = newWeight;
+            foreach (var courseEvaluationTask in courseEvaluationTasks)
+            {
+                total += courseEvaluationTask.Weight;
+            }
+            if (total > courseEvaluationDto.Weight)
             {
                 return false;
             }
@@ -44,7 +67,7 @@ namespace Wisdoeducative.Application.Helpers
 
         public bool IsCourseEvalutionTaskCreationDataValid(CourseEvaluationTask courseEvaluationTask)
         {
-            string[] propertiesToCheck = new string[] { "CourseEvaluationId", "Name", "Weight" };
+            string[] propertiesToCheck = new string[] { "Weight", "Name", "StartDate", "EndDate" };
             if (entityHelperService.AreAnyPropertiesNull(courseEvaluationTask, propertiesToCheck))
             {
                 return false;

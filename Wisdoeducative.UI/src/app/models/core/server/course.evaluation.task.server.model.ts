@@ -6,6 +6,9 @@ export class CourseEvaluationTaskServer {
     description: string;
     courseEvaluationId : number;
     courseEvaluation : CourseEvaluationServer;
+    startDate: Date;
+    endDate: Date;
+    totalScore : number;
     weight: number;
     status: string;
     evaluationStatus: string;

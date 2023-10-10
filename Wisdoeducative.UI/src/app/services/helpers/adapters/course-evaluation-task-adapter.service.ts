@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { CourseEvaluationTaskClient } from 'src/app/models/core/client/course.evaluation.task.client.model';
 import { CourseEvaluationTaskServer } from 'src/app/models/core/server/course.evaluation.task.server.model';
 import { CourseEvaluationAdapterService } from './course-evaluation-adapter.service';
@@ -8,7 +8,11 @@ import { CourseEvaluationAdapterService } from './course-evaluation-adapter.serv
 })
 export class CourseEvaluationTaskAdapterService {
 
-  constructor(private courseEvaluationAdapterService : CourseEvaluationAdapterService) { }
+  constructor(private injector : Injector) { }
+
+  private getCourseEvaluationAdapterService() {
+    return this.injector.get(CourseEvaluationAdapterService);
+  }
 
   public adaptServerToClient(courseEvaluationTaskServer : CourseEvaluationTaskServer){
     const courseEvaluationTaskClient = new CourseEvaluationTaskClient();
@@ -16,8 +20,12 @@ export class CourseEvaluationTaskAdapterService {
     courseEvaluationTaskClient.name = courseEvaluationTaskServer.name;
     courseEvaluationTaskClient.description = courseEvaluationTaskServer.description;
     courseEvaluationTaskClient.courseEvaluationId = courseEvaluationTaskServer.courseEvaluationId;
-    courseEvaluationTaskClient.courseEvaluation = courseEvaluationTaskServer.courseEvaluation ? this.courseEvaluationAdapterService.adaptServerToClient(courseEvaluationTaskServer.courseEvaluation) : undefined;
+    courseEvaluationTaskClient.courseEvaluation = courseEvaluationTaskServer.courseEvaluation
+     ? this.getCourseEvaluationAdapterService().adaptServerToClient(courseEvaluationTaskServer.courseEvaluation) : undefined;
     courseEvaluationTaskClient.weight = courseEvaluationTaskServer.weight;
+    courseEvaluationTaskClient.totalScore = courseEvaluationTaskServer.totalScore;
+    courseEvaluationTaskClient.startDate = courseEvaluationTaskServer.startDate;
+    courseEvaluationTaskClient.endDate = courseEvaluationTaskServer.endDate;
     courseEvaluationTaskClient.status = courseEvaluationTaskServer.status;
     courseEvaluationTaskClient.evaluationStatus = courseEvaluationTaskServer.evaluationStatus;
     return courseEvaluationTaskClient;
@@ -29,8 +37,12 @@ export class CourseEvaluationTaskAdapterService {
     courseEvaluationTaskServer.name = courseEvaluationTaskClient.name;
     courseEvaluationTaskServer.description = courseEvaluationTaskClient.description;
     courseEvaluationTaskServer.courseEvaluationId = courseEvaluationTaskClient.courseEvaluationId;
-    courseEvaluationTaskServer.courseEvaluation = courseEvaluationTaskClient.courseEvaluation ? this.courseEvaluationAdapterService.adaptClientToServer(courseEvaluationTaskClient.courseEvaluation) : undefined;
+    courseEvaluationTaskServer.courseEvaluation = courseEvaluationTaskClient.courseEvaluation
+     ? this.getCourseEvaluationAdapterService().adaptClientToServer(courseEvaluationTaskClient.courseEvaluation) : undefined;
     courseEvaluationTaskServer.weight = courseEvaluationTaskClient.weight;
+    courseEvaluationTaskServer.totalScore = courseEvaluationTaskClient.totalScore;
+    courseEvaluationTaskServer.startDate = courseEvaluationTaskClient.startDate;
+    courseEvaluationTaskServer.endDate = courseEvaluationTaskClient.endDate;
     courseEvaluationTaskServer.status = courseEvaluationTaskClient.status;
     courseEvaluationTaskServer.evaluationStatus = courseEvaluationTaskClient.evaluationStatus;
     return courseEvaluationTaskServer;

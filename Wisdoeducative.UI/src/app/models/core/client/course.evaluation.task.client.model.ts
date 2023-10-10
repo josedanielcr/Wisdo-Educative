@@ -6,6 +6,9 @@ export class CourseEvaluationTaskClient {
     description: string;
     courseEvaluationId : number;
     courseEvaluation : CourseEvaluationClient;
+    startDate: Date;
+    endDate: Date;
+    totalScore : number;
     weight: number;
     status: string;
     evaluationStatus: string;

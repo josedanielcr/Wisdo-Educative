@@ -129,6 +129,12 @@
   <data name="HistorySaveErrorMessage" xml:space="preserve">
     <value>Oops! We ran into an issue while trying to save the item's history.</value>
   </data>
+  <data name="InvalidEvaluationTaskDates" xml:space="preserve">
+    <value>Oops! it looks like your selected dates are not valid, please check if the start date greater than the end date</value>
+  </data>
+  <data name="InvalidEvaluationTaskWeight" xml:space="preserve">
+    <value>Oops! It looks like you're trying to assing more weight than the evaluation category has assigned.</value>
+  </data>
   <data name="InvalidWeight" xml:space="preserve">
     <value>Oops! your total course weight cannot exceed 100.</value>
   </data>

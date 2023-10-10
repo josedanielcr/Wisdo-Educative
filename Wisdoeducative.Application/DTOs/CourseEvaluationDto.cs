@@ -15,6 +15,7 @@ namespace Wisdoeducative.Application.DTOs
         public int CourseId { get; set; }
         public string Name { get; set; }
         public string? Description { get; set; }
+        public IEnumerable<CourseEvaluationTaskDto>? Tasks { get; set; }
         public int Weight { get; set; }
         public string? Status { get; set; }
     }
