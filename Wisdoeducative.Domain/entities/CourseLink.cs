@@ -10,9 +10,10 @@ namespace Wisdoeducative.Domain.Entities
 {
     public class CourseLink : BaseEntity
     {
-        public Course? Course { get; set; }
-        public int CourseId { get; set; }
+        public CourseEvaluationTask? CourseEvaluationTask { get; set; }
+        public int CourseEvaluationTaskId { get; set; }
         public string Link { get; set; }
+        public string Name { get; set; }
         public CourseLinkPlatform Platform { get; set; }
         public EntityStatus Status { get; set; }
     }

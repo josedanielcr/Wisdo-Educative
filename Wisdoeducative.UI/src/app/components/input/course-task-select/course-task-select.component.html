@@ -1,0 +1,38 @@
+<div class="input-label-container" *ngIf="label">
+    <label for="">{{label}}</label>
+</div>
+
+<div class="task-select-container wd-bg-bone d-flex"
+    [ngClass]="{'wd-bg-input-error' : ngControl?.control?.touched 
+    && ngControl?.control?.invalid }">
+  <!-- input -->
+  <div class="input-container">
+    <input type="text"
+          class="w-100 h-100"
+          [value]="value"
+          (input)="updateValue($event)"
+          (focus)="openDropdown()"
+          (blur)="closeDropdown()">
+    </div>
+
+    <div class="line"></div>
+
+    <!-- icon -->
+    <div class="d-flex justify-content-center align-items-center icon-container">
+        <img src="../../../../assets/icons/Loupe.png">
+    </div>
+    <div class="w-100 dropdown-container wd-bg-bone" [hidden]="!dropdownOpen">
+        <div class="drowpdown-data">
+            <div *ngFor="let task of filteredTasks" class="drowpdown-data-item"
+                (mousedown)="setToInput(task.name)">
+                <span class="option-text">{{task.name}}</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="w-100 d-flex">
+    <span *ngIf="ngControl?.control?.touched 
+    && ngControl?.control?.invalid" class="ms-auto wd-text-danger wd-text-input-error-size">
+        {{error}}
+    </span>
+</div>

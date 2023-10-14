@@ -42,5 +42,11 @@ namespace Wisdoeducative.API.Controllers
         {
             return Ok(await courseEvaluationService.GetAllCourseEvaluationTasks(courseEvaluationId));
         }
+
+        [HttpGet("task/course/all/{courseId}")]
+        public async Task<IActionResult> GetAllCourseTasks(int courseId)
+        {
+            return Ok(await courseEvaluationService.GetCourseTasks(courseId));
+        }
     }
 }

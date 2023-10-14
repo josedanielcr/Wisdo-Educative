@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ButtonType } from 'src/app/enums/button.enum';
 import { CourseClient } from 'src/app/models/core/client/course.client.model';
 import { DialogComponent } from '../dialog/dialog.component';
@@ -26,7 +26,7 @@ interface EvaluationRow {
   templateUrl: './evaluation-calculator.component.html',
   styleUrls: ['./evaluation-calculator.component.css']
 })
-export class EvaluationCalculatorComponent implements OnInit {
+export class EvaluationCalculatorComponent implements OnInit, OnDestroy {
 
   @Input() course : CourseClient;
   @ViewChild(DialogComponent) dialog: DialogComponent;
@@ -49,6 +49,10 @@ export class EvaluationCalculatorComponent implements OnInit {
     private formService : FormService,
     private courseEvalutationService : CourseEvaluationService,
     private messageService : MessageService) { }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(s => s.unsubscribe());
+  }
   
   ngOnInit(): void {
     this.initiateForms();

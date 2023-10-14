@@ -1,0 +1,13 @@
+{
+    "AddLink": "Add Link",
+    "AddLinkDesc" : "Add important links so you can easily access them later.",
+    "AddLinkInput": "Add the document link",
+    "AddLinkInputError" : "You must enter a valid link",
+    "AddLinkName": "Add the document name",
+    "AddLinkNameError" : "You must enter a valid name",
+    "SaveLink": "Save Link",
+    "Other": "Other",
+    "AddTaskLabel": "Select the task in which you want to add the link",
+    "AddTaskLabelError": "You must enter a valid task",
+    "TaskNotFound": "Task not found"
+}

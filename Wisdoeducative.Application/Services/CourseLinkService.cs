@@ -37,15 +37,16 @@ namespace Wisdoeducative.Application.Services
                 throw new BadRequestException(ErrorMessages.NullProperties, "NullProperties");
             }
             
-            dBContext.CourseLinks.Add(mapper.Map<CourseLink>(courseLink));
+            CourseLink newCourseLink = mapper.Map<CourseLink>(courseLink);
+            dBContext.CourseLinks.Add(newCourseLink);
             await dBContext.SaveChangesAsync();
-            return await CreateCourseLink(courseLink);
+            return await GetCourseLinkById(newCourseLink.Id);
         }
 
-        public async Task<CourseLinkDto> GetCourseLink(int courseId)
+        public async Task<CourseLinkDto> GetCourseLink(int courseEvaluationTaskId)
         {
             return await dBContext.CourseLinks
-                .Where(cl => cl.CourseId == courseId)
+                .Where(cl => cl.CourseEvaluationTaskId == courseEvaluationTaskId)
                 .Where(cl => cl.Status == Domain.Enums.EntityStatus.Active)
                 .Select(cl => mapper.Map<CourseLinkDto>(cl))
                 .FirstOrDefaultAsync()

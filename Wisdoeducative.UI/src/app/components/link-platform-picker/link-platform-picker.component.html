@@ -1,0 +1,38 @@
+<div class="w-100 mb-5" *transloco="let t; scope : 'links'">
+    <div class="d-flex gap-5 flex-wrap justify-content-center">
+        <div *ngFor="let platform of platforms" class="d-flex flex-column align-items-center
+            cursor-pointer position-relative" (click)="selectPlatform(platform)">
+            <div class="point position-absolute" *ngIf="platform.selected"
+                [ngStyle]="{
+                    'background-color': platform.color    
+                }">
+            </div>
+            <div class="platform-container d-flex align-items-center justify-content-center" 
+                [ngStyle]="{
+                'background-color': platform.color
+            }">
+                <img [src]="platform.icon">
+            </div>
+            <span class="fw-bold position-absolute top-100" *ngIf="platform.selected">
+                {{platform.name}}
+            </span>
+        </div>
+        <div class="d-flex flex-column align-items-center
+        cursor-pointer position-relative" (click)="selectPlatform(otherPlatform)">
+        <div class="point position-absolute" *ngIf="otherPlatform.selected"
+            [ngStyle]="{
+                'background-color': otherPlatform.color    
+            }">
+        </div>
+        <div class="platform-container d-flex align-items-center justify-content-center" 
+            [ngStyle]="{
+            'background-color': otherPlatform.color
+        }">
+            <img [src]="otherPlatform.icon">
+        </div>
+        <span class="fw-bold position-absolute top-100" *ngIf="otherPlatform.selected">
+            {{t('links.Other')}}
+        </span>
+    </div>
+    </div>
+</div>

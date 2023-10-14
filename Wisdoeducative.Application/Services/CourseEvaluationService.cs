@@ -114,6 +114,15 @@ namespace Wisdoeducative.Application.Services
                 .ToListAsync();
         }
 
+        public async Task<IEnumerable<CourseEvaluationTaskDto>> GetCourseTasks(int courseId)
+        {
+            return await dBContext.CourseEvaluationTasks
+                    .Where(cet => cet.CourseEvaluation!.CourseId == courseId)
+                    .Where(cet => cet.Status == Domain.Enums.EntityStatus.Active)
+                    .Select(cet => mapper.Map<CourseEvaluationTaskDto>(cet))
+                    .ToListAsync();
+        }
+
         public async Task<IEnumerable<CourseEvaluationTaskDto>> GetAllCourseEvaluationTasks(int courseEvaluationId)
         {
             return await dBContext.CourseEvaluationTasks
