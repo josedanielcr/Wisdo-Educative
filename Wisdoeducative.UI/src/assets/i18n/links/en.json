@@ -9,5 +9,9 @@
     "Other": "Other",
     "AddTaskLabel": "Select the task in which you want to add the link",
     "AddTaskLabelError": "You must enter a valid task",
-    "TaskNotFound": "Task not found"
+    "TaskNotFound": "Task not found",
+    "Platform": "Platform",
+    "Link": "Link",
+    "Actions": "Actions",
+    "UpdLink":"Update link" 
 }

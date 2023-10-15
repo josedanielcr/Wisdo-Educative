@@ -9,5 +9,9 @@
     "Other": "Otros",
     "AddTaskLabel": "Selecciona una tarea a la cual agregar el enlace",
     "AddTaskLabelError": "La tarea es requerida",
-    "TaskNotFound": "No se encontró la tarea"
+    "TaskNotFound": "No se encontró la tarea",
+    "Platform": "Plataforma",
+    "Link": "Enlace",
+    "Actions": "Acciones",
+    "UpdLink": "Actualizar enlace"
 }

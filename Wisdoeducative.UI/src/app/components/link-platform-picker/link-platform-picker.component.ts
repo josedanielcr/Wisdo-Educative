@@ -1,5 +1,5 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Platform } from 'src/app/models/utils/platform.model';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Platform, platforms } from 'src/app/models/utils/platform.model';
 
 @Component({
   selector: 'app-link-platform-picker',
@@ -9,46 +9,19 @@ import { Platform } from 'src/app/models/utils/platform.model';
 export class LinkPlatformPickerComponent implements OnInit {
 
   @Output() platform : EventEmitter<Platform> = new EventEmitter<Platform>();
-  public platforms : Platform[] = [
-    {
-      name: 'Notion',
-      icon: '../../../assets/icons/notion-platform.png',
-      code: 'Notion',
-      color: '#40404033',
-      selected : true
-    },
-    {
-      name: 'OneDrive',
-      icon: '../../../assets/icons/one-drive-platform.png',
-      code: 'OneDrive',
-      color: '#256E8EB2',
-      selected : false
-    },
-    {
-      name: 'Drive',
-      icon: '../../../assets/icons/google-drive-platform.png',
-      code: 'GoogleDrive',
-      color: '#0084FF26',
-      selected : false
-    },
-    {
-      name: 'Evernote',
-      icon: '../../../assets/icons/evernote-platform.png',
-      code: 'Evernote',
-      color: '#1ECF4526',
-      selected : false
-    },
-    {
-      name: 'Dropbox',
-      icon: '../../../assets/icons/dropbox-platform.png',
-      code: 'Dropbox',
-      color: '#256E8E26',
-      selected : false
-    }
-  ];
+  public platforms : Platform[] = platforms;
 
   ngOnInit(): void {
     this.platform.emit(this.platforms[0]);
+  }
+
+  public setDefaultPlatform(platformCode : string) : void {
+    this.platforms.forEach(p => {
+      if(p.code === platformCode){
+        this.selectPlatform(p);
+        this.platform.emit(p);
+      }
+    })
   }
 
   public otherPlatform : Platform = {

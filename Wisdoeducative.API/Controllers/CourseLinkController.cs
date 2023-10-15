@@ -27,10 +27,28 @@ namespace Wisdoeducative.API.Controllers
             return Ok(await courseLink.GetCourseLink(courseId));
         }
 
+        [HttpGet("course/{CourseId}")]
+        public async Task<IActionResult> GetCourseLinkByCourseId(int CourseId)
+        {
+            return Ok(await courseLink.GetCourseLinkByCourseId(CourseId));
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateCourseLink(CourseLinkDto courseLinkDto)
         {
             return Ok(await courseLink.CreateCourseLink(courseLinkDto));
+        }
+
+        [HttpDelete("{CourseLinkId}")]
+        public async Task<IActionResult> DeleteCourseLink(int CourseLinkId)
+        {
+            return Ok(await courseLink.DeleteCourseLink(CourseLinkId));
+        }
+
+        [HttpPut("{CourseLinkId}")]
+        public async Task<IActionResult> UpdateCourseLink(int CourseLinkId, CourseLinkDto courseLinkDto)
+        {
+            return Ok(await courseLink.UpdateCourseLink(CourseLinkId, courseLinkDto));
         }
     }
 }

@@ -30,6 +30,8 @@ import { CourseLinkComponent } from './course-link/course-link.component';
 import { CourseLinkFiltersComponent } from './course-link-filters/course-link-filters.component';
 import { LinkPlatformPickerComponent } from './link-platform-picker/link-platform-picker.component';
 import { CourseTaskSelectComponent } from './input/course-task-select/course-task-select.component';
+import { CourseLinksTableComponent } from './course-links-table/course-links-table.component';
+import { CourseLinkDialogComponent } from './course-link-dialog/course-link-dialog.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +63,9 @@ import { CourseTaskSelectComponent } from './input/course-task-select/course-tas
     CourseLinkComponent,
     CourseLinkFiltersComponent,
     LinkPlatformPickerComponent,
-    CourseTaskSelectComponent
+    CourseTaskSelectComponent,
+    CourseLinksTableComponent,
+    CourseLinkDialogComponent
   ],
   exports: [
     ButtonComponent,
@@ -88,7 +92,9 @@ import { CourseTaskSelectComponent } from './input/course-task-select/course-tas
     PomodoroTimerComponent,
     EvaluationCalculatorComponent,
     InputPercentageComponent,
-    CourseLinkComponent
+    CourseLinkComponent,
+    CourseLinksTableComponent,
+    CourseLinkDialogComponent
   ],
   imports: [
     CommonModule,
