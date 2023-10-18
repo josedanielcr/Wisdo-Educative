@@ -1,0 +1,12 @@
+<div class="w-100" *transloco="let t; scope : 'links'">
+    <form *ngIf="course && tasks && courseLinkForm" [formGroup]="courseLinkForm">
+        <app-course-task-select [course]="course"
+                                [tasks]="tasks"
+                                [isFilter]="true"
+                                formControlName="task"
+                                (valueChange)="onTaskChange($event)"
+                                [label]="t('links.SearchLink')"
+                                [error]="t('links.SearchLinkError')">
+        </app-course-task-select>
+    </form>
+</div>

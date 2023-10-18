@@ -27,8 +27,12 @@ import { PomodoroTimerComponent } from './pomodoro-timer/pomodoro-timer.componen
 import { EvaluationCalculatorComponent } from './evaluation-calculator/evaluation-calculator.component';
 import { InputPercentageComponent } from './input/input-percentage/input-percentage.component';
 import { CourseLinkComponent } from './course-link/course-link.component';
-
-
+import { CourseLinkFiltersComponent } from './course-link-filters/course-link-filters.component';
+import { LinkPlatformPickerComponent } from './link-platform-picker/link-platform-picker.component';
+import { CourseTaskSelectComponent } from './input/course-task-select/course-task-select.component';
+import { CourseLinksTableComponent } from './course-links-table/course-links-table.component';
+import { CourseLinkDialogComponent } from './course-link-dialog/course-link-dialog.component';
+import { DirectivesModule } from '../directives/directives.module';
 
 @NgModule({
   declarations: [
@@ -57,7 +61,12 @@ import { CourseLinkComponent } from './course-link/course-link.component';
     PomodoroTimerComponent,
     EvaluationCalculatorComponent,
     InputPercentageComponent,
-    CourseLinkComponent
+    CourseLinkComponent,
+    CourseLinkFiltersComponent,
+    LinkPlatformPickerComponent,
+    CourseTaskSelectComponent,
+    CourseLinksTableComponent,
+    CourseLinkDialogComponent
   ],
   exports: [
     ButtonComponent,
@@ -84,12 +93,15 @@ import { CourseLinkComponent } from './course-link/course-link.component';
     PomodoroTimerComponent,
     EvaluationCalculatorComponent,
     InputPercentageComponent,
-    CourseLinkComponent
+    CourseLinkComponent,
+    CourseLinksTableComponent,
+    CourseLinkDialogComponent
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    TranslocoRootModule
+    TranslocoRootModule,
+    DirectivesModule
   ]
 })
 export class ComponentsModule { }

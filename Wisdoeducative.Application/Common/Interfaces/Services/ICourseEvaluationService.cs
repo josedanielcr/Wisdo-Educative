@@ -13,6 +13,7 @@ namespace Wisdoeducative.Application.Common.Interfaces.Services
         Task<CourseEvaluationDto> CreateCourseEvaluation(CourseEvaluationDto courseEvaluationDto, int courseId);
         Task<IEnumerable<CourseEvaluationDto>> GetAllCourseEvaluations(int courseId);
         Task<CourseEvaluationDto> GetCourseEvaluation(int courseEvaluationId);
+        Task<IEnumerable<CourseEvaluationTaskDto>> GetCourseTasks(int courseId);
         Task<IEnumerable<CourseEvaluationTaskDto>> GetAllCourseEvaluationTasks(int courseEvaluationId);
         Task<CourseEvaluationTaskDto> CreateCourseEvaluationTask(int courseEvaluationId, CourseEvaluationTaskDto courseEvaluationTaskDto);
     }

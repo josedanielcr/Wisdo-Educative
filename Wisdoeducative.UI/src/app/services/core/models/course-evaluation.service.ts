@@ -96,4 +96,23 @@ export class CourseEvaluationService {
         })
       )
   }
+
+  public getCourseTasks(courseId : number): Observable<CourseEvaluationTaskClient[]>{
+    this.spinnerService.show();
+    return this.http.get<CourseEvaluationTaskClient[]>(
+      `${this.apiUrlService.checkEnvironment()}/CourseEvaluation/task/course/all/${courseId}`)
+      .pipe(
+        finalize(() => {
+          this.spinnerService.hide();
+        }),
+        map((courseEvaluationTasks : CourseEvaluationTaskServer[]) => {
+          return courseEvaluationTasks.map((courseEvaluationTask : CourseEvaluationTaskServer) => {
+            return this.courseEvaluationTaskAdapter.adaptServerToClient(courseEvaluationTask);
+          });
+        }),
+        catchError((error: any) => {
+          throw this.applicationErrorService.parseHttpError(error)
+        })
+      )
+  }
 }

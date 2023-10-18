@@ -1,0 +1,12 @@
+.platform-container {
+    width: 3.5625rem;
+    height: 3.5625rem;
+    border-radius: 0.5rem;
+}
+
+.point {
+    border-radius: 50%;
+    width: 0.8125rem;
+    height: 0.8125rem;
+    top: -1.5rem;
+}

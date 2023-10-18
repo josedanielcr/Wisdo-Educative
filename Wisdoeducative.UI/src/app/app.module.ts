@@ -19,6 +19,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { SetupModule } from './setup/setup.module';
 import { TranslocoRootModule } from './transloco-root.module';
+import { DirectivesModule } from './directives/directives.module';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { TranslocoRootModule } from './transloco-root.module';
     ComponentsModule,
     PagesModule,
     PipesModule,
+    DirectivesModule,
     SharedModule,
     AppRoutingModule,
     HttpClientModule,

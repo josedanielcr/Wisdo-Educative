@@ -19,7 +19,7 @@ namespace Wisdoeducative.Application.Helpers
         }
         public bool ValidateCourseLink(CourseLinkDto course)
         {
-            string[] propertiesToCheck = new string[] { "CourseId", "Link", "Platform" };
+            string[] propertiesToCheck = new string[] { "CourseEvaluationTaskId", "Link", "Platform", "Name" };
             if (entityHelperService.AreAnyPropertiesNull(course, propertiesToCheck))
             {
                 return false;

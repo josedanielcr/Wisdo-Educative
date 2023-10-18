@@ -1,0 +1,49 @@
+<app-dialog *transloco="let t; scope : 'links'"
+            [title]="t('links.AddLink')"
+            [description]="t('links.AddLinkDesc')"
+            [minHeight]="42">
+    
+    <div class="w-100 d-flex justify-content-center">
+        <app-link-platform-picker (platform)="setSelectedPlatform($event)">
+        </app-link-platform-picker>
+    </div>
+
+    <form [formGroup]="linkForm" class="w-100" *ngIf="course">
+        <div class="w-100 d-flex flex-wrap gap-2 mb-4">
+            <div class="platform-icon-container d-flex justify-content-center align-items-center
+                        wd-bg-bone mt-auto" [ngStyle]="{
+                            'background-color': selectedPlatform.color
+                        }">
+                <img [src]="selectedPlatform.icon" class="img-fluid">
+            </div>
+            <div class="flex-fill">
+                <app-input-text [label]="t('links.AddLinkInput')"
+                                formControlName="link"
+                                placeholder="">
+                </app-input-text>
+            </div>
+        </div>
+        <div class="w-100 mb-4" *ngIf="tasks.length > 0">
+            <app-course-task-select [course]="course"
+                                    [tasks]="tasks"
+                                    formControlName="task"
+                                    [label]="t('links.AddTaskLabel')"
+                                    [error]="t('links.AddTaskLabelError')">
+            </app-course-task-select>
+        </div>
+        <div class="w-100 d-flex flex-wrap gap-2">
+            <div class="flex-fill">                
+                <app-input-text [label]="t('links.AddLinkName')"
+                                    formControlName="name"
+                                    placeholder="">
+                </app-input-text>
+            </div>
+            <div class="mt-auto">
+                <app-button [type]="ButtonType.SECONDARY"
+                            [text]="isUpdate ? t('links.UpdLink') : t('links.AddLink')"
+                            (click)="saveLink()">
+                </app-button>
+            </div>
+        </div>
+    </form>       
+</app-dialog>
