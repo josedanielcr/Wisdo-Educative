@@ -13,5 +13,7 @@
     "Platform": "Platform",
     "Link": "Link",
     "Actions": "Actions",
-    "UpdLink":"Update link" 
+    "UpdLink":"Update link",
+    "SearchLink": "Select a task to search for links",
+    "SearchLinkError": "You must enter a valid task"
 }

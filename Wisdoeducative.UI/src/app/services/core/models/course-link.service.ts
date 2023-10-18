@@ -7,6 +7,7 @@ import { CourseLinkAdapterService } from '../../helpers/adapters/course-link-ada
 import { CourseLinkClient } from 'src/app/models/core/client/course.link.client.model';
 import { Observable, catchError, finalize, map } from 'rxjs';
 import { CourseLinkServer } from 'src/app/models/core/server/course.link.server.model';
+import { CourseLinkFilters } from 'src/app/models/utils/course.link.filters.model';
 
 @Injectable({
   providedIn: 'root'
@@ -100,6 +101,26 @@ export class CourseLinkService {
         }),
         map((courseLink : CourseLinkServer) => {
           return this.courseLinkAdapter.adaptServerToClient(courseLink);
+        }),
+        catchError((error: any) => {
+          throw this.applicationErrorService.parseHttpError(error)
+        })
+      )
+  }
+
+  public filterCourseLinks(courseLinkFilterModel : CourseLinkFilters) : Observable<CourseLinkClient[]>{
+    this.spinnerService.show();
+    return this.http.post<CourseLinkClient[]>(
+      `${this.apiUrlService.checkEnvironment()}/CourseLink/filter`,
+      courseLinkFilterModel)
+      .pipe(
+        finalize(() => {
+          this.spinnerService.hide();
+        }),
+        map((courseLinks : CourseLinkServer[]) => {
+          return courseLinks.map((courseLink : CourseLinkClient) => {
+            return this.courseLinkAdapter.adaptServerToClient(courseLink);
+          });
         }),
         catchError((error: any) => {
           throw this.applicationErrorService.parseHttpError(error)

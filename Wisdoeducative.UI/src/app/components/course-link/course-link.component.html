@@ -1,8 +1,12 @@
-<div class="w-100 d-flex align-items-center flex-wrap" *transloco="let t; scope : 'links'">
-    <div class="flex-fill">
-        <app-course-link-filters></app-course-link-filters>
+<div class="w-100 d-flex align-items-center flex-wrap gap-3" *transloco="let t; scope : 'links'">
+    <div class="flex-fill" *ngIf="course && tasks.length > 0">
+        <app-course-link-filters [course]="course" 
+                                 [tasks]="tasks"
+                                 (courseLinksEmitter)="updateLinks($event)"
+                                 [isFilter]="true">
+        </app-course-link-filters>
     </div>
-    <div class="ms-auto">
+    <div class="ms-auto mt-auto">
         <app-button [type]="ButtonType.SECONDARY"
                     [text]="t('links.AddLink')"
                     (click)="AddLink()">

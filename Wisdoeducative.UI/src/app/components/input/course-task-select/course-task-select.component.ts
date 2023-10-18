@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, Injector, Input, OnDestroy, OnInit, forwardRef } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, EventEmitter, Injector, Input, OnDestroy, OnInit, Output, forwardRef } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { MessageTypeEnum } from 'src/app/enums/message.type.enum';
 import { ApplicationErrorModel } from 'src/app/models/application.error.model';
@@ -30,15 +30,16 @@ export class CourseTaskSelectComponent extends BaseInput implements AfterViewIni
   @Input() override value : any;
   @Input() error : string = '';
   @Input() tasks : CourseEvaluationTaskClient[];
+  @Input() isFilter : boolean = false;
+  @Output() valueChange : EventEmitter<string> = new EventEmitter<string>();
   public filteredTasks : CourseEvaluationTaskClient[] = [];
   public dropdownOpen: boolean = false;
+  public isActive : boolean = false;
 
   //util
   private subscriptions : Subscription[] = [];
 
-  constructor(private evaluationService : CourseEvaluationService,
-    private messageService : MessageService,
-    private injector : Injector, 
+  constructor(private injector : Injector, 
     private cdf : ChangeDetectorRef) {
     super();
   }
@@ -64,8 +65,23 @@ export class CourseTaskSelectComponent extends BaseInput implements AfterViewIni
 
   public setToInput(taskName : string): void {
     this.value = taskName;
+    if(this.isFilter) this.manageFilterSelection();
     super.updateAndNotify(this.value);
     this.closeDropdown();
+  }
+
+  public clearFilters(): void {
+    if(!this.isFilter) return;
+    this.value = '';
+    this.filteredTasks = this.tasks;
+    super.updateAndNotify(this.value);
+    this.valueChange.emit(this.value);
+    this.isActive = false;
+  }
+
+  private manageFilterSelection(): void {
+    this.valueChange.emit(this.value);
+    this.isActive = true;
   }
 
   public openDropdown() {

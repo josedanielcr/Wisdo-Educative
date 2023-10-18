@@ -10,6 +10,7 @@ using Wisdoeducative.Application.Common.Interfaces;
 using Wisdoeducative.Application.Common.Interfaces.Helpers;
 using Wisdoeducative.Application.Common.Interfaces.Services;
 using Wisdoeducative.Application.DTOs;
+using Wisdoeducative.Application.DTOs.CustomDTOs;
 using Wisdoeducative.Application.Resources;
 using Wisdoeducative.Domain.Entities;
 using Wisdoeducative.Domain.Enums;
@@ -84,6 +85,21 @@ namespace Wisdoeducative.Application.Services
             };
 
             return courseLinkDtos;
+        }
+
+        public async Task<IEnumerable<CourseLinkDto>> GetCourseLinksByFilters(CourseLinkFiltersDto courseLinkFiltersDto)
+        {
+            return await dBContext.CourseLinks
+                .Where(cl => string.IsNullOrEmpty(courseLinkFiltersDto.TaskName) ||
+                                cl.CourseEvaluationTask!.Name.ToUpper() == courseLinkFiltersDto.TaskName!.ToUpper())
+                .Where(cl => cl.Status == EntityStatus.Active)
+                .Where(cl => cl.CourseEvaluationTask!.CourseEvaluation!.CourseId 
+                    == courseLinkFiltersDto.CourseId)
+                .Include(cl => cl.CourseEvaluationTask)
+                .Select(cl => mapper.Map<CourseLinkDto>(cl))
+                .ToListAsync()
+                ?? throw new NotFoundException(ErrorMessages.EntityNotFound, "EntityNotFound");
+
         }
 
         public async Task<CourseLinkDto> GetCourseLinkById(int CourseLinkId)

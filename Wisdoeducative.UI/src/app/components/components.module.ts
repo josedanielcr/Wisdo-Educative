@@ -32,6 +32,7 @@ import { LinkPlatformPickerComponent } from './link-platform-picker/link-platfor
 import { CourseTaskSelectComponent } from './input/course-task-select/course-task-select.component';
 import { CourseLinksTableComponent } from './course-links-table/course-links-table.component';
 import { CourseLinkDialogComponent } from './course-link-dialog/course-link-dialog.component';
+import { DirectivesModule } from '../directives/directives.module';
 
 @NgModule({
   declarations: [
@@ -99,7 +100,8 @@ import { CourseLinkDialogComponent } from './course-link-dialog/course-link-dial
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    TranslocoRootModule
+    TranslocoRootModule,
+    DirectivesModule
   ]
 })
 export class ComponentsModule { }

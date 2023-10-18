@@ -13,5 +13,7 @@
     "Platform": "Plataforma",
     "Link": "Enlace",
     "Actions": "Acciones",
-    "UpdLink": "Actualizar enlace"
+    "UpdLink": "Actualizar enlace",
+    "SearchLink": "Selecciona una tarea para buscar sus enlaces",
+    "SearchLinkError": "Debe de ingresar una tarea válida"
 }
