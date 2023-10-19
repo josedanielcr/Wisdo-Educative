@@ -43,6 +43,7 @@ namespace Wisdoeducative.Application.Common.Interfaces
         DbSet<CourseHistory> CourseHistories { get; set; }
         DbSet<CourseEvaluationTask> CourseEvaluationTasks { get; set; }
         DbSet<CourseLink> CourseLinks { get; set; }
+        DbSet<Pomodoro> Pomodoros { get; set; }
 
         Task<int> SaveChangesAsync();
         EntityEntry<TEntity> Entry<TEntity>(TEntity entity) where TEntity : class;

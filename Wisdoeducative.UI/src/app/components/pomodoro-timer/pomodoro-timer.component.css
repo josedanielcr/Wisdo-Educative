@@ -1,5 +1,5 @@
 .clock-container {
-    width: 95%;
+    width: 100%;
     border-radius: 0.3125rem;
 }
 
@@ -7,4 +7,14 @@
   transition: 0.35s stroke-dashoffset;
   transform: rotate(-90deg);
   transform-origin: 50% 50%;
+}
+
+.pomodoro-round {
+  width: 0.9375rem;
+  height: 0.9375rem;
+  border-radius: 50%;
+}
+
+i {
+  color: #D9D9D9;
 }
