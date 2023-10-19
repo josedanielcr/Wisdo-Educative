@@ -17,5 +17,6 @@
     "InvalidWeight": "¡Vaya! El peso total del promedio debe ser un número entre 0 y 100",
     "InvalidEvaluationTaskWeight": "¡Vaya! Parece que estás intentando asignar más nota del que la evaluación ha asignado.",
     "CourseEvaluationTaskCreation": "Tarea creada!",
-    "InvalidEvaluationTaskDates": "¡Ups! Parece que las fechas seleccionadas no son válidas. Por favor, verifica si la fecha de inicio es mayor que la fecha de finalización."
+    "InvalidEvaluationTaskDates": "¡Vaya! Parece que las fechas seleccionadas no son válidas. Por favor, verifica si la fecha de inicio es mayor que la fecha de finalización.",
+    "InvalidPomodoroSession":"¡Vaya! Parece que los datos de la sesión no son válidos. Por favor, intenta nuevamente."
 }

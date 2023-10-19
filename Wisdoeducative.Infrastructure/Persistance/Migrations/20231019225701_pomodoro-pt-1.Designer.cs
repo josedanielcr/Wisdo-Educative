@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Wisdoeducative.Infrastructure.Persistence;
 
@@ -11,9 +12,11 @@ using Wisdoeducative.Infrastructure.Persistence;
 namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    partial class ApplicationDBContextModelSnapshot : ModelSnapshot
+    [Migration("20231019225701_pomodoro-pt-1")]
+    partial class pomodoropt1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -323,7 +326,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CourseEvaluationTaskId")
+                    b.Property<int>("CousrEvaluationTaskId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("EndTime")
@@ -335,9 +338,12 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
+                    b.Property<int?>("courseEvaluationTaskId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("CourseEvaluationTaskId");
+                    b.HasIndex("courseEvaluationTaskId");
 
                     b.ToTable("Pomodoros");
                 });
@@ -1277,9 +1283,7 @@ namespace Wisdoeducative.Infrastructure.Persistance.Migrations
                 {
                     b.HasOne("Wisdoeducative.Domain.Entities.CourseEvaluationTask", "courseEvaluationTask")
                         .WithMany()
-                        .HasForeignKey("CourseEvaluationTaskId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("courseEvaluationTaskId");
 
                     b.Navigation("courseEvaluationTask");
                 });

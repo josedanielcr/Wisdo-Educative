@@ -115,6 +115,15 @@ namespace Wisdoeducative.Application.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Oops! It looks like the pomodoro session has some invalid values..
+        /// </summary>
+        internal static string InvalidPomodoroSession {
+            get {
+                return ResourceManager.GetString("InvalidPomodoroSession", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Oops! your total course weight cannot exceed 100..
         /// </summary>
         internal static string InvalidWeight {

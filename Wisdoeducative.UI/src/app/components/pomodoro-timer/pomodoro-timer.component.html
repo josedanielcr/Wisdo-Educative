@@ -1,10 +1,12 @@
 <div class="w-100 d-flex align-items-center flex-column">
-    <h1 class="wd-text-h1">Pomodoro</h1>
+    <h1 class="wd-text-h1" *transloco="let t; scope : 'pomodoro'">
+        {{isResting ? t('pomodoro.Resting') : t('pomodoro.Working')}}
+    </h1>
 
     <!-- timer -->
-    <div class="clock-container wd-bg-white d-flex justify-content-center align-items-center">
+    <div class="clock-container wd-bg-white d-flex flex-column justify-content-center align-items-center position-relative">
         <!-- SVG container -->
-        <svg width="200" height="200" class="mt-5 mb-5">
+        <svg width="200" height="200" class="mt-4">
 
             <!-- main circle -->
             <circle class="progress-ring__circle"
@@ -28,11 +30,44 @@
             <!-- Text for displaying the time -->
             <text x="50%" 
                   y="50%" 
+                  class="user-select-none"
                   text-anchor="middle"
                   dy=".3em"
                   font-size="2.25rem">
                 {{displayTime}}
             </text>
         </svg>
+        <div class="mt-3 mb-3 w-100">
+            <div class="w-100 d-flex gap-3 justify-content-center">
+                <div *ngFor="let round of pomodoroTotalRound" class="pomodoro-round"
+                     [ngStyle]="{
+                        'background-color': round ? '#A92353' : '#D9D9D9'
+                     }">
+                </div>
+            </div>
+            <div class="w-100 d-flex justify-content-center align-items-center mt-4">
+                <i class="fa-solid fa-play fa-2x cursor-pointer" *ngIf="!isRunning"
+                    (click)="runPomodoro()">
+                </i>
+                <i class="fa-solid fa-pause fa-2x cursor-pointer" *ngIf="isRunning"
+                    (click)="stopTimer()">
+                </i>
+            </div>
+        </div>
     </div>
+
+    <!-- pomodoro associated task -->
+    <ng-container *transloco="let t; scope : 'pomodoro'">
+        <form *ngIf="course && tasks.length > 0 && form" 
+            [formGroup]="form" 
+            class="w-100 mt-3">
+            <app-course-task-select [course]="course"
+                                    [tasks]="tasks"
+                                    [isFilter]="true"
+                                    formControlName="task"
+                                    [label]="t('pomodoro.SelectTask')"
+                                    (valueChange)="onTaskChange($event)">
+            </app-course-task-select>
+        </form>
+    </ng-container>
 </div>

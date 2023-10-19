@@ -30,6 +30,7 @@ namespace Wisdoeducative.Application.Settings
             services.AddScoped<IStudyPlanTermService, StudyPlanTermService>();
             services.AddScoped<ICourseEvaluationService, CourseEvaluationService>();
             services.AddScoped<ICourseLinkService, CourseLinkService>();
+            services.AddScoped<IPomodoroService, PomodoroService>();
             return services;
         }
     }

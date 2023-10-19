@@ -17,5 +17,6 @@
     "InvalidWeight": "Oops! your total course weight cannot exceed 100.",
     "InvalidEvaluationTaskWeight":"Oops! It looks like you're trying to assing more weight than the evaluation category has assigned.",
     "CourseEvaluationTaskCreation": "Evaluation task created successfully!",
-    "InvalidEvaluationTaskDates": "Oops! it looks like your selected dates are not valid, please check if the start date greater than the end date."
+    "InvalidEvaluationTaskDates": "Oops! it looks like your selected dates are not valid, please check if the start date greater than the end date.",
+    "InvalidPomodoroSession":"Oops! It looks like the pomodoro session has some invalid values."
 }
