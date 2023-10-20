@@ -16,6 +16,8 @@ import { FormService } from 'src/app/services/components/form.service';
 import { LinkPlatformPickerComponent } from '../link-platform-picker/link-platform-picker.component';
 import { CourseLinkService } from 'src/app/services/core/models/course-link.service';
 import { CourseLinkDialogComponent } from '../course-link-dialog/course-link-dialog.component';
+import { ScreenSizeModel } from 'src/app/models/screenSize.model';
+import { WindowResizeService } from 'src/app/services/helpers/window-resize.service';
 
 @Component({
   selector: 'app-course-link',
@@ -36,16 +38,30 @@ export class CourseLinkComponent implements OnInit, OnDestroy {
   public ButtonType = ButtonType;
   public selectedPlatform : Platform;
   public subscriptions : Subscription[] = [];
+  public isDesktop: boolean;
+  public isTablet: boolean;
+  public isPhone: boolean;
+
 
   constructor(private fb : FormBuilder,
     private evaluationService : CourseEvaluationService,
     private messageService : MessageService,
     private formService : FormService,
-    private courseLinkService : CourseLinkService) { }
+    private courseLinkService : CourseLinkService,
+    private windowService : WindowResizeService) { }
 
   ngOnInit(): void {
     this.loadCourseEvalutionTasks();
     this.loadCourseLinks();
+    this.subscribeToWindowService();
+  }
+
+  private subscribeToWindowService() {
+    this.windowService.getScreenSizeObservable().subscribe((screenSizes: ScreenSizeModel) => {
+      this.isDesktop = screenSizes.isDesktop;
+      this.isTablet = screenSizes.isTablet;
+      this.isPhone = screenSizes.isPhone;
+    });
   }
 
   ngOnDestroy(): void {

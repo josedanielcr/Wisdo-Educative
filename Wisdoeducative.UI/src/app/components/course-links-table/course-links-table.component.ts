@@ -10,6 +10,8 @@ import { Platform, platforms } from 'src/app/models/utils/platform.model';
 import { MessageService } from 'src/app/services/core/message.service';
 import { CourseLinkService } from 'src/app/services/core/models/course-link.service';
 import { CourseLinkDialogComponent } from '../course-link-dialog/course-link-dialog.component';
+import { WindowResizeService } from 'src/app/services/helpers/window-resize.service';
+import { ScreenSizeModel } from 'src/app/models/screenSize.model';
 
 @Component({
   selector: 'app-course-links-table',
@@ -25,13 +27,27 @@ export class CourseLinksTableComponent implements OnInit, OnDestroy{
   public map : Map<string, Platform> = new Map<string, Platform>();
   public subscriptions : Subscription[] = [];
 
+  public isDesktop: boolean;
+  public isTablet: boolean;
+  public isPhone: boolean;
+
   constructor(private courseLinkService : CourseLinkService,
-    private messageService : MessageService) { }
+    private messageService : MessageService,
+    private windowService : WindowResizeService) { }
 
   ngOnInit(): void {
     for (let platform of platforms) {
       this.map.set(platform.code, platform);
     }
+    this.subscribeToWindowService();
+  }
+
+  private subscribeToWindowService() {
+    this.windowService.getScreenSizeObservable().subscribe((screenSizes: ScreenSizeModel) => {
+      this.isDesktop = screenSizes.isDesktop;
+      this.isTablet = screenSizes.isTablet;
+      this.isPhone = screenSizes.isPhone;
+    });
   }
 
   ngOnDestroy(): void {

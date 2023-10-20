@@ -1,7 +1,9 @@
 <div class="w-100" *transloco="let t; scope : 'courses'">
-    <div class="d-flex">
+    <div class="d-flex" [ngClass]="{
+        'flex-column mt-3' : isPhone
+    }">
         <span class="wd-text-h3">{{t('courses.EvalCalc')}}</span>
-        <div class="ms-auto">
+        <div class="ms-auto" [class.w-100]="isPhone" [class.mt-3]="isPhone">
             <app-button [type]="ButtonType.SECONDARY"
                         [text]="t('courses.AddEval')"
                         (click)="addEvaluation()">
@@ -16,7 +18,7 @@
                 <tr>
                     <td class="fw-bold">{{t('courses.evaluation')}}</td>
                     <td class="fw-bold">{{t('courses.percentage')}}</td>
-                    <td class="fw-bold">{{t('courses.grade')}}</td>
+                    <td class="fw-bold" *ngIf="!isPhone">{{t('courses.grade')}}</td>
                     <td></td>
                 </tr>
             </thead>
@@ -37,7 +39,7 @@
                         <td (click)="openEvaluationRow(evaluation)"
                             class="cursor-pointer">{{evaluation.evaluation.weight}}%</td>
                         <td (click)="openEvaluationRow(evaluation)"
-                            class="cursor-pointer">{{evaluation.totalScore}}%</td>
+                            class="cursor-pointer" *ngIf="!isPhone">{{evaluation.totalScore}}%</td>
                         <td>
                             <i class="fa-solid fa-square-plus fa-2x cursor-pointer"
                                 (click)="openAddCourseEvaluationTask(evaluation)">
@@ -59,7 +61,7 @@
                             <tr *ngFor="let task of evaluation.tasks">
                                 <td>{{task.name}}</td>
                                 <td>{{task.weight}}%</td>
-                                <td>{{task.totalScore == null ? 0 : task.totalScore}}%</td>
+                                <td *ngIf="!isPhone">{{task.totalScore == null ? 0 : task.totalScore}}%</td>
                                 <td>
                                     <i class="fa-solid fa-circle-chevron-right cursor-pointer"></i>
                                 </td>
@@ -74,6 +76,7 @@
 
 <app-dialog [title]="t('courses.AddEval')"
             *transloco="let t; scope : 'courses'"
+            [minHeight]="25"
             [description]="t('courses.AddCourseEvalDesc')">
 
     <div class="w-100" *ngIf="evaluationForm">
@@ -98,7 +101,10 @@
         </form>
     </div>
 
-    <div class="position-absolute bottom-0 end-0 mb-5 me-5">
+    <div [ngClass]="{
+        'position-absolute bottom-0 end-0 mb-5 me-5': !isPhone,
+        'mt-3' : isPhone
+    }">
         <app-button [type]="ButtonType.SECONDARY"
                     [text]="t('courses.AddEval')"
                     (click)="createEvalution()">
@@ -107,6 +113,7 @@
 </app-dialog>
 
 <app-dialog #courseEvaluationTaskDialog
+            [minHeight]="30"
             *transloco="let t; scope : 'courses'"
             [description]="t('courses.AddCourseEvalTaskDesc')"
             [title]="t('courses.AddCourseEvalTask')">
@@ -130,14 +137,14 @@
                 </div>
             </div>
             <div class="d-flex gap-3 flex-wrap">
-                <div class="flex-fill">
+                <div class="flex-fill" [class.w-100]="isPhone">
                     <app-input-date [label]="t('courses.EvalTaskStartDate')"
                                     placeholder=""
                                     [error]="t('courses.EvalTaskStartDateError')"
                                     formControlName="startDate">
                     </app-input-date>
                 </div>
-                <div class="flex-fill">
+                <div class="flex-fill" [class.w-100]="isPhone">
                     <app-input-date [label]="t('courses.EvalTaskEndDate')"
                                     placeholder=""
                                     [error]="t('courses.EvalTaskEndDateError')"
@@ -148,7 +155,10 @@
         </form>
     </div>
 
-    <div class="position-absolute bottom-0 end-0 mb-5 me-5">
+    <div [ngClass]="{
+        'position-absolute bottom-0 end-0 mb-5 me-5' : !isPhone,
+        'mt-3' : isPhone
+    }">
         <app-button [type]="ButtonType.SECONDARY"
                     [text]="t('courses.EvalTaskSubmit')"
                     (click)="createEvaluationTask()">

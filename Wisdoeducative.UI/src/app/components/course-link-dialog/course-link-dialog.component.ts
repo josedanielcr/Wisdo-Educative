@@ -14,6 +14,8 @@ import { MessageService } from 'src/app/services/core/message.service';
 import { ApplicationErrorModel } from 'src/app/models/application.error.model';
 import { MessageModel } from 'src/app/models/message.model';
 import { MessageTypeEnum } from 'src/app/enums/message.type.enum';
+import { ScreenSizeModel } from 'src/app/models/screenSize.model';
+import { WindowResizeService } from 'src/app/services/helpers/window-resize.service';
 
 @Component({
   selector: 'app-course-link-dialog',
@@ -40,13 +42,27 @@ export class CourseLinkDialogComponent implements OnInit {
   public subscriptions : Subscription[] = [];
   public isUpdate : boolean = false;
 
+  public isDesktop: boolean;
+  public isTablet: boolean;
+  public isPhone: boolean;
+
   constructor(private fb : FormBuilder,
     private formService : FormService,
     private courseLinkService : CourseLinkService,
-    private messageService : MessageService) { }
+    private messageService : MessageService,
+    private windowService : WindowResizeService) { }
 
   ngOnInit(): void {
     this.initializeForms();
+    this.subscribeToWindowService();
+  }
+
+  private subscribeToWindowService() {
+    this.windowService.getScreenSizeObservable().subscribe((screenSizes: ScreenSizeModel) => {
+      this.isDesktop = screenSizes.isDesktop;
+      this.isTablet = screenSizes.isTablet;
+      this.isPhone = screenSizes.isPhone;
+    });
   }
 
   private initializeForms(): void {

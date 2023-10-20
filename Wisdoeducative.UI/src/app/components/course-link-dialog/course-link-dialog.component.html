@@ -32,13 +32,15 @@
             </app-course-task-select>
         </div>
         <div class="w-100 d-flex flex-wrap gap-2">
-            <div class="flex-fill">                
+            <div class="flex-fill" [class.mb-3]="isPhone">                
                 <app-input-text [label]="t('links.AddLinkName')"
                                     formControlName="name"
                                     placeholder="">
                 </app-input-text>
             </div>
-            <div class="mt-auto">
+            <div class="mt-auto" [ngClass]="{
+                'w-100': isPhone
+            }">
                 <app-button [type]="ButtonType.SECONDARY"
                             [text]="isUpdate ? t('links.UpdLink') : t('links.AddLink')"
                             (click)="saveLink()">

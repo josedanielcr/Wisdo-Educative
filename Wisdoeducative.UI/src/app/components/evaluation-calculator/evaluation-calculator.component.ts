@@ -12,6 +12,8 @@ import { MessageService } from 'src/app/services/core/message.service';
 import { MessageModel } from 'src/app/models/message.model';
 import { MessageTypeEnum } from 'src/app/enums/message.type.enum';
 import { CourseEvaluationTaskClient } from 'src/app/models/core/client/course.evaluation.task.client.model';
+import { WindowResizeService } from 'src/app/services/helpers/window-resize.service';
+import { ScreenSizeModel } from 'src/app/models/screenSize.model';
 
 
 interface EvaluationRow {
@@ -38,6 +40,10 @@ export class EvaluationCalculatorComponent implements OnInit, OnDestroy {
   public evaluationRows : EvaluationRow[] = [];
   public selectedEvaluationRow : EvaluationRow | null = null;
 
+  public isDesktop: boolean;
+  public isTablet: boolean;
+  public isPhone: boolean;
+
   //properties
   public evaluations : CourseEvaluationClient[] = [];
   
@@ -48,7 +54,8 @@ export class EvaluationCalculatorComponent implements OnInit, OnDestroy {
   constructor(private fb : FormBuilder,
     private formService : FormService,
     private courseEvalutationService : CourseEvaluationService,
-    private messageService : MessageService) { }
+    private messageService : MessageService,
+    private windowService : WindowResizeService) { }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(s => s.unsubscribe());
@@ -57,6 +64,15 @@ export class EvaluationCalculatorComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.initiateForms();
     this.getCourseEvaluations();
+    this.subscribeToWindowService();
+  }
+
+  private subscribeToWindowService() {
+    this.windowService.getScreenSizeObservable().subscribe((screenSizes: ScreenSizeModel) => {
+      this.isDesktop = screenSizes.isDesktop;
+      this.isTablet = screenSizes.isTablet;
+      this.isPhone = screenSizes.isPhone;
+    });
   }
 
   private initiateForms(): void {
