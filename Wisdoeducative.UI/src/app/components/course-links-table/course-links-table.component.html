@@ -9,13 +9,14 @@
         </thead>
         <tbody>
             <tr *ngFor="let link of courseLinks">
-                <td class="d-flex justify-content-center cursor-pointer"
-                (click)="openCourseLink(link)">
-                    <div class="platform-container d-flex justify-content-center align-items-center"
-                        [ngStyle]="{
-                            'background-color': map.get(link.platform).color
-                        }">
-                        <img [src]="map.get(link.platform).icon" class="img-fluid">
+                <td (click)="openCourseLink(link)">
+                    <div class="d-flex justify-content-center cursor-pointer">
+                        <div class="platform-container d-flex justify-content-center align-items-center"
+                            [ngStyle]="{
+                                'background-color': map.get(link.platform).color
+                            }">
+                            <img [src]="map.get(link.platform).icon" class="img-fluid">
+                        </div>
                     </div>
                 </td>
                 <td class="text-start cursor-pointer" (click)="openCourseLink(link)">{{link.name}}</td>
