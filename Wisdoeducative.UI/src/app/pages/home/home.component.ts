@@ -3,14 +3,19 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ButtonType } from 'src/app/enums/button.enum';
 import { UserStatus } from 'src/app/enums/core/user.status.enum';
+import { MessageTypeEnum } from 'src/app/enums/message.type.enum';
 import { ApplicationErrorModel } from 'src/app/models/application.error.model';
 import { StudyPlanClient } from 'src/app/models/core/client/study.plan.client.model';
 import { StudyPlanTermClient } from 'src/app/models/core/client/study.plan.term.client.model';
 import { UserClient } from 'src/app/models/core/client/user.client.model';
 import { UserDegreeClient } from 'src/app/models/core/client/user.degree.client.model';
+import { MessageModel } from 'src/app/models/message.model';
 import { ScreenSizeModel } from 'src/app/models/screenSize.model';
+import { UserStatistics } from 'src/app/models/utils/user.statistics.model';
+import { MessageService } from 'src/app/services/core/message.service';
 import { DegreeService } from 'src/app/services/core/models/degree.service';
 import { StudyPlanService } from 'src/app/services/core/models/study-plan.service';
+import { UserStatisticsService } from 'src/app/services/core/models/user-statistics.service';
 import { UserService } from 'src/app/services/core/models/user.service';
 import { StoreService } from 'src/app/services/core/store.service';
 import { UserInitializationService } from 'src/app/services/helpers/user-initialization.service';
@@ -43,6 +48,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public userDegree : UserDegreeClient;
   public studyPlan : StudyPlanClient;
   public studyPlanTerms : StudyPlanTermClient[] = [];
+  public userStatistics : UserStatistics;
   
   // util
   public currentTimeOfDay : TimeOfDay;
@@ -63,7 +69,9 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   constructor(private windowService : WindowResizeService,
     private router : Router,
-    private userInitializationService : UserInitializationService){}
+    private userInitializationService : UserInitializationService,
+    private userStatisticsService : UserStatisticsService,
+    private messageService : MessageService){}
   
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription: Subscription) => {
@@ -78,6 +86,19 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.setTimeOfDayIcon();
   }
 
+  private getUserStatistics(): void {
+    this.subscriptions.push(
+      this.userStatisticsService.getUserStatistics(this.user.id).subscribe({
+        next : (userStatistics : UserStatistics) => {
+          this.userStatistics = userStatistics;
+        },
+        error : (error : ApplicationErrorModel) => {
+          this.messageService.show(new MessageModel(MessageTypeEnum.Error, 'Error', error.errorCode));
+        }
+      })
+    )
+  }
+
 
   private initializeUser(): void {
     this.subscriptions.push(this.userInitializationService.initializeUser().subscribe(
@@ -86,6 +107,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.userDegree = userDegree;
         this.studyPlan = studyPlan;
         this.studyPlanTerms = studyPlanTerms;
+        this.getUserStatistics();
       }
     ));
   }

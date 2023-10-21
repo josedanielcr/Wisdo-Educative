@@ -11,6 +11,6 @@ namespace Wisdoeducative.Application.Common.Interfaces.Services
     public interface IStudyPlanTermService
     {
         Task<StudyTermCreationDto> CreateStudyPlanTerm(StudyTermCreationDto studyTermCreationDto);
-        Task<IEnumerable<StudyPlanTermDto>> GetUserStudyPlanTerms(int studyPlanId);
+        Task<IEnumerable<StudyPlanTermDto>> GetUserStudyPlanTerms(int? studyPlanId);
     }
 }
