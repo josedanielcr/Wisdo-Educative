@@ -75,7 +75,7 @@ namespace Wisdoeducative.Application.Services
             await dBContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<StudyPlanTermDto>> GetUserStudyPlanTerms(int studyPlanId)
+        public async Task<IEnumerable<StudyPlanTermDto>> GetUserStudyPlanTerms(int? studyPlanId)
         {
             List<StudyPlanTermDto> studyPlanTermsResult = new List<StudyPlanTermDto>();
             if (studyPlanId == 0)

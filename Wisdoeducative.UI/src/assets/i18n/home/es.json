@@ -6,5 +6,11 @@
     "OptimizeExperience": "¡Optimiza tu experiencia con Wisdo! Configura tu espacio siguiendo estos sencillos pasos y aprovecha al máximo todas nuestras herramientas. ¡Comienza ahora!",
     "SpaceInfo": "En este espacio podrás encontrar un dashboard con información útil del avance que tienes en tus estudios. Pero para eso necesitamos crear un espacio.",
     "ConfigureSpace": "Configurar espacio",
-    "CreateStudyPlan": "Crear plan de estudios"
+    "CreateStudyPlan": "Crear plan de estudios",
+    "Progress": "Avance general",
+    "Average": "Promedio",
+    "CoursesByStatus": "Materias por estado",
+    "ApprovedCourses": "Aprobadas",
+    "PendingCourses": "Pendientes",
+    "NotStarted": "Por cursar"
 }
