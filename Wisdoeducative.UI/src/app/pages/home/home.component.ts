@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ButtonType } from 'src/app/enums/button.enum';
@@ -13,13 +13,11 @@ import { MessageModel } from 'src/app/models/message.model';
 import { ScreenSizeModel } from 'src/app/models/screenSize.model';
 import { UserStatistics } from 'src/app/models/utils/user.statistics.model';
 import { MessageService } from 'src/app/services/core/message.service';
-import { DegreeService } from 'src/app/services/core/models/degree.service';
-import { StudyPlanService } from 'src/app/services/core/models/study-plan.service';
 import { UserStatisticsService } from 'src/app/services/core/models/user-statistics.service';
-import { UserService } from 'src/app/services/core/models/user.service';
-import { StoreService } from 'src/app/services/core/store.service';
 import { UserInitializationService } from 'src/app/services/helpers/user-initialization.service';
 import { WindowResizeService } from 'src/app/services/helpers/window-resize.service';
+import { ChartData, ChartType } from 'chart.js';
+import { TRANSLOCO_SCOPE, TranslocoService } from '@ngneat/transloco';
 
 enum TimeOfDay {
   Morning = 0,
@@ -63,15 +61,22 @@ export class HomeComponent implements OnInit, OnDestroy {
   public isDesktop: boolean;
   public isTablet: boolean;
   public isPhone: boolean;
+  public completed : string;
+  public inProgress : string;
+  public notStarted : string;
 
   //subscriptions
   private subscriptions : Subscription[] = [];
+
+  //charts
+  public doughnutChart : any;
 
   constructor(private windowService : WindowResizeService,
     private router : Router,
     private userInitializationService : UserInitializationService,
     private userStatisticsService : UserStatisticsService,
-    private messageService : MessageService){}
+    private messageService : MessageService,
+    private translocoService : TranslocoService){}
   
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription: Subscription) => {
@@ -80,10 +85,25 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.subscribeToTranslations();
     this.subscribeToWindowService();
     this.initializeUser();
     this.setCurrentTimeOfDay();
     this.setTimeOfDayIcon();
+  }
+
+  private subscribeToTranslations(): void {
+    this.subscriptions.push(
+      this.translocoService.selectTranslate('Finished', {}, 'studyplan').subscribe(translation => {
+        this.completed = translation;
+      }),
+      this.translocoService.selectTranslate('InProgress', {}, 'studyplan').subscribe(translation => {
+        this.inProgress = translation;
+      }),
+      this.translocoService.selectTranslate('NotStarted', {}, 'studyplan').subscribe(translation => {
+        this.notStarted = translation;
+      })
+    );
   }
 
   private getUserStatistics(): void {
@@ -97,6 +117,25 @@ export class HomeComponent implements OnInit, OnDestroy {
         }
       })
     )
+  }
+
+  public getDougnutData(): ChartData {
+    const labels : string[] = [this.completed, this.inProgress, this.notStarted];
+    const doughnutChartData : ChartData<'doughnut'> = {
+      labels : labels,
+      datasets : [
+        {
+          data : [this.userStatistics.completedCourses, 
+            this.userStatistics.inProgressCourses, this.userStatistics.notStartedCourses],
+          backgroundColor : ['#1ECF4526', '#256E8E26', '#C2C6CF33']
+        }
+      ]
+    }
+    return doughnutChartData;
+  }
+
+  public getDougnutType(): ChartType {
+    return 'doughnut';
   }
 
 

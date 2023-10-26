@@ -10,6 +10,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { StudyPlanComponent } from './study-plan/study-plan.component';
 import { TranslocoRootModule } from '../transloco-root.module';
 import { CourseComponent } from './course/course.component';
+import { NgChartsModule } from 'ng2-charts';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { CourseComponent } from './course/course.component';
     RouterModule,
     ComponentsModule,
     ReactiveFormsModule,
-    TranslocoRootModule
+    TranslocoRootModule,
+    NgChartsModule
   ]
 })
 export class PagesModule { }
