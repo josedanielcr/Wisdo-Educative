@@ -14,6 +14,7 @@ import { MessageTypeEnum } from 'src/app/enums/message.type.enum';
 import { CourseEvaluationTaskClient } from 'src/app/models/core/client/course.evaluation.task.client.model';
 import { WindowResizeService } from 'src/app/services/helpers/window-resize.service';
 import { ScreenSizeModel } from 'src/app/models/screenSize.model';
+import {Router} from "@angular/router";
 
 
 interface EvaluationRow {
@@ -46,7 +47,7 @@ export class EvaluationCalculatorComponent implements OnInit, OnDestroy {
 
   //properties
   public evaluations : CourseEvaluationClient[] = [];
-  
+
   //forms
   public evaluationForm : FormGroup;
   public evaluationTaskForm : FormGroup;
@@ -55,12 +56,13 @@ export class EvaluationCalculatorComponent implements OnInit, OnDestroy {
     private formService : FormService,
     private courseEvalutationService : CourseEvaluationService,
     private messageService : MessageService,
-    private windowService : WindowResizeService) { }
+    private windowService : WindowResizeService,
+    private router : Router) { }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(s => s.unsubscribe());
   }
-  
+
   ngOnInit(): void {
     this.initiateForms();
     this.getCourseEvaluations();
@@ -143,7 +145,7 @@ export class EvaluationCalculatorComponent implements OnInit, OnDestroy {
       this.courseEvalutationService.createCourseEvaluationTask(evaluationTask.courseEvaluationId, evaluationTask).subscribe({
         next : (courseEvaluationTaskClient : CourseEvaluationTaskClient) => {
           this.selectedEvaluationRow.tasks.push(courseEvaluationTaskClient);
-          this.messageService.show(new MessageModel(MessageTypeEnum.Success, 
+          this.messageService.show(new MessageModel(MessageTypeEnum.Success,
             'Success', 'CourseEvaluationTaskCreation'));
             this.courseEvaluationTaskDialog.hide();
         },
@@ -159,7 +161,7 @@ export class EvaluationCalculatorComponent implements OnInit, OnDestroy {
     this.formService.validateForm(this.evaluationForm, CourseEvaluationClient);
     if(!evaluation) return null;
     this.executeCreateEvaluation(evaluation);
-    
+
   }
 
   private executeCreateEvaluation(evaluation: CourseEvaluationClient) {
@@ -175,7 +177,7 @@ export class EvaluationCalculatorComponent implements OnInit, OnDestroy {
             isOpen : false,
             tasks : []
           });
-          this.messageService.show(new MessageModel(MessageTypeEnum.Success, 
+          this.messageService.show(new MessageModel(MessageTypeEnum.Success,
             'Success', 'CourseEvaluationCreation'));
           this.dialog.hide();
         },
@@ -184,5 +186,9 @@ export class EvaluationCalculatorComponent implements OnInit, OnDestroy {
         }
       })
     );
+  }
+
+  public goToCourseTask(evalutionId : number, taskId : number){
+    this.router.navigateByUrl(`workspace/study-plan/course/${this.course.id}/evaluation/${evalutionId}/task/${taskId}`);
   }
 }

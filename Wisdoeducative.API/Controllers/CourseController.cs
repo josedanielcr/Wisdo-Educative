@@ -32,6 +32,12 @@ namespace Wisdoeducative.API.Controllers
             return Ok(await courseService.GetStudyTermCourses(studyTermId));
         }
 
+        [HttpGet("study-plan/{studyPlanId}")]
+        public async Task<IActionResult> GetStudyPlanCourses(int studyPlanId)
+        {
+            return Ok(await courseService.GetStudyPlanCourses(studyPlanId));
+        }
+
         [HttpPost]
         public async Task<IActionResult> CreateCourse(List<CourseDto> courses)
         {

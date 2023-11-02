@@ -31,7 +31,7 @@
                                     {{evaluation.evaluation.name}}
                                 </span>
                                 <span class="ms-auto me-5 pe-5">
-                                    <i [class]="evaluation.isOpen ? 'fa-solid fa-chevron-up' 
+                                    <i [class]="evaluation.isOpen ? 'fa-solid fa-chevron-up'
                                     : 'fa-solid fa-chevron-down' + ' cursor-pointer'" ></i>
                                 </span>
                             </div>
@@ -63,7 +63,8 @@
                                 <td>{{task.weight}}%</td>
                                 <td *ngIf="!isPhone">{{task.totalScore == null ? 0 : task.totalScore}}%</td>
                                 <td>
-                                    <i class="fa-solid fa-circle-chevron-right cursor-pointer"></i>
+                                    <i class="fa-solid fa-circle-chevron-right cursor-pointer"
+                                      (click)="goToCourseTask(evaluation.evaluation.id,task.id)"></i>
                                 </td>
                             </tr>
                         </ng-container>

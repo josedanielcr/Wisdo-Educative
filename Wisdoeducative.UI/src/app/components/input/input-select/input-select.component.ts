@@ -18,12 +18,13 @@ import { SelectOptionModel } from 'src/app/models/select.option.model';
 export class InputSelectComponent extends BaseInput implements AfterViewInit {
 
   @ViewChild('selectComponent', { static: false }) mySelectRef: ElementRef;
-  
+
   @Input() options : SelectOptionModel[];
   @Input() defaultOption : SelectOptionModel;
   @Input() label : string;
   @Input() override value : any;
   @Input() error : string = '';
+  @Input() isTranslated : boolean = false;
   public ngControl : NgControl;
 
   constructor(private injector : Injector, private cdf : ChangeDetectorRef) {
@@ -32,7 +33,7 @@ export class InputSelectComponent extends BaseInput implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this.ngControl = this.injector.get(NgControl);
-    if (this.ngControl != null) { 
+    if (this.ngControl != null) {
       this.ngControl.valueAccessor = this;
       this.cdf.detectChanges();
     }

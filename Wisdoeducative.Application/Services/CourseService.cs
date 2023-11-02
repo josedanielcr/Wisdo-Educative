@@ -209,5 +209,15 @@ namespace Wisdoeducative.Application.Services
             courseDto.StudyPlanTermDto = studyPlanTermDto;
             return courseDto;
         }
+
+        public async Task<IEnumerable<CourseDto>> GetStudyPlanCourses(int studyPlanId)
+        {
+            return await dBContext.Courses.
+                Where(c => c.StudyPlanTerm!.StudyPlan!.Id == studyPlanId)
+                .Include(c => c.StudyPlanTerm)
+                .Select(c => mapper.Map<CourseDto>(c))
+                .ToListAsync()
+                ?? throw new NotFoundException(ErrorMessages.EntityNotFound, "EntityNotFound");
+        }
     }
 }

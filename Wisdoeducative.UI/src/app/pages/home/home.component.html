@@ -130,7 +130,7 @@
   </div>
 
   <!-- right side -->
-  <div class="col-md-4">
-    hola
+  <div class="col-md-4" *ngIf="studyPlan">
+    <app-reminders [studyPlan]="studyPlan"></app-reminders>
   </div>
 </div>

@@ -11,6 +11,7 @@ import { StudyPlanComponent } from './study-plan/study-plan.component';
 import { TranslocoRootModule } from '../transloco-root.module';
 import { CourseComponent } from './course/course.component';
 import { NgChartsModule } from 'ng2-charts';
+import { CourseEvaluationTasksComponent } from './course-evaluation-tasks/course-evaluation-tasks.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { NgChartsModule } from 'ng2-charts';
     HomeComponent,
     NewStudyPlanComponent,
     StudyPlanComponent,
-    CourseComponent
+    CourseComponent,
+    CourseEvaluationTasksComponent
   ],
   imports: [
     CommonModule,

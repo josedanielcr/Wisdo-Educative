@@ -33,6 +33,8 @@ import { CourseTaskSelectComponent } from './input/course-task-select/course-tas
 import { CourseLinksTableComponent } from './course-links-table/course-links-table.component';
 import { CourseLinkDialogComponent } from './course-link-dialog/course-link-dialog.component';
 import { DirectivesModule } from '../directives/directives.module';
+import { RemindersComponent } from './reminders/reminders.component';
+import { AddReminderComponent } from './add-reminder/add-reminder.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +68,9 @@ import { DirectivesModule } from '../directives/directives.module';
     LinkPlatformPickerComponent,
     CourseTaskSelectComponent,
     CourseLinksTableComponent,
-    CourseLinkDialogComponent
+    CourseLinkDialogComponent,
+    RemindersComponent,
+    AddReminderComponent
   ],
   exports: [
     ButtonComponent,
@@ -95,7 +99,9 @@ import { DirectivesModule } from '../directives/directives.module';
     InputPercentageComponent,
     CourseLinkComponent,
     CourseLinksTableComponent,
-    CourseLinkDialogComponent
+    CourseLinkDialogComponent,
+    RemindersComponent,
+    AddReminderComponent
   ],
   imports: [
     CommonModule,
