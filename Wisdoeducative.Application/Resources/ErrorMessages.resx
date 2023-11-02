@@ -138,6 +138,9 @@
   <data name="InvalidPomodoroSession" xml:space="preserve">
     <value>Oops! It looks like the pomodoro session has some invalid values.</value>
   </data>
+  <data name="InvalidReminderData" xml:space="preserve">
+    <value>Oops! it looks like your reminder does not have the correct data.</value>
+  </data>
   <data name="InvalidWeight" xml:space="preserve">
     <value>Oops! your total course weight cannot exceed 100.</value>
   </data>

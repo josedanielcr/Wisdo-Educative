@@ -20,7 +20,7 @@ export class CourseService {
     private applicationErrorService : ApplicationErrorService,
     private spinnerService : SpinnerService) { }
 
-  
+
   public getCourseById(courseId : number) : Observable<CourseClient> {
     return this.http.get<CourseServer>(`${this.apiUrlService.checkEnvironment()}/Course/${courseId}`)
       .pipe(
@@ -71,6 +71,22 @@ export class CourseService {
         }),
         map((course : CourseServer) => {
           return this.courseAdapter.adaptServerToClient(course);
+        }),
+        catchError((error: any) => {
+          throw this.applicationErrorService.parseHttpError(error)
+        })
+      )
+  }
+
+  public getCoursesByStudyPlanId(studyPlanId : number) : Observable<CourseClient[]> {
+    this.spinnerService.show();
+    return this.http.get<CourseServer[]>(`${this.apiUrlService.checkEnvironment()}/Course/study-plan/${studyPlanId}`)
+      .pipe(
+        finalize(() => {
+          this.spinnerService.hide();
+        }),
+        map((courses : CourseServer[]) => {
+          return courses.map(course => this.courseAdapter.adaptServerToClient(course));
         }),
         catchError((error: any) => {
           throw this.applicationErrorService.parseHttpError(error)

@@ -124,6 +124,15 @@ namespace Wisdoeducative.Application.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Oops! it looks like your reminder does not have the correct data..
+        /// </summary>
+        internal static string InvalidReminderData {
+            get {
+                return ResourceManager.GetString("InvalidReminderData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Oops! your total course weight cannot exceed 100..
         /// </summary>
         internal static string InvalidWeight {

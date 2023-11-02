@@ -1,0 +1,35 @@
+<app-dialog *transloco="let t; scope : 'reminders'"
+            [title]="t('reminders.AddReminder')"
+            [description]="t('reminders.AddReminderDescription')"
+            [minHeight]="20">
+
+  <div class="w-100">
+
+    <form class="w-100" action="" [formGroup]="reminderForm">
+      <div class="w-100">
+        <div class="w-100">
+          <app-input-text [label]="t('reminders.name')"
+                          formControlName="name"
+                          [error]="t('reminders.nameError')"
+                          placeholder="">
+          </app-input-text>
+        </div>
+        <div class="w-100 mt-3">
+          <app-input-date [label]="t('reminders.task')"
+                          placeholder=""
+                          [error]="t('reminders.taskError')"
+                          formControlName="date">
+          </app-input-date>
+        </div>
+      </div>
+
+      <!-- button-->
+      <div class="w-100 mt-5">
+        <app-button [type]="ButtonType.SECONDARY"
+                    [text]="t('reminders.AddReminder')"
+                    (click)="addReminder()">
+        </app-button>
+      </div>
+    </form>
+  </div>
+</app-dialog>

@@ -1,0 +1,10 @@
+{
+  "AddReminder": "Add Reminder",
+  "AddReminderDescription": "Add the required information in order to create a new reminder.",
+  "name": "Name",
+  "nameError": "Name is required",
+  "task": "Evaluation task date",
+  "taskError": "The task date is required",
+  "course": "Course",
+  "courseError": "The course is required"
+}
