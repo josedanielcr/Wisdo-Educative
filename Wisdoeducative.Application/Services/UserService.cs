@@ -111,13 +111,15 @@ namespace Wisdoeducative.Application.Services
             return mapper.Map<UserDto>(user);
         }
 
-        public async Task UpdateUser(UserDto user)
+        public async Task<UserDto> UpdateUser(UserDto user)
         {
             var userEntity = mapper.Map<User>(user);
             dBContext.Users.Attach(userEntity);
             dBContext.Entry(userEntity).State = EntityState.Modified;
             dBContext.Entry(userEntity).Property(u => u.B2cId).IsModified = false;
             await userServiceHelper.SaveUserHistory(userEntity, EntityChangeTypes.Modified, user.B2cId);
+            await dBContext.SaveChangesAsync();
+            return await userServiceHelper.GetUser(user.Id);
         }
 
         public async Task<UserDto> ValidateUser(UserDto user)

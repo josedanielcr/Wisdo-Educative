@@ -6,6 +6,7 @@ import { MenuService } from 'src/app/services/components/menu.service';
 import { UserService } from 'src/app/services/core/models/user.service';
 import { StoreService } from 'src/app/services/core/store.service';
 import { WindowResizeService } from 'src/app/services/helpers/window-resize.service';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-navbar',
@@ -25,7 +26,8 @@ export class NavbarComponent implements OnInit {
               private menuService : MenuService,
               private storeService : StoreService,
               private userService : UserService,
-              private msalService: MsalService) {}
+              private msalService: MsalService,
+              private router : Router) {}
 
   ngOnInit(): void {
     this.manageWindowSizes();
@@ -65,7 +67,7 @@ export class NavbarComponent implements OnInit {
    * Initiates the logout flow using the MSAL service.
    * The postLogoutRedirectUri parameter is set to the app's /auth route.
  */
-  public logout() { 
+  public logout() {
     let redirectUri : string;
     if(window.location.href.indexOf('localhost') > -1) {
         redirectUri = 'http://localhost:4200/landing';
@@ -76,7 +78,7 @@ export class NavbarComponent implements OnInit {
       postLogoutRedirectUri: redirectUri
     });
   }
-  
+
 
   private manageWindowSizes(): void {
     this.windowResizeService.getScreenSizeObservable().subscribe((screenSizes: ScreenSizeModel) => {
@@ -92,5 +94,10 @@ export class NavbarComponent implements OnInit {
 
   public toggleSidebar(): void {
     this.menuService.setSidebarHidden(!this.isSidebarOpen);
+  }
+
+  public goToProfile(): void {
+    this.router.navigate(['/workspace/profile']);
+    this.isDropdownOpen = false;
   }
 }

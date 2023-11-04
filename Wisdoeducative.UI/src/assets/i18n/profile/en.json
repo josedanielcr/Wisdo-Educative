@@ -1,0 +1,18 @@
+{
+  "Info": "Personal information",
+  "Name": "Complete name",
+  "NameError": "You must enter your name",
+  "LastName": "Last name",
+  "LastNameError": "You must enter your last name",
+  "Email": "Email",
+  "EmailError": "You must enter your email",
+  "StudyMode": "Study category",
+  "Password": "Change password",
+  "NewImage": "Change profile image",
+  "NewImageDescription": "Select a new image",
+  "ChangePersonalInfo": "Change personal information",
+  "ChangePersonalInfoDescription": "Please fill in the fields you want to change",
+  "FileDrop": "Drop the file here",
+  "FileDropDescription": "or",
+  "SaveInfo": "Save information"
+}

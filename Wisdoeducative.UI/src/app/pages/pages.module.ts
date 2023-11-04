@@ -12,6 +12,8 @@ import { TranslocoRootModule } from '../transloco-root.module';
 import { CourseComponent } from './course/course.component';
 import { NgChartsModule } from 'ng2-charts';
 import { CourseEvaluationTasksComponent } from './course-evaluation-tasks/course-evaluation-tasks.component';
+import { ProfileComponent } from './profile/profile.component';
+import {PipesModule} from "../pipes/pipes.module";
 
 
 @NgModule({
@@ -21,7 +23,8 @@ import { CourseEvaluationTasksComponent } from './course-evaluation-tasks/course
     NewStudyPlanComponent,
     StudyPlanComponent,
     CourseComponent,
-    CourseEvaluationTasksComponent
+    CourseEvaluationTasksComponent,
+    ProfileComponent
   ],
   imports: [
     CommonModule,
@@ -30,7 +33,8 @@ import { CourseEvaluationTasksComponent } from './course-evaluation-tasks/course
     ComponentsModule,
     ReactiveFormsModule,
     TranslocoRootModule,
-    NgChartsModule
+    NgChartsModule,
+    PipesModule
   ]
 })
 export class PagesModule { }

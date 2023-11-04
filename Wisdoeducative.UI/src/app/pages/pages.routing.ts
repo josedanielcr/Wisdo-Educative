@@ -8,6 +8,7 @@ import { NewStudyPlanComponent } from './new-study-plan/new-study-plan.component
 import { StudyPlanComponent } from './study-plan/study-plan.component';
 import { CourseComponent } from './course/course.component';
 import {CourseEvaluationTasksComponent} from "./course-evaluation-tasks/course-evaluation-tasks.component";
+import {ProfileComponent} from "./profile/profile.component";
 
 const routes: Routes = [
   {
@@ -17,6 +18,7 @@ const routes: Routes = [
       children  : [
         { path: '', redirectTo: 'home', pathMatch: 'full' },
         { path: 'home', component: HomeComponent },
+        { path: 'profile', component: ProfileComponent },
         { path: 'new-study-plan', component: NewStudyPlanComponent },
         { path : 'study-plan', component : StudyPlanComponent },
         { path : 'study-plan/course/:id', component: CourseComponent},
