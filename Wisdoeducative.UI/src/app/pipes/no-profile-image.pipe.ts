@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class NoProfileImagePipe implements PipeTransform {
 
   public transform(profileImageUrl : string): string {
-    return profileImageUrl ? profileImageUrl : '../../assets/icons/temp-user.jpg';
+    return profileImageUrl ? profileImageUrl : '../../assets/icons/dall-e-image.png';
   }
 
 }

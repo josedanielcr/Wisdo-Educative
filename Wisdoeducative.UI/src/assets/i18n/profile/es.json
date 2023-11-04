@@ -1,0 +1,18 @@
+{
+  "Info": "Información personal",
+  "Name": "Nombre",
+  "LastName": "Apellido",
+  "LastNameError": "Debe de ingresar su apellido",
+  "NameError": "Debe de ingresar su nombre",
+  "Email": "Correo electrónico",
+  "EmailError": "Por favor ingrese su correo electrónico",
+  "StudyMode": "Categoria de estudio",
+  "Password": "Cambiar contraseña",
+  "NewImage": "Cambiar imagen de perfil",
+  "NewImageDescription": "Por favor seleccione una imagen de perfil",
+  "ChangePersonalInfo": "Cambiar información personal",
+  "ChangePersonalInfoDescription": "Por favor ingrese la información que desea cambiar",
+  "FileDrop": "Arrastre y suelte un archivo aquí",
+  "FileDropDescription": "o",
+  "SaveInfo": "Guardar información"
+}

@@ -6,5 +6,5 @@
   "task": "Fecha del recordatorio",
   "taskError": "La fecha del recordatorio es requerida.",
   "course": "Nombre del curso",
-  "courseError": "El nombre del curso es requerido",
+  "courseError": "El nombre del curso es requerido"
 }

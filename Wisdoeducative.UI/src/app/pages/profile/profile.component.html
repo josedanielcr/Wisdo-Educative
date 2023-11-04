@@ -1,0 +1,109 @@
+<div *ngIf="user" class="w-100">
+
+  <div class="w-100 gap-4 d-flex flex-wrap align-items-center" *transloco="let t; scope : 'profile'">
+
+    <div class="wd-bg-white position-relative p-4 d-flex flex-column justify-content-center align-items-center"
+         [class.desktop-profile-container]="isDesktop"
+         [class.phone-profile-container]="isPhone || isTablet">
+      <img [src]="user.profileImage | noProfileImage"
+           alt="profile image"
+           class="img-fluid">
+      <span class="wd-text-h3 mt-2">{{user.name}} {{user.lastName}}</span>
+      <div class="position-absolute top-0 start-0 mt-5 ms-5 d-flex align-items-center gap-3">
+      </div>
+    </div>
+
+    <div class="wd-bg-white"
+         [class.p-5]="isDesktop"
+         [class.p-4]="isPhone || isTablet"
+         [class.phone-profile-container]="isPhone || isTablet"
+         [class.personal-info-container]="isDesktop">
+
+      <div class="d-flex">
+        <h1 class="wd-text-h1">{{t('profile.Info')}}</h1>
+        <div class="ms-auto">
+          <i class="fa-solid fa-pen-to-square fa-2x cursor-pointer" (click)="editPersonalInfo()"></i>
+        </div>
+      </div>
+
+      <div class="d-flex flex-column gap-4 mt-5">
+
+        <div class="d-flex">
+          <h5 class="fw-bold">{{t('profile.Name')}}:</h5>
+          <h5 class="ms-auto">{{user.name}}</h5>
+        </div>
+        <div class="d-flex">
+          <h5 class="fw-bold">{{t('profile.LastName')}}:</h5>
+          <h5 class="ms-auto">{{user.lastName}}</h5>
+        </div>
+
+        <div class="d-flex flex-wrap">
+          <h5 class="fw-bold">{{t('profile.Email')}}:</h5>
+          <h5 class="ms-auto">{{user.email}}</h5>
+        </div>
+
+        <div class="d-flex" *transloco="let t; scope: 'select'">
+          <h5 class="fw-bold">{{t('profile.StudyMode')}}:</h5>
+          <h5 class="ms-auto">{{t('select.'+user.category)}}</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-dialog *transloco="let t; scope : 'profile'"
+            #changeProfileImageDialog
+            [title]="t('profile.NewImage')"
+            [minHeight]="15"
+            [description]="t('profile.NewImageDescription')">
+
+  <div class="w-100">
+    <label for="images" class="drop-container" id="dropcontainer">
+      <span class="drop-title">{{t('profile.FileDrop')}}</span>
+      <span class="drop-subtitle">{{t('profile.FileDropDescription')}}</span>
+      <input type="file" id="images" accept="image/*" #imageFileInput>
+    </label>
+
+    <div class="mt-5 w-50">
+      <app-button [text]="t('profile.NewImage')"
+                  [type]="ButtonType.SECONDARY"
+                  (click)="executeImageUpdate()">
+      </app-button>
+    </div>
+  </div>
+
+</app-dialog>
+
+<app-dialog *transloco="let t; scope : 'profile'"
+            #changePersonalInformation
+            [title]="t('profile.ChangePersonalInfo')"
+            [minHeight]="20"
+            [description]="t('profile.ChangePersonalInfoDescription')">
+  <div class="w-100" *ngIf="user">
+    <form [formGroup]="userDataForm">
+      <div class="w-100 d-flex flex-column gap-3">
+        <div>
+          <app-input-text [label]="t('profile.Name')"
+                          formControlName="name"
+                          placeholder="">
+          </app-input-text>
+        </div>
+
+        <div>
+          <app-input-text [label]="t('profile.LastName')"
+                          formControlName="lastName"
+                          placeholder="">
+          </app-input-text>
+        </div>
+      </div>
+    </form>
+
+    <div class="mt-5" [class.w-50]="isDesktop">
+      <app-button [text]="t('profile.SaveInfo')"
+                  [type]="ButtonType.SECONDARY"
+                  (click)="executeUserUpdate()">
+      </app-button>
+    </div>
+
+  </div>
+</app-dialog>

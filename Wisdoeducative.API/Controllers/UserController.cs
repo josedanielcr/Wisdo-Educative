@@ -58,5 +58,11 @@ namespace Wisdoeducative.API.Controllers
         {
             return Ok(await userService.OmitUserSetup(userId));
         }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateUser([FromBody] UserDto user)
+        {
+            return Ok(await userService.UpdateUser(user));
+        }
     }
 }
