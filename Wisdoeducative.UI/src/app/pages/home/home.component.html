@@ -76,11 +76,6 @@
               <div class="statistic-card flex-wrap flex-fill wd-bg-white d-flex" [ngClass]="{
                 'justify-content-center align-items-center' : isPhone
               }">
-                <canvas baseChart
-                        class="chart"
-                        [data]="getDougnutData()"
-                        [type]="getDougnutType()">
-                </canvas>
                 <div class="ms-auto mt-5 pe-5" *ngIf="!isPhone">
                   {{t('home.CoursesByStatus')}}
                   <div class="d-flex flex-column gap-3">
