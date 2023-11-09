@@ -35,6 +35,8 @@ import { CourseLinkDialogComponent } from './course-link-dialog/course-link-dial
 import { DirectivesModule } from '../directives/directives.module';
 import { RemindersComponent } from './reminders/reminders.component';
 import { AddReminderComponent } from './add-reminder/add-reminder.component';
+import { EvaluationTaskOverviewComponent } from './evaluation-task-overview/evaluation-task-overview.component';
+import { CompleteEvaluationTaskComponent } from './complete-evaluation-task/complete-evaluation-task.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +72,9 @@ import { AddReminderComponent } from './add-reminder/add-reminder.component';
     CourseLinksTableComponent,
     CourseLinkDialogComponent,
     RemindersComponent,
-    AddReminderComponent
+    AddReminderComponent,
+    EvaluationTaskOverviewComponent,
+    CompleteEvaluationTaskComponent
   ],
   exports: [
     ButtonComponent,
@@ -101,7 +105,9 @@ import { AddReminderComponent } from './add-reminder/add-reminder.component';
     CourseLinksTableComponent,
     CourseLinkDialogComponent,
     RemindersComponent,
-    AddReminderComponent
+    AddReminderComponent,
+    EvaluationTaskOverviewComponent,
+    CompleteEvaluationTaskComponent
   ],
   imports: [
     CommonModule,

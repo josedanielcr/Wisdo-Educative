@@ -31,7 +31,7 @@ enum TimeOfDay {
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  
+
   // constants
   private morningPath = '../../../assets/icons/sun 1.svg';
   private afternoonPath = '../../../assets/icons/coffee 1.svg';
@@ -47,7 +47,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   public studyPlan : StudyPlanClient;
   public studyPlanTerms : StudyPlanTermClient[] = [];
   public userStatistics : UserStatistics;
-  
+
   // util
   public currentTimeOfDay : TimeOfDay;
   public UserStatus = UserStatus;
@@ -77,7 +77,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private userStatisticsService : UserStatisticsService,
     private messageService : MessageService,
     private translocoService : TranslocoService){}
-  
+
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription: Subscription) => {
       subscription.unsubscribe();
@@ -125,7 +125,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       labels : labels,
       datasets : [
         {
-          data : [this.userStatistics.completedCourses, 
+          data : [this.userStatistics.completedCourses,
             this.userStatistics.inProgressCourses, this.userStatistics.notStartedCourses],
           backgroundColor : ['#1ECF4526', '#256E8E26', '#C2C6CF33']
         }
@@ -137,7 +137,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   public getDougnutType(): ChartType {
     return 'doughnut';
   }
-
 
   private initializeUser(): void {
     this.subscriptions.push(this.userInitializationService.initializeUser().subscribe(
@@ -196,7 +195,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   public notCompletedSetup(): boolean {
-    return (this.user.userStatus !== UserStatus.Omitted 
+    return (this.user.userStatus !== UserStatus.Omitted
       && ((!this.studyPlan) || (this.studyPlan && this.studyPlanTerms.length === 0)))
   }
 }

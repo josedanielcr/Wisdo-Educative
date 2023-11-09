@@ -16,6 +16,7 @@
     "AddCourseEval": "Agregar evaluación",
     "AddCourseEvalDesc": "Ingrese la información de la evaluación para crearla.",
     "EvalTaskName": "Nombre de la tarea",
+    "EvalTaskDescription": "Descripción de la tarea",
     "EvalTaskNameError": "La tarea es requerida",
     "EvalTaskPercentage": "Peso de la tarea",
     "EvalTaskPercentageError": "El peso de la tarea es requerido",
@@ -26,5 +27,10 @@
     "EvalTaskSubmit": "Ingrese la tarea",
     "AddCourseEvalTask": "Agregar tarea de evaluación",
     "AddCourseEvalTaskDesc": "Ingrese la información de la tarea para crearla.",
-    "NoEvalTasks": "No hay tareas disponibles"
+    "NoEvalTasks": "No hay tareas disponibles",
+     "TaskOverview": "Resumen de la tarea",
+  "TaskOverviewDesc": "Información relevante de la tarea",
+  "UpdateTaskInfo": "Actualizar información de la tarea",
+  "completeTask": "Marcar como completada",
+  "completeTaskDesc": "Ingresa la información necesaria para marcarla como completada"
 }

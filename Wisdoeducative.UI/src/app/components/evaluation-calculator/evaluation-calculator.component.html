@@ -3,7 +3,11 @@
         'flex-column mt-3' : isPhone
     }">
         <span class="wd-text-h3">{{t('courses.EvalCalc')}}</span>
-        <div class="ms-auto" [class.w-100]="isPhone" [class.mt-3]="isPhone">
+        <div class="ms-auto d-flex gap-3 align-items-center" [class.w-100]="isPhone" [class.mt-3]="isPhone">
+
+          <i class="fa-solid fa-arrows-rotate fa-2x cursor-pointer" (click)="refreshTable()"></i>
+
+
             <app-button [type]="ButtonType.SECONDARY"
                         [text]="t('courses.AddEval')"
                         (click)="addEvaluation()">
@@ -64,7 +68,7 @@
                                 <td *ngIf="!isPhone">{{task.totalScore == null ? 0 : task.totalScore}}%</td>
                                 <td>
                                     <i class="fa-solid fa-circle-chevron-right cursor-pointer"
-                                      (click)="goToCourseTask(evaluation.evaluation.id,task.id)"></i>
+                                      (click)="goToCourseTask(task)"></i>
                                 </td>
                             </tr>
                         </ng-container>
@@ -166,3 +170,5 @@
         </app-button>
     </div>
 </app-dialog>
+
+<app-evaluation-task-overview></app-evaluation-task-overview>

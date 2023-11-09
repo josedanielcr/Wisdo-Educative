@@ -142,5 +142,36 @@ namespace Wisdoeducative.Application.Services
                 .FirstOrDefaultAsync()
                 ?? throw new NotFoundException(ErrorMessages.EntityNotFound, "EntityNotFound"); ;
         }
+
+        public async Task<CourseEvaluationTaskDto> UpdateCourseEvaluationTask(int courseEvaluationTaskId, CourseEvaluationTaskDto courseEvaluationTaskDto)
+        {
+            var taskEntity = mapper.Map<CourseEvaluationTask>(courseEvaluationTaskDto);
+            dBContext.CourseEvaluationTasks.Attach(taskEntity);
+            dBContext.Entry(taskEntity).State = EntityState.Modified;
+            taskEntity.Name = courseEvaluationTaskDto.Name;
+            taskEntity.Description = courseEvaluationTaskDto.Description;
+            await dBContext.SaveChangesAsync();
+            return mapper.Map<CourseEvaluationTaskDto>(taskEntity);
+        }
+
+        public async Task<CourseEvaluationTaskDto> CompleteCourseEvaluationTask(CourseEvaluationTaskDto courseEvaluationTaskDto)
+        {
+
+            var value = courseEvaluationTaskDto.TotalScore * courseEvaluationTaskDto.Weight / 100;
+
+            if(value > courseEvaluationTaskDto.Weight)
+            {
+                throw new BadRequestException(ErrorMessages.InvalidEvaluationTaskWeight, "InvalidEvaluationTaskWeight");
+            }
+
+            var taskEntity = mapper.Map<CourseEvaluationTask>(courseEvaluationTaskDto);
+            dBContext.CourseEvaluationTasks.Attach(taskEntity);
+            dBContext.Entry(taskEntity).State = EntityState.Modified;
+            taskEntity.Status = Domain.Enums.EntityStatus.Active;
+            taskEntity.EvaluationStatus = Domain.Enums.CourseEvaluationStatus.Finished;
+            taskEntity.TotalScore = taskEntity.TotalScore * taskEntity.Weight / 100;
+            await dBContext.SaveChangesAsync();
+            return mapper.Map<CourseEvaluationTaskDto>(taskEntity);
+        }
     }
 }

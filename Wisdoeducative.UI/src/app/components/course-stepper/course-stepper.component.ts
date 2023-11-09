@@ -25,12 +25,6 @@ export class CourseStepperComponent implements OnInit {
       isActive : true
     },
     {
-      code: 'Cal',
-      index: 1,
-      icon: 'fa-solid fa-graduation-cap fa-lg',
-      isActive : false
-    },
-    {
       code: 'Link',
       index: 2,
       icon: 'fa-solid fa-paperclip fa-lg',

@@ -16,5 +16,8 @@ namespace Wisdoeducative.Application.Common.Interfaces.Services
         Task<IEnumerable<CourseEvaluationTaskDto>> GetCourseTasks(int courseId);
         Task<IEnumerable<CourseEvaluationTaskDto>> GetAllCourseEvaluationTasks(int courseEvaluationId);
         Task<CourseEvaluationTaskDto> CreateCourseEvaluationTask(int courseEvaluationId, CourseEvaluationTaskDto courseEvaluationTaskDto);
+
+        Task<CourseEvaluationTaskDto> UpdateCourseEvaluationTask(int courseEvaluationTaskId, CourseEvaluationTaskDto courseEvaluationTaskDto);
+        Task<CourseEvaluationTaskDto> CompleteCourseEvaluationTask(CourseEvaluationTaskDto courseEvaluationTaskDto);
     }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import { ButtonType } from 'src/app/enums/button.enum';
 import { CourseClient } from 'src/app/models/core/client/course.client.model';
 import { DialogComponent } from '../dialog/dialog.component';
@@ -15,6 +15,7 @@ import { CourseEvaluationTaskClient } from 'src/app/models/core/client/course.ev
 import { WindowResizeService } from 'src/app/services/helpers/window-resize.service';
 import { ScreenSizeModel } from 'src/app/models/screenSize.model';
 import {Router} from "@angular/router";
+import {EvaluationTaskOverviewComponent} from "../evaluation-task-overview/evaluation-task-overview.component";
 
 
 interface EvaluationRow {
@@ -33,6 +34,7 @@ export class EvaluationCalculatorComponent implements OnInit, OnDestroy {
 
   @Input() course : CourseClient;
   @ViewChild(DialogComponent) dialog: DialogComponent;
+  @ViewChild(EvaluationTaskOverviewComponent) evaluationTaskOverview : EvaluationTaskOverviewComponent
   @ViewChild('courseEvaluationTaskDialog') courseEvaluationTaskDialog: DialogComponent;
 
   //util
@@ -40,6 +42,7 @@ export class EvaluationCalculatorComponent implements OnInit, OnDestroy {
   public subscriptions : Subscription[] = [];
   public evaluationRows : EvaluationRow[] = [];
   public selectedEvaluationRow : EvaluationRow | null = null;
+  public selectedEvaluationTask : CourseEvaluationTaskClient | null = null;
 
   public isDesktop: boolean;
   public isTablet: boolean;
@@ -188,7 +191,13 @@ export class EvaluationCalculatorComponent implements OnInit, OnDestroy {
     );
   }
 
-  public goToCourseTask(evalutionId : number, taskId : number){
-    this.router.navigateByUrl(`workspace/study-plan/course/${this.course.id}/evaluation/${evalutionId}/task/${taskId}`);
+  public goToCourseTask(task : CourseEvaluationTaskClient){
+    this.evaluationTaskOverview.setEvaluationTask(task);
+  }
+
+  public refreshTable() {
+    this.evaluationRows = [];
+    this.evaluations = [];
+    this.getCourseEvaluations();
   }
 }

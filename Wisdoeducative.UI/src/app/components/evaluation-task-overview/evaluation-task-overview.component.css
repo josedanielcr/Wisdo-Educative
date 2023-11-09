@@ -1,0 +1,25 @@
+.add-reminder-container {
+  position: absolute;
+  top: 85%;
+  left: 90%;
+}
+
+.complete-task-container {
+  position: absolute;
+  top: 85%;
+  left: 3%;
+}
+
+.add-reminder-button {
+  width: 3.125rem;
+  height: 3.1875rem;
+  border-radius: 50%;
+  background-color: var(--seconday-color);
+}
+
+.complete-task-button {
+  width: 3.125rem;
+  height: 3.1875rem;
+  border-radius: 50%;
+  background-color: var(--success-color);
+}
