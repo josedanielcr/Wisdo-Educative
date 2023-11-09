@@ -24,7 +24,7 @@ export class PomodoroTimerComponent implements OnInit, AfterViewInit, OnDestroy 
 
   //childs
   @ViewChild('circleProgress') circleProgress: ElementRef;
-  @ViewChild(CourseTaskSelectComponent) taskSelect : CourseTaskSelectComponent; 
+  @ViewChild(CourseTaskSelectComponent) taskSelect : CourseTaskSelectComponent;
 
   //util
   public isDesktop: boolean;
@@ -36,7 +36,7 @@ export class PomodoroTimerComponent implements OnInit, AfterViewInit, OnDestroy 
   public subscriptions : Subscription[] = [];
 
   //input
-  public timeToCount : number = 0.2; //minutes
+  public timeToCount : number = 25; //minutes
 
   //internal properties
   private totalTime : number = this.timeToCount * 60; //time in seconds
@@ -45,10 +45,10 @@ export class PomodoroTimerComponent implements OnInit, AfterViewInit, OnDestroy 
   public displayTime : string;
   public circleNativeElement : any;
   public pomodoroTotalRound : boolean[] = [false,false,false,false];
-  public pomodoroRestingSessions : number[] = [0.1,0.1,0.1,0.2];
+  public pomodoroRestingSessions : number[] = [5,5,5,15];
   public currPomodoroRound : number = -1;
   public finalTime : Date;
-  
+
   //data
   @Input() course : CourseClient;
   public tasks : CourseEvaluationTaskClient[] = [];
@@ -141,7 +141,7 @@ export class PomodoroTimerComponent implements OnInit, AfterViewInit, OnDestroy 
     this.selectedTask = this.tasks.find(t => t.name.toUpperCase() === taskName.toUpperCase());
     if(!this.selectedTask) return;
     this.isRunning = true;
-    this.startTimer(); 
+    this.startTimer();
   }
 
   private subscribeToWindowService() {
@@ -169,7 +169,7 @@ export class PomodoroTimerComponent implements OnInit, AfterViewInit, OnDestroy 
     this.setCurrentPomodoro();
     this.interval = setInterval(() => {
       this.currentTime--;
-      
+
       this.circleNativeElement = this.circleProgress.nativeElement;
       const radius = this.getRadius();
       const circumference = this.getCircumference(radius);

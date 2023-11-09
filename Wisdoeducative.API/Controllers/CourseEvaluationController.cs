@@ -48,5 +48,17 @@ namespace Wisdoeducative.API.Controllers
         {
             return Ok(await courseEvaluationService.GetCourseTasks(courseId));
         }
+
+        [HttpPut("task/{courseEvaluationTaskId}")]
+        public async Task<IActionResult> UpdateCourseEvaluationTask(int courseEvaluationTaskId, [FromBody] CourseEvaluationTaskDto courseEvaluationTaskDto)
+        {
+            return Ok(await courseEvaluationService.UpdateCourseEvaluationTask(courseEvaluationTaskId, courseEvaluationTaskDto));
+        }
+
+        [HttpPut("task/complete")]
+        public async Task<IActionResult> CompleteCourseEvaluationTask([FromBody] CourseEvaluationTaskDto courseEvaluationTaskDto)
+        {
+            return Ok(await courseEvaluationService.CompleteCourseEvaluationTask(courseEvaluationTaskDto));
+        }
     }
 }

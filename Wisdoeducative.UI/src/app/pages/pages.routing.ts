@@ -22,7 +22,6 @@ const routes: Routes = [
         { path: 'new-study-plan', component: NewStudyPlanComponent },
         { path : 'study-plan', component : StudyPlanComponent },
         { path : 'study-plan/course/:id', component: CourseComponent},
-        {path : 'study-plan/course/:id/evaluation/:evaluationId/task/:taskId', component: CourseEvaluationTasksComponent}
       ]
   }
 ];

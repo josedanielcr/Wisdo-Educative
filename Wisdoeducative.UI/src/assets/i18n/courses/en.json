@@ -16,6 +16,7 @@
     "AddCourseEval" : "Add course evaluation",
     "AddCourseEvalDesc" : "Add information to create a new course evaluation",
     "EvalTaskName": "Task name",
+    "EvalTaskDescription": "Task description",
     "EvalTaskNameError": "Task name is required",
     "EvalTaskPercentage": "Task weight",
     "EvalTaskPercentageError": "Task weight is required",
@@ -26,5 +27,10 @@
     "EvalTaskSubmit": "Add Task",
     "AddCourseEvalTask": "Add task",
     "AddCourseEvalTaskDesc": "Add information to create a new task",
-    "NoEvalTasks": "No tasks found"
+    "NoEvalTasks": "No tasks found",
+    "TaskOverview": "Task overview",
+    "TaskOverviewDesc": "Task relevant information",
+  "UpdateTaskInfo": "Update task information",
+  "completeTask": "Complete the task",
+  "completeTaskDesc": "Add the necessary information to complete the task"
 }

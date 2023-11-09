@@ -115,4 +115,40 @@ export class CourseEvaluationService {
         })
       )
   }
+
+  public updateCourseEvaluationTask(courseEvaluationTask : CourseEvaluationTaskClient): Observable<CourseEvaluationTaskClient>{
+    this.spinnerService.show();
+    return this.http.put<CourseEvaluationTaskClient>(
+      `${this.apiUrlService.checkEnvironment()}/CourseEvaluation/task/${courseEvaluationTask.id}`,
+      courseEvaluationTask)
+      .pipe(
+        finalize(() => {
+          this.spinnerService.hide();
+        }),
+        map((courseEvaluationTask : CourseEvaluationTaskServer) => {
+          return this.courseEvaluationTaskAdapter.adaptServerToClient(courseEvaluationTask);
+        }),
+        catchError((error: any) => {
+          throw this.applicationErrorService.parseHttpError(error)
+        })
+      )
+  }
+
+  public completeCourseEvaluationTask(courseEvaluationTask : CourseEvaluationTaskClient): Observable<CourseEvaluationTaskClient>{
+    this.spinnerService.show();
+    return this.http.put<CourseEvaluationTaskClient>(
+      `${this.apiUrlService.checkEnvironment()}/CourseEvaluation/task/complete`,
+      courseEvaluationTask)
+      .pipe(
+        finalize(() => {
+          this.spinnerService.hide();
+        }),
+        map((courseEvaluationTask : CourseEvaluationTaskServer) => {
+          return this.courseEvaluationTaskAdapter.adaptServerToClient(courseEvaluationTask);
+        }),
+        catchError((error: any) => {
+          throw this.applicationErrorService.parseHttpError(error)
+        })
+      )
+  }
 }
