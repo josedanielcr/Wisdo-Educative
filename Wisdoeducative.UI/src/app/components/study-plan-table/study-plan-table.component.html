@@ -5,7 +5,7 @@
                 <th [ngClass]="{
                     'ps-3' : true
                 }">
-                  <img [src]="isCourseTable ? '../../../assets/icons/heart-filled.png' 
+                  <img [src]="isCourseTable ? '../../../assets/icons/heart-filled.png'
                     : '../../../assets/icons/next.png'" width="20" height="20">
                 </th>
                 <th class="fw-bold th-name" [ngClass]="{
@@ -52,7 +52,7 @@
                 </td>
                 <td *ngIf="isDesktop">
                     <span class="me-2">
-                        <img [src]="getCurrentStatusIcon(course.courseStatus)">
+                        <img [src]="getCurrentStatusIcon(course.courseStatus)" width="20" height="20">
                     </span>
                     <span>{{t('studyplan.'+course.courseStatus)}}</span>
                 </td>
@@ -77,7 +77,7 @@
                 </td>
                 <td *ngIf="isDesktop">
                     <span class="me-2">
-                        <img [src]="getCurrentStatusIcon(studyPlanTerm.studyTermStatus)">
+                        <img [src]="getCurrentStatusIcon(studyPlanTerm.studyTermStatus)" width="20" height="20">
                     </span>
                     <span>
                         {{t('studyplan.'+studyPlanTerm.studyTermStatus)}}

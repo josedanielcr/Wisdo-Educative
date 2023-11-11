@@ -18,7 +18,7 @@ namespace Wisdoeducative.Application.DTOs
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int Weight { get; set; }
-        public int? TotalScore { get; set; }
+        public int TotalScore { get; set; }
         public string? Status { get; set; }
         public string? EvaluationStatus { get; set; }
     }

@@ -1,5 +1,5 @@
 {
-    "Prom" : "Percentage score",
+    "Prom" : "Total score",
     "Cal": "Grades",
     "Link" : "Links",
     "EvalCalc": "Evaluation Calculator",
@@ -32,5 +32,9 @@
     "TaskOverviewDesc": "Task relevant information",
   "UpdateTaskInfo": "Update task information",
   "completeTask": "Complete the task",
-  "completeTaskDesc": "Add the necessary information to complete the task"
+  "completeTaskDesc": "Add the necessary information to complete the task",
+  "GradeFail": "With the obtained average, you will not be able to pass the course.",
+  "GradeMeh": "You to passed the course, but you can do better.",
+  "GradeGood": "Congratulations! You have already passed the course.",
+  "Complete": "Complete course"
 }

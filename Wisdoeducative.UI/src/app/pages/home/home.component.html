@@ -73,10 +73,10 @@
                   <span class="progress-text">{{userStatistics.currentProgress}}%</span>
                 </div>
               </div>
-              <div class="statistic-card flex-wrap flex-fill wd-bg-white d-flex" [ngClass]="{
-                'justify-content-center align-items-center' : isPhone
-              }">
-                <div class="ms-auto mt-5 pe-5" *ngIf="!isPhone">
+              <div class="statistic-card flex-wrap wd-bg-white d-flex" [ngClass]="{
+                'justify-content-center align-items-center' : true
+              }" [class.w-100]="isPhone">
+                <div>
                   {{t('home.CoursesByStatus')}}
                   <div class="d-flex flex-column gap-3">
 
@@ -106,8 +106,6 @@
                                     'background-color' : '#C2C6CF33'
                                     }">{{t('studyplan.NotStarted')}}</span>
                     </div>
-
-
                   </div>
                 </div>
               </div>

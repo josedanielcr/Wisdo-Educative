@@ -19,5 +19,6 @@ namespace Wisdoeducative.Application.Common.Interfaces.Services
 
         Task<CourseEvaluationTaskDto> UpdateCourseEvaluationTask(int courseEvaluationTaskId, CourseEvaluationTaskDto courseEvaluationTaskDto);
         Task<CourseEvaluationTaskDto> CompleteCourseEvaluationTask(CourseEvaluationTaskDto courseEvaluationTaskDto);
+        Task CompleteCourse(int courseId); 
     }
 }

@@ -93,4 +93,20 @@ export class CourseService {
         })
       )
   }
+
+  public setGrade(courseId : number, grade : any): Observable<CourseClient>{
+    this.spinnerService.show();
+    return this.http.put(`${this.apiUrlService.checkEnvironment()}/Course/set-grade/${courseId}`, grade)
+      .pipe(
+        finalize(() => {
+          this.spinnerService.hide();
+        }),
+        map((course : CourseServer) => {
+          return this.courseAdapter.adaptServerToClient(course);
+        }),
+        catchError((error: any) => {
+          throw this.applicationErrorService.parseHttpError(error)
+        })
+      )
+  }
 }

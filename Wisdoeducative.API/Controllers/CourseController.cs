@@ -55,5 +55,11 @@ namespace Wisdoeducative.API.Controllers
         {
             return Ok(await courseService.AddFavoriteCourse(courseId));
         }
+
+        [HttpPut("set-grade/{courseId}")]
+        public async Task<IActionResult> SetGrade(int courseId, [FromBody] CourseGrade grade)
+        {
+            return Ok(await courseService.SetGrade(courseId, grade));
+        }
     }
 }
