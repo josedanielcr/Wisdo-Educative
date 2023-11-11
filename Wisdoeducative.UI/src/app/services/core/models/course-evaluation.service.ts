@@ -151,4 +151,19 @@ export class CourseEvaluationService {
         })
       )
   }
+
+  public completeCourse(courseId : number) {
+    this.spinnerService.show();
+    return this.http.put<CourseEvaluationTaskClient>(
+      `${this.apiUrlService.checkEnvironment()}/CourseEvaluation/course/complete/${courseId}`,
+      null)
+      .pipe(
+        finalize(() => {
+          this.spinnerService.hide();
+        }),
+        catchError((error: any) => {
+          throw this.applicationErrorService.parseHttpError(error)
+        })
+      )
+  }
 }

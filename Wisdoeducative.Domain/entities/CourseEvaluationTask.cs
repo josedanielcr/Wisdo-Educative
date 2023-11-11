@@ -17,7 +17,7 @@ namespace Wisdoeducative.Domain.Entities
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int Weight { get; set; }
-        public int? TotalScore { get; set; }
+        public int TotalScore { get; set; }
         public EntityStatus Status { get; set; }
         public CourseEvaluationStatus EvaluationStatus { get; set; }
     }

@@ -11,6 +11,7 @@ using Wisdoeducative.Application.Common.Interfaces.Helpers;
 using Wisdoeducative.Application.Common.Interfaces.Services;
 using Wisdoeducative.Application.DTOs;
 using Wisdoeducative.Application.Resources;
+using Wisdoeducative.Domain.Common;
 using Wisdoeducative.Domain.Entities;
 
 namespace Wisdoeducative.Application.Services
@@ -172,6 +173,94 @@ namespace Wisdoeducative.Application.Services
             taskEntity.TotalScore = taskEntity.TotalScore * taskEntity.Weight / 100;
             await dBContext.SaveChangesAsync();
             return mapper.Map<CourseEvaluationTaskDto>(taskEntity);
+        }
+
+        public async Task CompleteCourse(int courseId)
+        {
+            var course = await dBContext.Courses
+                .Where(c => c.Id == courseId)
+                .Where(c => c.status == Domain.Enums.EntityStatus.Active)
+                .Include(c => c.StudyPlanTerm)
+                .FirstOrDefaultAsync()
+                ?? throw new NotFoundException(ErrorMessages.EntityNotFound, "EntityNotFound");
+
+            var finalScore = 0;
+            var evaluations = await GetAllCourseEvaluations(courseId);
+
+            foreach (var evaluation in evaluations)
+            {
+                var tasks = await GetAllCourseEvaluationTasks(evaluation.Id);
+                foreach (var task in tasks)
+                {
+                    finalScore += task.TotalScore;
+                }
+            }
+
+            course.CurrentScore = finalScore.ToString();
+            course.CourseStatus = Domain.Enums.CourseStatus.Finished;
+            dBContext.Courses.Attach(course);
+            dBContext.Entry(course).State = EntityState.Modified;
+
+            await CheckTermProgress(course.StudyPlanTerm);
+
+            await dBContext.SaveChangesAsync();
+        }
+
+        private async Task CheckTermProgress(StudyPlanTerm studyPlanTerm)
+        {
+            var courses = await dBContext.Courses
+                .Where(c => c.StudyPlanTermId == studyPlanTerm.Id)
+                .Where(c => c.status == Domain.Enums.EntityStatus.Active)
+                .ToListAsync()
+                ?? throw new NotFoundException(ErrorMessages.EntityNotFound, "EntityNotFound");
+
+            var finishedCourses = 
+                courses.Where(c => c.CourseStatus == Domain.Enums.CourseStatus.Finished).ToList();
+
+            if (finishedCourses.Count+1 == courses.Count || finishedCourses.Count == courses.Count)
+            {
+                studyPlanTerm.StudyTermStatus = Domain.Enums.StudyTermStatus.Completed;
+                dBContext.StudyPlanTerms.Attach(studyPlanTerm);
+                dBContext.Entry(studyPlanTerm).State = EntityState.Modified;
+                await SetNewCurrentStudyPlanTerm((int)studyPlanTerm.StudyPlanId, (int)studyPlanTerm.PeriodNumber);
+            }
+        }
+
+        private async Task SetNewCurrentStudyPlanTerm(int studyPlanId, int periodNumber)
+        {
+            var studyPlanTerm = await dBContext.StudyPlanTerms
+                .Where(spt => spt.StudyPlanId == studyPlanId)
+                .Where(spt => spt.Status == Domain.Enums.EntityStatus.Active)
+                .Where(spt => spt.PeriodNumber == periodNumber+1)
+                .FirstOrDefaultAsync()
+                ?? throw new NotFoundException(ErrorMessages.EntityNotFound, "EntityNotFound");
+
+            if(studyPlanTerm != null)
+            {
+
+                studyPlanTerm.StudyTermStatus = Domain.Enums.StudyTermStatus.InProgress;
+                dBContext.StudyPlanTerms.Attach(studyPlanTerm);
+                dBContext.Entry(studyPlanTerm).State = EntityState.Modified;
+                await SetStudyPlanTermCoursesToInProgress(studyPlanTerm.Id);
+            }
+        }
+
+        private async Task SetStudyPlanTermCoursesToInProgress(int id)
+        {
+            var courses = await dBContext.Courses
+                .Where(c => c.StudyPlanTermId == id)
+                .Where(c => c.status == Domain.Enums.EntityStatus.Active)
+                .ToListAsync()
+                ?? throw new NotFoundException(ErrorMessages.EntityNotFound, "EntityNotFound");
+            if(courses != null)
+            {
+                   foreach (var course in courses)
+                {
+                    course.CourseStatus = Domain.Enums.CourseStatus.InProgress;
+                    dBContext.Courses.Attach(course);
+                    dBContext.Entry(course).State = EntityState.Modified;
+                }
+            }
         }
     }
 }

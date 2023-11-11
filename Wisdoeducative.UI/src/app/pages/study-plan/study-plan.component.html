@@ -5,7 +5,7 @@
     </app-title>
 </div>
 
-<div class="w-100" *ngIf="studyPlan && studyPlan 
+<div class="w-100" *ngIf="studyPlan && studyPlan
     && studyPlanTerms && defaultStudyPlanTerm && defaultStudyPlanTemCourses">
 
     <!-- filters -->
@@ -23,9 +23,12 @@
     }">
         <h3 class="wd-text-h4 wd-text-white m-0 ps-3" *transloco="let t; scope : 'studyplan'">
             {{isSearchActive ? t('studyplan.SearchResults') : defaultStudyPlanTerm.name}}
+          <span class="ps-2">
+            <i class="fa-solid fa-chevron-right cursor-pointer" (click)="showTermReview()"></i>
+          </span>
         </h3>
         <div class="ms-auto pe-2 user-select-none" *ngIf="isSearchActive">
-            <div class="new-study-plan-term-container wd-bg-primary d-flex 
+            <div class="new-study-plan-term-container wd-bg-primary d-flex
                 justify-content-center align-items-center gap-3 cursor-pointer"
                 (click)="cleanSearchResults()">
                 <div>
@@ -59,7 +62,7 @@
         }" *transloco="let t; scope : 'studyplan'">
             <h3 class="wd-text-h4 wd-text-white m-0 ps-3">{{t('studyplan.Other')}} {{t('studyplan.'+userDegree.schedule)}}s</h3>
             <div class="ms-auto pe-2 user-select-none">
-                <div class="new-study-plan-term-container wd-bg-primary d-flex 
+                <div class="new-study-plan-term-container wd-bg-primary d-flex
                     justify-content-center align-items-center gap-3 cursor-pointer"
                     (click)="toggleNewStudyPlanTerm()">
                     <div *ngIf="isDesktop">
@@ -95,7 +98,7 @@
                          (dialogWasClosed)="hideNewStudyPlanTermWindow()">
 </app-add-study-plan-term>
 
-<app-dialog title="" 
+<app-dialog title=""
             [type]="DialogType.StudyPlanTermOverview"
             [selectedStudyPlanTerm]="selectedStudyPlanTerm"
             *ngIf="isSelectedStudyPlanTermOpen">
@@ -112,7 +115,7 @@
                     <td>{{course.name}}</td>
                     <td>
                         <span class="me-2">
-                            <img [src]="getCurrentStatusIcon(course.courseStatus)">
+                            <img [src]="getCurrentStatusIcon(course.courseStatus)" height="20" width="20">
                         </span>
                         {{t('studyplan.'+course.courseStatus)}}
                     </td>

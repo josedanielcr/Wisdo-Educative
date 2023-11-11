@@ -32,6 +32,7 @@
     "NotStarted": "Not started",
     "InProgress": "In progress",
     "Finished": "Finished",
+    "Completed": "Completed",
     "Failed": "Failed",
     "AddBlockDescription": "Add the information of the block so you can create it.",
     "AddAnotherCourse": "Add another course"

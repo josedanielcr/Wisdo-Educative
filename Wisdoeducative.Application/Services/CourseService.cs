@@ -219,5 +219,21 @@ namespace Wisdoeducative.Application.Services
                 .ToListAsync()
                 ?? throw new NotFoundException(ErrorMessages.EntityNotFound, "EntityNotFound");
         }
+
+        public async Task<CourseDto> SetGrade(int courseId, CourseGrade grade)
+        {
+            var result = await dBContext.Courses
+                .Where(c => c.Id == courseId)
+                .Where(c => c.status == EntityStatus.Active)
+                .Include(c => c.StudyPlanTerm)
+                .FirstOrDefaultAsync()
+                ?? throw new BadRequestException($"{ErrorMessages.EntityNotFound}", "EntityNotFound");
+
+            result.CurrentScore = grade.Grade.ToString();
+            dBContext.Entry(result).State = EntityState.Modified;
+            dBContext.Entry(result).State = EntityState.Modified;
+            await dBContext.SaveChangesAsync();
+            return mapper.Map<CourseDto>(result);
+        }
     }
 }

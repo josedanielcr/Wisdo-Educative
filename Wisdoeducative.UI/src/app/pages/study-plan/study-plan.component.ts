@@ -96,7 +96,7 @@ export class StudyPlanComponent implements OnInit, OnDestroy {
 
   private setInProgressStudyPlanTerm(studyPlanTerms: StudyPlanTermClient[]): StudyPlanTermClient {
     const currentStudyPlanTerm : StudyPlanTermClient =
-       studyPlanTerms.filter((studyPlanTerm: StudyPlanTermClient) => 
+       studyPlanTerms.filter((studyPlanTerm: StudyPlanTermClient) =>
         studyPlanTerm.studyTermStatus == "InProgress")[0];
     this.studyPlanTerms = this.removeInProgressStudyPlanTerm(studyPlanTerms);
     return currentStudyPlanTerm;
@@ -114,7 +114,7 @@ export class StudyPlanComponent implements OnInit, OnDestroy {
   private setDefaultStudyPlanTermCourses(id: number): void  {
     this.subscriptions.push(this.courseService.getStudyPlanTermCourses(id).subscribe({
       next : (courses : CourseClient[]) => {
-        this.defaultStudyPlanTemCourses = courses; 
+        this.defaultStudyPlanTemCourses = courses;
         this.activeStudyPlanTermCourses = courses;
         this.sortCoursesByFavorite();
       },
@@ -205,5 +205,9 @@ export class StudyPlanComponent implements OnInit, OnDestroy {
       default:
         return '';
     }
+  }
+
+  public showTermReview() {
+    this.setStudyPlanTermCourses(this.defaultStudyPlanTerm);
   }
 }

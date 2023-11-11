@@ -32,5 +32,9 @@
   "TaskOverviewDesc": "Información relevante de la tarea",
   "UpdateTaskInfo": "Actualizar información de la tarea",
   "completeTask": "Marcar como completada",
-  "completeTaskDesc": "Ingresa la información necesaria para marcarla como completada"
+  "completeTaskDesc": "Ingresa la información necesaria para marcarla como completada",
+  "GradeFail": "Con el promedio obtenido no podrá aprobar el curso.",
+  "GradeMeh": "Aprobaste el curso pero no de la mejor manera.",
+  "GradeGood": "¡Felicidades! Ya aprobó el curso.",
+  "Complete": "Completar curso"
 }

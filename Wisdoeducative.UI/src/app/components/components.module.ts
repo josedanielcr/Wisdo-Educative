@@ -37,6 +37,7 @@ import { RemindersComponent } from './reminders/reminders.component';
 import { AddReminderComponent } from './add-reminder/add-reminder.component';
 import { EvaluationTaskOverviewComponent } from './evaluation-task-overview/evaluation-task-overview.component';
 import { CompleteEvaluationTaskComponent } from './complete-evaluation-task/complete-evaluation-task.component';
+import { GradesComponent } from './grades/grades.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +75,8 @@ import { CompleteEvaluationTaskComponent } from './complete-evaluation-task/comp
     RemindersComponent,
     AddReminderComponent,
     EvaluationTaskOverviewComponent,
-    CompleteEvaluationTaskComponent
+    CompleteEvaluationTaskComponent,
+    GradesComponent
   ],
   exports: [
     ButtonComponent,
@@ -107,7 +109,8 @@ import { CompleteEvaluationTaskComponent } from './complete-evaluation-task/comp
     RemindersComponent,
     AddReminderComponent,
     EvaluationTaskOverviewComponent,
-    CompleteEvaluationTaskComponent
+    CompleteEvaluationTaskComponent,
+    GradesComponent
   ],
   imports: [
     CommonModule,
