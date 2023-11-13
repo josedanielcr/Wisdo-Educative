@@ -15,6 +15,7 @@ Wisdo-Educative is a small app designed to help college students manage their st
 - Pomodoro Timer for Focus Sessions: Use the built-in Pomodoro timer to enhance study productivity.
 - Resource Attachments for Tasks: Attach links and resources (Drive, Notion, Evernote, etc.) to tasks for easy access.
 - Degree Progress Metrics: Track your overall progress in your degree with helpful metrics.
+- Bilingual Interface (English & Spanish): User-friendly experience in both English and Spanish, catering to a diverse user base.
 
 
 ## Tech Stack
