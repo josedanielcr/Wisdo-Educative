@@ -14,14 +14,15 @@ export class LandingPageComponent {
   public loginDisplay = false;
 
   // Inject the MSAL guard configuration and the MSAL services
-  constructor(@Inject(MSAL_GUARD_CONFIG) private msalGuardConfig: MsalGuardConfiguration, 
-              private broadcastService: MsalBroadcastService, 
+  constructor(@Inject(MSAL_GUARD_CONFIG) private msalGuardConfig: MsalGuardConfiguration,
+              private broadcastService: MsalBroadcastService,
               private msalService: MsalService,
-              private router : Router) { 
+              private router : Router) {
   }
 
   // Subscribe to the MSAL broadcast service to check if there is any interaction in progress
   ngOnInit() {
+    this.router.navigate(['/workspace/home']);
     this.broadcastService.inProgress$
     .pipe(
       filter((status: InteractionStatus) => status === InteractionStatus.None),
@@ -49,7 +50,7 @@ export class LandingPageComponent {
    * Initiates the logout flow using the MSAL service.
    * The postLogoutRedirectUri parameter is set to the app's /auth route.
    */
-  logout() { 
+  logout() {
     let redirectUri : string;
     if(window.location.href.indexOf('localhost') > -1) {
         redirectUri = 'http://localhost:4200/landing';

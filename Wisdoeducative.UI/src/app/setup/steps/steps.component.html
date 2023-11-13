@@ -10,24 +10,24 @@
         'small-wizard-container': isPhone
         }">
         <!-- wizard timeline -->
-        <div class="w-100">     
+        <div class="w-100">
             <div class="timeline">
                 <div class="timeline-line"></div>
-                <div *ngFor="let step of steps" 
-                    class="timeline-item" 
+                <div *ngFor="let step of steps"
+                    class="timeline-item"
                     [class.active]="step === currentStep">
                     <div class="step-number">{{ step }}</div>
                     <div class="timeline-marker"
                         [ngClass]="{
                             'timeline-item-done': step < currentStep,
                             'timeline-item-active': step === currentStep,
-                            'timeline-item-upcoming': step > currentStep, 
+                            'timeline-item-upcoming': step > currentStep,
                         }">
                     </div>
                 </div>
             </div>
         </div>
-    
+
         <div class="d-flex justify-content-center align-items-center flex-column w-100">
           <!-- step 1 user data -->
           <div class="w-100 d-flex justify-content-center align-items-center flex-column mb-4"
@@ -36,23 +36,23 @@
             <span class="wizard-child-description text-center">
               {{t('setup.personalDescription')}}
             </span>
-            
+
             <!-- content -->
             <div class="wizard-component-container w-100">
                 <div class="w-100">
                     <form autocomplete="off" [formGroup]="userSetupForm" class="w-100">
                         <div class="row d-flex flex-wrap">
                             <div class="col-sm-6 mb-3">
-                                <app-input-text placeholder="" 
-                                              [label]="t('setup.firstNameLabel')" 
+                                <app-input-text placeholder=""
+                                              [label]="t('setup.firstNameLabel')"
                                               placeholder=""
                                               [error]="t('setup.firstNameError')"
                                               formControlName="firstName">
                               </app-input-text>
                             </div>
                             <div class="col-sm-6 mb-3">
-                              <app-input-text placeholder="" 
-                                              [label]="t('setup.lastNameLabel')" 
+                              <app-input-text placeholder=""
+                                              [label]="t('setup.lastNameLabel')"
                                               placeholder=""
                                               [error]="t('setup.lastNameError')"
                                               formControlName="lastName">
@@ -71,6 +71,7 @@
                                 <app-input-select [options]="userCategoryOptions"
                                                   [label]="t('setup.professionQuestion')"
                                                   [error]="t('setup.categoryError')"
+                                                  [isTranslated]="true"
                                                   formControlName="category">
                                 </app-input-select>
                             </div>
@@ -96,25 +97,25 @@
             <span class="wizard-child-description text-center">
               {{t('setup.interestsDescription')}}
             </span>
-            
+
             <!-- content -->
             <div class="wizard-component-container d-flex justify-content-center align-items-center flex-column w-100">
-              <app-chips-container #chipsContainer 
-                                  [chips]="chips" 
+              <app-chips-container #chipsContainer
+                                  [chips]="chips"
                                   [limit]="4"
                                   [maxChipsPerRow]="6">
               </app-chips-container>
-          
-              <div class="w-100 d-flex button-spacing align-items-center mt-5"> 
+
+              <div class="w-100 d-flex button-spacing align-items-center mt-5">
                 <div *ngIf="this.isDesktop || this.isTablet" class="interest-count-container"
                       [ngClass]="{'wd-bg-input-error' : this.notEnoughInterestsError}">
                   {{t('setup.selectedInterests', {number: selectedChips.length, total: 4})}}
                 </div>
                 <div *ngIf="this.isPhone" class="interest-count-container"
-                    [ngClass]="{'wd-bg-input-error' : this.notEnoughInterestsError}"> 
+                    [ngClass]="{'wd-bg-input-error' : this.notEnoughInterestsError}">
                   {{(this.selectedChips.length > 0 ? this.selectedChips.length : 0) + ' - ' + 4}}
                 </div>
-        
+
                 <div class="btn-container ms-auto">
                     <app-button [text]="t('setup.continueBtn')"
                                 [type]="ButtonType.PRIMARY"
@@ -134,24 +135,24 @@
           <span class="wizard-child-description text-center">
             {{t('setup.studiesDescription')}}
           </span>
-      
+
           <div class="w-100 wizard-component-container">
             <form autocomplete="off" [formGroup]="setupDegreForm"
             *ngIf="academicSheculeOptions && degreeTypeOptions && studyFieldOptions">
-        
+
                 <!-- main form container -->
                 <div class="row d-flex flex-wrap">
                   <div class="col-sm-6 mb-3">
-                    <app-input-text placeholder="" 
-                                    [label]="t('setup.careerCourseLabel')" 
+                    <app-input-text placeholder=""
+                                    [label]="t('setup.careerCourseLabel')"
                                     placeholder=""
                                     [error]="t('setup.careerNameError')"
                                     formControlName="degreeName">
                     </app-input-text>
                   </div>
                   <div class="col-sm-6 mb-3">
-                    <app-institution-select placeholder="" 
-                                    [label]="t('setup.educationalCenterLabel')" 
+                    <app-institution-select placeholder=""
+                                    [label]="t('setup.educationalCenterLabel')"
                                     [institutions]="institutions"
                                     formControlName="institutionName"
                                     [error]="t('setup.institutionError')">
