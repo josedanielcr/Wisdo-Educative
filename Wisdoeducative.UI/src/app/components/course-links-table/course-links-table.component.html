@@ -1,0 +1,40 @@
+<div class="w-100" *transloco="let t; scope : 'links'">
+    <table class="w-100" *ngIf="courseLinks && map">
+        <thead>
+            <tr>
+                <td class="fw-bold text-center">{{t('links.Platform')}}</td>
+                <td class="fw-bold text-start">{{t('links.Link')}}</td>
+                <td class="fw-bold text-center">{{t('links.Actions')}}</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let link of courseLinks">
+                <td (click)="openCourseLink(link)">
+                    <div class="d-flex justify-content-center cursor-pointer">
+                        <div class="platform-container d-flex justify-content-center align-items-center"
+                            [ngStyle]="{
+                                'background-color': map.get(link.platform).color
+                            }">
+                            <img [src]="map.get(link.platform).icon" class="img-fluid">
+                        </div>
+                    </div>
+                </td>
+                <td class="text-start cursor-pointer" (click)="openCourseLink(link)">{{link.name}}</td>
+                <td class="user-select-none">
+                    <div class="d-flex gap-4 w-100 justify-content-center">
+                        <img src="../../../assets/icons/pen 1.png" class="cursor-pointer"
+                        (click)="openCourseLinkDialog(link)">
+                        <img src="../../../assets/icons/trash 5.png" class="cursor-pointer"
+                        (click)="deleteCourseLink(link)">
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<app-course-link-dialog [links]="courseLinks"
+                        [course]="course"
+                        [tasks]="tasks"
+                        (linkUpdateOutput)="updateCourseLink($event)">
+</app-course-link-dialog>

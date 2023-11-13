@@ -1,0 +1,90 @@
+.options-bg-color {
+    background-color: #68838E;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.sidebar-logo {
+    width: 7.4375rem;
+    height: 3.5625rem;
+    margin-top: 0.80rem;
+}
+
+.phone-sidebar {
+    position: absolute;
+    z-index: 2;
+}
+
+.sidebar-contraction-container {
+    margin-bottom: 2.5rem;
+}
+
+.options-container {
+    margin-top: 2.25rem;
+    padding-left: 1.45rem;
+    padding-right: 1rem;
+}
+
+.options-container-single-option {
+    margin-bottom: 1.50rem;
+}
+
+.single-option {
+    padding: 0.60rem;
+}
+
+.option-flex-child {
+    flex: 0 0 90%;
+}
+
+.icon-flex-child {
+    flex: 0 0 10%;
+}
+
+.single-option-active {
+    border-radius: 0.4rem;
+    background-color: #68838E;
+}
+
+.menu-option-icon {
+    margin-right: 1.70rem;
+}
+
+i {
+    font-size: 1.5rem;
+}
+
+.active-dot-container {
+    border-radius: 50%;
+    height: 0.5rem;
+    width: 0.5rem;
+}
+
+.final-line {
+    width: 100%;
+    height: 0.1rem;
+}
+
+.contracted-options-container {
+    margin-top: 6.60rem;
+}
+
+.contracted-options-container-single {
+    margin-bottom: 1.90rem;
+}
+
+.contract-icon-container{
+    padding: 0.5rem;
+}
+
+.close-sidebar-container {
+    position: absolute;
+    right: 1.2rem;
+    top: 1.2rem;
+}
+
+.sidebar-logo-phone {
+    margin-top: 3.44rem;
+}

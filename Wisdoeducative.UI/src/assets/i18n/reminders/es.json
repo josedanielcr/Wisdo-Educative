@@ -1,0 +1,10 @@
+{
+  "AddReminder": "Añadir recordatorio",
+  "AddReminderDescription": "Ingresa los datos necesariols para agregar un recordatorio.",
+  "name": "Nombre",
+  "nameError": "El nombre es requerido.",
+  "task": "Fecha del recordatorio",
+  "taskError": "La fecha del recordatorio es requerida.",
+  "course": "Nombre del curso",
+  "courseError": "El nombre del curso es requerido"
+}

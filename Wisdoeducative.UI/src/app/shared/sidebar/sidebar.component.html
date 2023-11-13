@@ -1,0 +1,87 @@
+<div class="w-100 h-100" 
+     *ngIf="!isHidden"
+     [ngClass]="{
+        'phone-sidebar': isPhone
+     }">
+
+    <div class="close-sidebar-container" *ngIf="isPhone"
+        (click)="hideSidebar()">
+        <img src="../../../assets/icons/reject 1.svg">
+    </div>
+
+    <div class="w-100 h-100 sidebar-container wd-bg-primary d-flex flex-column align-items-center"
+        *ngIf="!isContracted">
+
+        <!-- logo -->
+        <img src="https://wisdostorageaccount.blob.core.windows.net/wisdoblob/wisdo-white-logo.png" 
+            class="sidebar-logo"
+            [ngClass]="{
+                'sidebar-logo-phone': isPhone
+            }">
+    
+        <!-- sidebar options -->
+        <div class="options-container w-100" *transloco="let t; scope : 'shared'">
+    
+            <!-- single option -->
+            <div class="d-flex align-items-center options-container-single-option cursor-pointer" 
+                *ngFor="let menuOption of menuOptions"
+                [routerLink]="menuOption.path"
+                (click)="closeSidebar()">
+    
+                <!-- option -->
+                <div class="d-flex align-items-center single-option option-flex-child"
+                    [routerLinkActive]="['single-option-active']">
+                    <!-- icon -->
+                    <i [class]="menuOption.icon + ' wd-text-white menu-option-icon'"></i>
+                    <!-- name -->
+                    <span class="wd-text-white fw-bold user-select-none">{{t('shared.'+menuOption.name)}}</span>
+                </div>
+    
+                <!-- active dot -->
+                <div class="icon-flex-child">
+                    <div class="active-dot-container ms-auto" 
+                    [routerLinkActive]="['options-bg-color']"></div>
+                </div>
+            </div>
+            <div class="final-line options-bg-color"></div>
+        </div>
+        
+        <!-- contract -->
+        <div class="mt-auto w-100 d-flex justify-content-center gap-4 sidebar-contraction-container cursor-pointer"
+             (click)="contractSidebar()"
+             *ngIf="!isPhone">
+            <img src="../../../assets/icons/expand-arrows 1.svg">
+            <span class="wd-text-white fw-bold user-select-none" *transloco="let t; scope : 'shared'">
+                {{t('shared.Collapse')}}
+            </span>
+        </div>
+    </div>
+    <div *ngIf="isContracted"
+         class="w-100 h-100 wd-bg-primary d-flex flex-column align-items-center">
+
+        <!-- menu options -->
+        <div class="contracted-options-container w-100">
+            <div class="w-100 d-flex align-items-center justify-content-center contracted-options-container-single cursor-pointer"
+                 *ngFor="let menuOption of menuOptions" 
+                 [routerLink]="menuOption.path">
+            
+                 <!-- icon -->
+                 <div class="contract-icon-container"
+                     [routerLinkActive]="['single-option-active']">
+                     <i [class]="menuOption.icon + ' wd-text-white'"></i>
+                 </div>
+                 <!-- active dot -->
+                 <div class="icon-flex-child ms-2">
+                    <div class="active-dot-container" 
+                    [routerLinkActive]="['options-bg-color']"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- contract icon -->
+        <div class="mt-auto w-100 d-flex justify-content-center sidebar-contraction-container"
+        (click)="contractSidebar()">
+            <img src="../../../assets/icons/expand-arrows 1.svg">
+        </div>
+    </div>
+</div>

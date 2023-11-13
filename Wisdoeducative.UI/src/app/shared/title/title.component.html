@@ -1,0 +1,20 @@
+<div class="w-100">
+    <div class="d-flex align-items-center gap-3">
+        <!-- icon -->
+        <div class="icon-container d-flex justify-content-center align-items-center"
+             [style.backgroundColor]="iconBackgroundColor">
+            <img [src]="iconPath" width="20" height="20">
+        </div>
+
+        <!-- name title -->
+        <div>
+            <h1 class="m-0 wd-text-dark-grey"
+                [ngClass]="{
+                    'wd-text-h3' : isPhone,
+                    'wd-text-h1' : isDesktop || isTablet
+                }">
+                {{title}}
+            </h1>
+        </div>
+    </div>
+</div>

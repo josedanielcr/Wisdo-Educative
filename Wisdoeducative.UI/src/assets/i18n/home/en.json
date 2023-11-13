@@ -1,0 +1,16 @@
+{
+    "GoodMorning" : "Good morning",
+    "GoodAfternoon" : "Good afternoon",
+    "GoodEvening" : "Good evening",
+    "LetsStartTogether": "Let's Start Together!",
+    "OptimizeExperience": "Optimize your experience with Wisdo! Set up your space following these simple steps and take full advantage of all our tools. Start now!",
+    "SpaceInfo": "In this space, you'll find a dashboard with useful information about your study progress. But first, we need to set up your space.",
+    "ConfigureSpace": "Configure Space",
+    "CreateStudyPlan": "Create Study Plan",
+    "Progress": "Progress",
+    "Average": "Average",
+    "CoursesByStatus": "Courses by status",
+    "ApprovedCourses": "Approved",
+    "PendingCourses": "Pending",
+    "NotStarted": "Not started"
+}

@@ -1,0 +1,22 @@
+{
+    "CourseToFavorite" : "The course was successfully modified",
+    "DegreeDateFuture": "Oops! It looks like you've selected a date in the future. Please choose a date that is today or earlier.",
+    "DuplicatedEntity": "Oops! It looks like this item already exists in the system.",
+    "EntityNotFound": "Oops! We couldn't find the item you're looking for.",
+    "HistorySaveErrorMessage": "Oops! We ran into an issue while trying to save the item's history.",
+    "NoInterestsAvailable": "Oops! There are no interests available",
+    "NoStudyPlanProvided": "Oops! You must provide a study plan to retrive all it's terms",
+    "NotStudyPlanTermProvided": "Oops! You must provide a study plan term",
+    "NullProperties": "Oops! It looks like some details for this item are missing.",
+    "RestrictedAgeError": "Oops! You need to have more than 13 years old",
+    "StudyPlanAfterCreationDate": "Oops! Your study plan term needs to start after the start date of your degree",
+    "StudyPlanTermNotMatchWithSchedule": "Oops! The provided dates do not match with the schedule type of your degree",
+    "StudyTermOverlap": "Oops! The dates for this study plan overlap with another term. Could you please pick different dates?",
+    "UserAlreadyExistsErrorMessage": "Oops! It looks like there's already an account with this information.",
+    "CourseEvaluationCreation": "Evaluation created successfully!",
+    "InvalidWeight": "Oops! your total course weight cannot exceed 100.",
+    "InvalidEvaluationTaskWeight":"Oops! It looks like you're trying to assing more weight than the evaluation category has assigned.",
+    "CourseEvaluationTaskCreation": "Evaluation task created successfully!",
+    "InvalidEvaluationTaskDates": "Oops! it looks like your selected dates are not valid, please check if the start date greater than the end date.",
+    "InvalidPomodoroSession":"Oops! It looks like the pomodoro session has some invalid values."
+}

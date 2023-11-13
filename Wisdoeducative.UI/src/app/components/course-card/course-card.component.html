@@ -1,0 +1,25 @@
+<div class="w-100 wd-bg-white course-card d-flex flex-column user-select-none cursor-pointer"
+     *ngIf="course"
+     (click)="openCourseDetails()">
+
+    <!-- header -->
+    <div class="w-100 d-flex mb-2">
+
+        <!-- progress bar -->
+        <app-progress-bar [progress]="getCoursesProgress()"></app-progress-bar>
+
+        <!-- favorite -->
+        <div class="favorite-course-container d-flex 
+        justify-content-center align-items-center ms-auto cursor-pointer"
+            (click)="addToFavorite()">
+            <img [src]="course.isFavorite ? '../../../assets/icons/heart-filled.png' 
+                : '../../../assets/icons/heart-empty.png'">
+        </div>
+    </div>
+
+    <!-- name -->
+    <div class="card-course-name">
+        <span class="study-term-text">{{course.studyPlanTermDto.name}}</span>
+        <h4 class="wd-text-h4">{{course.name}}</h4>
+    </div>
+</div>

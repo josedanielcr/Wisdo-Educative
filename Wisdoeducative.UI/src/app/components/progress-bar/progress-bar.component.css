@@ -1,0 +1,9 @@
+.progress-bar-container {
+    background-color: #83838338;
+    height: 0.4375rem;
+    border-radius: 0.3125rem;
+}
+
+.bar {
+    border-radius: 0.3125rem;
+}

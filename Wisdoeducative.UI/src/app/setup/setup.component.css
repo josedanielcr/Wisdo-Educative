@@ -1,0 +1,44 @@
+.setup-container {
+    height: 100vh;
+    width: 100%;
+}
+
+.page-container {
+    height: 100%;
+    width: 100%;
+}
+
+.startup-window {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    max-width: 224px;
+    max-height: 107px;
+}
+
+.setup-header {
+    margin-top: 6.60rem;
+}
+
+.setup-subheader {
+    margin-top: 1.25rem;
+    text-align: center;
+}
+
+.setup-skip {
+    margin-top: 2.25rem
+}
+
+.btn-container {
+    width: 14.0625rem;
+}
+
+.translation-panel {
+    position: absolute;
+    top: 1rem;
+    left: 70%;
+}

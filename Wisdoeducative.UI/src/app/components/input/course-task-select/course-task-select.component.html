@@ -1,0 +1,47 @@
+<div class="input-label-container" *ngIf="label">
+    <label for="">{{label}}</label>
+</div>
+
+<div class="task-select-container d-flex position-relative"
+    [ngClass]="{
+        'wd-bg-input-error' : ngControl?.control?.touched && ngControl?.control?.invalid,
+        'wd-bg-bone': !isFilter,
+        'wd-bg-white': isFilter }">
+  <!-- input -->
+  <div class="input-container">
+    <input type="text"
+          class="w-100 h-100"
+          [value]="value"
+          [appPreventEdit]="isFilter"
+          (input)="updateValue($event)"
+          (focus)="openDropdown()"
+          (blur)="closeDropdown()">
+    </div>
+
+    <div class="line" [ngClass]="{
+        'wd-bg-white': !isFilter,
+        'wd-bg-bone': isFilter
+    }"></div>
+
+    <!-- icon -->
+    <div class="d-flex justify-content-center align-items-center icon-container" (click)="clearFilters()">
+        <img [src]="!isActive ? '../../../../assets/icons/Loupe.png' : '../../../../assets/icons/close-outline 1.png'">
+    </div>
+    <div class="w-100 dropdown-container" [hidden]="!dropdownOpen" [ngClass]="{
+        'wd-bg-bone': !isFilter,
+        'wd-bg-white': isFilter
+    }">
+        <div class="drowpdown-data">
+            <div *ngFor="let task of filteredTasks" class="drowpdown-data-item"
+                (mousedown)="setToInput(task.name)">
+                <span class="option-text">{{task.name}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="w-100 d-flex position-absolute end-0 top-100">
+        <span *ngIf="ngControl?.control?.touched 
+        && ngControl?.control?.invalid" class="ms-auto wd-text-danger wd-text-input-error-size">
+            {{error}}
+        </span>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+<div class="input-label-container" *ngIf="label">
+    <label for="">{{label}}</label>
+</div>
+  
+<div class="date-wrapper w-100" >
+    <input type="date"
+            #dateInput
+            [placeholder]="placeholder"
+            class="wd-input no-calendar w-100"
+            [disabled]="isDisabled"
+            [value]="value"
+            (input)="updateValue($event)"
+            (click)="openDatePicker()"
+            [ngClass]="{'wd-bg-input-error' : ngControl?.control?.touched 
+     && ngControl?.control?.invalid }"/>
+    <div class="icon">
+        <img src="../../../../assets/icons/CalendarIcon.svg" alt="date icon">
+    </div>
+</div>
+<div class="w-100 d-flex">
+    <span *ngIf="ngControl?.control?.touched 
+    && ngControl?.control?.invalid" class="ms-auto wd-text-danger wd-text-input-error-size">{{error}}</span>
+</div>

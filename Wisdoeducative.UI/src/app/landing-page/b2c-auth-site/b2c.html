@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wisdo Educative</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+       /* Document and Body Styling */
+        html {
+            height: 100%;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            height: 100%;
+            margin: 0px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-color: #0B5354;
+        }
+
+        a {
+            text-decoration: none;
+            color: black;
+        }
+
+        .main-logo {
+            margin-bottom: 40px;
+        }
+
+        #createAccount {
+            font-weight: 700;
+            margin-left: 5px;
+        }
+
+        ::placeholder {
+            color: black;
+        }
+
+        /* Window Container Styling */
+        .auth-window-container {
+            height: 610px;
+            width: 560px;
+            background-color: white;
+            border-radius: 10px;
+        }
+
+        /* Window Content Styling */
+        .auth-window-content {
+            padding: 60px 130px 40px 130px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .heading {
+            margin-bottom: 10px;
+        }
+
+        /* Logo Styling */
+        .heading h1 {
+            font-weight: 700;
+            size: 40px;
+            line-height: 48.41px;
+        }
+
+        /* Unified API Styling */
+        #api {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Form Styling */
+        .intro, .entry .entry-item label, .divider {
+            display: none;
+        }
+
+        #localAccountForm {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Input Styling */
+        #email, #password {
+            padding-left: 10px;
+            padding-right: 0px;
+            border: none;
+            width: 305px;
+            height: 39px;
+            background: rgba(217, 217, 217, 0.37);
+            border-radius: 10px;
+        }
+
+        #GoogleExchange {
+            display: inline-block;
+            background-color: #D9D9D98A;
+            color: #757575;
+            border: 1px solid #dadce0;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 400;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            background-image: url('https://companieslogo.com/img/orig/GOOG-0ed88f7c.png?t=1633218227');
+            background-repeat: no-repeat;
+            background-position: 10px center;
+            background-size: 16px 16px;
+            text-align: left;
+            padding-left: 36px;
+            width: 315px;
+            outline: none;
+            margin-bottom: 40px;
+        }
+
+        #GoogleExchange:hover {
+            background-color: #f1f3f4;
+        }
+
+        #password {
+            margin-top: 20px;
+        }
+
+        #email:focus, #password:focus {
+            outline: none;
+        }
+
+        .buttons button {
+            border: none;
+            width: 315px;
+            height: 39px;
+            background: #0B5354;
+            border-radius: 10px; 
+            margin-top: 20px;
+            cursor: pointer;
+            color: white;
+            font-weight: 700;
+            size: 16px;
+            line-height: 19.36px;
+        }
+
+        .create {
+            margin-top: 50px;
+        }
+
+        .create p {
+            font-weight: 300;
+            size: 16px;
+            line-height: 19.36px;
+        }
+
+        .entry .entry-item {
+            display: flex;
+            flex-direction: column-reverse;
+        }
+
+        .password-label {
+            margin-top: 8px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        #password {
+            order: 1;
+        }
+
+        #forgotPassword {
+            order: 2;
+            font-weight: 300;
+            size: 12;
+            line-height: 14.52px;
+        }
+
+        .buttons {
+            order: 3;
+        }
+
+        .cancel-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .auth-window-container {
+            position: relative;
+        }
+
+    </style>
+</head>
+<body>
+    <img src="https://wisdostorageaccount.blob.core.windows.net/wisdoblob/wisdo-white-logo.png"
+    height="116" width="241" class="main-logo">
+    <div class="auth-window-container">
+        <div class="cancel-button">X</div>
+        <div class="auth-window-content">
+            <div id="api" data-name="Unified"></div>
+        </div>
+    </div>
+</body>
+</html>

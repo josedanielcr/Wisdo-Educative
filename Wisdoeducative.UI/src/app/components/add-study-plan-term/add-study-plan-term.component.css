@@ -1,0 +1,38 @@
+
+/*#region add study plan term and course container*/
+.study-plan-term-container {
+    gap: 1.25rem;
+}
+
+.add-course-container {
+    display: flex;
+    flex-direction: row;
+    gap: 1.25rem;
+    max-height: 100%;
+    overflow: hidden; 
+}
+
+.add-course-container .course-name {
+    flex-grow: 6;
+    flex-basis: 0;
+}
+
+.add-course-container .course-credits, .course-button, .placeholder-button {
+    flex-grow: 1;
+    flex-basis: 0;
+}
+
+.create-courses-container {
+    position: absolute;
+    top: 90%;
+    left: 90%
+}
+
+.btn-create-course-desktop {
+    width: 12.375rem;
+}
+
+.btn-add-course-desktop {
+    width: 13.875rem;
+}
+/*#endregion add study plan term and course container*/

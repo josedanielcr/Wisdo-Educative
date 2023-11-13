@@ -1,0 +1,26 @@
+<div class="d-flex gap-3" *transloco="let t; scope : 'courses'">
+  <div class="grade-container d-flex align-items-center justify-content-center wd-bg-secondary">
+    <div *ngIf="course" class="d-flex flex-column align-items-center gap-3">
+      <span class="wd-text-white wd-text-h3">{{t('courses.Prom')}}</span>
+      <span class="wd-text-white wd-text-h2">{{totalScore}}%</span>
+    </div>
+  </div>
+  <div class="flex-fill motivation-container" [ngClass]="{
+    'wd-bg-danger': totalScore < 70,
+    'wd-bg-primary': totalScore >= 70 && totalScore < 90,
+    'wd-bg-success': totalScore >= 90
+    }">
+    <div class="w-100 h-100 d-flex justify-content-center align-items-center">
+      <div class="d-flex flex-column align-items-center gap-3">
+        <span class="wd-text-white wd-text-h3 text-center">{{t('courses.'+this.getScoreCode())}}</span>
+        <i class="wd-text-white {{this.getIcon()}}"></i>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="w-50 mt-3" *transloco="let t; scope : 'courses'">
+  <app-button [type]="ButtonType.PRIMARY"
+              [text]="t('courses.Complete')"
+              (click)="completeCourse()">
+  </app-button>
+</div>

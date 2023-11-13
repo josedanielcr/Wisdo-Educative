@@ -1,0 +1,11 @@
+.wd-input {
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    background-color: var(--bone-color);
+    padding-left: 20px;
+}
+
+input , select , ng-select{
+    height: 2.9375rem;
+}

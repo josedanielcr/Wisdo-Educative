@@ -1,0 +1,126 @@
+<div *ngIf="userDegree">
+    <app-title [title]="userDegree.degree.name"
+               [iconPath]="'../../../assets/icons/book-black.png'"
+               [iconBackgroundColor]="'rgba(124, 147, 158, 0.15)'">
+    </app-title>
+</div>
+
+<div class="w-100" *ngIf="studyPlan && studyPlan
+    && studyPlanTerms && defaultStudyPlanTerm && defaultStudyPlanTemCourses">
+
+    <!-- filters -->
+    <div>
+        <app-study-plan-filters [studyPlanId]="studyPlan.id"
+                                (coursesEmitter)="filterCourses($event)"
+                                (isCardViewEmitter)="switchView($event)"
+                                (isSearchActiveEmitter)="switchSearchBar($event)">
+        </app-study-plan-filters>
+    </div>
+
+    <!-- courses list header -->
+    <div class="header-container wd-bg-secondary w-100 d-flex align-items-center" [ngClass]="{
+        'mb-3' : isCardView
+    }">
+        <h3 class="wd-text-h4 wd-text-white m-0 ps-3" *transloco="let t; scope : 'studyplan'">
+            {{isSearchActive ? t('studyplan.SearchResults') : defaultStudyPlanTerm.name}}
+          <span class="ps-2">
+            <i class="fa-solid fa-chevron-right cursor-pointer" (click)="showTermReview()"></i>
+          </span>
+        </h3>
+        <div class="ms-auto pe-2 user-select-none" *ngIf="isSearchActive">
+            <div class="new-study-plan-term-container wd-bg-primary d-flex
+                justify-content-center align-items-center gap-3 cursor-pointer"
+                (click)="cleanSearchResults()">
+                <div>
+                    <img src="../../../assets/icons/right-arrow 7.png" width="15" height="15">
+                </div>
+                <div *ngIf="isDesktop">
+                    <span class="wd-text-white fw-bold"  *transloco="let t; scope : 'studyplan'">
+                        {{t('studyplan.ReturnToCurrentBlock')}}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- courses list -->
+    <div class="w-100">
+        <app-course-grid [courses]="activeStudyPlanTermCourses"
+                         *ngIf="isCardView"
+                         (courseChanges)="updateSingleActiveCourse($event)">
+        </app-course-grid>
+        <app-study-plan-table [courses]="activeStudyPlanTermCourses"
+                              *ngIf="!isCardView"
+                              (courseChanges)="updateCoursesList($event)">
+        </app-study-plan-table>
+    </div>
+
+    <!-- other study plan terms header-->
+    <div *ngIf="!isSearchActive">
+        <div class="header-container wd-bg-secondary w-100 d-flex align-items-center" [ngClass]="{
+            'mb-3' : isCardView
+        }" *transloco="let t; scope : 'studyplan'">
+            <h3 class="wd-text-h4 wd-text-white m-0 ps-3">{{t('studyplan.Other')}} {{t('studyplan.'+userDegree.schedule)}}s</h3>
+            <div class="ms-auto pe-2 user-select-none">
+                <div class="new-study-plan-term-container wd-bg-primary d-flex
+                    justify-content-center align-items-center gap-3 cursor-pointer"
+                    (click)="toggleNewStudyPlanTerm()">
+                    <div *ngIf="isDesktop">
+                        <span class="wd-text-white fw-bold">{{t('studyplan.AddBlock')}}</span>
+                    </div>
+                    <div>
+                        <img src="../../../assets/icons/plus.png" width="15" height="15">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- other study plan terms list -->
+    <div class="w-100" *ngIf="!isSearchActive">
+        <app-study-plan-term-grid [studyPlanTerms]="studyPlanTerms"
+                                  *ngIf="isCardView"
+                                  (wasCardClicked)="toggleSelectedStudyPlanTerm($event)">
+        </app-study-plan-term-grid>
+        <app-study-plan-table [studyPlanTerms]="studyPlanTerms"
+                              [typeOfSchedule]="userDegree.schedule"
+                               *ngIf="!isCardView"
+                               (clickedStudyTerm)="toggleSelectedStudyPlanTerm($event)">
+        </app-study-plan-table>
+    </div>
+</div>
+
+<app-add-study-plan-term *ngIf="isNewStudyPlanTermOpen"
+                         [studyPlan]="studyPlan"
+                         [studyPlanTerms]="studyPlanTerms"
+                         [isNewStudyPlanInProgress]="false"
+                         [needsToRouteToStudyPlan]="false"
+                         (dialogWasClosed)="hideNewStudyPlanTermWindow()">
+</app-add-study-plan-term>
+
+<app-dialog title=""
+            [type]="DialogType.StudyPlanTermOverview"
+            [selectedStudyPlanTerm]="selectedStudyPlanTerm"
+            *ngIf="isSelectedStudyPlanTermOpen">
+    <div class="forTypeTermCreationCompleted w-100" *transloco="let t; scope : 'studyplan'">
+        <table class="w-100">
+            <thead class="w-100">
+                <tr>
+                    <th>{{t('studyplan.Subject')}}</th>
+                    <th>{{t('studyplan.Status')}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let course of selectedStudyPlanTerm.coursesDtos">
+                    <td>{{course.name}}</td>
+                    <td>
+                        <span class="me-2">
+                            <img [src]="getCurrentStatusIcon(course.courseStatus)" height="20" width="20">
+                        </span>
+                        {{t('studyplan.'+course.courseStatus)}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</app-dialog>

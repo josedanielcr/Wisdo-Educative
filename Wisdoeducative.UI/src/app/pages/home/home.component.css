@@ -1,0 +1,30 @@
+.config-card {
+    min-height: 15.375rem;
+    width: 90%;
+    border-radius: 0.3125rem;
+}
+
+.config-button {
+    width: 15rem;
+}
+
+.statistic-card {
+    height: 16.375rem;
+    width: 20rem;
+    border-radius: 0.3125rem;
+    padding: 0.5rem;
+}
+
+.progress-text {
+    color: #256E8E;
+    font-size: 6.25rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.course-status-card {
+  border-radius: 0.3125rem;
+  width: 8rem;
+  height: 2rem;
+}

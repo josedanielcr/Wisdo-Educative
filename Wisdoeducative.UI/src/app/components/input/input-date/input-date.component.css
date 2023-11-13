@@ -1,0 +1,47 @@
+.date-wrapper {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    border-left: none;
+    width: 100%;
+}
+
+.wd-input {
+    width: 100%;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: transparent;
+    padding-left: 20px !important;
+    border-top: 1px solid white !important;
+}
+
+label {
+    margin-bottom: 10px;
+}
+
+.icon {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    border-left: 5px solid var(--background-color);
+    padding-left: 20px;
+}
+
+.no-calendar::-webkit-calendar-picker-indicator {
+    display: none;
+}
+
+.no-calendar::-webkit-inner-spin-button,
+.no-calendar::-webkit-clear-button {
+    -webkit-appearance: none;
+    margin: 0;
+    padding: 0;
+    display: none;
+}

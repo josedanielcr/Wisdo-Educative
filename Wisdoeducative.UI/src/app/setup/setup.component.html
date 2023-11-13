@@ -1,0 +1,47 @@
+<div class="setup-container" *transloco="let t; scope: 'setup'">
+  <div class="wd-bg-primary page-container startup-window"
+      *ngIf="isStartupWindowOpen">
+    <!-- logo -->
+    <img src="https://wisdostorageaccount.blob.core.windows.net/wisdoblob/wisdo-white-logo.png"
+        class="logo">
+
+    <div class="setup-header text-center">
+        <h1 class="wd-text-h1 wd-text-white">{{t('setup.welcomeMsg')}}</h1>
+    </div>
+
+    <!-- subheader -->
+    <div class="setup-subheader">
+      <span class="wd-text-white">
+        {{t('setup.setupIntro')}} <span class="fw-bold">{{t('setup.numSteps')}}</span> 
+        {{t('setup.learningPhase')}}
+      </span>
+    </div>
+
+      <!-- button -->
+    <div class="setup-skip btn-container">
+      <app-button [text]="t('setup.setupNow')" 
+              [disabled]="false" 
+              [type]="ButtonType.SECONDARY"
+              (click)="startSetup()"
+              >
+      </app-button>
+    </div>
+
+    <!-- skip button -->
+    <div class="setup-skip btn-container">
+      <app-button [text]="t('setup.skipStep')" 
+              [disabled]="false"
+              [type]="ButtonType.NOSTYLE"
+              (click)="skipSetup()">
+      </app-button>
+    </div>
+  </div>
+
+  <div class="page-container" *ngIf="!isStartupWindowOpen">
+    <app-steps></app-steps>
+  </div>
+</div>
+<div class="translation-panel">
+  <app-translation></app-translation>
+</div>
+<ng-container #messageContainer></ng-container>

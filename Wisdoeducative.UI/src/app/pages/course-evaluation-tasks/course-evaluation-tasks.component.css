@@ -1,0 +1,12 @@
+.add-reminder-container {
+  position: absolute;
+  top: 90%;
+  left: 95%;
+}
+
+.add-reminder-button {
+  width: 3.125rem;
+  height: 3.1875rem;
+  border-radius: 50%;
+  background-color: var(--seconday-color);
+}

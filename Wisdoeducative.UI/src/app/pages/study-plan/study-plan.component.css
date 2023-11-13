@@ -1,0 +1,22 @@
+.header-container {
+    height: 3.5rem;
+    border-radius: 0.3125rem;
+}
+
+.new-study-plan-term-container {
+    padding: 0.60rem;
+    border-radius: 0.3125rem;
+}
+
+table {
+    margin: auto;
+    border-collapse: separate;
+    border-spacing: 0 0.40rem;
+}
+
+th, td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 1rem 0rem;
+    border-bottom: 5px solid var( --general-bg-color);
+}

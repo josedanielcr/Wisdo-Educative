@@ -1,0 +1,116 @@
+<div class="w-100 d-flex align-items-center position-relative" [ngClass]="{
+    'navbar-desktop': isDesktop || isTablet,
+    'navbar-phone wd-bg-primary': isPhone
+}">
+
+    <!-- open sidebar -->
+    <div *ngIf="isPhone"
+         class="ms-4 h-100 d-flex align-items-center"
+         (click)="toggleSidebar()">
+        <img src="../../../assets/icons/menu 1.svg">
+    </div>
+
+    <div *ngIf="isPhone" class="logo-navbar-phone">
+        <img src="https://wisdostorageaccount.blob.core.windows.net/wisdoblob/wisdo-white-logo.png"
+        height="30" width="60">
+    </div>
+
+    <!-- profile and notifications -->
+    <div class="ms-auto d-flex h-100 align-items-center">
+        <i class="fa-regular fa-bell me-3 cursor-pointer" *ngIf="!isPhone"></i>
+        <div class="line-separator wd-bg-general" *ngIf="!isPhone"></div>
+
+        <!-- profile image -->
+        <div *ngIf="user" (click)="toggleDropdownMenu()">
+            <img class="profile-image ms-3 cursor-pointer"
+                [ngClass]="{
+                    'desktop-profile-image': isDesktop || isTablet,
+                    'phone-profile-image me-4': isPhone
+                }"
+                [src]="user.profileImage | noProfileImage">
+        </div>
+
+        <!-- dropdown button -->
+        <div class="ms-3 me-3 cursor-pointer" (click)="toggleDropdownMenu()" *ngIf="!isPhone">
+            <i class="fa-solid fa-angle-down"></i>
+        </div>
+    </div>
+
+    <!-- dropdown menu -->
+    <div class="wd-bg-general user-select-none dropdown-container"
+        [ngClass]="{
+            'dropdown-container-desktop': isDesktop || isTablet,
+            'dropdown-container-phone': isPhone
+        }"
+         *ngIf="isDropdownOpen">
+        <div class="dropdown-content h-100 d-flex flex-column" *transloco="let t; scope : 'shared'">
+
+            <!-- profile -->
+            <div class="d-flex gap-4 mb-3">
+                <div class="d-flex flex-column profile-names-container">
+                    <span class="fw-bold">{{user.name}}</span>
+                    <span>{{user.lastName}}</span>
+                </div>
+            </div>
+
+            <!-- options general-->
+            <div class="mb-3">
+                <span class="fw-bold">{{t('shared.General')}}</span>
+                <div class="d-flex flex-column gap-3 mt-3">
+
+                    <div class="d-flex gap-3 cursor-pointer" (click)="goToProfile()">
+                        <object data="../../../assets/icons/user.svg" type="image/svg+xml">
+                        </object>
+                        <span>{{t('shared.Profile')}}</span>
+                    </div>
+                    <div class="d-flex gap-3 cursor-pointer" *ngIf="false">
+                        <object data="../../../assets/icons/setting.svg" type="image/svg+xml">
+                        </object>
+                        <span>{{t('shared.Settings')}}</span>
+                    </div>
+                    <div class="d-flex gap-3 cursor-pointer">
+                        <img src="../../../assets/icons/translation 1.png" width="25" height="25">
+                        <app-translation></app-translation>
+                    </div>
+                    <div class="d-flex gap-3 cursor-pointer" *ngIf="false">
+                        <object data="../../../assets/icons/night-mode 1.svg" type="image/svg+xml">
+                        </object>
+                        <span>{{t('shared.DarkMode')}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="divisor wd-bg-white"></div>
+
+            <!-- options payments -->
+            <div class="mt-3 mb-3" *ngIf="false">
+                <span class="fw-bold">{{t('shared.Payments')}}</span>
+                <div class="d-flex flex-column gap-3 mt-3">
+
+                    <div class="d-flex align-items-center gap-3 cursor-pointer">
+                        <img src="../../../assets/icons/subscription-icon.png"
+                        height="18" width="18">
+                        <span>{{t('shared.Subscription')}}</span>
+                    </div>
+                    <div class="d-flex gap-3 cursor-pointer">
+                        <object data="../../../assets/icons/Icon-Invoice.svg" type="image/svg+xml">
+                        </object>
+                        <span>{{t('shared.Invoices')}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="divisor wd-bg-white"></div>
+
+            <!-- logout -->
+            <div class="mt-auto">
+                <div class="d-flex flex-column gap-3 mt-3">
+                    <div class="d-flex gap-3 cursor-pointer" (click)="logout()">
+                        <object data="../../../assets/icons/Icon-logOut.svg" type="image/svg+xml">
+                        </object>
+                        <span>{{t('shared.LogOut')}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

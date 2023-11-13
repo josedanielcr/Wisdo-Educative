@@ -1,0 +1,55 @@
+/* dialog.component.css */
+.dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.60);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.dialog-content {
+    background-color: #ffffff;
+    padding: 2rem 1.5rem;
+    border-radius: 0.3125rem;
+    box-shadow: 0rem 0rem 0rem rgba(0, 0, 0, 0.60);
+    max-height: 90%;
+    overflow-y: auto;
+}
+
+.dialog-content-phone {
+    width: 90%;
+}
+
+.dialog-content-desktop {
+    width: 40%;
+}
+
+.close-container {
+    cursor: pointer;
+}
+
+.status-card {
+    width: 10.25rem;
+    height: 2.4375rem;
+    border-radius: 0.3125rem;
+}
+
+.completed-card {
+    background-color: #1ECF4526;
+    color: #0B5354;
+}
+
+.in-progress-card {
+    background-color: #256E8E26;
+    color: #033043;
+}
+
+.not-started-card {
+    background-color: #83838338;
+    color: #1E1E1E;
+}

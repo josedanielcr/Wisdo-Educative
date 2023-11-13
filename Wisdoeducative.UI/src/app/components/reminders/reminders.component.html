@@ -1,0 +1,40 @@
+<!--date picker-->
+<div class="w-100">
+
+  <!--picker-->
+  <div class="w-100 d-flex justify-content-center" *ngIf="reminderDates || reminders.length > 0">
+
+    <div class="date-picker wd-bg-white d-flex justify-content-center align-items-center"
+    *ngIf="reminders.length > 0">
+      <i class="fa-solid fa-chevron-left cursor-pointer" (click)="goBack()"></i>
+      <span class="ms-5 me-5">{{reminderDates[currDate] | date: 'mediumDate'}}</span>
+      <i class="cursor-pointer fa-solid fa-chevron-right" (click)="goForward()"></i>
+    </div>
+
+
+  </div>
+
+  <!--  reminders-->
+  <div class="w-100 mt-4" *ngIf="reminders">
+    <div class="d-flex align-items-center flex-column gap-3">
+      <div *ngFor="let reminder of getCurrReminderElements(this.currDate)">
+        <div class="reminder-card wd-bg-white d-flex ps-2 pe-2">
+          <!--        data-->
+          <div class="d-flex ps-3 pt-1 pb-1 align-items-center">
+            <div class="d-flex flex-column gap-1">
+              <span>{{reminder.name}}</span>
+              <span class="evaluation-name">{{reminder.courseEvaluationTask.name}}</span>
+            </div>
+          </div>
+          <!--        actions-->
+          <div class="ms-auto pe-3 d-flex align-items-center justify-content-center flex-column gap-2 ms-3">
+            <i class="fa-regular fa-square-check wd-text-success cursor-pointer" (click)="updateReminder(reminder)"></i>
+            <i class="fa-solid fa-trash-can wd-text-danger cursor-pointer" (click)="deleteReminder(reminder.id)"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

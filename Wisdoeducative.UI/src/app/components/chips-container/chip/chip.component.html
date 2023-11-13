@@ -1,0 +1,7 @@
+<div class="chip d-flex justify-content-center align-items-center" 
+    [ngClass]="{ 
+        'selected': chip.selected 
+    }"
+    (click)="toggleSelected()" *transloco="let t; scope: 'chips'">
+    <span>{{t('chips.'+chip.code)}}</span>
+</div>

@@ -1,0 +1,92 @@
+<div class="w-100" *transloco="let t; scope : 'studyplan'">
+    <table class="w-100">
+        <thead class="w-100">
+            <tr class="wd-bg-white">
+                <th [ngClass]="{
+                    'ps-3' : true
+                }">
+                  <img [src]="isCourseTable ? '../../../assets/icons/heart-filled.png'
+                    : '../../../assets/icons/next.png'" width="20" height="20">
+                </th>
+                <th class="fw-bold th-name" [ngClass]="{
+                    'th-name-spacing-desktop': isDesktop,
+                    'th-name-spacing-phone': !isDesktop
+                }"
+                    *ngIf="isCourseTable">
+                    {{t('studyplan.Subject')}}
+                </th>
+                <th class="fw-bold th-name" *ngIf="!isCourseTable" [ngClass]="{
+                    'th-name-spacing-desktop': isDesktop,
+                    'th-name-spacing-phone': !isDesktop
+                }">
+                    {{t('studyplan.'+typeOfSchedule)}}
+                </th>
+                <th class="fw-bold" *ngIf="canShowProgress()" [ngClass]="{
+                    'pe-2' : isPhone
+                }">{{t('studyplan.Progress')}}</th>
+                <th class="fw-bold" *ngIf="isDesktop">{{t('studyplan.Status')}}</th>
+                <th class="fw-bold" *ngIf="canShowCredits()" [ngClass]="{
+                    'pe-2' : isPhone
+                }">{{t('studyplan.Credits')}}</th>
+              </tr>
+        </thead>
+        <tbody *ngIf="isCourseTable">
+            <tr *ngFor="let course of courses" class="wd-bg-white">
+                <td class="cursor-pointer" [ngClass]="{
+                    'ps-3' : true
+                }" (click)="addToFavorite(course.id)">
+                    <img [src]="course.isFavorite ?
+                         '../../../assets/icons/heart-filled.png' :
+                         '../../../assets/icons/heart-empty.png'" width="20" height="20">
+                </td>
+                <td class="th-name" [ngClass]="{
+                    'th-name-spacing-desktop': isDesktop,
+                    'th-name-spacing-phone': !isDesktop
+                }">{{ course.name }}</td>
+                <td [ngClass]="{
+                    'pe-2' : isPhone,
+                    'd-flex justify-content-center' : true
+                }">
+                    <app-progress-bar [progress]="getCourseProgress(course.currentScore)">
+                    </app-progress-bar>
+                </td>
+                <td *ngIf="isDesktop">
+                    <span class="me-2">
+                        <img [src]="getCurrentStatusIcon(course.courseStatus)" width="20" height="20">
+                    </span>
+                    <span>{{t('studyplan.'+course.courseStatus)}}</span>
+                </td>
+                <td *ngIf="isDesktop">{{ course.totalCredits }}</td>
+            </tr>
+        </tbody>
+        <tbody *ngIf="!isCourseTable">
+            <tr *ngFor="let studyPlanTerm of studyPlanTerms" class="wd-bg-white cursor-pointer">
+                <td [ngClass]="{
+                    'ps-3' : true
+                }">
+                    <img src="../../../assets/icons/next.png" width="20" height="20"
+                    (click)="emitClickedStudyTerm(studyPlanTerm)">
+                </td>
+                <td class="th-name" [ngClass]="{
+                    'th-name-spacing-desktop': isDesktop,
+                    'th-name-spacing-phone': !isDesktop
+                }">{{studyPlanTerm.name}}</td>
+                <td *ngIf="isDesktop" class="d-flex justify-content-center">
+                    <app-progress-bar [progress]="studyPlanTerm.currentProgress">
+                    </app-progress-bar>
+                </td>
+                <td *ngIf="isDesktop">
+                    <span class="me-2">
+                        <img [src]="getCurrentStatusIcon(studyPlanTerm.studyTermStatus)" width="20" height="20">
+                    </span>
+                    <span>
+                        {{t('studyplan.'+studyPlanTerm.studyTermStatus)}}
+                    </span>
+                </td>
+                <td [ngClass]="{
+                    'pe-2' : isPhone
+                }">{{studyPlanTerm.totalCredits}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

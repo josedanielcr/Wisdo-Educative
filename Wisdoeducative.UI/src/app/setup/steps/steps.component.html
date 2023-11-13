@@ -1,0 +1,222 @@
+<div class="d-flex justify-content-center image-logo-container">
+    <img src="https://wisdostorageaccount.blob.core.windows.net/wisdoblob/wisdo-colored-logo.png"
+    width="200" height="100">
+</div>
+
+<!-- wizard -->
+<div class="d-flex justify-content-center align-items-center" *transloco="let t; scope: 'setup'">
+    <div class="wizard-container" [ngClass]="{
+        'standard-wizard-container': isDesktop || isTablet,
+        'small-wizard-container': isPhone
+        }">
+        <!-- wizard timeline -->
+        <div class="w-100">
+            <div class="timeline">
+                <div class="timeline-line"></div>
+                <div *ngFor="let step of steps"
+                    class="timeline-item"
+                    [class.active]="step === currentStep">
+                    <div class="step-number">{{ step }}</div>
+                    <div class="timeline-marker"
+                        [ngClass]="{
+                            'timeline-item-done': step < currentStep,
+                            'timeline-item-active': step === currentStep,
+                            'timeline-item-upcoming': step > currentStep,
+                        }">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center align-items-center flex-column w-100">
+          <!-- step 1 user data -->
+          <div class="w-100 d-flex justify-content-center align-items-center flex-column mb-4"
+                *ngIf="this.currentStep === 1">
+            <h1 class="wd-text-h1">{{t('setup.personalTitle')}}</h1>
+            <span class="wizard-child-description text-center">
+              {{t('setup.personalDescription')}}
+            </span>
+
+            <!-- content -->
+            <div class="wizard-component-container w-100">
+                <div class="w-100">
+                    <form autocomplete="off" [formGroup]="userSetupForm" class="w-100">
+                        <div class="row d-flex flex-wrap">
+                            <div class="col-sm-6 mb-3">
+                                <app-input-text placeholder=""
+                                              [label]="t('setup.firstNameLabel')"
+                                              placeholder=""
+                                              [error]="t('setup.firstNameError')"
+                                              formControlName="firstName">
+                              </app-input-text>
+                            </div>
+                            <div class="col-sm-6 mb-3">
+                              <app-input-text placeholder=""
+                                              [label]="t('setup.lastNameLabel')"
+                                              placeholder=""
+                                              [error]="t('setup.lastNameError')"
+                                              formControlName="lastName">
+                              </app-input-text>
+                            </div>
+                        </div>
+                        <div class="row d-flex flex-wrap">
+                            <div class="col-sm-6">
+                                <app-input-date [label]="t('setup.birthdayQuestion')"
+                                                placeholder=""
+                                                [error]="t('setup.birthdateError')"
+                                                formControlName="dateOfBirth">
+                                </app-input-date>
+                            </div>
+                            <div class="col-sm-6">
+                                <app-input-select [options]="userCategoryOptions"
+                                                  [label]="t('setup.professionQuestion')"
+                                                  [error]="t('setup.categoryError')"
+                                                  [isTranslated]="true"
+                                                  formControlName="category">
+                                </app-input-select>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="w-100 d-flex">
+                        <div class="btn-container ms-auto mt-3">
+                            <app-button [text]="t('setup.continueBtn')"
+                                        [type]="ButtonType.PRIMARY"
+                                        (click)="submitUserData()">
+                            </app-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+
+          <!-- step 2 interests -->
+          <div class="w-100 d-flex justify-content-center align-items-center flex-column mb-4"
+                *ngIf="this.currentStep === 2">
+            <!-- step 2 interests -->
+            <h1 class="wd-text-h1">{{t('setup.interestsTitle')}}</h1>
+            <span class="wizard-child-description text-center">
+              {{t('setup.interestsDescription')}}
+            </span>
+
+            <!-- content -->
+            <div class="wizard-component-container d-flex justify-content-center align-items-center flex-column w-100">
+              <app-chips-container #chipsContainer
+                                  [chips]="chips"
+                                  [limit]="4"
+                                  [maxChipsPerRow]="6">
+              </app-chips-container>
+
+              <div class="w-100 d-flex button-spacing align-items-center mt-5">
+                <div *ngIf="this.isDesktop || this.isTablet" class="interest-count-container"
+                      [ngClass]="{'wd-bg-input-error' : this.notEnoughInterestsError}">
+                  {{t('setup.selectedInterests', {number: selectedChips.length, total: 4})}}
+                </div>
+                <div *ngIf="this.isPhone" class="interest-count-container"
+                    [ngClass]="{'wd-bg-input-error' : this.notEnoughInterestsError}">
+                  {{(this.selectedChips.length > 0 ? this.selectedChips.length : 0) + ' - ' + 4}}
+                </div>
+
+                <div class="btn-container ms-auto">
+                    <app-button [text]="t('setup.continueBtn')"
+                                [type]="ButtonType.PRIMARY"
+                                (click)="submitInterests()">
+                    </app-button>
+                </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- step 3 degree data -->
+        <div class="w-100 d-flex justify-content-center align-items-center flex-column mb-4"
+        *ngIf="this.currentStep === 3">
+
+        <!-- step 3 degree data -->
+          <h1 class="wd-text-h1">{{t('setup.studiesTitle')}}</h1>
+          <span class="wizard-child-description text-center">
+            {{t('setup.studiesDescription')}}
+          </span>
+
+          <div class="w-100 wizard-component-container">
+            <form autocomplete="off" [formGroup]="setupDegreForm"
+            *ngIf="academicSheculeOptions && degreeTypeOptions && studyFieldOptions">
+
+                <!-- main form container -->
+                <div class="row d-flex flex-wrap">
+                  <div class="col-sm-6 mb-3">
+                    <app-input-text placeholder=""
+                                    [label]="t('setup.careerCourseLabel')"
+                                    placeholder=""
+                                    [error]="t('setup.careerNameError')"
+                                    formControlName="degreeName">
+                    </app-input-text>
+                  </div>
+                  <div class="col-sm-6 mb-3">
+                    <app-institution-select placeholder=""
+                                    [label]="t('setup.educationalCenterLabel')"
+                                    [institutions]="institutions"
+                                    formControlName="institutionName"
+                                    [error]="t('setup.institutionError')">
+                    </app-institution-select>
+                  </div>
+                </div>
+
+                <div class="row d-flex flex-wrap">
+                  <div class="col-sm-6 mb-3">
+                    <app-input-select [options]="academicSheculeOptions"
+                                      [label]="t('setup.modalityLabel')"
+                                      formControlName="schedule">
+                    </app-input-select>
+                  </div>
+                  <div class="col-sm-6 mb-3">
+                    <app-input-select [options]="degreeTypeOptions"
+                                      [label]="t('setup.degreeLabel')"
+                                      formControlName="degreeType">
+                    </app-input-select>
+                  </div>
+                </div>
+
+                <div class="row d-flex flex-wrap">
+                  <div class="col-sm-6">
+                    <app-input-select [options]="studyFieldOptions"
+                                      [label]="t('setup.fieldLabel')"
+                                      formControlName="studyField">
+                    </app-input-select>
+                  </div>
+                  <div class="col-sm-6">
+                    <app-input-date [label]="t('setup.startDateLabel')"
+                                    placeholder=""
+                                    [error]="t('setup.startDateError')"
+                                    formControlName="startYear">
+                    </app-input-date>
+                  </div>
+                </div>
+                <div class="btn-container ms-auto mt-3">
+                  <app-button [text]="t('setup.finishBtn')"
+                              [type]="ButtonType.PRIMARY"
+                              (click)="submitUserDegree()">
+                  </app-button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- step 4 execute setup -->
+        <div class="w-100 d-flex justify-content-center align-items-center flex-column mb-4"
+        *ngIf="this.currentStep === 4">
+
+        <div class="w-100 wizard-component-container d-flex justify-content-center">
+          <object type="image/svg+xml" data="../../../assets/animations/Infinity-1.6s-210px.svg">
+            Your browser does not support SVG.
+          </object>
+        </div>
+
+        <div class="d-flex justify-content-center flex-column text-center">
+          <h1 class="wd-text-h1">{{t('setup.configuringTitle')}}</h1>
+          <span class="wizard-child-description text-center">
+            {{t('setup.configuringDescription')}}
+          </span>
+        </div>
+        </div>
+      </div>
+    </div>
+</div>

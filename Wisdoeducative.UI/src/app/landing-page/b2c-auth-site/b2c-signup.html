@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Wisdo Educative</title>
+    <style>
+       /* Document and Body Styling */
+       html {
+            height: 100%;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            height: 100%;
+            margin: 0px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background-color: #0B5354;
+        }
+
+        /* Window Container Styling */
+        .auth-window-container {
+            min-height: 610px;
+            width: 560px;
+            background-color: white;
+            border-radius: 10px;
+        }
+
+        /* Window Content Styling */
+        .auth-window-content {
+            padding: 40px 130px 40px 130px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cancel-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .auth-window-container {
+            position: relative;
+        }
+
+        .main-logo {
+            margin-bottom: 40px;
+        }
+
+        #api {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #cancel , #api .intro {
+            display: none;
+        }
+
+        li {
+            list-style-type: none;
+        }
+
+        input {
+            padding-left: 10px;
+            padding-right: 0px;
+            border: none;
+            width: 305px;
+            height: 39px;
+            background: rgba(217, 217, 217, 0.37);
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        input:focus {
+            outline: none;
+        }
+
+        .helpLink {
+            display: none;
+        }
+
+        #attributeVerification {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        ul {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .required {
+            display: none;
+        }
+
+        input:disabled {
+            background-color: gainsboro;
+            cursor: not-allowed;
+        }
+
+        button {
+            border: none;
+            width: 315px;
+            height: 39px;
+            background: #0B5354;
+            border-radius: 10px; 
+            margin-top: 10px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            color: white;
+            font-weight: 700;
+            size: 16px;
+            line-height: 19.36px;
+        }
+
+        .auth-window-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .terms-container {
+            font-weight: 400;
+            size: 14px;
+            line-height: 16.94px;
+        }
+
+        label {
+            display: none;
+        }
+
+        .verificationSuccessText {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .verifyCode, .sendNewCode {
+            width: 153px;
+        }
+
+        .verifyCode {
+            margin-right: 10px;
+        }
+
+        .buttons {
+            display: flex;
+        }
+
+        .termsSpan {
+            margin-bottom: 20px;
+        }
+
+        #claimVerificationServerError {
+            margin-bottom: 20px;
+        }
+
+        .verifying-modal {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <img src="https://wisdostorageaccount.blob.core.windows.net/wisdoblob/wisdo-white-logo.png"
+    height="116" width="241" class="main-logo">
+    <div class="auth-window-container">
+        <div class="cancel-button">X</div>
+        <div class="auth-window-content">
+            <div id="api" data-name="SelfAsserted"></div>
+        </div>
+    </div>
+</body>
+</html>

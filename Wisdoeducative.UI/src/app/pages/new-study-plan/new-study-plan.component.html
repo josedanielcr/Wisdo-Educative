@@ -1,0 +1,35 @@
+<div *ngIf="userDegree">
+    <app-title [title]="userDegree.degree.name"
+               [iconPath]="'../../../assets/icons/book-black.png'"
+               [iconBackgroundColor]="'rgba(124, 147, 158, 0.15)'">
+    </app-title>
+</div>
+
+<div class="no-studyplan-card wd-bg-white no-studyplan-container 
+            d-flex flex-column justify-content-center align-items-center"
+    *ngIf="userDegree && !studyPlan"
+        [ngClass]="{
+        'no-studyplan-card-phone': isPhone,
+        'no-studyplan-card-desktop': isDesktop || isTablet,
+        }">
+    
+    <div class="no-studyplan-content text-center d-flex flex-column justify-content-center align-items-center"
+        *transloco="let t; scope : 'studyplan'">
+        <span>
+            {{t('studyplan.HelloUser')}} <span class="fw-bold">{{user.name}}</span> <br>
+            {{t('studyplan.RecommendCourseInput')}}
+        </span>
+
+        <div class="no-studyplan-button mt-4">
+            <app-button [text]="t('studyplan.EnterCurrentCourses')"
+                        [type]="ButtonType.SECONDARY"
+                        (click)="createStudyPlan()">
+            </app-button>
+        </div>
+    </div>
+</div>
+<app-add-study-plan-term *ngIf="isNewStudyPlanTermOpen"
+                         [studyPlan]="studyPlan"
+                         [studyPlanTerms]="studyPlanTerms"
+                         [isNewStudyPlanInProgress]="true">
+</app-add-study-plan-term>

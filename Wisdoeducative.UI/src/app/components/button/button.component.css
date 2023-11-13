@@ -1,0 +1,23 @@
+button {
+    height: 2.9375rem;
+    width: 100%;
+}
+
+span {
+    padding: 1rem;
+}
+
+.wd-button {
+    outline: none;
+    border: none;
+    border-radius: 0.3125rem;
+}
+
+/* #region types */
+.btn-no-style {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+/*#endregion*/

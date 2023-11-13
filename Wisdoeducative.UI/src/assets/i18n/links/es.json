@@ -1,0 +1,19 @@
+{
+    "AddLink": "Agregar enlace",
+    "AddLinkDesc" : "Ingrese enlaces importantes para tenerlos de fácil acceso.",
+    "AddLinkInput": "Ingrese el enlace del documento",
+    "AddLinkInputError" : "El enlace es requerido",
+    "AddLinkName": "Ingrese el nombre del documento",
+    "AddLinkNameError" : "El nombre del enlace es requerido",
+    "SaveLink": "Guardar enlace",
+    "Other": "Otros",
+    "AddTaskLabel": "Selecciona una tarea a la cual agregar el enlace",
+    "AddTaskLabelError": "La tarea es requerida",
+    "TaskNotFound": "No se encontró la tarea",
+    "Platform": "Plataforma",
+    "Link": "Enlace",
+    "Actions": "Acciones",
+    "UpdLink": "Actualizar enlace",
+    "SearchLink": "Selecciona una tarea para buscar sus enlaces",
+    "SearchLinkError": "Debe de ingresar una tarea válida"
+}

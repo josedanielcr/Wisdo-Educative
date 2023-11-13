@@ -1,0 +1,68 @@
+.input-label-container {
+    margin-bottom: 10px;
+}
+
+/* #region input structure */
+input {
+    all: unset;
+    padding-left: 1.19rem;
+}
+
+.institution-select-container {
+    position: relative;
+    width: 100%;
+    height: 2.9375rem;
+    border-radius: 0.3125rem;
+}
+
+.input-container {
+    flex: 0 0 calc(100% - 4rem - 0.3rem);
+}
+
+.icon-container {
+    flex: 0 0 calc(4rem + 0.3rem);
+}
+
+.line {
+    position: absolute;
+    height: 100%;
+    width: 0.3rem;
+    right: 4rem;
+    background-color: white;
+}
+/*#endregion input structure*/
+
+/*#region dropdown*/
+.dropdown-container {
+    max-height: 11.875rem;
+    border-radius: 0.3125rem;
+    margin-top: 0.12rem;
+    overflow: auto;
+    position: absolute;
+    top: 3rem;
+    z-index: 10;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.drowpdown-data {
+    padding: 1.25rem;
+    padding-bottom: 0rem;
+}
+
+.drowpdown-data-item {
+    padding-bottom: 1.25rem;
+    color: black;
+    cursor: pointer;
+}
+
+.option-text {
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal; 
+}
+
+.create-container {
+    padding-bottom: 1.25rem;
+}
+/*#endregion dropdown*/

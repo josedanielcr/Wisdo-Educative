@@ -1,0 +1,6 @@
+<button class="wd-button" [ngClass]="getClassForButtonType()"
+    [disabled]="disabled">
+    <span *ngIf="text">{{text}}</span>
+    <i *ngIf="iconPath" [class]="iconPath"></i>
+    <img [src]="iconPath" *ngIf="iconPath">
+</button>
